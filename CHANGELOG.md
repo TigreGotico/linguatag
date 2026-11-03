@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.1a2](https://github.com/TigreGotico/linguatag/tree/0.1.1a2) (2026-11-03)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.1a1...0.1.1a2)
+
+**Merged pull requests:**
+
+- docs: cite only langcodes for the distance threshold [\#10](https://github.com/TigreGotico/linguatag/pull/10) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.1.1a1](https://github.com/TigreGotico/linguatag/tree/0.1.1a1) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.0a1...0.1.1a1)
