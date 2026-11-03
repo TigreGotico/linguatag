@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.2a1](https://github.com/TigreGotico/linguatag/tree/0.1.2a1) (2026-11-03)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.1a2...0.1.2a1)
+
+**Merged pull requests:**
+
+- fix: let an exact candidate win a closest\_lang tie [\#12](https://github.com/TigreGotico/linguatag/pull/12) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.1.1a2](https://github.com/TigreGotico/linguatag/tree/0.1.1a2) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.1a1...0.1.1a2)
