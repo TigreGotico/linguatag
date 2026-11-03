@@ -8,31 +8,11 @@ import pytest
 from langcodes import Language
 
 import linguatag.matching as matching
-import linguatag.standardize as standardize
 from linguatag import (OVERRIDES, closest_lang, default_region, lang_distance,
                        with_default_region)
 
 TABLE = json.loads((Path(matching.__file__).parent / "data" / "likely_regions.json")
                    .read_text(encoding="utf-8"))["regions"]
-
-
-@pytest.fixture
-def no_langcodes(monkeypatch):
-    """Both standardization and distance as they run without langcodes."""
-    import builtins
-    real_import = builtins.__import__
-
-    def refuse(name, *args, **kwargs):
-        if name == "langcodes" or name.startswith("langcodes."):
-            raise ImportError(name)
-        return real_import(name, *args, **kwargs)
-
-    standardize.standardize_lang.cache_clear()
-    matching._parseable_prefix.cache_clear()
-    monkeypatch.setattr(builtins, "__import__", refuse)
-    yield
-    standardize.standardize_lang.cache_clear()
-    matching._parseable_prefix.cache_clear()
 
 
 @pytest.mark.parametrize("language,region", [
