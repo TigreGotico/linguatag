@@ -121,3 +121,44 @@ def test_without_langcodes_a_private_use_subtag_also_adds_nothing(no_langcodes):
     assert lang_distance("an-x-cheso", "an-x-ansotano") == 0
     assert lang_distance("an-x-cheso", "an") == 0
     assert lang_distance("an-x-cheso", "es") == 100
+
+
+@pytest.mark.parametrize("lect", ["ar-SA-x-najd", "ar-x-gulf", "ar-SA-x-rijal-alma"])
+def test_a_four_letter_private_use_subtag_is_not_a_script(lect):
+    assert lang_distance(lect, "arb") <= 5 and lang_distance(lect, "ar") <= 5
+    assert closest_lang(lect, ["arb"]) == "arb"
+
+
+@pytest.mark.parametrize("lect", ["ar-SA-x-najd", "ar-x-gulf", "ar-SA-x-rijal-alma"])
+def test_without_langcodes_a_four_letter_private_use_subtag_is_not_a_script(lect, no_langcodes):
+    assert closest_lang(lect, ["arb"]) == "arb"
+
+
+@pytest.mark.parametrize("tag", ["apc-x-test", "arz-x-cair"])
+def test_a_four_letter_private_use_subtag_keeps_the_arabic_cap(tag):
+    assert lang_distance(tag, "arb") == lang_distance(tag.split("-x-")[0], "arb") == 5
+
+
+@pytest.mark.parametrize("spelling", ["arb", "ar-001", "arb-x-zzz", "ar-x-zzz"])
+def test_every_msa_spelling_is_measured_as_bare_ar(spelling):
+    for candidate in ["ar-EG", "ar-MA", "ar-SA", "arz", "ar-001", "arb"]:
+        assert lang_distance(spelling, candidate) == lang_distance("ar", candidate), candidate
+
+
+def test_msa_with_a_private_use_subtag_prefers_msa_to_egypt():
+    assert closest_lang("arb-x-zzz", ["ar-EG", "ar"]) == "ar"
+    assert closest_lang("arb", ["ar-EG", "ar"]) == "ar"
+
+
+ARABIC_CATALOGUE = ["ar-EG", "ar-x-maghrebi", "ar-x-mashriqi", "arb"]
+
+
+def test_standard_mode_picks_msa_over_the_arabic_clades():
+    assert closest_lang("arb-x-zzz", ARABIC_CATALOGUE, lects="standard") == "arb"
+
+
+@pytest.mark.parametrize("catalogue", [ARABIC_CATALOGUE, ARABIC_CATALOGUE[::-1]])
+def test_default_mode_ties_msa_and_the_clades_on_the_first_candidate(catalogue):
+    tied = [tag for tag in catalogue if lang_distance("arb-x-zzz", tag) == 0]
+    assert tied == [tag for tag in catalogue if tag != "ar-EG"]
+    assert closest_lang("arb-x-zzz", catalogue) == tied[0]
