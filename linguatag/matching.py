@@ -25,6 +25,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Optional, Sequence
 
+from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import with_default_region
 from linguatag.standardize import standardize_lang
 
@@ -124,8 +125,12 @@ def _coarse_distance(desired: str, supported: str) -> int:
     primary subtag is near, a differing one is far; the generic (region-less)
     form of a language counts as nearer than a sibling region of it. The
     values 3, 5 and 100 carry ordering only: what matters is their relative
-    order and whether they reach the threshold of 10.
+    order and whether they reach the threshold of 10. Private-use subtags
+    count for nothing, as in ``langcodes``.
     """
+    desired, supported = without_private_use(desired), without_private_use(supported)
+    if desired.lower() == supported.lower():
+        return 0
     if desired.split("-")[0].lower() != supported.split("-")[0].lower():
         return 100  # a different language, beyond any usable threshold
     if "-" not in desired or "-" not in supported:
@@ -133,7 +138,7 @@ def _coarse_distance(desired: str, supported: str) -> int:
     return 5  # two different regions of the same language
 
 
-def lang_distance(desired: str, supported: str) -> int:
+def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int:
     """The distance between two BCP-47 language tags.
 
     ``0`` is identical; a larger number is further apart; a value above 10 is
@@ -152,7 +157,21 @@ def lang_distance(desired: str, supported: str) -> int:
 
     Uses ``langcodes.tag_distance`` when available, and a coarse
     same-language measure otherwise.
+
+    A private-use subtag counts for nothing unless ``lects`` asks for it:
+    ``"dialect"`` scores the nearest other dialect before the standard
+    language, ``"standard"`` the standard language before the dialects (see
+    :mod:`linguatag.lects`). The lect score reorders candidates; it never
+    raises a distance at or below the default threshold above it.
     """
+    distance = _language_distance(desired, supported)
+    if lects is None:
+        return distance
+    ceiling = max(distance, DEFAULT_MAX_LANGUAGE_DISTANCE)
+    return min(distance + lect_score(desired, supported, lects), ceiling)
+
+
+def _language_distance(desired: str, supported: str) -> int:
     a = _parseable_prefix(standardize_lang(desired))
     b = _parseable_prefix(standardize_lang(supported))
     if a.lower() == b.lower() or (a.lower() in _MSA and b.lower() in _MSA):
@@ -189,33 +208,36 @@ def lang_matches(a: str, b: str,
 
 
 def closest_lang(target: str, available: Sequence[str],
-                 max_distance: int = DEFAULT_MAX_LANGUAGE_DISTANCE
-                 ) -> Optional[str]:
+                 max_distance: int = DEFAULT_MAX_LANGUAGE_DISTANCE,
+                 lects: Optional[str] = None) -> Optional[str]:
     """The entry of ``available`` closest to ``target``.
 
     The candidate with the smallest :func:`lang_distance` wins when its
     distance is ``max_distance`` or less, so ``max_distance=0`` accepts exact
     matches only. Ties resolve to the first candidate in iteration order.
+    With ``lects``, the lect score orders the candidates within
+    ``max_distance``; it decides no match.
 
     Args:
         target: the requested BCP-47 tag.
         available: the tags on hand: directory names, voice ids, model
             languages. Iterated once.
         max_distance: the inclusive upper bound on an acceptable match.
+        lects: ``None``, ``"dialect"`` or ``"standard"``, as for
+            :func:`lang_distance`. ``closest_lang("an-x-cheso", ["an",
+            "an-x-ansotano"], lects="dialect")`` is ``"an-x-ansotano"``.
 
     Returns:
         The original string from ``available`` that best matches ``target``,
         verbatim, or ``None`` when nothing qualifies.
     """
     best: Optional[str] = None
-    best_distance: Optional[int] = None
+    best_rank: Optional[int] = None
     for candidate in available:
         distance = lang_distance(target, candidate)
-        if best_distance is None or distance < best_distance:
-            best, best_distance = candidate, distance
-
-    if best is None:
-        return None
-    if best_distance <= max_distance:
-        return best
-    return None
+        if distance > max_distance:
+            continue
+        rank = distance if lects is None else lang_distance(target, candidate, lects)
+        if best_rank is None or rank < best_rank:
+            best, best_rank = candidate, rank
+    return best
