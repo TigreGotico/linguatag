@@ -17,7 +17,9 @@ closest_lang("en-AU", ["fr-FR", "en-US"])  # 'en-US'
 
 A tag with no region defaults to its motherland: the region where the language first appeared and is still spoken. `en` is `en-GB`, `pt` is `pt-PT`, `es` is `es-ES`.
 
-CLDR likely-subtags is the base. CLDR picks the most-populous region, and for most languages that is also the motherland. `linguatag.MOTHERLAND` overrides CLDR where the two differ, and each override cites its source. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
+CLDR likely-subtags is the base. CLDR picks the most-populous region, and for most languages that is also the motherland. `linguatag.OVERRIDES` replaces CLDR where the two differ, and each override cites its source: `en` is GB, `pt` is PT, `ur` is IN and `yue` is CN. An override holds for its own script only, so `yue-Hant` stays HK. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
+
+A bare `ar` is Modern Standard Arabic, the standard of no single country, so its region is `001`, the world, as CLDR spells it.
 
 `linguatag/data/likely_regions.json` holds the CLDR regions. `scripts/build_likely_regions.py` rebuilds it from the installed `langcodes`.
 
@@ -27,7 +29,7 @@ CLDR likely-subtags is the base. CLDR picks the most-populous region, and for mo
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
-An Arabic variety (`arz`, `apc`, `ar-MA`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). No other macrolanguage gets this rule.
+An Arabic variety (`arz`, `apc`, `ar-MA`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). No other macrolanguage gets this rule. Cantonese never matches Mandarin.
 
 ## Install
 

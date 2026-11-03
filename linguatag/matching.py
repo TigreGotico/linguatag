@@ -25,6 +25,7 @@ from __future__ import annotations
 from typing import Optional, Sequence
 
 from linguatag.regions import with_default_region
+from linguatag.standardize import standardize_lang
 
 __all__ = [
     "standardize_lang",
@@ -54,36 +55,12 @@ _ARABIC_VARIETIES = frozenset(
 _MSA = ("ar", "arb")
 _ARABIC_FALLBACK_DISTANCE = 5
 
-
-def standardize_lang(tag: str) -> str:
-    """Normalize a BCP-47 language tag for comparison.
-
-    Folds underscores to hyphens, lowercases the primary subtag, uppercases
-    the region and, with ``langcodes``, resolves canonical script and region
-    forms, so that two spellings of one language (``en_us``, ``en-US``)
-    reduce to one comparable string.
-
-    Args:
-        tag: a BCP-47-like language tag, possibly underscore-separated or
-            mixed-case, as directory names and config values often are.
-
-    Returns:
-        ``langcodes.standardize_tag``'s output when ``langcodes`` is
-        installed; otherwise a primary-lowercase, region-uppercase form.
-    """
-    if tag.lower() in ("tl", "tgl"):
-        # langcodes folds Tagalog into the `fil` macrolanguage; Tagalog stays
-        # a language of its own here.
-        return "tl"
-    try:
-        from langcodes import standardize_tag
-        return str(standardize_tag(tag))
-    except Exception:
-        normalized = tag.replace("_", "-")
-        if "-" in normalized:
-            primary, rest = normalized.split("-", 1)
-            return f"{primary.lower()}-{rest.upper()}"
-        return normalized.lower()
+# Cantonese is never served as Mandarin. langcodes measures `yue-CN` against
+# `zh-CN` at 10, a member against its macrolanguage in one script, and that
+# is a usable match; the two are not mutually intelligible. They count as
+# different languages, as the coarse measure counts them.
+_NEVER_INTERCHANGEABLE = frozenset({frozenset({"yue", "zh"})})
+_DIFFERENT_LANGUAGE_DISTANCE = 100
 
 
 def _langcodes_distance(desired: str, supported: str) -> Optional[int]:
@@ -144,6 +121,9 @@ def lang_distance(desired: str, supported: str) -> int:
     distance = _langcodes_distance(a, b)
     if distance is None:
         distance = _coarse_distance(a, b)
+    languages = frozenset({a.split("-")[0].lower(), b.split("-")[0].lower()})
+    if languages in _NEVER_INTERCHANGEABLE:
+        distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     scripts = [t.lower() for t in a.split("-")[1:] if len(t) == 4 and t.isalpha()]
     if (to_msa and a.split("-")[0].lower() in _ARABIC_VARIETIES
             and scripts in ([], ["arab"])):
@@ -156,8 +136,10 @@ def lang_matches(a: str, b: str,
     """``True`` when two BCP-47 tags are close enough to interchange.
 
     Args:
-        a: one BCP-47 tag.
-        b: the other BCP-47 tag. The relation is symmetric.
+        a: the requested BCP-47 tag.
+        b: the candidate tag. The relation is symmetric except for the
+            Modern Standard Arabic fallback: ``arz`` is near ``ar``, but
+            ``ar`` is not near ``arz``.
         max_distance: the inclusive upper bound on an acceptable distance.
             Pass ``max_distance=0`` to require an exact match.
     """

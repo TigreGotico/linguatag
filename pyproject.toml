@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -7,13 +7,12 @@ name = "linguatag"
 dynamic = ["version"]
 description = "BCP-47 language tags: standardization, distance, closest match, and the default region of a bare tag"
 readme = "README.md"
-license = { text = "Apache-2.0" }
+license = "Apache-2.0"
 authors = [{ name = "JarbasAi", email = "jarbasai@mailfence.com" }]
 requires-python = ">=3.11"
 keywords = ["bcp47", "language-tag", "locale", "cldr", "nlp"]
 classifiers = [
     "Programming Language :: Python :: 3",
-    "License :: OSI Approved :: Apache Software License",
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Internationalization",
     "Topic :: Software Development :: Libraries :: Python Modules",

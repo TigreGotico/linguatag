@@ -88,10 +88,10 @@ def test_distance_without_langcodes_shares_primary_subtag(monkeypatch):
 
 
 def test_distance_without_langcodes_prefers_the_generic_tag(monkeypatch):
-    """`yi` has no default region, so the bare tag stays generic. A bare tag
+    """`qaa` has no default region, so the bare tag stays generic. A bare tag
     with one (`en` is `en-GB`) is measured as that region instead."""
     monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
-    assert closest_lang("yi-US", ["yi-IL", "yi"]) == "yi"
+    assert closest_lang("qaa-US", ["qaa-IL", "qaa"]) == "qaa"
 
 
 def test_distance_without_langcodes_no_shared_subtag(monkeypatch):

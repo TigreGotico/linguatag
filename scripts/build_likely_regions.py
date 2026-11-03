@@ -3,9 +3,10 @@
 The table maps every language tag without a region (`en`, `zh-Hant`) to the
 region CLDR expects for it. A deprecated code (`ji` is `yi`) has no entry,
 because `standardize_lang` replaces it before the lookup. CLDR picks the
-most-populous region; the motherland overrides in `linguatag.regions` apply
-on top at runtime, so this file stays a plain CLDR snapshot. A tag whose likely region is
-unknown (`ZZ`) or the world (`001`) has no entry.
+most-populous region; the overrides in `linguatag.regions` apply on top at
+runtime, so this file stays a plain CLDR snapshot. A tag whose likely region
+is unknown (`ZZ`) has no entry; one placed in the world (`001`, as `yi`)
+keeps it.
 
 Run it after a langcodes upgrade: `python scripts/build_likely_regions.py`.
 """
@@ -15,10 +16,10 @@ from pathlib import Path
 
 from langcodes.data_dicts import LIKELY_SUBTAGS
 
-from linguatag.matching import standardize_lang
+from linguatag.standardize import standardize_lang
 
 OUT = Path(__file__).resolve().parent.parent / "linguatag" / "data" / "likely_regions.json"
-NO_REGION = ("ZZ", "001")
+UNKNOWN = "ZZ"
 
 
 def _is_script(subtag: str) -> bool:
@@ -34,7 +35,7 @@ def likely_regions() -> dict:
         if standardize_lang(tag) != tag:
             continue
         region = likely.split("-")[-1]
-        if region not in NO_REGION:
+        if region != UNKNOWN:
             regions[tag] = region
     return dict(sorted(regions.items()))
 
