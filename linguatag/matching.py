@@ -171,12 +171,22 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     return min(distance + lect_score(desired, supported, lects), ceiling)
 
 
+def _as_world_arabic(tag: str) -> str:
+    """Every spelling of Modern Standard Arabic as ``ar-001``, the region the
+    default-region rule gives a bare ``ar``. ``langcodes`` would otherwise
+    place ``arb`` in Egypt. A private-use part is kept."""
+    base, separator, private = tag.partition("-x-")
+    if base.lower() in _MSA:
+        return "ar-001" + separator + private
+    return tag
+
+
 def _language_distance(desired: str, supported: str) -> int:
-    a = _parseable_prefix(standardize_lang(desired))
-    b = _parseable_prefix(standardize_lang(supported))
-    if a.lower() == b.lower() or (a.lower() in _MSA and b.lower() in _MSA):
+    a = _as_world_arabic(_parseable_prefix(standardize_lang(desired)))
+    b = _as_world_arabic(_parseable_prefix(standardize_lang(supported)))
+    if a.lower() == b.lower():
         return 0
-    to_msa = b.lower() in _MSA
+    to_msa = without_private_use(b).lower() in _MSA
     a, b = with_default_region(a), with_default_region(b)
     if a.lower() == b.lower():
         return 0

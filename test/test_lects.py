@@ -137,3 +137,14 @@ def test_without_langcodes_a_four_letter_private_use_subtag_is_not_a_script(lect
 @pytest.mark.parametrize("tag", ["apc-x-test", "arz-x-cair"])
 def test_a_four_letter_private_use_subtag_keeps_the_arabic_cap(tag):
     assert lang_distance(tag, "arb") == lang_distance(tag.split("-x-")[0], "arb") == 5
+
+
+@pytest.mark.parametrize("spelling", ["arb", "ar-001", "arb-x-zzz", "ar-x-zzz"])
+def test_every_msa_spelling_is_measured_as_bare_ar(spelling):
+    for candidate in ["ar-EG", "ar-MA", "ar-SA", "arz", "ar-001", "arb"]:
+        assert lang_distance(spelling, candidate) == lang_distance("ar", candidate), candidate
+
+
+def test_msa_with_a_private_use_subtag_prefers_msa_to_egypt():
+    assert closest_lang("arb-x-zzz", ["ar-EG", "ar"]) == "ar"
+    assert closest_lang("arb", ["ar-EG", "ar"]) == "ar"
