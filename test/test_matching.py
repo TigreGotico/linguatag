@@ -280,7 +280,33 @@ def test_the_spellings_of_msa_are_identical(langcodes_present, monkeypatch):
 @pytest.mark.parametrize("voice", ["zh-CN-XiaoxiaoNeural", "zh-TW-HsiaoChenNeural",
                                    "zh-CN-cantonese", "zh_CN-huayan-medium"])
 def test_cantonese_never_matches_a_mandarin_voice_id(voice):
-    """A voice id langcodes cannot parse is measured on its language subtag,
-    and the Cantonese rule reads the same subtag."""
-    assert lang_distance("yue", voice) >= 100
+    """A voice id langcodes cannot parse is measured as its parseable prefix,
+    and the Cantonese rule reads the same prefix."""
+    assert lang_distance("yue", voice) > language.DEFAULT_MAX_LANGUAGE_DISTANCE
     assert closest_lang("yue", [voice]) is None
+
+
+# --- tags langcodes cannot parse ----------------------------------------------
+
+@pytest.mark.parametrize("request_tag,voice,distance", [
+    ("yue", "yue-CN-XiaoMinNeural", 0),
+    ("yue", "yue-voicename", 0),
+    ("yue-HK", "zh-HK-HiuMaanNeural", 10),
+    ("en-US", "en-US-JennyNeural", 0),
+    ("en", "en-GB-SoniaNeural", 0),
+    ("pt", "pt-BR-FranciscaNeural", 5),
+])
+def test_an_unparseable_id_is_measured_as_its_parseable_prefix(request_tag, voice, distance):
+    assert lang_distance(request_tag, voice) == distance
+    assert closest_lang(request_tag, [voice]) == voice
+
+
+def test_the_prefix_keeps_its_region():
+    """`en` is `en-GB`: a British voice id wins over an American one."""
+    assert closest_lang("en", ["en-US-JennyNeural", "en-GB-SoniaNeural"]) == "en-GB-SoniaNeural"
+    assert closest_lang("yue-HK", ["zh-CN-XiaoxiaoNeural", "zh-HK-HiuMaanNeural"]) \
+        == "zh-HK-HiuMaanNeural"
+
+
+def test_an_unparseable_request_is_measured_the_same_way():
+    assert lang_distance("zh-HK-HiuMaanNeural", "yue-HK") == lang_distance("zh-HK", "yue-HK")

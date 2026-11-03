@@ -68,18 +68,33 @@ _DIFFERENT_LANGUAGE_DISTANCE = 100
 
 
 def _is_simplified(tag: str) -> bool:
-    """Whether ``tag`` maximizes to Simplified script, retried on the primary
-    subtag when the full tag is unparseable, as the distance itself is."""
+    try:
+        from langcodes import Language
+        return Language.get(tag).maximize().script == "Hans"
+    except Exception:
+        return False
+
+
+def _parseable_prefix(tag: str) -> str:
+    """The longest leading part of ``tag`` that ``langcodes`` parses.
+
+    A voice id such as ``zh-HK-HiuMaanNeural`` is not a language tag, but its
+    ``zh-HK`` is, and that is what it is measured as. A tag with no parseable
+    prefix, or any tag when ``langcodes`` is absent, is returned unchanged.
+    """
     try:
         from langcodes import Language
     except ImportError:
-        return False
-    for candidate in (tag, tag.split("-")[0]):
+        return tag
+    parts = tag.split("-")
+    for end in range(len(parts), 0, -1):
+        candidate = "-".join(parts[:end])
         try:
-            return Language.get(candidate).maximize().script == "Hans"
+            Language.get(candidate)
         except Exception:
             continue
-    return False
+        return candidate
+    return tag
 
 
 def _cantonese_against_mandarin(a: str, b: str) -> bool:
@@ -91,19 +106,13 @@ def _cantonese_against_mandarin(a: str, b: str) -> bool:
 
 
 def _langcodes_distance(desired: str, supported: str) -> Optional[int]:
-    """``langcodes.tag_distance``, retried on the primary subtag if the full
-    tag is unparseable. ``None`` if no distance can be computed, including
-    when ``langcodes`` is not installed."""
+    """``langcodes.tag_distance``, or ``None`` if no distance can be computed,
+    including when ``langcodes`` is not installed."""
     try:
         from langcodes import tag_distance
-    except ImportError:
+        return int(tag_distance(desired, supported))
+    except Exception:
         return None
-    for candidate in (supported, supported.split("-")[0]):
-        try:
-            return int(tag_distance(desired, candidate))
-        except Exception:
-            continue
-    return None
 
 
 def _coarse_distance(desired: str, supported: str) -> int:
@@ -136,11 +145,14 @@ def lang_distance(desired: str, supported: str) -> int:
     most 5. Cantonese measured against ``cmn``, or against ``zh`` in
     Simplified script, is a different language.
 
+    A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
+    its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``.
+
     Uses ``langcodes.tag_distance`` when available, and a coarse
     same-language measure otherwise.
     """
-    a = standardize_lang(desired)
-    b = standardize_lang(supported)
+    a = _parseable_prefix(standardize_lang(desired))
+    b = _parseable_prefix(standardize_lang(supported))
     if a.lower() == b.lower() or (a.lower() in _MSA and b.lower() in _MSA):
         return 0
     to_msa = b.lower() in _MSA
