@@ -156,6 +156,19 @@ def test_a_bare_request_still_reaches_another_region():
     assert closest_lang("ur", ["ur-PK"]) == "ur-PK"
 
 
+@pytest.mark.parametrize("target, available, exact", [
+    ("pt-PT", ["pt", "pt-BR", "pt-PT"], "pt-PT"),
+    ("es-ES", ["es", "es-ES"], "es-ES"),
+    ("en", ["en-GB", "en"], "en"),
+    ("pt-pt", ["pt", "pt-PT"], "pt-PT"),
+    ("pt_PT", ["pt", "pt-PT"], "pt-PT"),
+])
+def test_an_exact_candidate_wins_a_tie_at_zero(target, available, exact):
+    assert lang_distance(target, available[0]) == lang_distance(target, exact) == 0
+    assert closest_lang(target, available) == exact
+    assert closest_lang(target, available, lects="standard") == exact
+
+
 def test_a_regional_request_is_not_pulled_to_the_default():
     assert closest_lang("en-US", ["en-GB", "en-US"]) == "en-US"
     assert closest_lang("en-US", ["en", "en-US"]) == "en-US"
