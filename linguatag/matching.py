@@ -22,6 +22,7 @@ resolution depends on.
 """
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Optional, Sequence
 
 from linguatag.regions import with_default_region
@@ -75,6 +76,7 @@ def _is_simplified(tag: str) -> bool:
         return False
 
 
+@lru_cache(maxsize=4096)
 def _parseable_prefix(tag: str) -> str:
     """The longest leading part of ``tag`` that ``langcodes`` parses.
 

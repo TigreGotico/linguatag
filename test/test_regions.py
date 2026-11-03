@@ -1,5 +1,7 @@
 """The default region of a tag that names none."""
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -26,9 +28,11 @@ def no_langcodes(monkeypatch):
         return real_import(name, *args, **kwargs)
 
     standardize.standardize_lang.cache_clear()
+    matching._parseable_prefix.cache_clear()
     monkeypatch.setattr(builtins, "__import__", refuse)
     yield
     standardize.standardize_lang.cache_clear()
+    matching._parseable_prefix.cache_clear()
 
 
 @pytest.mark.parametrize("language,region", [
@@ -175,3 +179,26 @@ def test_a_bare_request_still_reaches_another_region():
 def test_a_regional_request_is_not_pulled_to_the_default():
     assert closest_lang("en-US", ["en-GB", "en-US"]) == "en-US"
     assert closest_lang("en-US", ["en", "en-US"]) == "en-US"
+
+
+_WITHOUT_LANGCODES = """
+import builtins, sys
+real_import = builtins.__import__
+def refuse(name, *args, **kwargs):
+    if name == "langcodes" or name.startswith("langcodes."):
+        raise ImportError(name)
+    return real_import(name, *args, **kwargs)
+builtins.__import__ = refuse
+from linguatag import lang_distance
+print(lang_distance(sys.argv[1], sys.argv[2]))
+"""
+
+
+@pytest.mark.parametrize("desired,supported", [
+    ("an-x-benasques", "an-x-chistabin"), ("zh-HK-HiuMaanNeural", "zh-HK")])
+def test_a_prefix_found_with_langcodes_is_not_reused_without_it(desired, supported, request):
+    lang_distance(desired, supported)
+    request.getfixturevalue("no_langcodes")
+    expected = subprocess.run([sys.executable, "-c", _WITHOUT_LANGCODES, desired, supported],
+                              check=True, capture_output=True, text=True).stdout
+    assert lang_distance(desired, supported) == int(expected)
