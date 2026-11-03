@@ -26,9 +26,11 @@ def no_langcodes(monkeypatch):
         return real_import(name, *args, **kwargs)
 
     standardize.standardize_lang.cache_clear()
+    matching._parseable_prefix.cache_clear()
     monkeypatch.setattr(builtins, "__import__", refuse)
     yield
     standardize.standardize_lang.cache_clear()
+    matching._parseable_prefix.cache_clear()
 
 
 @pytest.mark.parametrize("language,region", [
