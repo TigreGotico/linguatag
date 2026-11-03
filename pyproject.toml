@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "linguatag"
+dynamic = ["version"]
+description = "BCP-47 language tags: standardization, distance, closest match, and the default region of a bare tag"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "JarbasAi", email = "jarbasai@mailfence.com" }]
+requires-python = ">=3.11"
+keywords = ["bcp47", "language-tag", "locale", "cldr", "nlp"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Apache Software License",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Internationalization",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Text Processing :: Linguistic",
+]
+
+[project.optional-dependencies]
+langcodes = ["langcodes"]
+test = ["pytest", "langcodes"]
+
+[project.urls]
+Homepage = "https://github.com/TigreGotico/linguatag"
+Repository = "https://github.com/TigreGotico/linguatag"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["linguatag*"]
+
+[tool.setuptools.package-data]
+linguatag = ["data/*.json"]
+
+[tool.setuptools.dynamic]
+version = { attr = "linguatag.version.VERSION_STR" }
