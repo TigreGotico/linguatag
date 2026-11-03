@@ -37,11 +37,11 @@ __all__ = [
     "DEFAULT_MAX_LANGUAGE_DISTANCE",
 ]
 
-# A language distance of 10 or less is a usable regional match, as the
-# langcodes distance-values documentation reads it and OVOS-INTENT-2 §2.2
-# adopts. The bound is inclusive, so 10 itself qualifies: langcodes gives
-# exactly 10 to a specific language against its macrolanguage tag, such as
-# "arz" against "ar".
+# langcodes rates a distance of 4 to 9 an unproblematic regional difference
+# and 10 to 24 a gray area that depends on the use case. This module accepts
+# 10 or less. The bound is inclusive because langcodes uses 10 for a specific
+# language against its more-commonly-used macrolanguage tag, such as "arz"
+# against "ar".
 DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 
 # The individual languages of the ISO 639-3 `ara` macrolanguage (SIL
