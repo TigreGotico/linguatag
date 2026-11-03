@@ -89,7 +89,8 @@ def default_region(tag: str) -> Optional[str]:
     with none returns its default: `en` is `GB`, `zh-Hant` is `TW`, `ar` is
     `001`. A script with no entry of its own takes its language's region,
     unless an override writes the language in another script. The
-    tag is standardized first, so `eng` and `en_GB` work. `None` means no
+    tag is standardized first: `en_GB` always works, and with `langcodes`
+    so do deprecated and three-letter codes (`iw`, `eng`). `None` means no
     region applies: the language is unknown, or the tag is an extended form
     that `langcodes` was not there to replace.
     """

@@ -139,6 +139,8 @@ def test_without_langcodes_the_case_follows_bcp47(no_langcodes):
     assert with_default_region("EN_us") == "en-US"
     assert with_default_region("zh_hant") == "zh-Hant-TW"
     assert with_default_region("ext-pt-X-Barrancos") == "ext-PT-x-barrancos"
+    assert with_default_region("en-x-GB") == "en-GB-x-gb"
+    assert with_default_region("en-u-CA-gregory") == "en-GB-u-ca-gregory"
 
 
 @pytest.mark.parametrize("langcodes_present", [True, False])

@@ -6,8 +6,8 @@ from functools import lru_cache
 __all__ = ["standardize_lang"]
 
 
-def _case(index: int, subtag: str, after_x: bool) -> str:
-    if index == 0 or after_x:
+def _case(index: int, subtag: str, after_singleton: bool) -> str:
+    if index == 0 or after_singleton:
         return subtag.lower()
     if len(subtag) == 4 and subtag.isalpha():
         return subtag.title()
@@ -18,11 +18,12 @@ def _case(index: int, subtag: str, after_x: bool) -> str:
 
 def _fold(tag: str) -> str:
     """BCP-47 case conventions without ``langcodes``: language and variants
-    lowercase, script titlecase, region uppercase, private use lowercase."""
-    out, after_x = [], False
+    lowercase, script titlecase, region uppercase, and every subtag after a
+    singleton (an extension or private use) lowercase."""
+    out, after_singleton = [], False
     for index, subtag in enumerate(tag.replace("_", "-").split("-")):
-        out.append(_case(index, subtag, after_x))
-        after_x = after_x or subtag.lower() == "x"
+        after_singleton = after_singleton or (index > 0 and len(subtag) == 1)
+        out.append(_case(index, subtag, after_singleton))
     return "-".join(out)
 
 

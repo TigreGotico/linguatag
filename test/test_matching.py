@@ -240,3 +240,38 @@ def test_arabizi_is_not_pulled_to_msa(monkeypatch):
     monkeypatch.setattr(language, "_ARABIC_FALLBACK_DISTANCE", 0)
     assert lang_distance("ar-Latn", "ar") == capped
     assert lang_distance("arz-Arab", "arb") == 0
+
+
+# --- Cantonese and Mandarin ---------------------------------------------------
+
+@pytest.mark.parametrize("cantonese,mandarin", [
+    ("yue", "cmn"), ("yue", "zh-CN"), ("yue-CN", "zh"), ("yue-HK", "cmn-HK"),
+    ("yue-HK", "cmn"), ("zh-yue", "cmn-CN")])
+def test_cantonese_never_matches_mandarin(cantonese, mandarin):
+    assert lang_distance(cantonese, mandarin) >= 100
+    assert lang_distance(mandarin, cantonese) >= 100
+    assert closest_lang(cantonese, [mandarin]) is None
+    assert closest_lang(mandarin, [cantonese]) is None
+
+
+def test_a_cantonese_request_never_lands_on_mandarin_over_cantonese():
+    assert closest_lang("yue", ["cmn", "yue-HK"]) != "cmn"
+    assert closest_lang("yue-HK", ["cmn-HK", "zh-HK"]) == "zh-HK"
+
+
+def test_traditional_chinese_keeps_its_cantonese_match():
+    """A `zh-HK` resource is often Cantonese; langcodes measures it at 10."""
+    assert lang_distance("yue-HK", "zh-HK") == 10
+    assert closest_lang("yue-HK", ["zh-HK"]) == "zh-HK"
+
+
+# --- the spellings of Modern Standard Arabic ---------------------------------
+
+@pytest.mark.parametrize("langcodes_present", [True, False])
+def test_the_spellings_of_msa_are_identical(langcodes_present, monkeypatch):
+    if not langcodes_present:
+        monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
+    for a, b in [("ar", "arb"), ("arb", "ar"), ("ar-001", "arb"), ("ar", "ar-001")]:
+        assert lang_distance(a, b) == 0, (a, b)
+    assert closest_lang("ar", ["ar-SA", "arb"]) == "arb"
+    assert closest_lang("arb", ["ar-SA", "ar"]) == "ar"

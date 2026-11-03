@@ -45,22 +45,42 @@ DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 # The individual languages of the ISO 639-3 `ara` macrolanguage (SIL
 # macrolanguage mappings; ajp and bbz are retired codes). A request for one of
 # them, or for `ar` with any region, in Arabic script, falls back to the bare
-# Modern Standard Arabic entry (`ar` or `arb`) when nothing closer is
+# Modern Standard Arabic entry (`ar`, `arb` or `ar-001`) when nothing closer is
 # available, since speakers of every variety expect MSA from a voice
 # assistant. Other macrolanguages get no such rule: Cantonese does not fall
 # back to Mandarin.
 _ARABIC_VARIETIES = frozenset(
     "ar aao abh abv acm acq acw acx acy adf aeb aec afb ajp apc apd arb arq ars "
     "ary arz auz avl ayh ayl ayn ayp bbz pga shu ssh".split())
-_MSA = ("ar", "arb")
+_MSA = ("ar", "arb", "ar-001")
 _ARABIC_FALLBACK_DISTANCE = 5
 
 # Cantonese is never served as Mandarin. langcodes measures `yue-CN` against
-# `zh-CN` at 10, a member against its macrolanguage in one script, and that
-# is a usable match; the two are not mutually intelligible. They count as
-# different languages, as the coarse measure counts them.
-_NEVER_INTERCHANGEABLE = frozenset({frozenset({"yue", "zh"})})
+# `zh-CN` or `cmn` at 10, a member against its macrolanguage in one script,
+# and that is a usable match; the two are not mutually intelligible. Against
+# `cmn`, and against `zh` in Simplified script, they count as different
+# languages, as the coarse measure counts them. `zh` in Traditional script
+# keeps the langcodes distance: a `zh-HK` resource is often Cantonese.
+_CANTONESE = "yue"
+_MANDARIN = "cmn"
+_CHINESE = "zh"
 _DIFFERENT_LANGUAGE_DISTANCE = 100
+
+
+def _is_simplified(tag: str) -> bool:
+    try:
+        from langcodes import Language
+        return Language.get(tag).maximize().script == "Hans"
+    except Exception:
+        return False
+
+
+def _cantonese_against_mandarin(a: str, b: str) -> bool:
+    languages = {a.split("-")[0].lower(): a, b.split("-")[0].lower(): b}
+    if _CANTONESE not in languages:
+        return False
+    return _MANDARIN in languages or (_CHINESE in languages
+                                      and _is_simplified(languages[_CHINESE]))
 
 
 def _langcodes_distance(desired: str, supported: str) -> Optional[int]:
@@ -103,16 +123,18 @@ def lang_distance(desired: str, supported: str) -> int:
     is measured from its default region, so ``lang_distance("pt", "pt-PT")``
     is ``0`` while ``lang_distance("pt", "pt-BR")`` is a regional difference.
 
-    An individual Arabic language (``arz``, ``apc``, ...) or ``ar`` with any
-    region, in Arabic script, measured against bare ``ar`` or ``arb``, is at
-    most 5.
+    The spellings of Modern Standard Arabic (``ar``, ``arb``, ``ar-001``) are
+    identical. An individual Arabic language (``arz``, ``apc``, ...) or ``ar``
+    with any region, in Arabic script, measured against one of them, is at
+    most 5. Cantonese measured against ``cmn``, or against ``zh`` in
+    Simplified script, is a different language.
 
     Uses ``langcodes.tag_distance`` when available, and a coarse
     same-language measure otherwise.
     """
     a = standardize_lang(desired)
     b = standardize_lang(supported)
-    if a.lower() == b.lower():
+    if a.lower() == b.lower() or (a.lower() in _MSA and b.lower() in _MSA):
         return 0
     to_msa = b.lower() in _MSA
     a, b = with_default_region(a), with_default_region(b)
@@ -121,8 +143,7 @@ def lang_distance(desired: str, supported: str) -> int:
     distance = _langcodes_distance(a, b)
     if distance is None:
         distance = _coarse_distance(a, b)
-    languages = frozenset({a.split("-")[0].lower(), b.split("-")[0].lower()})
-    if languages in _NEVER_INTERCHANGEABLE:
+    if _cantonese_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     scripts = [t.lower() for t in a.split("-")[1:] if len(t) == 4 and t.isalpha()]
     if (to_msa and a.split("-")[0].lower() in _ARABIC_VARIETIES
