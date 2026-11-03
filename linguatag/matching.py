@@ -68,11 +68,18 @@ _DIFFERENT_LANGUAGE_DISTANCE = 100
 
 
 def _is_simplified(tag: str) -> bool:
+    """Whether ``tag`` maximizes to Simplified script, retried on the primary
+    subtag when the full tag is unparseable, as the distance itself is."""
     try:
         from langcodes import Language
-        return Language.get(tag).maximize().script == "Hans"
-    except Exception:
+    except ImportError:
         return False
+    for candidate in (tag, tag.split("-")[0]):
+        try:
+            return Language.get(candidate).maximize().script == "Hans"
+        except Exception:
+            continue
+    return False
 
 
 def _cantonese_against_mandarin(a: str, b: str) -> bool:

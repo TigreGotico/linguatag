@@ -275,3 +275,12 @@ def test_the_spellings_of_msa_are_identical(langcodes_present, monkeypatch):
         assert lang_distance(a, b) == 0, (a, b)
     assert closest_lang("ar", ["ar-SA", "arb"]) == "arb"
     assert closest_lang("arb", ["ar-SA", "ar"]) == "ar"
+
+
+@pytest.mark.parametrize("voice", ["zh-CN-XiaoxiaoNeural", "zh-TW-HsiaoChenNeural",
+                                   "zh-CN-cantonese", "zh_CN-huayan-medium"])
+def test_cantonese_never_matches_a_mandarin_voice_id(voice):
+    """A voice id langcodes cannot parse is measured on its language subtag,
+    and the Cantonese rule reads the same subtag."""
+    assert lang_distance("yue", voice) >= 100
+    assert closest_lang("yue", [voice]) is None
