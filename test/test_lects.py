@@ -148,3 +148,17 @@ def test_every_msa_spelling_is_measured_as_bare_ar(spelling):
 def test_msa_with_a_private_use_subtag_prefers_msa_to_egypt():
     assert closest_lang("arb-x-zzz", ["ar-EG", "ar"]) == "ar"
     assert closest_lang("arb", ["ar-EG", "ar"]) == "ar"
+
+
+ARABIC_CATALOGUE = ["ar-EG", "ar-x-maghrebi", "ar-x-mashriqi", "arb"]
+
+
+def test_standard_mode_picks_msa_over_the_arabic_clades():
+    assert closest_lang("arb-x-zzz", ARABIC_CATALOGUE, lects="standard") == "arb"
+
+
+@pytest.mark.parametrize("catalogue", [ARABIC_CATALOGUE, ARABIC_CATALOGUE[::-1]])
+def test_default_mode_ties_msa_and_the_clades_on_the_first_candidate(catalogue):
+    tied = [tag for tag in catalogue if lang_distance("arb-x-zzz", tag) == 0]
+    assert tied == [tag for tag in catalogue if tag != "ar-EG"]
+    assert closest_lang("arb-x-zzz", catalogue) == tied[0]
