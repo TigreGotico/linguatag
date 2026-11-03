@@ -40,7 +40,7 @@ closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="dialect")   # 'an-x-a
 closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="standard")  # 'an'
 ```
 
-`"dialect"` takes the nearest other dialect first and the standard language last. `"standard"` takes the standard language first and the dialects after it. Nearness is the number of steps between two dialects in the orthography2ipa dialect tree: a parent dialect is 1 step away, a sibling 2. The lect score adds at most 4, and never lifts a usable match above the threshold.
+`"dialect"` takes the nearest other dialect first and the standard language last. `"standard"` takes the standard language first and the dialects after it. Nearness is the number of steps between two dialects in the orthography2ipa dialect tree: a parent dialect is 1 step away, a sibling 2. The lect score adds at most 4. `closest_lang` uses it only to order the candidates within `max_distance`, so it never decides whether a tag matches.
 
 `linguatag/data/lineage.json` holds the tree. `scripts/build_lineage.py` rebuilds it from the orthography2ipa spec files at a git ref.
 

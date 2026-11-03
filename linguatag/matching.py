@@ -193,8 +193,7 @@ def _language_distance(desired: str, supported: str) -> int:
 
 
 def lang_matches(a: str, b: str,
-                 max_distance: int = DEFAULT_MAX_LANGUAGE_DISTANCE,
-                 lects: Optional[str] = None) -> bool:
+                 max_distance: int = DEFAULT_MAX_LANGUAGE_DISTANCE) -> bool:
     """``True`` when two BCP-47 tags are close enough to interchange.
 
     Args:
@@ -204,10 +203,8 @@ def lang_matches(a: str, b: str,
             ``ar`` is not near ``arz``.
         max_distance: the inclusive upper bound on an acceptable distance.
             Pass ``max_distance=0`` to require an exact match.
-        lects: ``None``, ``"dialect"`` or ``"standard"``, as for
-            :func:`lang_distance`.
     """
-    return lang_distance(a, b, lects) <= max_distance
+    return lang_distance(a, b) <= max_distance
 
 
 def closest_lang(target: str, available: Sequence[str],
@@ -218,6 +215,8 @@ def closest_lang(target: str, available: Sequence[str],
     The candidate with the smallest :func:`lang_distance` wins when its
     distance is ``max_distance`` or less, so ``max_distance=0`` accepts exact
     matches only. Ties resolve to the first candidate in iteration order.
+    With ``lects``, the lect score orders the candidates within
+    ``max_distance``; it decides no match.
 
     Args:
         target: the requested BCP-47 tag.
@@ -233,14 +232,12 @@ def closest_lang(target: str, available: Sequence[str],
         verbatim, or ``None`` when nothing qualifies.
     """
     best: Optional[str] = None
-    best_distance: Optional[int] = None
+    best_rank: Optional[int] = None
     for candidate in available:
-        distance = lang_distance(target, candidate, lects)
-        if best_distance is None or distance < best_distance:
-            best, best_distance = candidate, distance
-
-    if best is None:
-        return None
-    if best_distance <= max_distance:
-        return best
-    return None
+        distance = lang_distance(target, candidate)
+        if distance > max_distance:
+            continue
+        rank = distance if lects is None else lang_distance(target, candidate, lects)
+        if best_rank is None or rank < best_rank:
+            best, best_rank = candidate, rank
+    return best

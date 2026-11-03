@@ -6,7 +6,7 @@ import pytest
 
 import linguatag.lects as lects
 from linguatag import (DEFAULT_MAX_LANGUAGE_DISTANCE, LECT_MODES, closest_lang,
-                       lang_distance, lang_matches, lect_steps)
+                       lang_distance, lect_steps)
 
 LINEAGE = json.loads((Path(lects.__file__).parent / "data" / "lineage.json")
                      .read_text(encoding="utf-8"))
@@ -70,12 +70,33 @@ def test_a_region_still_outweighs_a_dialect():
                         lects="standard") == "es-ES-x-andalusia-w"
 
 
+TAGS = sorted(LINEAGE["parents"]) + ["en", "pt-BR", "es-419", "ar", "arz", "eu", "an"]
+
+
 @pytest.mark.parametrize("mode", LECT_MODES)
-def test_a_lect_score_never_changes_whether_two_tags_match(mode):
-    tags = sorted(LINEAGE["parents"]) + ["en", "pt-BR", "es-419", "ar", "arz", "eu", "an"]
-    for a in tags:
-        for b in tags:
-            assert lang_matches(a, b) == lang_matches(a, b, lects=mode), (a, b)
+def test_a_lect_score_never_crosses_the_default_threshold(mode):
+    for a in TAGS:
+        for b in TAGS:
+            plain, scored = lang_distance(a, b), lang_distance(a, b, lects=mode)
+            assert (plain <= DEFAULT_MAX_LANGUAGE_DISTANCE) == \
+                (scored <= DEFAULT_MAX_LANGUAGE_DISTANCE), (a, b)
+
+
+@pytest.mark.parametrize("mode", LECT_MODES)
+@pytest.mark.parametrize("max_distance", [0, 3, 5])
+def test_a_lect_score_never_decides_a_match(mode, max_distance):
+    for a in TAGS:
+        found = closest_lang(a, TAGS, max_distance=max_distance, lects=mode)
+        plain = closest_lang(a, TAGS, max_distance=max_distance)
+        assert (found is None) == (plain is None), a
+        if found is not None:
+            assert lang_distance(a, found) <= max_distance, (a, found)
+
+
+def test_a_lect_score_keeps_a_near_candidate_under_a_tight_limit():
+    # es-419 is a regional difference (5); a lect score on top would exceed 5
+    assert closest_lang("es-ES-x-andalusia-e", ["es-419"], max_distance=5,
+                        lects="dialect") == "es-419"
 
 
 @pytest.mark.parametrize("mode", LECT_MODES)
