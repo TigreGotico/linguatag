@@ -121,3 +121,19 @@ def test_without_langcodes_a_private_use_subtag_also_adds_nothing(no_langcodes):
     assert lang_distance("an-x-cheso", "an-x-ansotano") == 0
     assert lang_distance("an-x-cheso", "an") == 0
     assert lang_distance("an-x-cheso", "es") == 100
+
+
+@pytest.mark.parametrize("lect", ["ar-SA-x-najd", "ar-x-gulf", "ar-SA-x-rijal-alma"])
+def test_a_four_letter_private_use_subtag_is_not_a_script(lect):
+    assert lang_distance(lect, "arb") <= 5 and lang_distance(lect, "ar") <= 5
+    assert closest_lang(lect, ["arb"]) == "arb"
+
+
+@pytest.mark.parametrize("lect", ["ar-SA-x-najd", "ar-x-gulf", "ar-SA-x-rijal-alma"])
+def test_without_langcodes_a_four_letter_private_use_subtag_is_not_a_script(lect, no_langcodes):
+    assert closest_lang(lect, ["arb"]) == "arb"
+
+
+@pytest.mark.parametrize("tag", ["apc-x-test", "arz-x-cair"])
+def test_a_four_letter_private_use_subtag_keeps_the_arabic_cap(tag):
+    assert lang_distance(tag, "arb") == lang_distance(tag.split("-x-")[0], "arb") == 5

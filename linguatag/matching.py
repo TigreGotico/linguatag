@@ -185,7 +185,8 @@ def _language_distance(desired: str, supported: str) -> int:
         distance = _coarse_distance(a, b)
     if _cantonese_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
-    scripts = [t.lower() for t in a.split("-")[1:] if len(t) == 4 and t.isalpha()]
+    scripts = [t.lower() for t in without_private_use(a).split("-")[1:]
+               if len(t) == 4 and t.isalpha()]
     if (to_msa and a.split("-")[0].lower() in _ARABIC_VARIETIES
             and scripts in ([], ["arab"])):
         distance = min(distance, _ARABIC_FALLBACK_DISTANCE)
