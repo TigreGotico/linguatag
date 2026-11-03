@@ -225,7 +225,10 @@ def closest_lang(target: str, available: Sequence[str],
 
     The candidate with the smallest :func:`lang_distance` wins when its
     distance is ``max_distance`` or less, so ``max_distance=0`` accepts exact
-    matches only. Ties resolve to the first candidate in iteration order.
+    matches only. A tie goes to the candidate that spells ``target`` itself
+    (compared after :func:`standardize_lang`, without regard to case), so
+    ``pt-PT`` picks ``pt-PT`` over ``pt``, which is also at 0. Other ties
+    resolve to the first candidate in iteration order.
     With ``lects``, the lect score orders the candidates within
     ``max_distance``; it decides no match.
 
@@ -242,13 +245,15 @@ def closest_lang(target: str, available: Sequence[str],
         The original string from ``available`` that best matches ``target``,
         verbatim, or ``None`` when nothing qualifies.
     """
+    wanted = standardize_lang(target).casefold()
     best: Optional[str] = None
-    best_rank: Optional[int] = None
+    best_rank: Optional[tuple] = None
     for candidate in available:
         distance = lang_distance(target, candidate)
         if distance > max_distance:
             continue
-        rank = distance if lects is None else lang_distance(target, candidate, lects)
+        rank = (distance if lects is None else lang_distance(target, candidate, lects),
+                standardize_lang(candidate).casefold() != wanted)
         if best_rank is None or rank < best_rank:
             best, best_rank = candidate, rank
     return best
