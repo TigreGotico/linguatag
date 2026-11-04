@@ -103,7 +103,7 @@ def test_a_tag_is_standardized_before_the_lookup(tag, region):
     ("zh_hant", "zh-Hant-TW"),
     ("gl-x-central", "gl-ES-x-central"),
     ("pt-BR", "pt-BR"),
-    ("ext-PT-x-barrancos", "ext-PT-x-barrancos"),
+    ("ext-PT-x-barranco", "ext-PT-x-barranco"),
     ("sl-rozaj", "sl-SI-rozaj"),
     ("x-klingon", "x-klingon"),
     ("", ""),
@@ -122,7 +122,7 @@ def test_an_extended_form_never_gets_a_region_inside_it(tag, no_langcodes):
 def test_without_langcodes_the_case_follows_bcp47(no_langcodes):
     assert with_default_region("EN_us") == "en-US"
     assert with_default_region("zh_hant") == "zh-Hant-TW"
-    assert with_default_region("ext-pt-X-Barrancos") == "ext-PT-x-barrancos"
+    assert with_default_region("ext-pt-X-Barranco") == "ext-PT-x-barranco"
     assert with_default_region("en-x-GB") == "en-GB-x-gb"
     assert with_default_region("en-u-CA-gregory") == "en-GB-u-ca-gregory"
 
@@ -188,7 +188,7 @@ print(lang_distance(sys.argv[1], sys.argv[2]))
 
 
 @pytest.mark.parametrize("desired,supported", [
-    ("an-x-benasques", "an-x-chistabin"), ("zh-HK-HiuMaanNeural", "zh-HK")])
+    ("an-x-benasque", "an-x-chistau"), ("zh-HK-HiuMaanNeural", "zh-HK")])
 def test_a_prefix_found_with_langcodes_is_not_reused_without_it(desired, supported, request):
     lang_distance(desired, supported)
     request.getfixturevalue("no_langcodes")

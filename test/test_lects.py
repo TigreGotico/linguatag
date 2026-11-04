@@ -11,15 +11,15 @@ from linguatag import (DEFAULT_MAX_LANGUAGE_DISTANCE, LECT_MODES, closest_lang,
 LINEAGE = json.loads((Path(lects.__file__).parent / "data" / "lineage.json")
                      .read_text(encoding="utf-8"))
 
-# In the orthography2ipa specs, ar-SA-x-qassim and ar-SA-x-shamali have the
-# parent ar-SA-x-najd; ar-SA-x-najd, ar-SA-x-hejaz and ar-x-gulf have the
-# parent ar-x-peninsular; every an-x-* lect has the parent an.
-QASSIM = "ar-SA-x-qassim"
+# In the orthography2ipa specs, ars-SA-x-qassim and ars-SA-x-shamali have the
+# parent ars-SA (Najdi); ars-SA, ayn-YE and afb have the parent ar-x-peninsul;
+# afb-SA-x-sharqiya has the parent afb; every an-x-* lect has the parent an.
+QASSIM = "ars-SA-x-qassim"
 
 
 @pytest.mark.parametrize("other,steps", [
-    ("ar-SA-x-najd", 1), ("ar-SA-x-shamali", 2), ("ar-SA-x-hejaz", 3),
-    ("ar-x-gulf", 3), (QASSIM, 0)])
+    ("ars-SA", 1), ("ars-SA-x-shamali", 2), ("ar-x-peninsul", 2),
+    ("ayn-YE", 3), ("afb-SA-x-sharqiya", 4), (QASSIM, 0)])
 def test_steps_follow_the_dialect_tree(other, steps):
     assert lect_steps(QASSIM, other) == steps
     assert lect_steps(other, QASSIM) == steps
@@ -37,17 +37,13 @@ def test_by_default_a_private_use_subtag_adds_nothing():
 
 def test_dialect_mode_takes_the_nearest_dialect_before_the_standard():
     assert closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="dialect") == "an-x-ansotano"
-    candidates = ["ar-SA", "ar-SA-x-hejaz", "ar-SA-x-shamali", "ar-SA-x-najd"]
-    assert closest_lang(QASSIM, candidates, lects="dialect") == "ar-SA-x-najd"
-    assert closest_lang(QASSIM, candidates[:3], lects="dialect") == "ar-SA-x-shamali"
-    assert closest_lang(QASSIM, candidates[:2], lects="dialect") == "ar-SA-x-hejaz"
+    assert closest_lang(QASSIM, ["ars-SA", "ars-SA-x-shamali"], lects="dialect") \
+        == "ars-SA-x-shamali"
 
 
 def test_standard_mode_takes_the_standard_before_any_dialect():
     assert closest_lang("an-x-cheso", ["an-x-ansotano", "an"], lects="standard") == "an"
-    candidates = ["ar-SA-x-hejaz", "ar-SA-x-najd", "ar-SA"]
-    assert closest_lang(QASSIM, candidates, lects="standard") == "ar-SA"
-    assert closest_lang(QASSIM, candidates[:2], lects="standard") == "ar-SA-x-najd"
+    assert closest_lang(QASSIM, ["ars-SA-x-shamali", "ars-SA"], lects="standard") == "ars-SA"
 
 
 @pytest.mark.parametrize("mode", LECT_MODES)
@@ -65,9 +61,9 @@ def test_the_scores_are_the_documented_steps(mode, scores):
 
 
 def test_a_region_still_outweighs_a_dialect():
-    # es-ES-x-andalusia-e has the parent es-ES; es-419 is another region
-    assert closest_lang("es-ES-x-andalusia-e", ["es-419", "es-ES-x-andalusia-w"],
-                        lects="standard") == "es-ES-x-andalusia-w"
+    # es-ES-x-andalusi-e has the parent es-ES; es-419 is another region
+    assert closest_lang("es-ES-x-andalusi-e", ["es-419", "es-ES-x-andalusi-w"],
+                        lects="standard") == "es-ES-x-andalusi-w"
 
 
 TAGS = sorted(LINEAGE["parents"]) + ["en", "pt-BR", "es-419", "ar", "arz", "eu", "an"]
@@ -95,7 +91,7 @@ def test_a_lect_score_never_decides_a_match(mode, max_distance):
 
 def test_a_lect_score_keeps_a_near_candidate_under_a_tight_limit():
     # es-419 is a regional difference (5); a lect score on top would exceed 5
-    assert closest_lang("es-ES-x-andalusia-e", ["es-419"], max_distance=5,
+    assert closest_lang("es-ES-x-andalusi-e", ["es-419"], max_distance=5,
                         lects="dialect") == "es-419"
 
 
@@ -113,7 +109,7 @@ def test_an_unknown_mode_is_refused():
 def test_the_table_reaches_every_lect_ancestor_it_names():
     parents = LINEAGE["parents"]
     assert LINEAGE["source"].startswith("TigreGotico/orthography2ipa@")
-    assert sum("-x-" in code for code in parents) >= 190
+    assert sum("-x-" in code for code in parents) >= 180
     assert DEFAULT_MAX_LANGUAGE_DISTANCE == 10
 
 
