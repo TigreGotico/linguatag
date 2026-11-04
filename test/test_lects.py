@@ -113,6 +113,16 @@ def test_the_table_reaches_every_lect_ancestor_it_names():
     assert DEFAULT_MAX_LANGUAGE_DISTANCE == 10
 
 
+def test_every_subtag_in_the_table_is_one_to_eight_alphanumerics():
+    # BCP 47 section 2.1: a subtag is 1 to 8 alphanumeric characters
+    codes = set(LINEAGE["parents"]) | set(LINEAGE["parents"].values())
+    malformed = sorted(code for code in codes
+                       if not all(1 <= len(subtag) <= 8 and subtag.isascii()
+                                  and subtag.isalnum()
+                                  for subtag in code.split("-")))
+    assert malformed == []
+
+
 def test_without_langcodes_a_private_use_subtag_also_adds_nothing(no_langcodes):
     assert lang_distance("an-x-cheso", "an-x-ansotano") == 0
     assert lang_distance("an-x-cheso", "an") == 0
