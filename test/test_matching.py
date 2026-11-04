@@ -187,7 +187,7 @@ def test_threshold_is_inclusive_on_both_sides():
 # --- Arabic varieties fall back to Modern Standard Arabic ---------------------
 
 ARABIC_REQUESTS = ["ar", "ar-SA", "ar-EG", "ar-MA", "arz", "apc", "ary", "acm",
-                   "afb", "aeb", "ajp", "pga", "ssh", "arq"]
+                   "afb", "aeb", "ajp", "ssh", "arq", "pga-Arab", "acy-Arab"]
 
 
 @pytest.mark.parametrize("tag", ARABIC_REQUESTS)
@@ -197,6 +197,18 @@ def test_arabic_request_falls_back_to_msa(tag, langcodes_present, monkeypatch):
         monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
     assert lang_distance(tag, "arb") <= 5
     assert closest_lang(tag, ["arb", "en-US"], max_distance=5) == "arb"
+
+
+@pytest.mark.parametrize("tag", ["pga", "pga-SS", "acy", "acy-CY", "pga-Latn"])
+@pytest.mark.parametrize("langcodes_present", [True, False])
+def test_a_latin_script_arabic_language_does_not_fall_back_to_msa(
+        tag, langcodes_present, monkeypatch):
+    """CLDR likely subtags write Juba Arabic (pga_Latn_SS) and Cypriot
+    Maronite Arabic (acy_Latn_CY) in Latin script."""
+    if not langcodes_present:
+        monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
+    assert lang_distance(tag, "arb") > language.DEFAULT_MAX_LANGUAGE_DISTANCE
+    assert closest_lang(tag, ["arb", "ar", "ar-001"]) is None
 
 
 def test_arabic_variety_file_beats_msa():
