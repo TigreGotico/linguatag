@@ -310,3 +310,16 @@ def test_the_prefix_keeps_its_region():
 
 def test_an_unparseable_request_is_measured_the_same_way():
     assert lang_distance("zh-HK-HiuMaanNeural", "yue-HK") == lang_distance("zh-HK", "yue-HK")
+
+
+@pytest.mark.parametrize("malformed", ["ar-", "AR-", "ar_", "-ar", "_ar", "ar--EG", "ar-EG-", ""])
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_a_tag_with_an_empty_subtag_matches_nothing(malformed, with_langcodes, request):
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    for tag in ("ar", "ar-EG", "arb", malformed):
+        assert lang_distance(malformed, tag) > 10
+        assert lang_distance(tag, malformed) > 10
+        assert lang_distance(malformed, tag, lects="standard") > 10
+    assert closest_lang(malformed, ["ar", "ar-EG", "arz"]) is None
+    assert closest_lang("ar", [malformed]) is None
