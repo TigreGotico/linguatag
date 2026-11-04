@@ -54,6 +54,10 @@ DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 _ARABIC_VARIETIES = frozenset(
     "ar aao abh abv acm acq acw acx acy adf aeb aec afb ajp apc apd arb arq ars "
     "ary arz auz avl ayh ayl ayn ayp bbz pga shu ssh".split())
+# CLDR likely subtags write two of them in Latin script: Cypriot Maronite
+# Arabic (acy_Latn_CY) and Juba Arabic (pga_Latn_SS). With no script subtag,
+# a request for either is not in Arabic script.
+_LATIN_SCRIPT_ARABIC = frozenset({"acy", "pga"})
 _MSA = ("ar", "arb", "ar-001")
 _ARABIC_FALLBACK_DISTANCE = 5
 
@@ -206,10 +210,12 @@ def _language_distance(desired: str, supported: str) -> int:
         distance = _coarse_distance(a, b)
     if _cantonese_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
+    language = a.split("-")[0].lower()
     scripts = [t.lower() for t in without_private_use(a).split("-")[1:]
                if len(t) == 4 and t.isalpha()]
-    if (to_msa and a.split("-")[0].lower() in _ARABIC_VARIETIES
-            and scripts in ([], ["arab"])):
+    if not scripts:
+        scripts = ["latn"] if language in _LATIN_SCRIPT_ARABIC else ["arab"]
+    if to_msa and language in _ARABIC_VARIETIES and scripts == ["arab"]:
         distance = min(distance, _ARABIC_FALLBACK_DISTANCE)
     return distance
 
