@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.4a1](https://github.com/TigreGotico/linguatag/tree/0.1.4a1) (2026-11-04)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.3a1...0.1.4a1)
+
+**Merged pull requests:**
+
+- fix: rebuild the lect tree from the BCP-47 orthography2ipa keys [\#16](https://github.com/TigreGotico/linguatag/pull/16) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.3a1](https://github.com/TigreGotico/linguatag/tree/0.1.3a1) (2026-11-04)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.2a1...0.1.3a1)
