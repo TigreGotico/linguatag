@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.5a1](https://github.com/TigreGotico/linguatag/tree/0.1.5a1) (2026-11-04)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.4a1...0.1.5a1)
+
+**Merged pull requests:**
+
+- fix: keep Latin-script Juba and Cypriot Maronite Arabic off the MSA fallback [\#17](https://github.com/TigreGotico/linguatag/pull/17) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.4a1](https://github.com/TigreGotico/linguatag/tree/0.1.4a1) (2026-11-04)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.3a1...0.1.4a1)
