@@ -153,7 +153,9 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     Simplified script, is a different language.
 
     A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
-    its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``.
+    its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``. A tag
+    with an empty subtag (``ar-``, ``ar_``, ``-ar``, ``en--US``) is not a
+    language tag, and it is no usable match for any tag.
 
     Uses ``langcodes.tag_distance`` when available, and a coarse
     same-language measure otherwise.
@@ -181,9 +183,18 @@ def _as_world_arabic(tag: str) -> str:
     return tag
 
 
+def _has_empty_subtag(tag: str) -> bool:
+    return "" in tag.split("-")
+
+
 def _language_distance(desired: str, supported: str) -> int:
-    a = _as_world_arabic(_parseable_prefix(standardize_lang(desired)))
-    b = _as_world_arabic(_parseable_prefix(standardize_lang(supported)))
+    a, b = standardize_lang(desired), standardize_lang(supported)
+    # BCP 47 subtags are 1 to 8 characters long: a leading, trailing or
+    # doubled separator makes a tag that names no language.
+    if _has_empty_subtag(a) or _has_empty_subtag(b):
+        return _DIFFERENT_LANGUAGE_DISTANCE
+    a = _as_world_arabic(_parseable_prefix(a))
+    b = _as_world_arabic(_parseable_prefix(b))
     if a.lower() == b.lower():
         return 0
     to_msa = without_private_use(b).lower() in _MSA
