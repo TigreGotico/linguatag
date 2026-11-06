@@ -95,12 +95,6 @@ def test_a_lect_score_keeps_a_near_candidate_under_a_tight_limit():
                         lects="dialect") == "es-419"
 
 
-@pytest.mark.parametrize("mode", LECT_MODES)
-def test_both_modes_order_the_same_without_langcodes(mode, no_langcodes):
-    assert closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects=mode) == \
-        {"dialect": "an-x-ansotano", "standard": "an"}[mode]
-
-
 def test_an_unknown_mode_is_refused():
     with pytest.raises(ValueError):
         lang_distance("an-x-cheso", "an", lects="nearest")
@@ -123,20 +117,9 @@ def test_every_subtag_in_the_table_is_one_to_eight_alphanumerics():
     assert malformed == []
 
 
-def test_without_langcodes_a_private_use_subtag_also_adds_nothing(no_langcodes):
-    assert lang_distance("an-x-cheso", "an-x-ansotano") == 0
-    assert lang_distance("an-x-cheso", "an") == 0
-    assert lang_distance("an-x-cheso", "es") == 100
-
-
 @pytest.mark.parametrize("lect", ["ar-SA-x-najd", "ar-x-gulf", "ar-SA-x-rijal-alma"])
 def test_a_four_letter_private_use_subtag_is_not_a_script(lect):
     assert lang_distance(lect, "arb") <= 5 and lang_distance(lect, "ar") <= 5
-    assert closest_lang(lect, ["arb"]) == "arb"
-
-
-@pytest.mark.parametrize("lect", ["ar-SA-x-najd", "ar-x-gulf", "ar-SA-x-rijal-alma"])
-def test_without_langcodes_a_four_letter_private_use_subtag_is_not_a_script(lect, no_langcodes):
     assert closest_lang(lect, ["arb"]) == "arb"
 
 

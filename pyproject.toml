@@ -10,6 +10,7 @@ readme = "README.md"
 license = "Apache-2.0"
 authors = [{ name = "JarbasAi", email = "jarbasai@mailfence.com" }]
 requires-python = ">=3.11"
+dependencies = ["langcodes>=3.5.1"]
 keywords = ["bcp47", "language-tag", "locale", "cldr", "nlp"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -20,8 +21,10 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-langcodes = ["langcodes"]
-test = ["pytest", "langcodes"]
+# An empty alias. `langcodes` is a plain dependency, and requirements that name
+# `linguatag[langcodes]` stay valid.
+langcodes = []
+test = ["pytest"]
 
 [project.urls]
 Homepage = "https://github.com/TigreGotico/linguatag"

@@ -13,6 +13,16 @@ closest_lang("en", ["en-US", "en-GB"])  # 'en-GB'
 closest_lang("en-AU", ["fr-FR", "en-US"])  # 'en-US'
 ```
 
+## Standardization
+
+`standardize_lang` folds underscores and case, and replaces deprecated forms through `langcodes`: `en_us` is `en-US`, `iw` is `he`, `zh-yue` is `yue`.
+
+`tl` and `tgl` are `tl`, with any region, so `tl-PH` stays `tl-PH`. The IANA Language Subtag Registry gives `tl` no `Preferred-Value`, and RFC 5646 section 4.5 replaces a subtag only through that field. CLDR aliases `tl` to `fil` with the reason `legacy`, and `langcodes` follows CLDR, so `linguatag` overrides it here. `fil` stays `fil`, and the distance between the two tags is 0.
+
+A tag that `langcodes` cannot parse, such as a voice id, keeps its unparseable part in lowercase after its standardized prefix: `zh-HK-HiuMaanNeural` is `zh-HK-hiumaanneural`. `None` and a tag with an empty subtag (`en_`, `-en`, `en--US`) name no language, and they standardize to an empty string.
+
+`MAX_TAG_LENGTH` is 255 characters. A longer string also names no language: every function treats it as an empty tag, before any parsing. The limit follows the 255-byte file name limit, because tags come from directory names and config values. A tag whose standard form passes the limit gets the same result.
+
 ## Default region
 
 A tag with no region defaults to its motherland: the region where the language first appeared and is still spoken. `en` is `en-GB`, `pt` is `pt-PT`, `es` is `es-ES`.
@@ -42,12 +52,12 @@ closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="standard")  # 'an'
 
 `"dialect"` takes the nearest other dialect first and the standard language last. `"standard"` takes the standard language first and the dialects after it. Nearness is the number of steps between two dialects in the orthography2ipa dialect tree: a parent dialect is 1 step away, a sibling 2. The lect score adds at most 4. `closest_lang` uses it only to order the candidates within `max_distance`, so it never decides whether a tag matches.
 
-`linguatag/data/lineage.json` holds the tree. `scripts/build_lineage.py` rebuilds it from the orthography2ipa spec files at a git ref.
+`linguatag/data/lineage.json` holds the tree. `scripts/build_lineage.py` rebuilds it from the orthography2ipa spec files at a git ref. With `--check` it writes nothing and exits 1 when the rebuild differs from the file. The `Lineage Check` workflow runs this check every week against the `dev` branch of orthography2ipa.
 
 ## Install
 
 ```
-pip install linguatag[langcodes]
+pip install linguatag
 ```
 
-`langcodes` is optional. Without it, standardization only folds case and underscores, and distance uses a coarse same-language measure with the same ordering.
+`langcodes` is a required dependency. It has no required dependencies of its own. The `linguatag[langcodes]` extra is empty, and it exists so that requirements that name it stay valid.

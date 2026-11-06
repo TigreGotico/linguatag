@@ -67,9 +67,9 @@ def _is_region(subtag: str) -> bool:
 def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     """`(language, script, region, extended)` of a standardized tag.
 
-    `extended` is true when the second subtag is an extended language or part
-    of a grandfathered tag (`zh-yue`, `zh-min-nan`): such a tag has no
-    language subtag of its own to give a region to.
+    `extended` is true when the second subtag is an extended language that
+    standardization keeps (`sgn-ase`): such a tag has no language subtag of
+    its own to give a region to.
     """
     parts = tag.split("-")
     language, index = parts[0], 1
@@ -82,17 +82,16 @@ def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     return language, script, region, extended
 
 
-def default_region(tag: str) -> Optional[str]:
+def default_region(tag: Optional[str]) -> Optional[str]:
     """The region `tag` names, or the one it defaults to.
 
     A tag with a region returns it: `default_region("pt-BR")` is `BR`. A tag
     with none returns its default: `en` is `GB`, `zh-Hant` is `TW`, `ar` is
     `001`. A script with no entry of its own takes its language's region,
     unless an override writes the language in another script. The
-    tag is standardized first: `en_GB` always works, and with `langcodes`
-    so do deprecated and three-letter codes (`iw`, `eng`). `None` means no
-    region applies: the language is unknown, or the tag is an extended form
-    that `langcodes` was not there to replace.
+    tag is standardized first, so `en_GB` works, and so do deprecated and
+    three-letter codes (`iw`, `eng`). `None` means no region applies: the
+    language is unknown, the tag is an extended form, or it names no language.
     """
     language, script, region, extended = _split(standardize_lang(tag))
     if region:
@@ -109,13 +108,16 @@ def default_region(tag: str) -> Optional[str]:
     return regions.get(language)
 
 
-def with_default_region(tag: str) -> str:
+def with_default_region(tag: Optional[str]) -> str:
     """`tag`, standardized, with its default region inserted.
 
     `en` becomes `en-GB`, `zh-Hant` becomes `zh-Hant-TW` and `en_us` becomes
     `en-US`. A variant or a private-use subtag stays after the region:
     `gl-x-central` becomes `gl-ES-x-central`. A tag with no default region is
     returned standardized and otherwise unchanged.
+
+    The region can take the result past `MAX_TAG_LENGTH`. Such a result is a
+    final form: a further call on it returns `""`.
     """
     tag = standardize_lang(tag)
     _, script, region, _ = _split(tag)
