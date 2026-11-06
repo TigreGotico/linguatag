@@ -5,11 +5,12 @@ from linguatag.lects import LECT_MODES, lect_steps
 from linguatag.matching import (DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang,
                                 lang_distance, lang_matches)
 from linguatag.regions import OVERRIDES, default_region, with_default_region
-from linguatag.standardize import standardize_lang
+from linguatag.standardize import MAX_TAG_LENGTH, standardize_lang
 
 __all__ = [
     "DEFAULT_MAX_LANGUAGE_DISTANCE",
     "LECT_MODES",
+    "MAX_TAG_LENGTH",
     "OVERRIDES",
     "closest_lang",
     "default_region",

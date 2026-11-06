@@ -10,8 +10,11 @@ The specs are read from a git ref, so no checkout is needed:
 
     python scripts/build_lineage.py ~/path/to/orthography2ipa origin/dev
 
-Run it again when orthography2ipa adds, renames or re-parents a lect.
+Run it again when orthography2ipa adds, renames or re-parents a lect. With
+``--check`` it writes nothing and exits 1 when the rebuild differs from the
+file. The commit that ``source`` records does not count as a difference.
 """
+import argparse
 import json
 import subprocess
 import sys
@@ -63,10 +66,36 @@ def lineage(parents: dict) -> dict:
     return dict(sorted(kept.items()))
 
 
+def differences(committed: dict, rebuilt: dict) -> list:
+    """One line for each parent link that differs between two trees."""
+    lines = []
+    for code in sorted(committed.keys() | rebuilt.keys()):
+        if code not in rebuilt:
+            lines.append(f"removed {code} (parent {committed[code]})")
+        elif code not in committed:
+            lines.append(f"added {code} (parent {rebuilt[code]})")
+        elif committed[code] != rebuilt[code]:
+            lines.append(f"changed {code}: parent {committed[code]} is {rebuilt[code]}")
+    return lines
+
+
 def main() -> None:
-    repo, ref = sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else "origin/dev"
-    sha = git(repo, "rev-parse", ref).decode().strip()
-    parents = lineage(read_parents(repo, ref))
+    parser = argparse.ArgumentParser(description="Rebuild linguatag/data/lineage.json.")
+    parser.add_argument("repo", help="a clone of orthography2ipa")
+    parser.add_argument("ref", nargs="?", default="origin/dev")
+    parser.add_argument("--check", action="store_true",
+                        help="write nothing; exit 1 when the rebuild differs from the file")
+    args = parser.parse_args()
+    sha = git(args.repo, "rev-parse", args.ref).decode().strip()
+    parents = lineage(read_parents(args.repo, args.ref))
+    if args.check:
+        committed = json.loads(OUT.read_text(encoding="utf-8"))["parents"]
+        lines = differences(committed, parents)
+        print(f"{len(committed)} parent links in the file, {len(parents)} in "
+              f"orthography2ipa@{sha}, {len(lines)} differ", file=sys.stderr)
+        if lines:
+            sys.exit("\n".join(lines))
+        return
     OUT.write_text(json.dumps({"source": f"TigreGotico/orthography2ipa@{sha}",
                                "parents": parents}, indent=0, ensure_ascii=False) + "\n")
     print(f"{len(parents)} parent links out", file=sys.stderr)

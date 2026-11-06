@@ -1,8 +1,10 @@
 """Standardization, distance and closest match."""
 import pytest
+from langcodes import tag_distance
 
 import linguatag.matching as language
-from linguatag import closest_lang, lang_distance, lang_matches, standardize_lang
+from linguatag import (closest_lang, default_region, lang_distance, lang_matches,
+                       standardize_lang, with_default_region)
 
 
 # --- standardize_lang --------------------------------------------------------
@@ -12,15 +14,95 @@ def test_standardize_normalizes_underscores_and_case():
 
 
 def test_standardize_keeps_tagalog_as_tl():
-    """langcodes folds `tl` into `fil`; OVOS keeps it distinct."""
+    """CLDR aliases `tl` to `fil`; the IANA registry keeps it."""
     assert standardize_lang("tl") == "tl"
     assert standardize_lang("tgl") == "tl"
+
+
+@pytest.mark.parametrize("spelling", ["tl", "TL", "tgl", "TGL"])
+def test_every_spelling_of_tagalog_is_tl(spelling):
+    assert standardize_lang(spelling) == "tl"
+
+
+@pytest.mark.parametrize("spelling, standard", [
+    ("tl-PH", "tl-PH"), ("tl_ph", "tl-PH"), ("TL_PH", "tl-PH"), ("tgl-PH", "tl-PH"),
+    ("tgl_ph", "tl-PH"), ("tl-x-manila", "tl-x-manila"),
+    ("tl-PH-x-manila", "tl-PH-x-manila"), ("tl_PH-voice-low", "tl-PH-voice-low"),
+])
+def test_tagalog_keeps_its_subtag_with_a_region(spelling, standard):
+    assert standardize_lang(spelling) == standard
+
+
+def test_the_default_region_of_tagalog_is_its_own_standard_form():
+    assert with_default_region("tl") == standardize_lang("tl-PH") == "tl-PH"
+    assert with_default_region("tgl") == "tl-PH"
+
+
+@pytest.mark.parametrize("tag", ["fil", "fil-PH", "pt-TL", "zh-TL"])
+def test_filipino_and_the_timor_leste_region_stay_as_written(tag):
+    assert standardize_lang(tag) == tag
+
+
+def test_tagalog_and_filipino_keep_the_cldr_distance():
+    assert lang_distance("tl-PH", "fil-PH") == tag_distance("tl-PH", "fil-PH")
+    assert lang_distance("tl", "fil") == tag_distance("tl", "fil")
+
+
+def test_a_tagalog_request_takes_the_tagalog_spelling_in_a_tie():
+    assert closest_lang("tl-PH", ["fil-PH", "tl-PH"]) == "tl-PH"
+    assert closest_lang("fil-PH", ["tl-PH", "fil-PH"]) == "fil-PH"
+
+
+@pytest.mark.parametrize("tag", ["en_", "en-", "-en", "_en", "en--US", "en__US", "en-US-", ""])
+def test_a_tag_with_an_empty_subtag_has_no_standard_form(tag):
+    assert standardize_lang(tag) == ""
+    assert with_default_region(tag) == ""
+    assert default_region(tag) is None
+
+
+def test_none_names_no_language():
+    assert standardize_lang(None) == ""
+    assert with_default_region(None) == ""
+    assert default_region(None) is None
+    assert lang_distance(None, "en") == lang_distance("en", None) == 100
+    assert lang_distance(None, None) == 100
+    assert lang_matches(None, "en") is False
+    assert closest_lang(None, ["en", "pt"]) is None
+    assert closest_lang("en", [None, "en"]) == "en"
+
+
+@pytest.mark.parametrize("tag, standard", [
+    ("zh-HK-HiuMaanNeural", "zh-HK-hiumaanneural"),
+    ("EN_gb-Alan-Medium", "en-GB-alan-medium"),
+    ("pt_br-x-VeryLongSubtag", "pt-BR-x-verylongsubtag"),
+    ("iw_IL-voice-low", "he-IL-voice-low"),
+    ("ENGLISH", "english"),
+])
+def test_an_unparseable_part_follows_the_standard_prefix(tag, standard):
+    assert standardize_lang(tag) == standard
 
 
 # --- lang_distance -----------------------------------------------------------
 
 def test_distance_is_zero_for_identical_tags():
     assert lang_distance("en-US", "en_us") == 0
+
+
+@pytest.mark.parametrize("a, b, forward, backward", [
+    ("es-MX", "es-419", 1, 4),
+    ("gl", "es", 20, 80),
+    ("ms", "id", 34, 14),
+])
+def test_distance_has_a_direction(a, b, forward, backward):
+    assert (tag_distance(a, b), tag_distance(b, a)) == (forward, backward)
+    assert lang_distance(a, b) == forward
+    assert lang_distance(b, a) == backward
+
+
+def test_a_tag_with_no_parseable_prefix_matches_only_itself():
+    assert lang_distance("english-gb", "english-us") == 100
+    assert lang_distance("english", "en") == 100
+    assert lang_distance("english", "English") == 0
 
 
 def test_distance_is_large_for_different_languages():
@@ -77,26 +159,6 @@ def test_explicit_region_is_respected_over_the_norm_preference():
 
 def test_bare_tag_falls_back_when_norm_region_absent():
     assert closest_lang("pt", ["pt-BR"]) == "pt-BR"
-
-
-# --- the langcodes-absent path ----------------------------------------------
-
-def test_distance_without_langcodes_shares_primary_subtag(monkeypatch):
-    """With no langcodes distance, a shared primary subtag still resolves."""
-    monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
-    assert closest_lang("en-AU", ["pt-BR", "en-GB", "fr-FR"]) == "en-GB"
-
-
-def test_distance_without_langcodes_prefers_the_generic_tag(monkeypatch):
-    """`qaa` has no default region, so the bare tag stays generic. A bare tag
-    with one (`en` is `en-GB`) is measured as that region instead."""
-    monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
-    assert closest_lang("qaa-US", ["qaa-IL", "qaa"]) == "qaa"
-
-
-def test_distance_without_langcodes_no_shared_subtag(monkeypatch):
-    monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
-    assert closest_lang("en-AU", ["pt-BR", "fr-FR"]) is None
 
 
 # --- edge cases --------------------------------------------------------------
@@ -191,22 +253,15 @@ ARABIC_REQUESTS = ["ar", "ar-SA", "ar-EG", "ar-MA", "arz", "apc", "ary", "acm",
 
 
 @pytest.mark.parametrize("tag", ARABIC_REQUESTS)
-@pytest.mark.parametrize("langcodes_present", [True, False])
-def test_arabic_request_falls_back_to_msa(tag, langcodes_present, monkeypatch):
-    if not langcodes_present:
-        monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
+def test_arabic_request_falls_back_to_msa(tag):
     assert lang_distance(tag, "arb") <= 5
     assert closest_lang(tag, ["arb", "en-US"], max_distance=5) == "arb"
 
 
 @pytest.mark.parametrize("tag", ["pga", "pga-SS", "acy", "acy-CY", "pga-Latn"])
-@pytest.mark.parametrize("langcodes_present", [True, False])
-def test_a_latin_script_arabic_language_does_not_fall_back_to_msa(
-        tag, langcodes_present, monkeypatch):
+def test_a_latin_script_arabic_language_does_not_fall_back_to_msa(tag):
     """CLDR likely subtags write Juba Arabic (pga_Latn_SS) and Cypriot
     Maronite Arabic (acy_Latn_CY) in Latin script."""
-    if not langcodes_present:
-        monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
     assert lang_distance(tag, "arb") > language.DEFAULT_MAX_LANGUAGE_DISTANCE
     assert closest_lang(tag, ["arb", "ar", "ar-001"]) is None
 
@@ -279,10 +334,7 @@ def test_traditional_chinese_keeps_its_cantonese_match():
 
 # --- the spellings of Modern Standard Arabic ---------------------------------
 
-@pytest.mark.parametrize("langcodes_present", [True, False])
-def test_the_spellings_of_msa_are_identical(langcodes_present, monkeypatch):
-    if not langcodes_present:
-        monkeypatch.setattr(language, "_langcodes_distance", lambda a, b: None)
+def test_the_spellings_of_msa_are_identical():
     for a, b in [("ar", "arb"), ("arb", "ar"), ("ar-001", "arb"), ("ar", "ar-001")]:
         assert lang_distance(a, b) == 0, (a, b)
     assert closest_lang("ar", ["ar-SA", "arb"]) == "arb"
@@ -325,10 +377,7 @@ def test_an_unparseable_request_is_measured_the_same_way():
 
 
 @pytest.mark.parametrize("malformed", ["ar-", "AR-", "ar_", "-ar", "_ar", "ar--EG", "ar-EG-", ""])
-@pytest.mark.parametrize("with_langcodes", [True, False])
-def test_a_tag_with_an_empty_subtag_matches_nothing(malformed, with_langcodes, request):
-    if not with_langcodes:
-        request.getfixturevalue("no_langcodes")
+def test_a_tag_with_an_empty_subtag_matches_nothing(malformed):
     for tag in ("ar", "ar-EG", "arb", malformed):
         assert lang_distance(malformed, tag) > 10
         assert lang_distance(tag, malformed) > 10
