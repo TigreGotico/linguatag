@@ -67,9 +67,9 @@ def _is_region(subtag: str) -> bool:
 def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     """`(language, script, region, extended)` of a standardized tag.
 
-    `extended` is true when the second subtag is an extended language or part
-    of a grandfathered tag (`zh-yue`, `zh-min-nan`): such a tag has no
-    language subtag of its own to give a region to.
+    `extended` is true when the second subtag has three letters, as in a
+    grandfathered tag (`zh-min-nan`): such a tag has no language subtag of
+    its own to give a region to.
     """
     parts = tag.split("-")
     language, index = parts[0], 1
@@ -91,8 +91,8 @@ def default_region(tag: str) -> Optional[str]:
     unless an override writes the language in another script. The
     tag is standardized first: `en_GB` always works, and with `langcodes`
     so do deprecated and three-letter codes (`iw`, `eng`). `None` means no
-    region applies: the language is unknown, or the tag is an extended form
-    that `langcodes` was not there to replace.
+    region applies: the language is unknown, or the tag is a grandfathered
+    form that `langcodes` was not there to replace.
     """
     language, script, region, extended = _split(standardize_lang(tag))
     if region:

@@ -27,6 +27,8 @@ A bare `ar` is Modern Standard Arabic, the standard of no single country, so its
 
 `lang_distance` is `0` for identical tags and grows as tags differ. A distance of 10 or less is a usable match. Both tags are standardized first, and a tag with no region is measured from its default region.
 
+Standardization replaces an extlang tag with its IANA Preferred-Value, as RFC 5646 section 4.5 says: `zh-hak` is Hakka (`hak`), and `ar-arz-EG` is `arz-EG`. `linguatag/data/extlangs.json` holds the table. `scripts/build_extlangs.py` rebuilds it from the IANA Language Subtag Registry.
+
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
 An Arabic variety (`arz`, `apc`, `ar-MA`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`) and Cypriot Maronite Arabic (`acy`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
@@ -50,4 +52,4 @@ closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="standard")  # 'an'
 pip install linguatag[langcodes]
 ```
 
-`langcodes` is optional. Without it, standardization only folds case and underscores, and distance uses a coarse same-language measure with the same ordering.
+`langcodes` is optional. Without it, standardization only folds case and underscores and replaces extlang tags, and distance uses a coarse same-language measure with the same ordering.

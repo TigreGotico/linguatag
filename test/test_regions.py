@@ -112,11 +112,20 @@ def test_with_default_region(tag, expected):
     assert with_default_region(tag) == expected
 
 
-@pytest.mark.parametrize("tag", ["zh-yue", "zh-min-nan", "sgn-ase"])
-def test_an_extended_form_never_gets_a_region_inside_it(tag, no_langcodes):
-    """Without langcodes `zh-yue` stays as written; `zh-CN-yue` is wrong."""
-    assert with_default_region(tag) == tag
-    assert default_region(tag) is None
+def test_a_grandfathered_form_never_gets_a_region_inside_it(no_langcodes):
+    """Without langcodes `zh-min-nan` stays as written; `zh-CN-min-nan` is wrong."""
+    assert with_default_region("zh-min-nan") == "zh-min-nan"
+    assert default_region("zh-min-nan") is None
+
+
+@pytest.mark.parametrize("tag,expected", [("zh-yue", "yue-CN"), ("sgn-ase", "ase-US")])
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_an_extlang_form_takes_the_region_of_its_preferred_value(
+        tag, expected, with_langcodes, request):
+    """IANA gives the extlangs `yue` and `ase` the Preferred-Values `yue` and `ase`."""
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    assert with_default_region(tag) == expected
 
 
 def test_without_langcodes_the_case_follows_bcp47(no_langcodes):
