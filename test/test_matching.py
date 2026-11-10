@@ -1,4 +1,6 @@
 """Standardization, distance and closest match."""
+from importlib.resources import files
+
 import pytest
 
 import linguatag.matching as language
@@ -15,6 +17,57 @@ def test_standardize_keeps_tagalog_as_tl():
     """langcodes folds `tl` into `fil`; OVOS keeps it distinct."""
     assert standardize_lang("tl") == "tl"
     assert standardize_lang("tgl") == "tl"
+
+
+def _registry_extlangs():
+    """(Prefix, Subtag, Preferred-Value) of every extlang record in the IANA
+    registry copy that langcodes ships, read independently of linguatag."""
+    text = (files("langcodes") / "data" / "language-subtag-registry.txt").read_text("utf-8")
+    records = (dict(line.split(": ", 1) for line in block.splitlines()
+                    if ": " in line and not line.startswith(" "))
+               for block in text.split("\n%%\n"))
+    return [(r["Prefix"], r["Subtag"], r["Preferred-Value"])
+            for r in records if r.get("Type") == "extlang"]
+
+
+@pytest.mark.parametrize("prefix,subtag,preferred", _registry_extlangs())
+def test_an_extlang_tag_is_its_preferred_value(prefix, subtag, preferred):
+    """RFC 5646 section 3.1.7: `zh-yue-Hant-HK` and `yue-Hant-HK` "ought to be
+    treated as if they were the same tag"."""
+    tag = f"{prefix}-{subtag}"
+    assert standardize_lang(tag) == standardize_lang(preferred)
+    assert lang_distance(tag, preferred) == 0
+    assert lang_distance(preferred, tag) == 0
+    assert closest_lang(preferred, [prefix, tag]) == tag
+
+
+@pytest.mark.parametrize("tag,canonical", [
+    ("zh-hak", "hak"),  # the RFC 5646 section 4.5 example
+    ("zh-yue-Hant-HK", "yue-Hant-HK"),  # the RFC 5646 section 3.1.7 example
+    ("zh-nan-TW", "nan-TW"),
+    ("ar-arz-EG", "arz-EG"),
+    ("sgn-ase-US", "ase-US"),
+    ("ZH_HAK_tw", "hak-TW"),
+    ("zh-hak-x-sixian", "hak-x-sixian"),
+])
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_standardize_replaces_an_extlang_and_keeps_the_other_subtags(
+        tag, canonical, with_langcodes, request):
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    assert standardize_lang(tag) == canonical
+
+
+@pytest.mark.parametrize("tag", ["en-hak", "zh-x-hak", "ar-hak", "zh-arz"])
+def test_an_extlang_under_another_prefix_is_not_replaced(tag):
+    """IANA registers `hak` with Prefix `zh` and `arz` with Prefix `ar` only."""
+    assert standardize_lang(tag).lower() == tag.lower()
+
+
+def test_an_extlang_tag_is_not_read_as_its_prefix():
+    assert closest_lang("hak", ["zh", "zh-hak"]) == "zh-hak"
+    assert closest_lang("arz-EG", ["ar-SA", "ar-arz-EG"]) == "ar-arz-EG"
+    assert closest_lang("zh-hak", ["cmn"]) is None
 
 
 # --- lang_distance -----------------------------------------------------------

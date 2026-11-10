@@ -1,9 +1,30 @@
 """One spelling for every way of writing a language tag."""
 from __future__ import annotations
 
+import json
 from functools import lru_cache
+from pathlib import Path
+from typing import Dict
 
 __all__ = ["standardize_lang"]
+
+
+_EXTLANGS = Path(__file__).resolve().parent / "data" / "extlangs.json"
+
+
+@lru_cache(maxsize=1)
+def _extlang_preferred_values() -> Dict[str, str]:
+    return json.loads(_EXTLANGS.read_text(encoding="utf-8"))["preferred"]
+
+
+def _without_extlang(tag: str) -> str:
+    """A language and its extlang replaced by the extlang's IANA
+    Preferred-Value (RFC 5646 section 4.5): `zh-hak-TW` is `hak-TW`."""
+    parts = tag.replace("_", "-").split("-")
+    preferred = _extlang_preferred_values().get("-".join(parts[:2]).lower())
+    if preferred is None:
+        return tag
+    return "-".join([preferred, *parts[2:]])
 
 
 def _case(index: int, subtag: str, after_singleton: bool) -> str:
@@ -31,10 +52,12 @@ def _fold(tag: str) -> str:
 def standardize_lang(tag: str) -> str:
     """Normalize a BCP-47 language tag for comparison.
 
-    Folds underscores to hyphens and applies the BCP-47 case conventions. With
-    ``langcodes`` it also replaces deprecated and extended forms (``iw`` is
-    ``he``, ``zh-yue`` is ``yue``) and drops a redundant script, so two
-    spellings of one language (``en_us``, ``en-US``) reduce to one string.
+    Folds underscores to hyphens and applies the BCP-47 case conventions. A
+    language and its extlang become the extlang's IANA Preferred-Value
+    (``zh-hak`` is ``hak``, ``ar-arz-EG`` is ``arz-EG``). With ``langcodes``
+    it also replaces deprecated forms (``iw`` is ``he``) and drops a redundant
+    script, so two spellings of one language (``en_us``, ``en-US``) reduce to
+    one string.
 
     Args:
         tag: a BCP-47-like language tag, possibly underscore-separated or
@@ -48,6 +71,7 @@ def standardize_lang(tag: str) -> str:
         # langcodes folds Tagalog into the `fil` macrolanguage; the tag stays
         # `tl` here.
         return "tl"
+    tag = _without_extlang(tag)
     try:
         from langcodes import standardize_tag
         return str(standardize_tag(tag))
