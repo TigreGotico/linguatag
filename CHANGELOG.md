@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.6a1](https://github.com/TigreGotico/linguatag/tree/0.1.6a1) (2026-11-10)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.5a1...0.1.6a1)
+
+**Merged pull requests:**
+
+- fix: keep Hakka, Min Nan, Wu, Gan and Xiang off Mandarin [\#21](https://github.com/TigreGotico/linguatag/pull/21) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.1.5a1](https://github.com/TigreGotico/linguatag/tree/0.1.5a1) (2026-11-04)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.4a1...0.1.5a1)
