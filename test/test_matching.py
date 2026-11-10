@@ -145,7 +145,7 @@ def test_lang_matches_exact_only_when_max_distance_zero():
 
 # --- the distance-10 boundary ------------------------------------------------
 
-MACROLANGUAGE_PAIRS = [("wuu", "zh")]
+MACROLANGUAGE_PAIRS = [("vro", "et"), ("ltg", "lv")]
 REGIONAL_PAIRS = [("ar-SA", "ar", 4), ("en-AU", "en-GB", 3), ("pt-BR", "pt-PT", 5)]
 UNRELATED_PAIRS = [("en", "zh", 134), ("es", "fr", 84),
                    ("fr-CH", "de-CH", 80), ("af", "nl", 24)]
@@ -264,6 +264,32 @@ def test_cantonese_never_matches_mandarin(cantonese, mandarin):
     assert lang_distance(mandarin, cantonese) >= 100
     assert closest_lang(cantonese, [mandarin]) is None
     assert closest_lang(mandarin, [cantonese]) is None
+
+
+SINITIC_REQUESTS = [f"{language}{suffix}" for language in ("hak", "nan", "wuu", "gan", "hsn")
+                    for suffix in ("", "-CN", "-Hans", "-Latn")]
+
+
+@pytest.mark.parametrize("mandarin", ["cmn", "zh", "zh-Hans", "zh-CN"])
+@pytest.mark.parametrize("sinitic", SINITIC_REQUESTS)
+def test_a_sinitic_language_never_matches_mandarin(sinitic, mandarin):
+    """Hakka, Min Nan, Wu, Gan and Xiang are separate languages of the `zh`
+    macrolanguage, as Cantonese is."""
+    assert lang_distance(sinitic, mandarin) >= 100
+    assert lang_distance(mandarin, sinitic) >= 100
+    assert closest_lang(sinitic, [mandarin]) is None
+    assert closest_lang(mandarin, [sinitic]) is None
+
+
+@pytest.mark.parametrize("sinitic", ["hak-Latn", "nan-Latn", "wuu-Latn", "gan-Latn", "hsn-Latn"])
+def test_a_latin_script_sinitic_language_never_matches_pinyin(sinitic):
+    assert closest_lang(sinitic, ["cmn-Latn", "cmn-latn-pinyin"]) is None
+
+
+@pytest.mark.parametrize("chinese", ["zh", "zh-Hans", "zh-CN"])
+def test_mandarin_is_its_own_macrolanguage_tag(chinese):
+    assert lang_distance("cmn", chinese) == 0
+    assert lang_distance(chinese, "cmn") == 0
 
 
 def test_a_cantonese_request_never_lands_on_mandarin_over_cantonese():

@@ -61,13 +61,14 @@ _LATIN_SCRIPT_ARABIC = frozenset({"acy", "pga"})
 _MSA = ("ar", "arb", "ar-001")
 _ARABIC_FALLBACK_DISTANCE = 5
 
-# Cantonese is never served as Mandarin. langcodes measures `yue-CN` against
-# `zh-CN` or `cmn` at 10, a member against its macrolanguage in one script,
-# and that is a usable match; the two are not mutually intelligible. Against
-# `cmn`, and against `zh` in Simplified script, they count as different
-# languages, as the coarse measure counts them. `zh` in Traditional script
-# keeps the langcodes distance: a `zh-HK` resource is often Cantonese.
-_CANTONESE = "yue"
+# Cantonese, Hakka, Min Nan, Wu, Gan and Xiang are never served as Mandarin.
+# langcodes measures `yue-CN` or `hak` against `zh-CN` or `cmn` at 10, a
+# member against its macrolanguage in one script, and that is a usable match;
+# they are not mutually intelligible with Mandarin. Against `cmn`, and against
+# `zh` in Simplified script, they count as different languages, as the coarse
+# measure counts them. `zh` in Traditional script keeps the langcodes
+# distance: a `zh-HK` resource is often Cantonese.
+_NOT_MANDARIN = frozenset({"yue", "hak", "nan", "wuu", "gan", "hsn"})
 _MANDARIN = "cmn"
 _CHINESE = "zh"
 _DIFFERENT_LANGUAGE_DISTANCE = 100
@@ -104,9 +105,9 @@ def _parseable_prefix(tag: str) -> str:
     return tag
 
 
-def _cantonese_against_mandarin(a: str, b: str) -> bool:
+def _sinitic_against_mandarin(a: str, b: str) -> bool:
     languages = {a.split("-")[0].lower(): a, b.split("-")[0].lower(): b}
-    if _CANTONESE not in languages:
+    if _NOT_MANDARIN.isdisjoint(languages):
         return False
     return _MANDARIN in languages or (_CHINESE in languages
                                       and _is_simplified(languages[_CHINESE]))
@@ -153,8 +154,9 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     The spellings of Modern Standard Arabic (``ar``, ``arb``, ``ar-001``) are
     identical. An individual Arabic language (``arz``, ``apc``, ...) or ``ar``
     with any region, in Arabic script, measured against one of them, is at
-    most 5. Cantonese measured against ``cmn``, or against ``zh`` in
-    Simplified script, is a different language.
+    most 5. Cantonese, Hakka, Min Nan, Wu, Gan or Xiang (``yue``, ``hak``,
+    ``nan``, ``wuu``, ``gan``, ``hsn``) measured against ``cmn``, or against
+    ``zh`` in Simplified script, is a different language.
 
     A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
     its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``. A tag
@@ -208,7 +210,7 @@ def _language_distance(desired: str, supported: str) -> int:
     distance = _langcodes_distance(a, b)
     if distance is None:
         distance = _coarse_distance(a, b)
-    if _cantonese_against_mandarin(a, b):
+    if _sinitic_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     language = a.split("-")[0].lower()
     scripts = [t.lower() for t in without_private_use(a).split("-")[1:]
