@@ -3,27 +3,24 @@
 Everything rests on one distance function, :func:`lang_distance`;
 :func:`closest_lang` is the candidate with the smallest distance. All policy
 lives inside :func:`lang_distance`: tag standardization, the default region of
-a bare tag, the Modern Standard Arabic fallback, and the behaviour when
-``langcodes`` is absent.
+a bare tag, and the Modern Standard Arabic fallback.
 
 The distance ladder, from nearest to farthest: identical tags (``0``), a bare
 tag against its own default region (``0``), two regions of one language (a
 small distance), a member language against its macrolanguage tag (``10``, the
-threshold itself), and a different language (``>= 100`` with the coarse
-measure, never a usable match).
+threshold itself), and a different language (a larger distance, never a
+usable match).
 
 A bare tag is measured from its default region (see :mod:`linguatag.regions`):
 ``en`` is ``en-GB``, so ``lang_distance("en", "en-GB")`` is ``0`` and
 ``lang_distance("en", "en-US")`` is a regional difference.
-
-``langcodes`` is optional. Without it, :func:`lang_distance` falls back to a
-coarse same-language measure with the same ordering for the cases locale
-resolution depends on.
 """
 from __future__ import annotations
 
 from functools import lru_cache
 from typing import Optional, Sequence
+
+from langcodes import Language, tag_distance
 
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import with_default_region
@@ -59,8 +56,8 @@ DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 _ARABIC_VARIETIES = frozenset(
     "ar aao abh abv acm acq acw acx acy adf aeb aec afb ajp apc apd arb arq ars "
     "ary arz auz avl ayh ayl ayn ayp bbz mey pga shu ssh".split())
-# `ara` is the ISO 639-2 code of Arabic. langcodes reads it as `ar`; without
-# langcodes it stays `ara`.
+# `ara` is the ISO 639-2 code of Arabic. langcodes reads it as `ar`; a tag that
+# langcodes refuses, such as `ara-SA-voice1`, keeps it.
 _ARABIC_LANGUAGES = _ARABIC_VARIETIES | {"ara"}
 # CLDR likely subtags write two of them in Latin script: Cypriot Maronite
 # Arabic (acy_Latn_CY) and Juba Arabic (pga_Latn_SS). With no script subtag,
@@ -73,9 +70,9 @@ _ARABIC_FALLBACK_DISTANCE = 5
 # langcodes measures `yue-CN` or `hak` against `zh-CN` or `cmn` at 10, a
 # member against its macrolanguage in one script, and that is a usable match;
 # they are not mutually intelligible with Mandarin. Against `cmn`, and against
-# `zh` in Simplified script, they count as different languages, as the coarse
-# measure counts them. `zh` in Traditional script keeps the langcodes
-# distance: a `zh-HK` resource is often Cantonese.
+# `zh` in Simplified script, they count as different languages. `zh` in
+# Traditional script keeps the langcodes distance: a `zh-HK` resource is often
+# Cantonese.
 _NOT_MANDARIN = frozenset({"yue", "hak", "nan", "wuu", "gan", "hsn"})
 _MANDARIN = "cmn"
 _CHINESE = "zh"
@@ -84,7 +81,6 @@ _DIFFERENT_LANGUAGE_DISTANCE = 100
 
 def _is_simplified(tag: str) -> bool:
     try:
-        from langcodes import Language
         return Language.get(tag).maximize().script == "Hans"
     except Exception:
         return False
@@ -96,12 +92,8 @@ def _parseable_prefix(tag: str) -> str:
 
     A voice id such as ``zh-HK-HiuMaanNeural`` is not a language tag, but its
     ``zh-HK`` is, and that is what it is measured as. A tag with no parseable
-    prefix, or any tag when ``langcodes`` is absent, is returned unchanged.
+    prefix is returned unchanged.
     """
-    try:
-        from langcodes import Language
-    except ImportError:
-        return tag
     parts = tag.split("-")
     for end in range(len(parts), 0, -1):
         candidate = "-".join(parts[:end])
@@ -121,34 +113,13 @@ def _sinitic_against_mandarin(a: str, b: str) -> bool:
                                       and _is_simplified(languages[_CHINESE]))
 
 
-def _langcodes_distance(desired: str, supported: str) -> Optional[int]:
-    """``langcodes.tag_distance``, or ``None`` if no distance can be computed,
-    including when ``langcodes`` is not installed."""
+def _langcodes_distance(desired: str, supported: str) -> int:
+    """``langcodes.tag_distance``. A tag that ``langcodes`` cannot parse names
+    no language, and it is no usable match."""
     try:
-        from langcodes import tag_distance
         return int(tag_distance(desired, supported))
     except Exception:
-        return None
-
-
-def _coarse_distance(desired: str, supported: str) -> int:
-    """A ``langcodes``-free distance.
-
-    The two tags are already standardized and region-expanded. A shared
-    primary subtag is near, a differing one is far; the generic (region-less)
-    form of a language counts as nearer than a sibling region of it. The
-    values 3, 5 and 100 carry ordering only: what matters is their relative
-    order and whether they reach the threshold of 10. Private-use subtags
-    count for nothing, as in ``langcodes``.
-    """
-    desired, supported = without_private_use(desired), without_private_use(supported)
-    if desired.lower() == supported.lower():
-        return 0
-    if desired.split("-")[0].lower() != supported.split("-")[0].lower():
-        return 100  # a different language, beyond any usable threshold
-    if "-" not in desired or "-" not in supported:
-        return 3  # one side is the generic language tag
-    return 5  # two different regions of the same language
+        return _DIFFERENT_LANGUAGE_DISTANCE
 
 
 def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int:
@@ -172,8 +143,8 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     with an empty subtag (``ar-``, ``ar_``, ``-ar``, ``en--US``) is not a
     language tag, and it is no usable match for any tag.
 
-    Uses ``langcodes.tag_distance`` when available, and a coarse
-    same-language measure otherwise.
+    Uses ``langcodes.tag_distance``. A tag with no prefix that ``langcodes``
+    parses is no usable match for any other tag.
 
     A private-use subtag counts for nothing unless ``lects`` asks for it:
     ``"dialect"`` scores the nearest other dialect before the standard
@@ -217,8 +188,6 @@ def _language_distance(desired: str, supported: str) -> int:
     if a.lower() == b.lower():
         return 0
     distance = _langcodes_distance(a, b)
-    if distance is None:
-        distance = _coarse_distance(a, b)
     if _sinitic_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     language = a.split("-")[0].lower()

@@ -1,7 +1,5 @@
 """The default region of a tag that names none."""
 import json
-import subprocess
-import sys
 from pathlib import Path
 
 import pytest
@@ -112,34 +110,13 @@ def test_with_default_region(tag, expected):
     assert with_default_region(tag) == expected
 
 
-def test_a_grandfathered_form_never_gets_a_region_inside_it(no_langcodes):
-    """Without langcodes `zh-min-nan` stays as written; `zh-CN-min-nan` is wrong."""
-    assert with_default_region("zh-min-nan") == "zh-min-nan"
-    assert default_region("zh-min-nan") is None
-
-
 @pytest.mark.parametrize("tag,expected", [("zh-yue", "yue-CN"), ("sgn-ase", "ase-US")])
-@pytest.mark.parametrize("with_langcodes", [True, False])
-def test_an_extlang_form_takes_the_region_of_its_preferred_value(
-        tag, expected, with_langcodes, request):
+def test_an_extlang_form_takes_the_region_of_its_preferred_value(tag, expected):
     """IANA gives the extlangs `yue` and `ase` the Preferred-Values `yue` and `ase`."""
-    if not with_langcodes:
-        request.getfixturevalue("no_langcodes")
     assert with_default_region(tag) == expected
 
 
-def test_without_langcodes_the_case_follows_bcp47(no_langcodes):
-    assert with_default_region("EN_us") == "en-US"
-    assert with_default_region("zh_hant") == "zh-Hant-TW"
-    assert with_default_region("ext-pt-X-Barranco") == "ext-PT-x-barranco"
-    assert with_default_region("en-x-GB") == "en-GB-x-gb"
-    assert with_default_region("en-u-CA-gregory") == "en-GB-u-ca-gregory"
-
-
-@pytest.mark.parametrize("langcodes_present", [True, False])
-def test_a_bare_tag_is_its_default_region_when_measured(langcodes_present, monkeypatch):
-    if not langcodes_present:
-        monkeypatch.setattr(matching, "_langcodes_distance", lambda a, b: None)
+def test_a_bare_tag_is_its_default_region_when_measured():
     assert lang_distance("en", "en-GB") == 0
     assert lang_distance("en", "en-US") > 0
     assert lang_distance("ur", "ur-IN") == 0
@@ -149,12 +126,9 @@ def test_a_bare_tag_is_its_default_region_when_measured(langcodes_present, monke
     assert closest_lang("yue", ["yue-HK", "yue-CN"]) == "yue-CN"
 
 
-@pytest.mark.parametrize("langcodes_present", [True, False])
-def test_a_regional_arabic_request_ties_msa_and_a_foreign_region(langcodes_present, monkeypatch):
+def test_a_regional_arabic_request_ties_msa_and_a_foreign_region():
     """`ar-MA` is 5 from both `ar-EG` and bare `ar` (`ar-001`), so the order
     of the candidates decides; the request never leaves Arabic."""
-    if not langcodes_present:
-        monkeypatch.setattr(matching, "_langcodes_distance", lambda a, b: None)
     assert lang_distance("ar-MA", "ar-EG") == lang_distance("ar-MA", "ar") == 5
     assert closest_lang("ar-MA", ["ar-EG", "ar"]) == "ar-EG"
     assert closest_lang("ar-MA", ["ar", "ar-EG"]) == "ar"
@@ -181,26 +155,3 @@ def test_an_exact_candidate_wins_a_tie_at_zero(target, available, exact):
 def test_a_regional_request_is_not_pulled_to_the_default():
     assert closest_lang("en-US", ["en-GB", "en-US"]) == "en-US"
     assert closest_lang("en-US", ["en", "en-US"]) == "en-US"
-
-
-_WITHOUT_LANGCODES = """
-import builtins, sys
-real_import = builtins.__import__
-def refuse(name, *args, **kwargs):
-    if name == "langcodes" or name.startswith("langcodes."):
-        raise ImportError(name)
-    return real_import(name, *args, **kwargs)
-builtins.__import__ = refuse
-from linguatag import lang_distance
-print(lang_distance(sys.argv[1], sys.argv[2]))
-"""
-
-
-@pytest.mark.parametrize("desired,supported", [
-    ("an-x-benasque", "an-x-chistau"), ("zh-HK-HiuMaanNeural", "zh-HK")])
-def test_a_prefix_found_with_langcodes_is_not_reused_without_it(desired, supported, request):
-    lang_distance(desired, supported)
-    request.getfixturevalue("no_langcodes")
-    expected = subprocess.run([sys.executable, "-c", _WITHOUT_LANGCODES, desired, supported],
-                              check=True, capture_output=True, text=True).stdout
-    assert lang_distance(desired, supported) == int(expected)

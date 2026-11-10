@@ -10,6 +10,7 @@ readme = "README.md"
 license = "Apache-2.0"
 authors = [{ name = "JarbasAi", email = "jarbasai@mailfence.com" }]
 requires-python = ">=3.11"
+dependencies = ["langcodes>=3.3.0"]
 keywords = ["bcp47", "language-tag", "locale", "cldr", "nlp"]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -20,8 +21,10 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-langcodes = ["langcodes"]
-test = ["pytest", "langcodes"]
+# Empty: langcodes is a required dependency. The extra stays so that
+# `linguatag[langcodes]` in a downstream pin still installs.
+langcodes = []
+test = ["pytest"]
 
 [project.urls]
 Homepage = "https://github.com/TigreGotico/linguatag"

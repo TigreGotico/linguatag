@@ -58,7 +58,7 @@ closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="standard")  # 'an'
 ## Install
 
 ```
-pip install linguatag[langcodes]
+pip install linguatag
 ```
 
-`langcodes` is optional. Without it, standardization only folds case and underscores and replaces extlang tags, and distance uses a coarse same-language measure with the same ordering.
+`langcodes` is a required dependency. The `langcodes` extra is empty, so `linguatag[langcodes]` installs the same package.
