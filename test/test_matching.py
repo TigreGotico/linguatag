@@ -4,7 +4,8 @@ from importlib.resources import files
 import pytest
 
 import linguatag.matching as language
-from linguatag import closest_lang, lang_distance, lang_matches, standardize_lang
+from linguatag import (closest_lang, is_arabic_variety, lang_distance, lang_matches,
+                       standardize_lang)
 
 
 # --- standardize_lang --------------------------------------------------------
@@ -240,7 +241,8 @@ def test_threshold_is_inclusive_on_both_sides():
 # --- Arabic varieties fall back to Modern Standard Arabic ---------------------
 
 ARABIC_REQUESTS = ["ar", "ar-SA", "ar-EG", "ar-MA", "arz", "apc", "ary", "acm",
-                   "afb", "aeb", "ajp", "ssh", "arq", "pga-Arab", "acy-Arab"]
+                   "afb", "aeb", "ajp", "ssh", "arq", "pga-Arab", "acy-Arab",
+                   "mey", "mey-MR", "mey-Arab-MR"]
 
 
 @pytest.mark.parametrize("tag", ARABIC_REQUESTS)
@@ -252,7 +254,7 @@ def test_arabic_request_falls_back_to_msa(tag, langcodes_present, monkeypatch):
     assert closest_lang(tag, ["arb", "en-US"], max_distance=5) == "arb"
 
 
-@pytest.mark.parametrize("tag", ["pga", "pga-SS", "acy", "acy-CY", "pga-Latn"])
+@pytest.mark.parametrize("tag", ["pga", "pga-SS", "acy", "acy-CY", "pga-Latn", "mey-Latn"])
 @pytest.mark.parametrize("langcodes_present", [True, False])
 def test_a_latin_script_arabic_language_does_not_fall_back_to_msa(
         tag, langcodes_present, monkeypatch):
@@ -271,6 +273,7 @@ def test_arabic_variety_file_beats_msa():
 
 def test_msa_request_does_not_fall_back_to_a_variety():
     assert closest_lang("arb", ["arz"], max_distance=5) is None
+    assert closest_lang("arb", ["mey-MR"], max_distance=5) is None
 
 
 def test_arabic_does_not_reach_other_languages():
@@ -294,7 +297,7 @@ def test_arabic_variety_prefers_msa_over_a_foreign_region():
 
 
 @pytest.mark.parametrize("msa", ["arb", "ar"])
-@pytest.mark.parametrize("variety", ["arz", "arz-EG", "ary"])
+@pytest.mark.parametrize("variety", ["arz", "arz-EG", "ary", "mey", "mey-MR"])
 def test_arabic_fallback_distance_is_exactly_five(msa, variety):
     """Bare `ar` has a default region; it still counts as MSA here."""
     assert lang_distance(variety, msa) == 5
@@ -305,6 +308,46 @@ def test_arabizi_is_not_pulled_to_msa(monkeypatch):
     monkeypatch.setattr(language, "_ARABIC_FALLBACK_DISTANCE", 0)
     assert lang_distance("ar-Latn", "ar") == capped
     assert lang_distance("arz-Arab", "arb") == 0
+
+
+# --- Which tags name Arabic ---------------------------------------------------
+
+# The IANA language subtags with `Macrolanguage: ar` (registry File-Date
+# 2026-09-17), and the macrolanguage itself under its ISO 639-1 and 639-2 codes.
+ARABIC_MACROLANGUAGE = ["ar", "ara"] + """aao abh abv acm acq acw acx acy adf aeb aec
+    afb ajp apc apd arb arq ars ary arz auz avl ayh ayl ayn ayp bbz pga shu ssh""".split()
+
+
+@pytest.mark.parametrize("code", ARABIC_MACROLANGUAGE + ["mey"])
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_an_arabic_language_is_an_arabic_variety_in_any_script(code, with_langcodes, request):
+    """Hassaniyya (`mey`) is outside the macrolanguage in IANA, and Arabic in
+    Glottolog 5.4 (languoid hass1238)."""
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    for suffix in ("", "-Arab", "-Latn", "-EG", "-MR", "-Arab-MR", "-Latn-001", "-x-buckwalt"):
+        assert is_arabic_variety(code + suffix), code + suffix
+
+
+@pytest.mark.parametrize("tag", ["ar-Latn-x-buckwalt", "AR_latn", "acy", "acy-CY",
+                                 "pga", "pga-SS", "mey-Latn", "ar-SA-HamedNeural"])
+def test_a_latin_script_or_voice_id_tag_is_an_arabic_variety(tag):
+    assert is_arabic_variety(tag)
+
+
+@pytest.mark.parametrize("tag", ["und", "und-Arab", "fa", "fa-Arab-IR", "ur", "ps", "ug",
+                                 "ckb", "ks-Arab", "arc", "arn", "en", "x-ar"])
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_a_language_that_is_not_arabic_is_not_an_arabic_variety(tag, with_langcodes,
+                                                                request):
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    assert not is_arabic_variety(tag)
+
+
+@pytest.mark.parametrize("malformed", ["ar-", "ar_", "-ar", "ar--EG", ""])
+def test_a_tag_with_an_empty_subtag_is_not_an_arabic_variety(malformed):
+    assert not is_arabic_variety(malformed)
 
 
 # --- Cantonese and Mandarin ---------------------------------------------------

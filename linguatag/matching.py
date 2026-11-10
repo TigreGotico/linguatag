@@ -34,6 +34,7 @@ __all__ = [
     "lang_distance",
     "lang_matches",
     "closest_lang",
+    "is_arabic_variety",
     "DEFAULT_MAX_LANGUAGE_DISTANCE",
 ]
 
@@ -45,15 +46,22 @@ __all__ = [
 DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 
 # The individual languages of the ISO 639-3 `ara` macrolanguage (SIL
-# macrolanguage mappings; ajp and bbz are retired codes). A request for one of
-# them, or for `ar` with any region, in Arabic script, falls back to the bare
-# Modern Standard Arabic entry (`ar`, `arb` or `ar-001`) when nothing closer is
-# available, since speakers of every variety expect MSA from a voice
-# assistant. Other macrolanguages get no such rule: Cantonese does not fall
-# back to Mandarin.
+# macrolanguage mappings; ajp and bbz are retired codes), which are the IANA
+# language subtags with `Macrolanguage: ar`, and Hassaniyya (`mey`). The IANA
+# record of `mey` names no macrolanguage, but Glottolog 5.4 classifies
+# Hassaniyya as Arabic > North African Arabic > Western Middle Arabic
+# (languoid hass1238), and CLDR likely subtags write it in Arabic script
+# (mey_Arab_DZ). A request for one of them, or for `ar` with any region, in
+# Arabic script, falls back to the bare Modern Standard Arabic entry (`ar`,
+# `arb` or `ar-001`) when nothing closer is available, since speakers of every
+# variety expect MSA from a voice assistant. Other macrolanguages get no such
+# rule: Cantonese does not fall back to Mandarin.
 _ARABIC_VARIETIES = frozenset(
     "ar aao abh abv acm acq acw acx acy adf aeb aec afb ajp apc apd arb arq ars "
-    "ary arz auz avl ayh ayl ayn ayp bbz pga shu ssh".split())
+    "ary arz auz avl ayh ayl ayn ayp bbz mey pga shu ssh".split())
+# `ara` is the ISO 639-2 code of Arabic. langcodes reads it as `ar`; without
+# langcodes it stays `ara`.
+_ARABIC_LANGUAGES = _ARABIC_VARIETIES | {"ara"}
 # CLDR likely subtags write two of them in Latin script: Cypriot Maronite
 # Arabic (acy_Latn_CY) and Juba Arabic (pga_Latn_SS). With no script subtag,
 # a request for either is not in Arabic script.
@@ -152,11 +160,12 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     is ``0`` while ``lang_distance("pt", "pt-BR")`` is a regional difference.
 
     The spellings of Modern Standard Arabic (``ar``, ``arb``, ``ar-001``) are
-    identical. An individual Arabic language (``arz``, ``apc``, ...) or ``ar``
-    with any region, in Arabic script, measured against one of them, is at
-    most 5. Cantonese, Hakka, Min Nan, Wu, Gan or Xiang (``yue``, ``hak``,
-    ``nan``, ``wuu``, ``gan``, ``hsn``) measured against ``cmn``, or against
-    ``zh`` in Simplified script, is a different language.
+    identical. An individual Arabic language (``arz``, ``apc``, ...),
+    Hassaniyya (``mey``) or ``ar`` with any region, in Arabic script, measured
+    against one of them, is at most 5. Cantonese, Hakka, Min Nan, Wu, Gan or
+    Xiang (``yue``, ``hak``, ``nan``, ``wuu``, ``gan``, ``hsn``) measured
+    against ``cmn``, or against ``zh`` in Simplified script, is a different
+    language.
 
     A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
     its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``. A tag
@@ -235,6 +244,27 @@ def lang_matches(a: str, b: str,
             Pass ``max_distance=0`` to require an exact match.
     """
     return lang_distance(a, b) <= max_distance
+
+
+def is_arabic_variety(tag: str) -> bool:
+    """``True`` when ``tag`` names Arabic or a variety of Arabic.
+
+    The language subtag decides, after :func:`standardize_lang`. Script,
+    region and private-use subtags do not count, so ``ar-Latn-x-buckwalt``,
+    ``arz-EG`` and Juba Arabic, ``pga``, are Arabic varieties. Arabic is
+    ``ar`` (``ara``), its individual languages (the IANA language subtags
+    with ``Macrolanguage: ar``, among them ``arb``, ``arz``, ``acy`` and
+    ``pga``), and Hassaniyya, ``mey``. A different language written in Arabic
+    script is not one: ``fa``, ``ur`` and ``und-Arab`` are ``False``, and so
+    is a tag with an empty subtag.
+
+    This tells what language a tag names. :func:`lang_distance` tells whether
+    a resource for one tag can serve a request for another.
+    """
+    standard = standardize_lang(tag)
+    if _has_empty_subtag(standard):
+        return False
+    return standard.split("-")[0].lower() in _ARABIC_LANGUAGES
 
 
 def closest_lang(target: str, available: Sequence[str],
