@@ -29,7 +29,7 @@ A bare `ar` is Modern Standard Arabic, the standard of no single country, so its
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
-An Arabic variety (`arz`, `apc`, `ar-MA`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`) and Cypriot Maronite Arabic (`acy`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese never matches Mandarin.
+An Arabic variety (`arz`, `apc`, `ar-MA`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`) and Cypriot Maronite Arabic (`acy`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
 
 ## Dialects
 
