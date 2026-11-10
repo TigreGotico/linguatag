@@ -3,7 +3,8 @@
 BCP-47 language tags: standardization, distance, closest match, and the default region of a tag that names none.
 
 ```python
-from linguatag import closest_lang, default_region, lang_distance, with_default_region
+from linguatag import (closest_lang, default_region, is_arabic_variety, lang_distance,
+                       with_default_region)
 
 default_region("en")            # 'GB'
 with_default_region("zh-Hant")  # 'zh-Hant-TW'
@@ -11,6 +12,8 @@ lang_distance("pt", "pt-PT")    # 0
 lang_distance("pt", "pt-BR")    # 5
 closest_lang("en", ["en-US", "en-GB"])  # 'en-GB'
 closest_lang("en-AU", ["fr-FR", "en-US"])  # 'en-US'
+is_arabic_variety("ar-Latn-x-buckwalt")  # True
+is_arabic_variety("fa")         # False
 ```
 
 ## Default region
@@ -29,7 +32,13 @@ A bare `ar` is Modern Standard Arabic, the standard of no single country, so its
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
-An Arabic variety (`arz`, `apc`, `ar-MA`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`) and Cypriot Maronite Arabic (`acy`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
+An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`) and Cypriot Maronite Arabic (`acy`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
+
+## Arabic varieties
+
+`is_arabic_variety` tells whether a tag names Arabic. The language subtag decides. Script, region and private-use subtags do not count, so `ar-Latn-x-buckwalt` and Juba Arabic (`pga`) are Arabic varieties. Arabic is `ar` (`ara`), the individual languages that the IANA registry puts in the `ar` macrolanguage (`arb`, `arz`, `acy`, `pga` and the others), and Hassaniyya (`mey`). The IANA registry puts Hassaniyya in no macrolanguage, and Glottolog classifies it as Arabic. A different language in Arabic script is not Arabic: `fa`, `ur` and `und-Arab` are `False`.
+
+`lang_distance` answers a different question: whether a resource for one tag can serve a request for another.
 
 ## Dialects
 
