@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1a1](https://github.com/TigreGotico/linguatag/tree/0.2.1a1) (2026-11-11)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.0a1...0.2.1a1)
+
+**Merged pull requests:**
+
+- fix: measure Arabic varieties in their CLDR 49 likely script [\#27](https://github.com/TigreGotico/linguatag/pull/27) ([JarbasAl](https://github.com/JarbasAl))
+
 ## [0.2.0a1](https://github.com/TigreGotico/linguatag/tree/0.2.0a1) (2026-11-10)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.7a1...0.2.0a1)
