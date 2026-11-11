@@ -26,6 +26,8 @@ A bare `ar` is Modern Standard Arabic, the standard of no single country, so its
 
 `linguatag/data/likely_regions.json` holds the CLDR regions. `scripts/build_likely_regions.py` rebuilds it from the installed `langcodes`.
 
+The CLDR data in `langcodes` has no entry for some Arabic varieties, and it puts them in Latin script. CLDR 49 puts them in Arabic script: Libyan Arabic `ayl` is `ayl-Arab-LY` and Hassaniyya `mey` is `mey-Arab-DZ`. For these varieties the table holds the CLDR 49 entries, with their scripts, and the build script reads them from the CLDR release. A tag that names no script is measured in the CLDR script, so `mey` and `mey-Arab` are at distance 0. Hassaniyya in Senegal, `mey-SN`, is in Latin script, as CLDR gives it.
+
 ## Distance and closest match
 
 `lang_distance` is `0` for identical tags and grows as tags differ. A distance of 10 or less is a usable match. Both tags are standardized first, and a tag with no region is measured from its default region.
@@ -34,7 +36,7 @@ Standardization replaces an extlang tag with its IANA Preferred-Value, as RFC 56
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
-An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`) and Cypriot Maronite Arabic (`acy`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
+An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`), Cypriot Maronite Arabic (`acy`) and Hassaniyya in Senegal (`mey-SN`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
 
 ## Arabic varieties
 

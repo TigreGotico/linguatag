@@ -52,8 +52,8 @@ _DATA = Path(__file__).resolve().parent / "data" / "likely_regions.json"
 
 
 @lru_cache(maxsize=1)
-def _likely_regions() -> Dict[str, str]:
-    return json.loads(_DATA.read_text(encoding="utf-8"))["regions"]
+def _likely_subtags() -> Dict[str, Dict[str, str]]:
+    return json.loads(_DATA.read_text(encoding="utf-8"))
 
 
 def _is_script(subtag: str) -> bool:
@@ -99,7 +99,7 @@ def default_region(tag: str) -> Optional[str]:
         return region
     if extended:
         return None
-    regions = _likely_regions()
+    regions = _likely_subtags()["regions"]
     if script and f"{language}-{script}" in regions:
         return regions[f"{language}-{script}"]
     if language in OVERRIDES:
@@ -127,3 +127,23 @@ def with_default_region(tag: str) -> str:
     parts = tag.split("-")
     at = 2 if script else 1
     return "-".join(parts[:at] + [region] + parts[at:])
+
+
+def _with_likely_script(tag: str) -> str:
+    """`tag`, standardized and region-expanded, with the script CLDR expects
+    for it, where the CLDR snapshot in `langcodes` expects another.
+
+    Only the Arabic varieties in the `scripts` table of the data file have
+    one: `mey-DZ` is `mey-Arab-DZ` and `mey-SN` is `mey-Latn-SN`, as CLDR
+    gives `mey_Arab_DZ` and `mey_Latn_SN`. A tag that names a script, or a
+    language with no entry, is returned unchanged.
+    """
+    language, script, region, extended = _split(tag)
+    if script or extended:
+        return tag
+    scripts = _likely_subtags()["scripts"]
+    likely = scripts.get(f"{language}-{region}", scripts.get(language))
+    if likely is None:
+        return tag
+    parts = tag.split("-")
+    return "-".join([parts[0], likely, *parts[1:]])
