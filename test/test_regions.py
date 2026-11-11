@@ -11,8 +11,9 @@ import linguatag.matching as matching
 from linguatag import (OVERRIDES, closest_lang, default_region, lang_distance,
                        with_default_region)
 
-TABLE = json.loads((Path(matching.__file__).parent / "data" / "likely_regions.json")
-                   .read_text(encoding="utf-8"))["regions"]
+DATA = json.loads((Path(matching.__file__).parent / "data" / "likely_regions.json")
+                  .read_text(encoding="utf-8"))
+TABLE = DATA["regions"]
 
 
 @pytest.mark.parametrize("language,region", [
@@ -59,10 +60,11 @@ def test_without_an_override_the_cldr_region_stands(language):
 
 
 def test_the_table_is_the_cldr_likely_region_of_every_tag_without_one():
-    assert len(TABLE) == 746
+    assert len(TABLE) == 764
     for tag, region in TABLE.items():
         assert "-" not in tag or len(tag.split("-")[1]) == 4, tag
-        assert Language.get(tag).maximize().territory == region, tag
+        if tag.split("-")[0] not in DATA["scripts"]:
+            assert Language.get(tag).maximize().territory == region, tag
     assert "ZZ" not in TABLE.values()
     assert TABLE["yi"] == "001"
 

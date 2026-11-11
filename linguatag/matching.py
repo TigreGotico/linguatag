@@ -26,7 +26,7 @@ from functools import lru_cache
 from typing import Optional, Sequence
 
 from linguatag.lects import lect_score, without_private_use
-from linguatag.regions import with_default_region
+from linguatag.regions import _with_likely_script, with_default_region
 from linguatag.standardize import standardize_lang
 
 __all__ = [
@@ -50,7 +50,7 @@ DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 # language subtags with `Macrolanguage: ar`, and Hassaniyya (`mey`). The IANA
 # record of `mey` names no macrolanguage, but Glottolog 5.4 classifies
 # Hassaniyya as Arabic > North African Arabic > Western Middle Arabic
-# (languoid hass1238), and CLDR likely subtags write it in Arabic script
+# (languoid hass1238), and CLDR 49 likely subtags write it in Arabic script
 # (mey_Arab_DZ). A request for one of them, or for `ar` with any region, in
 # Arabic script, falls back to the bare Modern Standard Arabic entry (`ar`,
 # `arb` or `ar-001`) when nothing closer is available, since speakers of every
@@ -213,7 +213,8 @@ def _language_distance(desired: str, supported: str) -> int:
     if a.lower() == b.lower():
         return 0
     to_msa = without_private_use(b).lower() in _MSA
-    a, b = with_default_region(a), with_default_region(b)
+    a = _with_likely_script(with_default_region(a))
+    b = _with_likely_script(with_default_region(b))
     if a.lower() == b.lower():
         return 0
     distance = _langcodes_distance(a, b)
