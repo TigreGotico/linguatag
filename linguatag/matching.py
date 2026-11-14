@@ -37,6 +37,38 @@ macrolanguage included, are a different language here too. ``knn`` is not in
 this rule, because CLDR 49 gives it
 ``<languageMatch desired="knn" supported="kok" distance="10" oneway="true"/>``.
 
+The IANA registry names 19 language subtags with ``Macrolanguage: zh``:
+``cdo cjy cmn cnp cpx csp czh czo gan hak hnm hsn luh lzh mnp nan sjc wuu
+yue``. The ISO 639-3 macrolanguage mappings give ``zho`` the same 19. A
+record reads::
+
+    Type: language
+    Subtag: cdo
+    Description: Min Dong Chinese
+    Added: 2009-07-29
+    Macrolanguage: zh
+
+Mandarin is the primary encompassed language,
+``<languageAlias type="cmn" replacement="zh" reason="macrolanguage"/>``, so
+``zh`` names Mandarin. CLDR 49 gives each of the other 18 members one rule,
+under one heading::
+
+    <!-- Encompassed by Chinese, Mandarin -->
+    <languageMatch desired="cdo" supported="zh" distance="10" oneway="true"/>  <!-- Min Dong Chinese -->
+    <languageMatch desired="cjy" supported="zh" distance="10" oneway="true"/>  <!-- Jinyu Chinese -->
+    ...
+    <languageMatch desired="yue" supported="zh" distance="10" oneway="true"/>  <!-- Chinese, Cantonese -->
+
+Those 18 are languages apart from Mandarin, and this module never serves
+them from a Mandarin resource (see ``_NOT_MANDARIN``). The rule is the same
+for all 18, because the registry and CLDR give all 18 the same records.
+Literary Chinese (``lzh``) is one of them: the ISO 639-3 code table types it
+historic, and "A language is listed as historic when it is considered to be
+distinct from any modern languages that are descended from it". Dungan
+(``dng``) is not: its record has no ``Macrolanguage`` field, and no CLDR 49
+``languageMatch`` names it, so ``* ⇒ *`` at 80 already makes it a different
+language from Mandarin.
+
 A bare tag is measured from its default region (see :mod:`linguatag.regions`):
 ``en`` is ``en-GB``, so ``lang_distance("en", "en-GB")`` is ``0`` and
 ``lang_distance("en", "en-US")`` is a regional difference.
@@ -101,14 +133,17 @@ _LATIN_SCRIPT_ARABIC = frozenset({"acy", "pga"})
 _MSA = ("ar", "arb", "ar-001")
 _ARABIC_FALLBACK_DISTANCE = 5
 
-# Cantonese, Hakka, Min Nan, Wu, Gan and Xiang are never served as Mandarin.
-# langcodes measures `yue-CN` or `hak` against `zh-CN` or `cmn` at 10, a
-# member against its macrolanguage in one script, and that is a usable match;
-# they are not mutually intelligible with Mandarin. Against `cmn`, and against
-# `zh` in Simplified script, they count as different languages, as the coarse
-# measure counts them. `zh` in Traditional script keeps the langcodes
-# distance: a `zh-HK` resource is often Cantonese.
-_NOT_MANDARIN = frozenset({"yue", "hak", "nan", "wuu", "gan", "hsn"})
+# The members of the `zh` macrolanguage other than Mandarin (see the module
+# docstring), among them Cantonese, Hakka, Min Nan, Wu, Gan and Xiang, are
+# never served as Mandarin. langcodes measures `yue-CN`, `hak` or `cdo-Hans`
+# against `zh-CN` or `cmn` at 10, a member against its macrolanguage in one
+# script, and that is a usable match; they are not mutually intelligible with
+# Mandarin. Against `cmn`, and against `zh` in Simplified script, they count
+# as different languages, as the coarse measure counts them. `zh` in
+# Traditional script keeps the langcodes distance: a `zh-HK` resource is often
+# Cantonese.
+_NOT_MANDARIN = frozenset(
+    "cdo cjy cnp cpx csp czh czo gan hak hnm hsn luh lzh mnp nan sjc wuu yue".split())
 _MANDARIN = "cmn"
 _CHINESE = "zh"
 _DIFFERENT_LANGUAGE_DISTANCE = 100
@@ -203,11 +238,12 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     The spellings of Modern Standard Arabic (``ar``, ``arb``, ``ar-001``) are
     identical. An individual Arabic language (``arz``, ``apc``, ...),
     Hassaniyya (``mey``) or ``ar`` with any region, in Arabic script, measured
-    against one of them, is at most 5. Cantonese, Hakka, Min Nan, Wu, Gan or
-    Xiang (``yue``, ``hak``, ``nan``, ``wuu``, ``gan``, ``hsn``) measured
-    against ``cmn``, or against ``zh`` in Simplified script, is a different
-    language. So is Fanti (``fat``) or Mandinka (``mnk``) measured against
-    another language, Akan (``ak``) and Mandingo (``man``) included.
+    against one of them, is at most 5. A member of the ``zh`` macrolanguage
+    other than Mandarin (``yue``, ``hak``, ``nan``, ``wuu``, ``cdo``, ``lzh``
+    and the others the module docstring names) measured against ``cmn``, or
+    against ``zh`` in Simplified script, is a different language. So is Fanti
+    (``fat``) or Mandinka (``mnk``) measured against another language, Akan
+    (``ak``) and Mandingo (``man``) included.
 
     A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
     its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``. A tag
