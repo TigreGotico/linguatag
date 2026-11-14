@@ -89,6 +89,48 @@ def test_a_tie_goes_to_the_code_as_written(target, available, expected):
     assert closest_lang(target, available) == expected
 
 
+@pytest.mark.parametrize("target,available,expected", [
+    ("yol-IE", ["enm", "yol"], "yol"),
+    ("he-IL", ["iw", "he"], "he"),
+    ("ajp-JO", ["apc", "ajp"], "ajp"),
+])
+def test_a_tie_between_a_deprecated_code_and_its_preferred_value(target, available, expected):
+    assert closest_lang(target, available) == expected
+
+
+# RFC 5646 section 4.5, step 3: "For extlangs, the original primary language
+# subtag is also replaced if there is a primary language subtag in the
+# 'Preferred-Value'." The registry marks extlang `ajp` Deprecated 2023-03-17.
+@pytest.mark.parametrize("target,available,expected", [
+    ("hak", ["zh-hak", "hak"], "hak"),
+    ("zh-hak", ["hak", "zh-hak"], "zh-hak"),
+    ("yue", ["zh-yue", "yue"], "yue"),
+    ("zh-yue", ["yue", "zh-yue"], "zh-yue"),
+    ("arz-EG", ["ar-arz-EG", "arz-EG"], "arz-EG"),
+    ("ar-arz-EG", ["arz-EG", "ar-arz-EG"], "ar-arz-EG"),
+    ("apc", ["ar-ajp", "apc"], "apc"),
+])
+def test_a_tie_between_an_extlang_form_and_its_preferred_value(target, available, expected):
+    assert closest_lang(target, available) == expected
+
+
+# IANA Language Subtag Registry, File-Date 2026-09-17: `aka`, `fra`, `tur` and
+# `fas` are no language subtags; the subtags are `ak`, `fr`, `tr` and `fa`.
+# `fat` (Fanti) and `pes` (Iranian Persian) are member languages of the `ak`
+# and `fa` macrolanguages. `rev` and `red` are no registered variants.
+@pytest.mark.parametrize("target,available,expected", [
+    ("ak-GH", ["aka", "fat"], "aka"),
+    ("fa-IR", ["fas", "pes"], "fas"),
+    ("fr-FR", ["fra-Latn", "fra-Latn-rev"], "fra-Latn"),
+    ("tr-TR", ["tur-Latn", "tur-Latn-red"], "tur-Latn"),
+])
+def test_an_iso_639_alias_does_not_lose_a_tie(target, available, expected):
+    """An ISO 639-2 or 639-3 code that langcodes reads as a language subtag is
+    not a deprecated subtag, so it does not lose a tie to another language or
+    to a tag that langcodes cannot read."""
+    assert closest_lang(target, available) == expected
+
+
 # IANA Language Subtag Registry, File-Date 2026-09-17. The langcodes copy
 # predates these records:
 #   Subtag: ajp  Description: South Levantine Arabic  Deprecated: 2023-03-17
