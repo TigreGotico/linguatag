@@ -10,6 +10,9 @@ RFC 5646 section 4.5 canonicalizes a tag in two steps that need the registry:
 - A deprecated language subtag becomes its Preferred-Value: `ajp` is `apc`.
   deprecated_languages.json maps every deprecated language subtag that has a
   Preferred-Value to that value.
+- A deprecated region subtag becomes its Preferred-Value: `my-BU` is
+  `my-MM`. deprecated_regions.json maps every deprecated region subtag that
+  has a Preferred-Value to that value.
 
 The registry is read from a file or a URL, the IANA one by default:
 
@@ -75,6 +78,13 @@ def main() -> None:
                   for r in languages if "Deprecated" in r and "Preferred-Value" in r}
     write("deprecated_languages.json", file_date, deprecated)
     print(f"{len(languages)} language records in, {len(deprecated)} deprecated "
+          f"mappings out", file=sys.stderr)
+
+    regions = [r for r in entries if r.get("Type") == ["region"]]
+    deprecated = {r["Subtag"][0].lower(): r["Preferred-Value"][0].lower()
+                  for r in regions if "Deprecated" in r and "Preferred-Value" in r}
+    write("deprecated_regions.json", file_date, deprecated)
+    print(f"{len(regions)} region records in, {len(deprecated)} deprecated "
           f"mappings out", file=sys.stderr)
 
 if __name__ == "__main__":

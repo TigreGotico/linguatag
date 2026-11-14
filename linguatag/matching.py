@@ -41,6 +41,12 @@ A bare tag is measured from its default region (see :mod:`linguatag.regions`):
 ``en`` is ``en-GB``, so ``lang_distance("en", "en-GB")`` is ``0`` and
 ``lang_distance("en", "en-US")`` is a regional difference.
 
+Tags are compared in their canonical form. RFC 5646 section 4.5, step 3:
+"Subtags are replaced by their 'Preferred-Value', if there is one. For
+extlangs, the original primary language subtag is also replaced if there is
+a primary language subtag in the 'Preferred-Value'." So ``ar-apc`` and
+``apc`` are one tag, and so are ``my-BU`` and ``my-MM``.
+
 ``langcodes`` is optional. Without it, :func:`lang_distance` falls back to a
 coarse same-language measure with the same ordering for the cases locale
 resolution depends on.
@@ -52,8 +58,8 @@ from typing import Optional, Sequence
 
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import _with_likely_script, with_default_region
-from linguatag.standardize import (_without_deprecated_language, _without_extlang,
-                                   standardize_lang)
+from linguatag.standardize import (_preferred_values, _without_deprecated_language,
+                                   _without_extlang, standardize_lang)
 
 __all__ = [
     "standardize_lang",
@@ -312,6 +318,23 @@ def _has_preferred_value(tag: str) -> bool:
     return _without_deprecated_language(_without_extlang(tag)) != tag
 
 
+def _region_subtag(tag: str) -> str:
+    """The region subtag of ``tag`` (two letters or three digits), or ``""``."""
+    for subtag in tag.replace("_", "-").split("-")[1:]:
+        if len(subtag) == 1:
+            break
+        if (len(subtag) == 2 and subtag.isalpha()) or (len(subtag) == 3 and subtag.isdigit()):
+            return subtag.lower()
+    return ""
+
+
+def _has_noncanonical_subtag(tag: str) -> bool:
+    """Whether canonicalization replaces a subtag of ``tag``: a language,
+    extlang or region subtag with an IANA Preferred-Value."""
+    return (_has_preferred_value(tag)
+            or _region_subtag(tag) in _preferred_values("deprecated_regions.json"))
+
+
 def _is_other_code_of_language(target: str, candidate: str) -> bool:
     """Whether ``candidate`` writes the language of ``target`` with another
     code: one of the two has an IANA Preferred-Value that gives the other.
@@ -345,8 +368,10 @@ def closest_lang(target: str, available: Sequence[str],
     same language (a deprecated code or an extlang form, and its
     Preferred-Value) loses the tie, so ``apc`` picks ``apc`` over ``ajp`` and
     ``hak`` picks ``hak`` over ``zh-hak``. An ISO 639-2 or 639-3 code such as
-    ``fra`` for ``fr`` is not such a code. Other ties resolve to the first
-    candidate in iteration order.
+    ``fra`` for ``fr`` is not such a code. Next, a candidate with a language,
+    extlang or region subtag that has a Preferred-Value loses the tie, so
+    ``ar-apc`` picks ``apc`` over ``ajp`` and ``my-MM`` picks ``my-MM`` over
+    ``my-BU``. Other ties resolve to the first candidate in iteration order.
     With ``lects``, the lect score orders the candidates within
     ``max_distance``; it decides no match.
 
@@ -372,7 +397,8 @@ def closest_lang(target: str, available: Sequence[str],
             continue
         rank = (distance if lects is None else lang_distance(target, candidate, lects),
                 standardize_lang(candidate).casefold() != wanted,
-                _is_other_code_of_language(target, candidate))
+                _is_other_code_of_language(target, candidate),
+                _has_noncanonical_subtag(candidate))
         if best_rank is None or rank < best_rank:
             best, best_rank = candidate, rank
     return best

@@ -81,6 +81,7 @@ def test_a_deprecated_language_is_its_preferred_value(subtag, preferred, with_la
     ("enm", ["yol", "enm"], "enm"),
     ("ajp_Arab", ["apc_Arab", "ajp_Arab"], "ajp_Arab"),
     ("ajp", ["apc", "ajp"], "ajp"),
+    ("ar-ajp", ["apc", "ar-ajp"], "ar-ajp"),
 ])
 def test_a_tie_goes_to_the_code_as_written(target, available, expected):
     """A deprecated code and its Preferred-Value standardize to one string.
@@ -111,6 +112,66 @@ def test_a_tie_between_a_deprecated_code_and_its_preferred_value(target, availab
     ("apc", ["ar-ajp", "apc"], "apc"),
 ])
 def test_a_tie_between_an_extlang_form_and_its_preferred_value(target, available, expected):
+    assert closest_lang(target, available) == expected
+
+
+def _registry_deprecated_regions():
+    """(Subtag, Preferred-Value) of every deprecated region record in the IANA
+    registry copy that langcodes ships, read independently of linguatag."""
+    text = (files("langcodes") / "data" / "language-subtag-registry.txt").read_text("utf-8")
+    records = (dict(line.split(": ", 1) for line in block.splitlines()
+                    if ": " in line and not line.startswith(" "))
+               for block in text.split("\n%%\n"))
+    return [(r["Subtag"], r["Preferred-Value"]) for r in records
+            if r.get("Type") == "region" and "Deprecated" in r and "Preferred-Value" in r]
+
+
+@pytest.mark.parametrize("subtag,preferred", _registry_deprecated_regions())
+def test_a_tie_goes_to_the_preferred_value_of_a_deprecated_region(subtag, preferred):
+    deprecated, canonical = f"en-{subtag}", f"en-{preferred}"
+    assert closest_lang(canonical, [deprecated, canonical]) == canonical
+    assert closest_lang(canonical, [canonical, deprecated]) == canonical
+
+
+# IANA Language Subtag Registry, File-Date 2026-09-17:
+#   Type: region  Subtag: BU  Description: Burma  Deprecated: 1989-12-05  Preferred-Value: MM
+#   Type: region  Subtag: DD  Description: German Democratic Republic  Deprecated: 1990-10-30
+#     Preferred-Value: DE
+#   Type: extlang  Subtag: apc  Preferred-Value: apc  Prefix: ar
+#   Type: extlang  Subtag: ajp  Deprecated: 2023-03-17  Preferred-Value: ajp  Prefix: ar
+#   Type: language  Subtag: ajp  Deprecated: 2023-03-17  Preferred-Value: apc
+# So `ar-apc`, `ar-ajp` and `ajp` are `apc`, `my-BU` is `my-MM` and `de-DD` is `de-DE`.
+@pytest.mark.parametrize("target,available,expected", [
+    ("my-MM", ["my-BU", "my-MM"], "my-MM"),
+    ("my-MM", ["my-MM", "my-BU"], "my-MM"),
+    ("my-BU", ["my-BU", "my-MM"], "my-MM"),
+    ("my-BU", ["my-MM", "my-BU"], "my-MM"),
+    ("de-DE", ["de-DD", "de-DE"], "de-DE"),
+    ("de-DE", ["de-DE", "de-DD"], "de-DE"),
+    ("ar-apc", ["ajp", "apc"], "apc"),
+    ("ar-apc", ["apc", "ajp"], "apc"),
+    ("ar-ajp", ["ajp", "apc"], "apc"),
+    ("ar-ajp", ["apc", "ajp"], "apc"),
+    ("ajp", ["ar-ajp", "apc"], "apc"),
+])
+def test_a_tie_goes_to_the_preferred_value_over_a_deprecated_subtag(target, available, expected):
+    assert closest_lang(target, available) == expected
+
+
+# None of these candidates has a Preferred-Value: `ak`, `tw` and `my` are
+# language subtags, `aka` is no subtag, `MM` is a region subtag, and the region
+# record of `SU` (Deprecated: 1992-08-30) has no Preferred-Value. The tie goes
+# to the code the request names, or else to the first candidate.
+@pytest.mark.parametrize("target,available,expected", [
+    ("my-MM", ["my-MM"], "my-MM"),
+    ("ak", ["aka", "ak"], "aka"),
+    ("ak", ["ak", "aka"], "ak"),
+    ("ak-GH", ["tw", "aka"], "tw"),
+    ("ak-GH", ["aka", "tw"], "aka"),
+    ("ru-RU", ["ru-SU", "ru-RU"], "ru-SU"),
+    ("ru-RU", ["ru-RU", "ru-SU"], "ru-RU"),
+])
+def test_a_tie_without_a_preferred_value_keeps_its_order(target, available, expected):
     assert closest_lang(target, available) == expected
 
 
