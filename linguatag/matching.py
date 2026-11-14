@@ -27,7 +27,8 @@ from typing import Optional, Sequence
 
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import _with_likely_script, with_default_region
-from linguatag.standardize import _preferred_values, standardize_lang
+from linguatag.standardize import (_without_deprecated_language, _without_extlang,
+                                   standardize_lang)
 
 __all__ = [
     "standardize_lang",
@@ -272,16 +273,25 @@ def _language_subtag(tag: str) -> str:
     return tag.replace("_", "-").split("-", 1)[0].casefold()
 
 
+def _has_preferred_value(tag: str) -> bool:
+    return _without_deprecated_language(_without_extlang(tag)) != tag
+
+
 def _is_other_code_of_language(target: str, candidate: str) -> bool:
     """Whether ``candidate`` writes the language of ``target`` with another
-    code: one of the two is a deprecated language subtag and the other its
-    Preferred-Value (``ajp`` and ``apc``). An ISO 639-2 or 639-3 code that
-    ``langcodes`` reads as a shorter subtag (``fra`` as ``fr``) is no
-    deprecated subtag, so it is not another code."""
-    target_language, candidate_language = _language_subtag(target), _language_subtag(candidate)
-    deprecated = _preferred_values("deprecated_languages.json")
-    return (target_language != candidate_language
-            and (target_language in deprecated or candidate_language in deprecated)
+    code: one of the two has an IANA Preferred-Value that gives the other.
+
+    RFC 5646 section 4.5, step 3: "Subtags are replaced by their
+    'Preferred-Value', if there is one. For extlangs, the original primary
+    language subtag is also replaced if there is a primary language subtag in
+    the 'Preferred-Value'." So a deprecated language subtag and its
+    Preferred-Value (``ajp`` and ``apc``) are two codes of one language, and
+    so are a language-extlang pair and its Preferred-Value (``zh-hak`` and
+    ``hak``). An ISO 639-2 or 639-3 code that ``langcodes`` reads as a shorter
+    subtag (``fra`` as ``fr``) has no Preferred-Value, so it is not another
+    code."""
+    return (_language_subtag(candidate) != _language_subtag(target)
+            and (_has_preferred_value(target) or _has_preferred_value(candidate))
             and _language_subtag(standardize_lang(candidate))
             == _language_subtag(standardize_lang(target)))
 
@@ -297,8 +307,9 @@ def closest_lang(target: str, available: Sequence[str],
     (compared after :func:`standardize_lang`, without regard to case), so
     ``pt-PT`` picks ``pt-PT`` over ``pt``, which is also at 0. Next, a
     candidate that writes the target's language with another code of the
-    same language (a deprecated code and its Preferred-Value) loses the tie,
-    so ``apc`` picks ``apc`` over ``ajp``. An ISO 639-2 or 639-3 code such as
+    same language (a deprecated code or an extlang form, and its
+    Preferred-Value) loses the tie, so ``apc`` picks ``apc`` over ``ajp`` and
+    ``hak`` picks ``hak`` over ``zh-hak``. An ISO 639-2 or 639-3 code such as
     ``fra`` for ``fr`` is not such a code. Other ties resolve to the first
     candidate in iteration order.
     With ``lects``, the lect score orders the candidates within

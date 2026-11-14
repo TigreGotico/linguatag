@@ -98,6 +98,22 @@ def test_a_tie_between_a_deprecated_code_and_its_preferred_value(target, availab
     assert closest_lang(target, available) == expected
 
 
+# RFC 5646 section 4.5, step 3: "For extlangs, the original primary language
+# subtag is also replaced if there is a primary language subtag in the
+# 'Preferred-Value'." The registry marks extlang `ajp` Deprecated 2023-03-17.
+@pytest.mark.parametrize("target,available,expected", [
+    ("hak", ["zh-hak", "hak"], "hak"),
+    ("zh-hak", ["hak", "zh-hak"], "zh-hak"),
+    ("yue", ["zh-yue", "yue"], "yue"),
+    ("zh-yue", ["yue", "zh-yue"], "zh-yue"),
+    ("arz-EG", ["ar-arz-EG", "arz-EG"], "arz-EG"),
+    ("ar-arz-EG", ["arz-EG", "ar-arz-EG"], "ar-arz-EG"),
+    ("apc", ["ar-ajp", "apc"], "apc"),
+])
+def test_a_tie_between_an_extlang_form_and_its_preferred_value(target, available, expected):
+    assert closest_lang(target, available) == expected
+
+
 # IANA Language Subtag Registry, File-Date 2026-09-17: `aka`, `fra`, `tur` and
 # `fas` are no language subtags; the subtags are `ak`, `fr`, `tr` and `fa`.
 # `fat` (Fanti) and `pes` (Iranian Persian) are member languages of the `ak`
