@@ -9,22 +9,31 @@ from typing import Dict
 __all__ = ["standardize_lang"]
 
 
-_EXTLANGS = Path(__file__).resolve().parent / "data" / "extlangs.json"
+_DATA = Path(__file__).resolve().parent / "data"
 
 
-@lru_cache(maxsize=1)
-def _extlang_preferred_values() -> Dict[str, str]:
-    return json.loads(_EXTLANGS.read_text(encoding="utf-8"))["preferred"]
+@lru_cache(maxsize=None)
+def _preferred_values(name: str) -> Dict[str, str]:
+    return json.loads((_DATA / name).read_text(encoding="utf-8"))["preferred"]
 
 
 def _without_extlang(tag: str) -> str:
     """A language and its extlang replaced by the extlang's IANA
     Preferred-Value (RFC 5646 section 4.5): `zh-hak-TW` is `hak-TW`."""
     parts = tag.replace("_", "-").split("-")
-    preferred = _extlang_preferred_values().get("-".join(parts[:2]).lower())
+    preferred = _preferred_values("extlangs.json").get("-".join(parts[:2]).lower())
     if preferred is None:
         return tag
     return "-".join([preferred, *parts[2:]])
+
+
+def _without_deprecated_language(tag: str) -> str:
+    """A deprecated language subtag replaced by its IANA Preferred-Value
+    (RFC 5646 section 4.5): `ajp-JO` is `apc-JO`. The registry copy in
+    ``langcodes`` predates some deprecations, so the table comes first."""
+    language, sep, rest = tag.replace("_", "-").partition("-")
+    preferred = _preferred_values("deprecated_languages.json").get(language.lower())
+    return tag if preferred is None else preferred + sep + rest
 
 
 def _case(index: int, subtag: str, after_singleton: bool) -> str:
@@ -54,7 +63,8 @@ def standardize_lang(tag: str) -> str:
 
     Folds underscores to hyphens and applies the BCP-47 case conventions. A
     language and its extlang become the extlang's IANA Preferred-Value
-    (``zh-hak`` is ``hak``, ``ar-arz-EG`` is ``arz-EG``). With ``langcodes``
+    (``zh-hak`` is ``hak``, ``ar-arz-EG`` is ``arz-EG``), and a deprecated
+    language subtag becomes its Preferred-Value (``ajp`` is ``apc``). With ``langcodes``
     it also replaces deprecated forms (``iw`` is ``he``) and drops a redundant
     script, so two spellings of one language (``en_us``, ``en-US``) reduce to
     one string.
@@ -71,7 +81,7 @@ def standardize_lang(tag: str) -> str:
         # langcodes folds Tagalog into the `fil` macrolanguage; the tag stays
         # `tl` here.
         return "tl"
-    tag = _without_extlang(tag)
+    tag = _without_deprecated_language(_without_extlang(tag))
     try:
         from langcodes import standardize_tag
         return str(standardize_tag(tag))

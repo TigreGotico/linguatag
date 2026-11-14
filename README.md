@@ -32,7 +32,7 @@ The CLDR data in `langcodes` has no entry for some Arabic varieties, and it puts
 
 `lang_distance` is `0` for identical tags and grows as tags differ. A distance of 10 or less is a usable match. Both tags are standardized first, and a tag with no region is measured from its default region.
 
-Standardization replaces an extlang tag with its IANA Preferred-Value, as RFC 5646 section 4.5 says: `zh-hak` is Hakka (`hak`), and `ar-arz-EG` is `arz-EG`. `linguatag/data/extlangs.json` holds the table. `scripts/build_extlangs.py` rebuilds it from the IANA Language Subtag Registry.
+Standardization replaces an extlang tag and a deprecated language subtag with their IANA Preferred-Values, as RFC 5646 section 4.5 says: `zh-hak` is Hakka (`hak`), `ar-arz-EG` is `arz-EG`, and `ajp-JO` is `apc-JO`. `linguatag/data/extlangs.json` and `linguatag/data/deprecated_languages.json` hold the tables. `scripts/build_preferred_values.py` rebuilds both from the IANA Language Subtag Registry.
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
