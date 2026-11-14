@@ -12,6 +12,31 @@ small distance), a member language against its macrolanguage tag (``10``, the
 threshold itself), and a different language (``>= 100`` with the coarse
 measure, never a usable match).
 
+``langcodes`` replaces an encompassed language with its macrolanguage
+before it measures, from the CLDR ``languageAlias`` entries with
+``reason="macrolanguage"``. UTS #35 (revision 79, CLDR 49), BCP 47
+Conformance: "Each macrolanguage has an identified primary encompassed
+language, which is treated as an alias for the macrolanguage, and thus is
+replaced when canonicalizing". So ``tw`` against ``ak`` and ``cmn`` against
+``zh`` are ``0``. The ``langcodes`` copy is older than CLDR 49 and still holds
+three such entries that CLDR has removed::
+
+    <languageAlias type="fat" replacement="ak" reason="macrolanguage"/> <!-- Fanti ⇒ Akan -->
+    <languageAlias type="mnk" replacement="man" reason="macrolanguage"/> <!-- Mandinka ⇒ Mandingo -->
+    <languageAlias type="knn" replacement="kok" reason="macrolanguage"/> <!-- Konkani (individual language) ⇒ Konkani -->
+
+CLDR 46 dropped the ``knn`` entry and CLDR 48 the ``mnk`` entry. CLDR 49
+dropped the ``fat`` entry (CLDR-19720, "Akan (ak) should only have one
+encompassed language") and kept
+``<languageAlias type="tw" replacement="ak" reason="macrolanguage"/>``. The
+CLDR 49 ``languageMatching`` data names neither ``fat`` nor ``mnk``, so their
+distance to any other language comes from
+``<languageMatch desired="*" supported="*" distance="80"/>``: a different
+language. Fanti and Mandinka measured against another language, their
+macrolanguage included, are a different language here too. ``knn`` is not in
+this rule, because CLDR 49 gives it
+``<languageMatch desired="knn" supported="kok" distance="10" oneway="true"/>``.
+
 A bare tag is measured from its default region (see :mod:`linguatag.regions`):
 ``en`` is ``en-GB``, so ``lang_distance("en", "en-GB")`` is ``0`` and
 ``lang_distance("en", "en-US")`` is a regional difference.
@@ -82,6 +107,10 @@ _MANDARIN = "cmn"
 _CHINESE = "zh"
 _DIFFERENT_LANGUAGE_DISTANCE = 100
 
+# Fanti and Mandinka, which langcodes reads as Akan and Mandingo (see the
+# module docstring).
+_FORMER_MACROLANGUAGE_ALIASES = frozenset({"fat", "mnk"})
+
 
 def _is_simplified(tag: str) -> bool:
     try:
@@ -120,6 +149,11 @@ def _sinitic_against_mandarin(a: str, b: str) -> bool:
         return False
     return _MANDARIN in languages or (_CHINESE in languages
                                       and _is_simplified(languages[_CHINESE]))
+
+
+def _former_macrolanguage_alias(a: str, b: str) -> bool:
+    languages = {a.split("-")[0].lower(), b.split("-")[0].lower()}
+    return len(languages) == 2 and not _FORMER_MACROLANGUAGE_ALIASES.isdisjoint(languages)
 
 
 def _langcodes_distance(desired: str, supported: str) -> Optional[int]:
@@ -166,7 +200,8 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     against one of them, is at most 5. Cantonese, Hakka, Min Nan, Wu, Gan or
     Xiang (``yue``, ``hak``, ``nan``, ``wuu``, ``gan``, ``hsn``) measured
     against ``cmn``, or against ``zh`` in Simplified script, is a different
-    language.
+    language. So is Fanti (``fat``) or Mandinka (``mnk``) measured against
+    another language, Akan (``ak``) and Mandingo (``man``) included.
 
     A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
     its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``. A tag
@@ -221,7 +256,7 @@ def _language_distance(desired: str, supported: str) -> int:
     distance = _langcodes_distance(a, b)
     if distance is None:
         distance = _coarse_distance(a, b)
-    if _sinitic_against_mandarin(a, b):
+    if _sinitic_against_mandarin(a, b) or _former_macrolanguage_alias(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     language = a.split("-")[0].lower()
     scripts = [t.lower() for t in without_private_use(a).split("-")[1:]

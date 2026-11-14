@@ -36,7 +36,7 @@ Standardization replaces an extlang tag and a deprecated language subtag with th
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only.
 
-An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`), Cypriot Maronite Arabic (`acy`) and Hassaniyya in Senegal (`mey-SN`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin.
+An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`), Cypriot Maronite Arabic (`acy`) and Hassaniyya in Senegal (`mey-SN`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. Cantonese, Hakka, Min Nan, Wu, Gan and Xiang never match Mandarin. Fanti (`fat`) and Mandinka (`mnk`) match no other language, Akan (`ak`), Twi (`tw`), Mandingo (`man`) and Eastern Maninkakan (`emk`) included: CLDR 49 does not make them aliases of a macrolanguage. Twi is an alias of Akan.
 
 ## Arabic varieties
 
