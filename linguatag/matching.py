@@ -19,19 +19,23 @@ Conformance: "Each macrolanguage has an identified primary encompassed
 language, which is treated as an alias for the macrolanguage, and thus is
 replaced when canonicalizing". So ``tw`` against ``ak`` and ``cmn`` against
 ``zh`` are ``0``. The ``langcodes`` copy is older than CLDR 49 and still holds
-two such entries that CLDR has removed::
+three such entries that CLDR has removed::
 
     <languageAlias type="fat" replacement="ak" reason="macrolanguage"/> <!-- Fanti ⇒ Akan -->
     <languageAlias type="mnk" replacement="man" reason="macrolanguage"/> <!-- Mandinka ⇒ Mandingo -->
+    <languageAlias type="knn" replacement="kok" reason="macrolanguage"/> <!-- Konkani (individual language) ⇒ Konkani -->
 
-CLDR 48 dropped the ``mnk`` entry. CLDR 49 dropped the ``fat`` entry
-(CLDR-19720, "Akan (ak) should only have one encompassed language") and kept
+CLDR 46 dropped the ``knn`` entry and CLDR 48 the ``mnk`` entry. CLDR 49
+dropped the ``fat`` entry (CLDR-19720, "Akan (ak) should only have one
+encompassed language") and kept
 ``<languageAlias type="tw" replacement="ak" reason="macrolanguage"/>``. The
 CLDR 49 ``languageMatching`` data names neither ``fat`` nor ``mnk``, so their
 distance to any other language comes from
 ``<languageMatch desired="*" supported="*" distance="80"/>``: a different
 language. Fanti and Mandinka measured against another language, their
-macrolanguage included, are a different language here too.
+macrolanguage included, are a different language here too. ``knn`` is not in
+this rule, because CLDR 49 gives it
+``<languageMatch desired="knn" supported="kok" distance="10" oneway="true"/>``.
 
 A bare tag is measured from its default region (see :mod:`linguatag.regions`):
 ``en`` is ``en-GB``, so ``lang_distance("en", "en-GB")`` is ``0`` and

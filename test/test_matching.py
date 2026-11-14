@@ -446,6 +446,19 @@ def test_a_current_macrolanguage_alias_is_its_macrolanguage(desired, supported):
     assert lang_distance(desired, supported) == 0
 
 
+# Two regions of Fanti or Mandinka are one language: the same region distance
+# as two regions of Akan or Mandingo.
+@pytest.mark.parametrize("desired,supported,same_shape", [
+    ("fat-US", "fat-GH", ("ak-US", "ak-GH")),
+    ("mnk-SN", "mnk-GM", ("man-SN", "man-GM")),
+])
+def test_two_regions_of_a_former_macrolanguage_alias_are_one_language(
+        desired, supported, same_shape):
+    assert lang_distance(desired, supported) == lang_distance(*same_shape)
+    assert lang_distance(desired, supported) <= language.DEFAULT_MAX_LANGUAGE_DISTANCE
+    assert closest_lang(supported, [desired]) == desired
+
+
 def test_arabic_variety_prefers_its_own_region_over_another():
     assert closest_lang("ary", ["ar-EG", "ar-MA"]) == "ar-MA"
     assert closest_lang("arz", ["ar-MA", "ar-EG"]) == "ar-EG"
