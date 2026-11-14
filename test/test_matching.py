@@ -400,6 +400,52 @@ def test_cantonese_does_not_reach_mandarin():
     assert closest_lang("yue", ["zh-CN"]) is None
 
 
+# --- macrolanguage aliases that CLDR has removed ------------------------------
+
+# CLDR 48 supplementalMetadata.xml, removed in CLDR 49 (CLDR-19720):
+#   <languageAlias type="fat" replacement="ak" reason="macrolanguage"/> <!-- Fanti ⇒ Akan -->
+# CLDR 47 supplementalMetadata.xml, removed in CLDR 48:
+#   <languageAlias type="mnk" replacement="man" reason="macrolanguage"/> <!-- Mandinka ⇒ Mandingo -->
+# CLDR 49 languageInfo.xml has no languageMatch for fat or mnk, so this applies:
+#   <languageMatch desired="*" supported="*" distance="80"/>
+CLDR_ANY_LANGUAGE_DISTANCE = 80
+FORMER_ALIAS_PAIRS = [("ak-GH", "fat"), ("ak", "fat"), ("fat", "ak"), ("fat-GH", "ak-GH"),
+                      ("aka", "fat"), ("fat", "tw"), ("tw", "fat"),
+                      ("man", "mnk"), ("mnk", "man"), ("mnk-GM", "man-GM")]
+
+
+@pytest.mark.parametrize("desired,supported", FORMER_ALIAS_PAIRS)
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_a_former_macrolanguage_alias_is_another_language(desired, supported,
+                                                         with_langcodes, request):
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    assert lang_distance(desired, supported) >= CLDR_ANY_LANGUAGE_DISTANCE
+    assert lang_matches(desired, supported) is False
+
+
+@pytest.mark.parametrize("target,available,expected", [
+    ("ak-GH", ["fat", "aka"], "aka"),
+    ("ak-GH", ["aka", "fat"], "aka"),
+    ("ak-GH", ["fat"], None),
+    ("fat", ["ak", "fat"], "fat"),
+    ("fat", ["ak"], None),
+    ("man", ["mnk", "man"], "man"),
+    ("mnk", ["man"], None),
+])
+def test_a_former_macrolanguage_alias_does_not_tie_with_its_macrolanguage(
+        target, available, expected):
+    assert closest_lang(target, available) == expected
+
+
+# CLDR 49 supplementalMetadata.xml keeps:
+#   <languageAlias type="tw" replacement="ak" reason="macrolanguage"/> <!-- Twi ⇒ Akan -->
+@pytest.mark.parametrize("desired,supported", [("ak-GH", "tw"), ("ak", "tw"), ("tw", "ak"),
+                                               ("twi", "ak"), ("cmn", "zh")])
+def test_a_current_macrolanguage_alias_is_its_macrolanguage(desired, supported):
+    assert lang_distance(desired, supported) == 0
+
+
 def test_arabic_variety_prefers_its_own_region_over_another():
     assert closest_lang("ary", ["ar-EG", "ar-MA"]) == "ar-MA"
     assert closest_lang("arz", ["ar-MA", "ar-EG"]) == "ar-EG"
