@@ -27,7 +27,7 @@ from typing import Optional, Sequence
 
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import _with_likely_script, with_default_region
-from linguatag.standardize import standardize_lang
+from linguatag.standardize import _preferred_values, standardize_lang
 
 __all__ = [
     "standardize_lang",
@@ -274,9 +274,14 @@ def _language_subtag(tag: str) -> str:
 
 def _is_other_code_of_language(target: str, candidate: str) -> bool:
     """Whether ``candidate`` writes the language of ``target`` with another
-    code, such as a deprecated code and its Preferred-Value (``ajp`` and
-    ``apc``)."""
-    return (_language_subtag(candidate) != _language_subtag(target)
+    code: one of the two is a deprecated language subtag and the other its
+    Preferred-Value (``ajp`` and ``apc``). An ISO 639-2 or 639-3 code that
+    ``langcodes`` reads as a shorter subtag (``fra`` as ``fr``) is no
+    deprecated subtag, so it is not another code."""
+    target_language, candidate_language = _language_subtag(target), _language_subtag(candidate)
+    deprecated = _preferred_values("deprecated_languages.json")
+    return (target_language != candidate_language
+            and (target_language in deprecated or candidate_language in deprecated)
             and _language_subtag(standardize_lang(candidate))
             == _language_subtag(standardize_lang(target)))
 
@@ -293,7 +298,8 @@ def closest_lang(target: str, available: Sequence[str],
     ``pt-PT`` picks ``pt-PT`` over ``pt``, which is also at 0. Next, a
     candidate that writes the target's language with another code of the
     same language (a deprecated code and its Preferred-Value) loses the tie,
-    so ``apc`` picks ``apc`` over ``ajp``. Other ties resolve to the first
+    so ``apc`` picks ``apc`` over ``ajp``. An ISO 639-2 or 639-3 code such as
+    ``fra`` for ``fr`` is not such a code. Other ties resolve to the first
     candidate in iteration order.
     With ``lects``, the lect score orders the candidates within
     ``max_distance``; it decides no match.
