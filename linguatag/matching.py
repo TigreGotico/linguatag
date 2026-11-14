@@ -268,6 +268,19 @@ def is_arabic_variety(tag: str) -> bool:
     return standard.split("-")[0].lower() in _ARABIC_LANGUAGES
 
 
+def _language_subtag(tag: str) -> str:
+    return tag.replace("_", "-").split("-", 1)[0].casefold()
+
+
+def _is_other_code_of_language(target: str, candidate: str) -> bool:
+    """Whether ``candidate`` writes the language of ``target`` with another
+    code, such as a deprecated code and its Preferred-Value (``ajp`` and
+    ``apc``)."""
+    return (_language_subtag(candidate) != _language_subtag(target)
+            and _language_subtag(standardize_lang(candidate))
+            == _language_subtag(standardize_lang(target)))
+
+
 def closest_lang(target: str, available: Sequence[str],
                  max_distance: int = DEFAULT_MAX_LANGUAGE_DISTANCE,
                  lects: Optional[str] = None) -> Optional[str]:
@@ -277,8 +290,11 @@ def closest_lang(target: str, available: Sequence[str],
     distance is ``max_distance`` or less, so ``max_distance=0`` accepts exact
     matches only. A tie goes to the candidate that spells ``target`` itself
     (compared after :func:`standardize_lang`, without regard to case), so
-    ``pt-PT`` picks ``pt-PT`` over ``pt``, which is also at 0. Other ties
-    resolve to the first candidate in iteration order.
+    ``pt-PT`` picks ``pt-PT`` over ``pt``, which is also at 0. Next, a
+    candidate that writes the target's language with another code of the
+    same language (a deprecated code and its Preferred-Value) loses the tie,
+    so ``apc`` picks ``apc`` over ``ajp``. Other ties resolve to the first
+    candidate in iteration order.
     With ``lects``, the lect score orders the candidates within
     ``max_distance``; it decides no match.
 
@@ -303,7 +319,8 @@ def closest_lang(target: str, available: Sequence[str],
         if distance > max_distance:
             continue
         rank = (distance if lects is None else lang_distance(target, candidate, lects),
-                standardize_lang(candidate).casefold() != wanted)
+                standardize_lang(candidate).casefold() != wanted,
+                _is_other_code_of_language(target, candidate))
         if best_rank is None or rank < best_rank:
             best, best_rank = candidate, rank
     return best

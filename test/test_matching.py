@@ -53,12 +53,40 @@ def _registry_deprecated_languages():
             if r.get("Type") == "language" and "Deprecated" in r and "Preferred-Value" in r]
 
 
-@pytest.mark.parametrize("subtag,preferred", _registry_deprecated_languages())
-def test_a_deprecated_language_is_its_preferred_value(subtag, preferred):
+# IANA Language Subtag Registry, File-Date 2026-09-17: deprecated language
+# records with a Preferred-Value that the langcodes copy lacks.
+_NEWER_DEPRECATIONS = [
+    ("ajp", "apc"), ("ajt", "aeb"), ("bh", "bih"), ("dek", "sqm"), ("kgm", "plu"),
+    ("lak", "ksp"), ("mrd", "mgp"), ("nom", "cbr"), ("nte", "eko"), ("pmk", "crr"),
+    ("prp", "gu"), ("shl", "mrh"), ("smd", "kmb"), ("snb", "iba"), ("szd", "umi"),
+    ("tmk", "tdg"), ("tpw", "tpn"), ("xss", "zko"), ("yol", "enm"), ("zkb", "kjh"),
+]
+
+
+@pytest.mark.parametrize("subtag,preferred",
+                         _registry_deprecated_languages() + _NEWER_DEPRECATIONS)
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_a_deprecated_language_is_its_preferred_value(subtag, preferred, with_langcodes, request):
     """RFC 5646 section 4.5: a deprecated subtag is replaced by its
     Preferred-Value in the canonical form."""
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
     assert standardize_lang(subtag) == standardize_lang(preferred)
     assert lang_distance(subtag, preferred) == 0
+
+
+@pytest.mark.parametrize("target,available,expected", [
+    ("apc", ["ajp", "apc"], "apc"),
+    ("apc-SY", ["ajp", "apc"], "apc"),
+    ("enm", ["yol", "enm"], "enm"),
+    ("ajp_Arab", ["apc_Arab", "ajp_Arab"], "ajp_Arab"),
+    ("ajp", ["apc", "ajp"], "ajp"),
+])
+def test_a_tie_goes_to_the_code_as_written(target, available, expected):
+    """A deprecated code and its Preferred-Value standardize to one string.
+    Data sets that keep both apart (NLLB ajp_Arab and apc_Arab) still get
+    the entry the request names."""
+    assert closest_lang(target, available) == expected
 
 
 # IANA Language Subtag Registry, File-Date 2026-09-17. The langcodes copy
