@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.4a1](https://github.com/TigreGotico/linguatag/tree/0.2.4a1) (2026-11-14)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.3a1...0.2.4a1)
+
+**Merged pull requests:**
+
+- fix: measure Fanti and Mandinka as languages apart from Akan and Mandingo [\#33](https://github.com/TigreGotico/linguatag/pull/33) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.2.3a1](https://github.com/TigreGotico/linguatag/tree/0.2.3a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.2a1...0.2.3a1)
