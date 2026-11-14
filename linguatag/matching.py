@@ -57,7 +57,7 @@ from functools import lru_cache
 from typing import Optional, Sequence
 
 from linguatag.lects import lect_score, without_private_use
-from linguatag.regions import _with_likely_script, with_default_region
+from linguatag.regions import _is_region, _with_likely_script, with_default_region
 from linguatag.standardize import (_preferred_values, _without_deprecated_language,
                                    _without_extlang, standardize_lang)
 
@@ -323,7 +323,7 @@ def _region_subtag(tag: str) -> str:
     for subtag in tag.replace("_", "-").split("-")[1:]:
         if len(subtag) == 1:
             break
-        if (len(subtag) == 2 and subtag.isalpha()) or (len(subtag) == 3 and subtag.isdigit()):
+        if _is_region(subtag):
             return subtag.lower()
     return ""
 

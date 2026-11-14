@@ -160,8 +160,9 @@ def test_a_tie_goes_to_the_preferred_value_over_a_deprecated_subtag(target, avai
 
 # None of these candidates has a Preferred-Value: `ak`, `tw` and `my` are
 # language subtags, `aka` is no subtag, `MM` is a region subtag, and the region
-# record of `SU` (Deprecated: 1992-08-30) has no Preferred-Value. The tie goes
-# to the code the request names, or else to the first candidate.
+# record of `SU` (Deprecated: 1992-08-30) has no Preferred-Value. `dd` after
+# the private-use singleton `x` is no region subtag. The tie goes to the code
+# the request names, or else to the first candidate.
 @pytest.mark.parametrize("target,available,expected", [
     ("my-MM", ["my-MM"], "my-MM"),
     ("ak", ["aka", "ak"], "aka"),
@@ -170,6 +171,7 @@ def test_a_tie_goes_to_the_preferred_value_over_a_deprecated_subtag(target, avai
     ("ak-GH", ["aka", "tw"], "aka"),
     ("ru-RU", ["ru-SU", "ru-RU"], "ru-SU"),
     ("ru-RU", ["ru-RU", "ru-SU"], "ru-RU"),
+    ("en", ["en-x-dd", "en-GB"], "en-x-dd"),
 ])
 def test_a_tie_without_a_preferred_value_keeps_its_order(target, available, expected):
     assert closest_lang(target, available) == expected
