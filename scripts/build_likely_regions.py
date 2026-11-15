@@ -9,13 +9,15 @@ is unknown (`ZZ`) has no entry; one placed in the world (`001`, as `yi`)
 keeps it.
 
 The base is the CLDR snapshot inside the installed `langcodes`. That
-snapshot has no entry for some Arabic varieties, and `langcodes` then
-expands them to Latin script in the US. For each Arabic variety
-(`is_arabic_variety`) whose likely script in the CLDR release below differs
-from the one `langcodes` gives, every likely-subtag entry of that language
-comes from the CLDR release: its regions go into `regions`, and its scripts
-go into `scripts`, which maps a tag without a script (`mey`, `mey-SN`) to the
-script CLDR expects for it.
+snapshot has no entry for some Arabic varieties or for Western Armenian
+(`hyw`), and `langcodes` then expands them to Latin script in the US. It
+puts Literary Chinese (`lzh`) in Simplified script, where CLDR 49 gives
+`lzh_Hant_CN`. For each Arabic variety (`is_arabic_variety`) and each
+language in `FROM_CLDR_RELEASE` whose likely script in the CLDR release below
+differs from the one `langcodes` gives, every likely-subtag entry of that
+language comes from the CLDR release: its regions go into `regions`, and its
+scripts go into `scripts`, which maps a tag without a script (`mey`,
+`mey-SN`) to the script CLDR expects for it.
 
 Run it after a langcodes upgrade or a CLDR release:
 
@@ -39,6 +41,8 @@ CLDR_RELEASE = "49"
 CLDR_URL = ("https://raw.githubusercontent.com/unicode-org/cldr/release-{}"
             "/common/supplemental/likelySubtags.xml")
 UNKNOWN = "ZZ"
+# Western Armenian and Literary Chinese, beside the Arabic varieties.
+FROM_CLDR_RELEASE = frozenset({"hyw", "lzh"})
 
 
 def _is_script(subtag: str) -> bool:
@@ -68,11 +72,12 @@ def cldr_likely_subtags(release: str) -> dict:
             for entry in root.iter("likelySubtag")}
 
 
-def arabic_scripts_and_regions(cldr: dict) -> tuple:
-    """The CLDR scripts and regions of each Arabic variety whose likely
-    script `langcodes` gets wrong."""
+def cldr_scripts_and_regions(cldr: dict) -> tuple:
+    """The CLDR scripts and regions of each Arabic variety and each language
+    in `FROM_CLDR_RELEASE` whose likely script `langcodes` gets wrong."""
     languages = {tag for tag, (_, script, _) in cldr.items()
-                 if "-" not in tag and is_arabic_variety(tag)
+                 if "-" not in tag
+                 and (is_arabic_variety(tag) or tag in FROM_CLDR_RELEASE)
                  and standardize_lang(tag) == tag
                  and Language.get(tag).maximize().script != script}
     scripts, regions = {}, {}
@@ -90,10 +95,10 @@ def arabic_scripts_and_regions(cldr: dict) -> tuple:
 def main() -> None:
     release = sys.argv[1] if len(sys.argv) > 1 else CLDR_RELEASE
     cldr = cldr_likely_subtags(release)
-    scripts, arabic_regions = arabic_scripts_and_regions(cldr)
-    regions = {**likely_regions(), **arabic_regions}
+    scripts, cldr_regions = cldr_scripts_and_regions(cldr)
+    regions = {**likely_regions(), **cldr_regions}
     payload = {"source": f"CLDR likelySubtags, langcodes {version('langcodes')}; "
-                         f"Arabic varieties from CLDR {release}",
+                         f"Arabic varieties, hyw and lzh from CLDR {release}",
                "regions": dict(sorted(regions.items())),
                "scripts": dict(sorted(scripts.items()))}
     OUT.write_text(json.dumps(payload, indent=1, ensure_ascii=False) + "\n")
