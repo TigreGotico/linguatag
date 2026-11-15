@@ -613,6 +613,79 @@ def test_a_sinitic_language_never_matches_mandarin(sinitic, mandarin):
     assert closest_lang(mandarin, [sinitic]) is None
 
 
+# The other spoken IANA language subtags with `Macrolanguage: zh`, Mandarin
+# (`cmn`) and Literary Chinese (`lzh`) left out. CLDR 49 gives each of them
+# distance 10 to `zh`, as it gives Cantonese, in a block that is generated
+# mechanically from macrolanguage membership:
+# `<languageMatch desired="cdo" supported="zh" distance="10" oneway="true"/>`.
+# linguatag overrides that distance to 100, because these languages are not
+# mutually intelligible with Mandarin.
+OTHER_ZH_MEMBERS = ["cdo", "cjy", "cnp", "cpx", "csp", "czh", "czo", "hnm", "luh", "mnp",
+                    "sjc"]
+
+
+@pytest.mark.parametrize("mandarin", ["cmn", "zh", "zh-Hans", "zh-CN"])
+@pytest.mark.parametrize("suffix", ["", "-CN", "-Hans", "-Hans-CN", "-Latn"])
+@pytest.mark.parametrize("member", OTHER_ZH_MEMBERS)
+def test_every_other_member_of_zh_never_matches_mandarin(member, suffix, mandarin):
+    """Min Dong, Jinyu, Pu-Xian, Huizhou, Min Zhong, Min Bei, the Ping
+    languages, Hainanese, Leizhou and Shaojiang are separate spoken languages
+    of the `zh` macrolanguage, as Cantonese is."""
+    sinitic = member + suffix
+    assert lang_distance(sinitic, mandarin) >= 100
+    assert lang_distance(mandarin, sinitic) >= 100
+    assert closest_lang(sinitic, [mandarin]) is None
+    assert closest_lang(mandarin, [sinitic]) is None
+
+
+@pytest.mark.parametrize("member", OTHER_ZH_MEMBERS)
+def test_a_simplified_member_of_zh_finds_no_chinese_resource(member):
+    assert closest_lang(f"{member}-Hans", ["cmn", "zh-Hans", "zh-Hant"]) is None
+
+
+# Literary Chinese has no speakers, so the Mandarin rule leaves it out and it
+# keeps the CLDR 49 distance:
+# `<languageMatch desired="lzh" supported="zh" distance="10" oneway="true"/>`.
+# The other direction falls to `<languageMatch desired="*" supported="*" distance="80"/>`.
+@pytest.mark.parametrize("mandarin", ["cmn", "zh", "zh-Hans", "zh-CN"])
+@pytest.mark.parametrize("literary", ["lzh", "lzh-CN", "lzh-Hans", "lzh-Hans-CN", "zh-lzh"])
+def test_literary_chinese_keeps_the_cldr_distance_to_mandarin(literary, mandarin):
+    assert lang_distance(literary, mandarin) == 10
+    assert lang_distance(mandarin, literary) == 80
+    assert closest_lang(literary, [mandarin]) == mandarin
+    assert closest_lang(mandarin, [literary]) is None
+
+
+@pytest.mark.parametrize("mandarin", ["cmn", "zh", "zh-Hans", "zh-CN"])
+def test_literary_chinese_in_latin_script_keeps_the_langcodes_distance(mandarin):
+    assert lang_distance("lzh-Latn", mandarin) == 60
+    assert lang_distance(mandarin, "lzh-Latn") == 130
+    assert closest_lang("lzh-Latn", [mandarin]) is None
+    assert closest_lang(mandarin, ["lzh-Latn"]) is None
+
+
+@pytest.mark.parametrize("literary", ["lzh", "lzh-Hans"])
+def test_literary_chinese_finds_a_chinese_resource(literary):
+    """A Chinese resource serves a Literary Chinese request."""
+    assert closest_lang(literary, ["cmn", "zh-Hans", "zh-Hant"]) == "cmn"
+
+
+# langcodes 3.5.1 carries the CLDR rule for these members. Its registry copy
+# (File-Date 2021-08-06) has no `hnm`, `luh` or `sjc`, and it measures `cnp`
+# and `csp` at 80 against every `zh` tag.
+@pytest.mark.parametrize("member", ["cdo", "cjy", "cpx", "czh", "czo", "lzh", "mnp",
+                                    "gan", "hak", "hsn", "nan", "wuu", "yue"])
+def test_traditional_chinese_keeps_the_cldr_distance(member):
+    """`zh` in Traditional script is outside the Mandarin rule. CLDR 49 gives
+    `<languageMatch desired="cdo" supported="zh" distance="10" oneway="true"/>`,
+    so the other direction falls to
+    `<languageMatch desired="*" supported="*" distance="80"/>`."""
+    tag = f"{member}-Hant-TW"
+    assert lang_distance(tag, "zh-Hant") == 10
+    assert lang_distance("zh-Hant", tag) == 80
+    assert closest_lang(tag, ["cmn", "zh-Hans", "zh-Hant"]) == "zh-Hant"
+
+
 @pytest.mark.parametrize("sinitic", ["hak-Latn", "nan-Latn", "wuu-Latn", "gan-Latn", "hsn-Latn"])
 def test_a_latin_script_sinitic_language_never_matches_pinyin(sinitic):
     assert closest_lang(sinitic, ["cmn-Latn", "cmn-latn-pinyin"]) is None
