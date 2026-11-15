@@ -133,10 +133,12 @@ def _with_likely_script(tag: str) -> str:
     """`tag`, standardized and region-expanded, with the script CLDR expects
     for it, where the CLDR snapshot in `langcodes` expects another.
 
-    Only the Arabic varieties in the `scripts` table of the data file have
-    one: `mey-DZ` is `mey-Arab-DZ` and `mey-SN` is `mey-Latn-SN`, as CLDR
-    gives `mey_Arab_DZ` and `mey_Latn_SN`. A tag that names a script, or a
-    language with no entry, is returned unchanged.
+    Only the languages in the `scripts` table of the data file have one:
+    the Arabic varieties, Western Armenian and Literary Chinese. `mey-DZ` is
+    `mey-Arab-DZ` and `mey-SN` is `mey-Latn-SN`, as CLDR gives `mey_Arab_DZ`
+    and `mey_Latn_SN`; `hyw-AM` is `hyw-Armn-AM` and `lzh-TW` is
+    `lzh-Hant-TW`, as CLDR 49 gives `hyw_Armn_AM` and `lzh_Hant_CN`. A tag
+    that names a script, or a language with no entry, is returned unchanged.
     """
     language, script, region, extended = _split(tag)
     if script or extended:

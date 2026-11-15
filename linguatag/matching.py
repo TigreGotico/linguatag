@@ -65,9 +65,13 @@ judgement about intelligibility. This module overrides the distance to 100
 for 17 of the 18 members, measured against ``cmn`` or against ``zh`` in
 Simplified script, because they are spoken languages that are not mutually
 intelligible with Mandarin (see ``_NOT_MANDARIN``). Literary Chinese
-(``lzh``) has no speakers, so it keeps the CLDR distance. A Chinese resource
-serves an ``lzh`` request, as in the MediaWiki fallback for ``lzh``,
-``'zh-hant, zh, zh-hans'`` (Phabricator T125373). Dungan (``dng``) is not a
+(``lzh``) has no speakers, so it keeps the CLDR distance. CLDR 49 likely
+subtags write it in Traditional script in China,
+``<likelySubtag from="lzh" to="lzh_Hant_CN"/>``, so a Chinese resource in the
+script and region of an ``lzh`` request serves it at 10: ``lzh`` gets
+``zh-Hant-CN``, ``lzh-TW`` gets ``zh-Hant`` and ``lzh-Hans`` gets ``zh``.
+``<languageMatch desired="*_*_*" supported="*_*_*" distance="4"/>`` puts a
+bare ``lzh`` at 14 from ``zh-Hant``, which is Taiwan. Dungan (``dng``) is not a
 member: its record has no ``Macrolanguage`` field, and no CLDR 49
 ``languageMatch`` names it, so ``* ⇒ *`` at 80 already makes it a different
 language from Mandarin.

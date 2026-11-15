@@ -1,5 +1,5 @@
 {
- "source": "CLDR likelySubtags, langcodes 3.5.1; Arabic varieties from CLDR 49",
+ "source": "CLDR likelySubtags, langcodes 3.5.1; Arabic varieties, hyw and lzh from CLDR 49",
  "regions": {
   "aa": "ET",
   "aao": "DZ",
@@ -273,6 +273,7 @@
   "ht": "HT",
   "hu": "HU",
   "hy": "AM",
+  "hyw": "AM",
   "hz": "NA",
   "ia": "001",
   "iba": "MY",
@@ -442,7 +443,6 @@
   "moh": "CA",
   "mos": "BF",
   "mr": "IN",
-  "mrd": "NP",
   "mrj": "RU",
   "mro": "BD",
   "ms": "MY",
@@ -782,6 +782,8 @@
   "ayl": "Arab",
   "ayn": "Arab",
   "ayp": "Arab",
+  "hyw": "Armn",
+  "lzh": "Hant",
   "mey": "Arab",
   "mey-SN": "Latn",
   "ssh": "Arab"

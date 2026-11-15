@@ -643,12 +643,12 @@ def test_a_simplified_member_of_zh_finds_no_chinese_resource(member):
     assert closest_lang(f"{member}-Hans", ["cmn", "zh-Hans", "zh-Hant"]) is None
 
 
-# Literary Chinese has no speakers, so the Mandarin rule leaves it out and it
-# keeps the CLDR 49 distance:
+# Literary Chinese has no speakers, so the Mandarin rule leaves it out and,
+# in Simplified script, it keeps the CLDR 49 distance:
 # `<languageMatch desired="lzh" supported="zh" distance="10" oneway="true"/>`.
 # The other direction falls to `<languageMatch desired="*" supported="*" distance="80"/>`.
 @pytest.mark.parametrize("mandarin", ["cmn", "zh", "zh-Hans", "zh-CN"])
-@pytest.mark.parametrize("literary", ["lzh", "lzh-CN", "lzh-Hans", "lzh-Hans-CN", "zh-lzh"])
+@pytest.mark.parametrize("literary", ["lzh-Hans", "lzh-Hans-CN"])
 def test_literary_chinese_keeps_the_cldr_distance_to_mandarin(literary, mandarin):
     assert lang_distance(literary, mandarin) == 10
     assert lang_distance(mandarin, literary) == 80
@@ -664,10 +664,11 @@ def test_literary_chinese_in_latin_script_keeps_the_langcodes_distance(mandarin)
     assert closest_lang(mandarin, ["lzh-Latn"]) is None
 
 
-@pytest.mark.parametrize("literary", ["lzh", "lzh-Hans"])
-def test_literary_chinese_finds_a_chinese_resource(literary):
-    """A Chinese resource serves a Literary Chinese request."""
-    assert closest_lang(literary, ["cmn", "zh-Hans", "zh-Hant"]) == "cmn"
+@pytest.mark.parametrize("literary,resource", [("lzh-Hans", "cmn"), ("lzh-TW", "zh-Hant")])
+def test_literary_chinese_finds_a_chinese_resource_in_its_script(literary, resource):
+    """A Chinese resource in the script and region of a Literary Chinese
+    request serves it."""
+    assert closest_lang(literary, ["cmn", "zh-Hans", "zh-Hant"]) == resource
 
 
 # langcodes 3.5.1 carries the CLDR rule for these members. Its registry copy
