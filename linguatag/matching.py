@@ -86,15 +86,19 @@ extlangs, the original primary language subtag is also replaced if there is
 a primary language subtag in the 'Preferred-Value'." So ``ar-apc`` and
 ``apc`` are one tag, and so are ``my-BU`` and ``my-MM``.
 
-``langcodes`` is optional. Without it, :func:`lang_distance` falls back to a
-coarse same-language measure with the same ordering for the cases locale
-resolution depends on.
+The distance itself is ``langcodes.tag_distance``, which ``langcodes``
+computes from its own CLDR snapshot. Standardization, default regions and
+likely scripts come from :mod:`linguatag.bcp47`, which reads the CLDR 49 data
+of this package. ``langcodes`` is optional. Without it, :func:`lang_distance`
+falls back to a coarse same-language measure with the same ordering for the
+cases locale resolution depends on.
 """
 from __future__ import annotations
 
 from functools import lru_cache
 from typing import Optional, Sequence
 
+from linguatag.bcp47 import LanguageTagError, maximize, parse
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import _is_region, _with_likely_script, with_default_region
 from linguatag.standardize import (_preferred_values, _without_deprecated_language,
@@ -130,8 +134,8 @@ DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 _ARABIC_VARIETIES = frozenset(
     "ar aao abh abv acm acq acw acx acy adf aeb aec afb ajp apc apd arb arq ars "
     "ary arz auz avl ayh ayl ayn ayp bbz mey pga shu ssh".split())
-# `ara` is the ISO 639-2 code of Arabic. langcodes reads it as `ar`; without
-# langcodes it stays `ara`.
+# `ara` is the ISO 639-2 code of Arabic, which standardization reads as `ar`
+# (CLDR 49 `<languageAlias type="ara" replacement="ar" reason="overlong"/>`).
 _ARABIC_LANGUAGES = _ARABIC_VARIETIES | {"ara"}
 # CLDR likely subtags write two of them in Latin script: Cypriot Maronite
 # Arabic (acy_Latn_CY) and Juba Arabic (pga_Latn_SS). With no script subtag,
@@ -162,31 +166,24 @@ _FORMER_MACROLANGUAGE_ALIASES = frozenset({"fat", "mnk"})
 
 
 def _is_simplified(tag: str) -> bool:
-    try:
-        from langcodes import Language
-        return Language.get(tag).maximize().script == "Hans"
-    except Exception:
-        return False
+    maximized = maximize(tag)
+    return maximized is not None and maximized.script == "Hans"
 
 
 @lru_cache(maxsize=4096)
 def _parseable_prefix(tag: str) -> str:
-    """The longest leading part of ``tag`` that ``langcodes`` parses.
+    """The longest leading part of ``tag`` that is a well-formed BCP 47 tag.
 
     A voice id such as ``zh-HK-HiuMaanNeural`` is not a language tag, but its
-    ``zh-HK`` is, and that is what it is measured as. A tag with no parseable
-    prefix, or any tag when ``langcodes`` is absent, is returned unchanged.
+    ``zh-HK`` is, and that is what it is measured as. A tag with no
+    well-formed prefix is returned unchanged.
     """
-    try:
-        from langcodes import Language
-    except ImportError:
-        return tag
     parts = tag.split("-")
     for end in range(len(parts), 0, -1):
         candidate = "-".join(parts[:end])
         try:
-            Language.get(candidate)
-        except Exception:
+            parse(candidate)
+        except LanguageTagError:
             continue
         return candidate
     return tag
@@ -253,10 +250,10 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     So is Fanti (``fat``) or Mandinka (``mnk``) measured against another
     language, Akan (``ak``) and Mandingo (``man``) included.
 
-    A tag that ``langcodes`` cannot parse, such as a voice id, is measured as
-    its longest parseable prefix: ``zh-HK-HiuMaanNeural`` as ``zh-HK``. A tag
-    with an empty subtag (``ar-``, ``ar_``, ``-ar``, ``en--US``) is not a
-    language tag, and it is no usable match for any tag.
+    A tag that is not a well-formed BCP 47 tag, such as a voice id, is
+    measured as its longest well-formed prefix: ``zh-HK-HiuMaanNeural`` as
+    ``zh-HK``. A tag with an empty subtag (``ar-``, ``ar_``, ``-ar``,
+    ``en--US``) is not a language tag, and it is no usable match for any tag.
 
     Uses ``langcodes.tag_distance`` when available, and a coarse
     same-language measure otherwise.
@@ -376,7 +373,7 @@ def _has_noncanonical_subtag(tag: str) -> bool:
     """Whether canonicalization replaces a subtag of ``tag``: a language,
     extlang or region subtag with an IANA Preferred-Value."""
     return (_has_preferred_value(tag)
-            or _region_subtag(tag) in _preferred_values("deprecated_regions.json"))
+            or _region_subtag(tag) in _preferred_values("region"))
 
 
 def _is_other_code_of_language(target: str, candidate: str) -> bool:
@@ -389,7 +386,7 @@ def _is_other_code_of_language(target: str, candidate: str) -> bool:
     the 'Preferred-Value'." So a deprecated language subtag and its
     Preferred-Value (``ajp`` and ``apc``) are two codes of one language, and
     so are a language-extlang pair and its Preferred-Value (``zh-hak`` and
-    ``hak``). An ISO 639-2 or 639-3 code that ``langcodes`` reads as a shorter
+    ``hak``). An ISO 639-2 or 639-3 code that standardization reads as a shorter
     subtag (``fra`` as ``fr``) has no Preferred-Value, so it is not another
     code."""
     return (_language_subtag(candidate) != _language_subtag(target)

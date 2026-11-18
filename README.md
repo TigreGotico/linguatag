@@ -21,25 +21,35 @@ is_arabic_variety("fa")         # False
 
 A tag with no region defaults to its motherland: the region where the language first appeared and is still spoken. `en` is `en-GB`, `pt` is `pt-PT`, `es` is `es-ES`.
 
-CLDR likely-subtags is the base. CLDR picks the most-populous region, and for most languages that is also the motherland. `linguatag.OVERRIDES` replaces CLDR where the two differ, and each override cites its source: `en` is GB, `pt` is PT, `ur` is IN and `yue` is CN. An override holds for its own script only, so `yue-Hant` stays HK. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
+CLDR 49 likely-subtags is the base. CLDR picks the most-populous region, and for most languages that is also the motherland. `linguatag.OVERRIDES` replaces CLDR where the two differ, and each override cites its source: `en` is GB, `pt` is PT, `ur` is IN and `yue` is CN. An override holds for its own script only, so `yue-Hant` stays HK. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
 
-A bare `ar` is Modern Standard Arabic, the standard of no single country, so its region is `001`, the world, as CLDR spells it.
+A bare `ar` is Modern Standard Arabic, the standard of no single country, so its region is `001`, the world, as CLDR spells it. `arb`, the code of Modern Standard Arabic itself, takes the same region.
 
 ## Likely script
 
-`likely_script(tag)` gives the script of a tag: its script subtag, or else the script that CLDR likely-subtags gives for the language in its region. `zh-TW` and `zh-HK` are `Hant`, `zh` is `Hans`, and `sr-ME` is `Latn`. A bare tag takes its default region first, so `yue` is `yue-CN` and `Hans`. It needs `langcodes` for every language that the package table does not hold.
+`likely_script(tag)` gives the script of a tag: its script subtag, or else the script that CLDR 49 likely-subtags gives for the language in its region. `zh-TW` and `zh-HK` are `Hant`, `zh` is `Hans`, `sr-ME` is `Latn` and `ku-IQ` is `Arab`. A bare tag takes its default region first, so `yue` is `yue-CN` and `Hans`. Libyan Arabic `ayl` is `Arab`, Hassaniyya in Senegal (`mey-SN`) is `Latn`, Western Armenian `hyw` is `Armn` and Literary Chinese `lzh` is `Hant`.
 
-`linguatag/data/likely_regions.json` holds the CLDR regions. `scripts/build_likely_regions.py` rebuilds it from the installed `langcodes`.
+## CLDR and IANA data
 
-The CLDR data in `langcodes` has no entry for some Arabic varieties, and it puts them in Latin script. CLDR 49 puts them in Arabic script: Libyan Arabic `ayl` is `ayl-Arab-LY` and Hassaniyya `mey` is `mey-Arab-DZ`. For these varieties the table holds the CLDR 49 entries, with their scripts, and the build script reads them from the CLDR release. A tag that names no script is measured in the CLDR script, so `mey` and `mey-Arab` are at distance 0. Hassaniyya in Senegal, `mey-SN`, is in Latin script, as CLDR gives it.
+Standardization, the default region and the likely script come from data that this package carries, never from what else is installed. `linguatag/bcp47.py` parses a tag (RFC 5646 section 2.1), puts it in canonical form (RFC 5646 section 4.5 and UTS #35 Annex C) and adds likely subtags (UTS #35 section 4.3). It reads three files in `linguatag/data`, and each names its source in a `source` field:
 
-The same holds for two more languages. The `langcodes` data has no entry for Western Armenian and puts it in Latin script in the US, and it puts Literary Chinese in Simplified script. CLDR 49 gives `hyw_Armn_AM` and `lzh_Hant_CN`, and the table holds these entries. So `hyw` is `hyw-Armn-AM` and `lzh-TW` is `lzh-Hant-TW`. A `hyw-Latn` request matches no Armenian-script resource, such as `hyw` or `hyw-AM`.
+| File | Source |
+| --- | --- |
+| `likely_subtags.json` | CLDR 49 `supplemental/likelySubtags.json` |
+| `aliases.json` | CLDR 49 `supplemental/aliases.json`: language, script, territory and variant aliases |
+| `subtags.json` | the IANA Language Subtag Registry: every subtag, with its deprecation, Preferred-Value, Prefix, Suppress-Script and Macrolanguage |
+
+`scripts/extract_cldr.py` writes the three files. Run it again after a CLDR release or an IANA registry change.
+
+The parser and the canonicalization follow the code of `langcodes` (see NOTICE).
 
 ## Distance and closest match
 
 `lang_distance` is `0` for identical tags and grows as tags differ. A distance of 10 or less is a usable match. Both tags are standardized first, and a tag with no region is measured from its default region.
 
-Standardization replaces an extlang tag and a deprecated language subtag with their IANA Preferred-Values, as RFC 5646 section 4.5 says: `zh-hak` is Hakka (`hak`), `ar-arz-EG` is `arz-EG`, and `ajp-JO` is `apc-JO`. `linguatag/data/extlangs.json` and `linguatag/data/deprecated_languages.json` hold the tables. `langcodes` replaces a deprecated region subtag (`my-BU` is `my-MM`), and `linguatag/data/deprecated_regions.json` holds the IANA Preferred-Values of region subtags for the tie rule below. `scripts/build_preferred_values.py` rebuilds the three tables from the IANA Language Subtag Registry.
+Standardization replaces an extlang tag and a deprecated subtag with their IANA Preferred-Values, as RFC 5646 section 4.5 says: `zh-hak` is Hakka (`hak`), `ar-arz-EG` is `arz-EG`, `ajp-JO` is `apc-JO` and `my-BU` is `my-MM`. It replaces an ISO 639-2 code with its two-letter code (`eng` is `en`) and drops a script that the registry suppresses for the language (`en-Latn` is `en`). An encompassed language keeps its own code: `cmn` stays `cmn` and `arb` stays `arb`.
+
+The distance itself comes from `langcodes.tag_distance`.
 
 `closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only. Among candidates at the same distance, the code that the request names wins first, and a code with no language, extlang or region subtag that has a Preferred-Value wins next: `closest_lang("zh-hak", ["hak", "zh-hak"])` is `zh-hak`, `closest_lang("ar-apc", ["ajp", "apc"])` is `apc`, and `closest_lang("my-MM", ["my-BU", "my-MM"])` is `my-MM`.
 
@@ -70,4 +80,4 @@ closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="standard")  # 'an'
 pip install linguatag[langcodes]
 ```
 
-`langcodes` is optional. Without it, standardization only folds case and underscores and replaces extlang tags, and distance uses a coarse same-language measure with the same ordering.
+`langcodes` is optional, and only `lang_distance` and `closest_lang` use it. Without it, distance uses a coarse same-language measure with the same ordering. Standardization, the default region, the likely script and `is_arabic_variety` give the same output with `langcodes` and without it.

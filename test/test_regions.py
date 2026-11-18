@@ -5,15 +5,24 @@ import sys
 from pathlib import Path
 
 import pytest
-from langcodes import Language
 
 import linguatag.matching as matching
 from linguatag import (OVERRIDES, closest_lang, default_region, lang_distance,
-                       with_default_region)
+                       standardize_lang, with_default_region)
 
-DATA = json.loads((Path(matching.__file__).parent / "data" / "likely_regions.json")
+DATA = json.loads((Path(matching.__file__).parent / "data" / "likely_subtags.json")
                   .read_text(encoding="utf-8"))
-TABLE = DATA["regions"]
+# CLDR 49 likelySubtags, hyphenated: `"zh-Hant": "zh-Hant-TW"`.
+LIKELY = DATA["likely"]
+
+
+def cldr_49(tag: str) -> list:
+    """The `[language, script, region]` that CLDR 49 likely-subtags gives
+    `tag`, looked up as UTS #35 section 4.3 says: language_region, then
+    language."""
+    language, *rest = tag.split("-")
+    key = tag if tag in LIKELY else language
+    return LIKELY[key].split("-")
 
 
 @pytest.mark.parametrize("language,region", [
@@ -25,13 +34,12 @@ def test_an_override_sets_the_default(language, region):
 def test_every_override_differs_from_cldr():
     """An override that CLDR already gives says nothing."""
     for language, (_, region) in OVERRIDES.items():
-        assert Language.get(language).maximize().territory != region, language
-        assert TABLE[language] != region
+        assert cldr_49(language)[2] != region, language
 
 
 def test_every_override_script_is_the_one_its_region_writes():
     for language, (script, region) in OVERRIDES.items():
-        assert Language.get(f"{language}-{region}").maximize().script == script, language
+        assert cldr_49(f"{language}-{region}")[1] == script, language
 
 
 @pytest.mark.parametrize("tag,region", [
@@ -43,7 +51,7 @@ def test_an_override_applies_only_in_its_own_script(tag, region):
 
 def test_cantonese_defaults_to_simplified_script():
     assert with_default_region("yue") == "yue-CN"
-    assert Language.get("yue-CN").maximize().script == "Hans"
+    assert cldr_49("yue-CN")[1] == "Hans"
     assert default_region("yue-Hant") == "HK"
 
 
@@ -56,17 +64,32 @@ def test_bare_arabic_is_modern_standard_arabic():
 @pytest.mark.parametrize("language", ["es", "fr", "de", "it", "zh", "ja", "bn", "yi"])
 def test_without_an_override_the_cldr_region_stands(language):
     assert language not in OVERRIDES
-    assert default_region(language) == Language.get(language).maximize().territory
+    assert default_region(language) == cldr_49(language)[2]
 
 
-def test_the_table_is_the_cldr_likely_region_of_every_tag_without_one():
-    assert len(TABLE) == 764
-    for tag, region in TABLE.items():
-        assert "-" not in tag or len(tag.split("-")[1]) == 4, tag
-        if tag.split("-")[0] not in DATA["scripts"]:
-            assert Language.get(tag).maximize().territory == region, tag
-    assert "ZZ" not in TABLE.values()
-    assert TABLE["yi"] == "001"
+def test_yiddish_takes_the_cldr_49_region():
+    # CLDR 49 likelySubtags.json: "yi": "yi-Hebr-UA"; langcodes 3.5.1 gives yi-Hebr-001.
+    assert default_region("yi") == "UA"
+
+
+def test_every_tag_without_a_region_takes_its_cldr_49_region():
+    """Each CLDR 49 entry for a language, or a language and a script, gives
+    its region, unless an override names the language and its script."""
+    assert DATA["source"] == "CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json"
+    assert len(LIKELY) == 7868
+    checked = 0
+    for tag, likely in LIKELY.items():
+        language, *rest = tag.split("-")
+        if language == "und" or any(len(r) != 4 for r in rest):
+            continue
+        if standardize_lang(tag) != tag or language in OVERRIDES:
+            continue
+        assert default_region(tag) == likely.split("-")[2], tag
+        checked += 1
+    # Every CLDR 49 key of a language, or a language and a script, other
+    # than `und`, the five override languages and the deprecated codes `in`,
+    # `iw`, `ji`, `jw` and `mo`.
+    assert checked == 7314
 
 
 def test_a_tag_with_a_region_keeps_it():
@@ -79,7 +102,7 @@ def test_a_tag_with_a_region_keeps_it():
 def test_a_script_uses_its_own_entry_before_its_language():
     assert default_region("zh-Hant") == "TW"
     assert default_region("zh") == "CN"
-    assert "sr-Latn" not in TABLE
+    assert "sr-Latn" not in LIKELY
     assert default_region("sr-Latn") == "RS"
 
 
@@ -114,10 +137,14 @@ def test_with_default_region(tag, expected):
     assert with_default_region(tag) == expected
 
 
-def test_a_grandfathered_form_never_gets_a_region_inside_it(no_langcodes):
-    """Without langcodes `zh-min-nan` stays as written; `zh-CN-min-nan` is wrong."""
-    assert with_default_region("zh-min-nan") == "zh-min-nan"
-    assert default_region("zh-min-nan") is None
+@pytest.mark.parametrize("with_langcodes", [True, False])
+def test_a_grandfathered_form_takes_its_preferred_value(with_langcodes, request):
+    """IANA: `Tag: zh-min-nan ... Preferred-Value: nan`; CLDR 49 gives
+    `nan` the region CN. `zh-CN-min-nan` would be wrong."""
+    if not with_langcodes:
+        request.getfixturevalue("no_langcodes")
+    assert with_default_region("zh-min-nan") == "nan-CN"
+    assert default_region("zh-min-nan") == "CN"
 
 
 @pytest.mark.parametrize("tag,expected", [("zh-yue", "yue-CN"), ("sgn-ase", "ase-US")])

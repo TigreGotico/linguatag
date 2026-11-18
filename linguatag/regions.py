@@ -3,8 +3,9 @@
 A bare tag defaults to its motherland: the region where the language first
 appeared and is still spoken. `en` is `en-GB` and `pt` is `pt-PT`.
 
-CLDR likely-subtags is the base. It picks the most-populous region, which is
-the motherland for most languages. `OVERRIDES` replaces it where the two
+CLDR 49 likely-subtags is the base (UTS #35 section 4.3, in
+:mod:`linguatag.bcp47`). It picks the most-populous region, which is the
+motherland for most languages. `OVERRIDES` replaces it where the two
 differ, and every override cites its source. When several countries share
 the area where a language first appeared, the CLDR pick is one of them and
 stays. A language that names a standard of no country defaults to the world
@@ -12,11 +13,9 @@ region, `001`, as CLDR spells it.
 """
 from __future__ import annotations
 
-import json
-from functools import lru_cache
-from pathlib import Path
 from typing import Dict, Optional, Tuple
 
+from linguatag.bcp47 import _load, maximize
 from linguatag.standardize import standardize_lang
 
 __all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
@@ -47,14 +46,6 @@ OVERRIDES: Dict[str, Tuple[str, str]] = {
     # https://en.wikipedia.org/wiki/Cantonese
     "yue": ("Hans", "CN"),
 }
-
-_DATA = Path(__file__).resolve().parent / "data" / "likely_regions.json"
-
-
-@lru_cache(maxsize=1)
-def _likely_subtags() -> Dict[str, Dict[str, str]]:
-    return json.loads(_DATA.read_text(encoding="utf-8"))
-
 
 def _is_script(subtag: str) -> bool:
     return len(subtag) == 4 and subtag.isalpha()
@@ -88,25 +79,30 @@ def default_region(tag: str) -> Optional[str]:
     A tag with a region returns it: `default_region("pt-BR")` is `BR`. A tag
     with none returns its default: `en` is `GB`, `zh-Hant` is `TW`, `ar` is
     `001`. A script with no entry of its own takes its language's region,
-    unless an override writes the language in another script. The
-    tag is standardized first: `en_GB` always works, and with `langcodes`
-    so do deprecated and three-letter codes (`iw`, `eng`). `None` means no
-    region applies: the language is unknown, or the tag is a grandfathered
-    form that `langcodes` was not there to replace.
+    unless an override writes the language in another script. The tag is
+    standardized first, so `en_GB` and deprecated and three-letter codes
+    (`iw`, `eng`) all work, and an encompassed language that CLDR replaces
+    with its macrolanguage takes the region of the macrolanguage: `cmn` is
+    `CN` and `arb`, Modern Standard Arabic, is `001`. `None` means no region applies: the
+    language is unknown or `und`, or the tag is not a language tag.
     """
-    language, script, region, extended = _split(standardize_lang(tag))
+    tag = standardize_lang(tag)
+    language, script, region, extended = _split(tag)
     if region:
         return region
-    if extended:
+    if extended or language == "und":
         return None
-    regions = _likely_subtags()["regions"]
-    if script and f"{language}-{script}" in regions:
-        return regions[f"{language}-{script}"]
-    if language in OVERRIDES:
-        override_script, override_region = OVERRIDES[language]
-        if script in (None, override_script):
-            return override_region
-    return regions.get(language)
+    if script:
+        likely = _load("likely_subtags.json")["likely"].get(f"{language}-{script}")
+        if likely is not None:
+            return likely.split("-")[-1]
+    maximized = maximize(f"{language}-{script}" if script else language)
+    for overridden in (language, maximized and maximized.language):
+        if overridden in OVERRIDES:
+            override_script, override_region = OVERRIDES[overridden]
+            if script in (None, override_script):
+                return override_region
+    return maximized.region if maximized else None
 
 
 def with_default_region(tag: str) -> str:
@@ -131,59 +127,37 @@ def with_default_region(tag: str) -> str:
 
 def likely_script(tag: str) -> Optional[str]:
     """The ISO 15924 script that `tag` is written in: the script subtag of the
-    tag, or else the script that CLDR likely-subtags gives for the language in
-    its default region.
+    tag, or else the script that CLDR 49 likely-subtags gives for the language
+    in its default region.
 
     `zh-TW` is `Hant` and `zh` is `Hans`, as CLDR gives `zh_Hant_TW` and
-    `zh_Hans_CN`; `sr-ME` is `Latn` and `pa-PK` is `Arab`. A bare tag takes its
-    default region first (:func:`with_default_region`), so `yue` is `yue-CN`
-    and `Hans`. The table of this package corrects the `langcodes` snapshot
-    (`hyw` is `Armn`). None for a tag that `langcodes` cannot parse, for a
-    language that it does not know (`zzz`, `und`), when `langcodes` is absent
-    and the table has no entry, or when no script is known. The data is the
-    CLDR snapshot of `langcodes`, which differs from CLDR 49 for some tags,
-    as `ku-IQ`.
+    `zh_Hans_CN`; `sr-ME` is `Latn`, `pa-PK` is `Arab`, `hyw` is `Armn` and
+    `ku-IQ` is `Arab`. A bare tag takes its default region first
+    (:func:`with_default_region`), so `yue` is `yue-CN` and `Hans`. None for a
+    tag that is not a language tag, for a language that CLDR does not know
+    (`zzz`) or `und`, or when no script is known.
     """
     tag = with_default_region(tag)
-    language, script, _, extended = _split(tag)
+    _, script, _, extended = _split(tag)
     if script or extended:
         return script
-    _, script, _, _ = _split(_with_likely_script(tag))
-    if script:
-        return script
-    try:
-        from langcodes import Language, LanguageTagError
-        from langcodes.data_dicts import LIKELY_SUBTAGS
-    except ImportError:
-        return None
-    try:
-        parsed = Language.get(tag)
-    except LanguageTagError:
-        return None
-    # langcodes falls back to an `und` entry, the Latin script of the root locale, for a language that its
-    # likely-subtags data does not hold, alone or through its macrolanguage (`cmn` is `zh`).
-    entry = next((broader for broader in parsed.broader_tags() if broader in LIKELY_SUBTAGS), "und")
-    if entry.split("-")[0] == "und":
-        return None
-    return parsed.maximize().script
+    maximized = maximize(tag)
+    return maximized.script if maximized else None
 
 
 def _with_likely_script(tag: str) -> str:
-    """`tag`, standardized and region-expanded, with the script CLDR expects
-    for it, where the CLDR snapshot in `langcodes` expects another.
+    """`tag`, standardized and region-expanded, with the script that CLDR 49
+    expects for it (:func:`likely_script`).
 
-    Only the languages in the `scripts` table of the data file have one:
-    the Arabic varieties, Western Armenian and Literary Chinese. `mey-DZ` is
-    `mey-Arab-DZ` and `mey-SN` is `mey-Latn-SN`, as CLDR gives `mey_Arab_DZ`
-    and `mey_Latn_SN`; `hyw-AM` is `hyw-Armn-AM` and `lzh-TW` is
+    `mey-DZ` is `mey-Arab-DZ` and `mey-SN` is `mey-Latn-SN`, as CLDR gives
+    `mey_Arab_DZ` and `mey_Latn_SN`; `hyw-AM` is `hyw-Armn-AM` and `lzh-TW` is
     `lzh-Hant-TW`, as CLDR 49 gives `hyw_Armn_AM` and `lzh_Hant_CN`. A tag
-    that names a script, or a language with no entry, is returned unchanged.
+    that names a script, or one with no likely script, is returned unchanged.
     """
     language, script, region, extended = _split(tag)
     if script or extended:
         return tag
-    scripts = _likely_subtags()["scripts"]
-    likely = scripts.get(f"{language}-{region}", scripts.get(language))
+    likely = likely_script(tag)
     if likely is None:
         return tag
     parts = tag.split("-")

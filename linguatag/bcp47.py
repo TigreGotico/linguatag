@@ -1,0 +1,432 @@
+"""Parse, canonicalize and maximize BCP 47 language tags.
+
+Ported from langcodes 3.5.1 (``tag_parser.py``, ``Language.get``,
+``Language.maximize`` and ``standardize_tag``), Copyright (C) 2021 Robyn
+Speer, MIT License; see NOTICE. The data is the CLDR 49 release and the IANA
+Language Subtag Registry, read from ``linguatag/data`` (written by
+``scripts/extract_cldr.py``), never from an installed package.
+
+Parsing follows the RFC 5646 section 2.1 ABNF::
+
+    langtag = language ["-" script] ["-" region] *("-" variant)
+              *("-" extension) ["-" privateuse]
+    language = 2*3ALPHA ["-" extlang] / 4ALPHA / 5*8ALPHA
+
+Canonicalization follows RFC 5646 section 4.5, "applying each of the
+following steps in order": "1. Extension sequences are ordered into
+case-insensitive ASCII order by singleton subtag. 2. Redundant or
+grandfathered tags are replaced by their 'Preferred-Value', if there is one.
+3. Subtags are replaced by their 'Preferred-Value', if there is one. For
+extlangs, the original primary language subtag is also replaced if there is
+a primary language subtag in the 'Preferred-Value'." The replacements are
+the IANA Preferred-Values and the CLDR alias rules, applied as UTS #35 Annex
+C, "LocaleId Canonicalization", applies them; an IANA value wins over a CLDR
+rule for the same subtag. The CLDR rules add the ISO 639-2 codes (``eng`` is
+``en``), the legacy forms (``sh`` is ``sr-Latn``) and the sign-language tags
+(``sgn-US`` is ``ase``). A tag with an extlang whose IANA ``Prefix`` is
+another language (``en-hak``) is left as written.
+
+UTS #35 Annex C also replaces an encompassed language with its macrolanguage
+(``cmn`` is ``zh``, ``arb`` is ``ar``). :func:`standardize` does not: a tag
+keeps the language it names. :func:`maximize` does, as UTS #35 section 4.3
+requires. CLDR composes two ISO 639-2 aliases with such a replacement
+(``twi`` to ``ak`` through ``tw``, ``bih`` to ``bho`` through ``bh``); without
+the macrolanguage step ``twi`` is ``tw`` and ``bih`` stays.
+
+The script that IANA names in a language's ``Suppress-Script`` field is
+dropped, as RFC 5646 section 3.1.9 says of it: "The subtag for such a script
+therefore adds no distinguishing information to a language tag and thus
+SHOULD NOT be used for most documents in that language." Variants are put in
+alphabetical order, as UTS #35 section 5 "Canonicalizing Syntax" does.
+"""
+from __future__ import annotations
+
+import json
+from dataclasses import dataclass, field, replace
+from functools import lru_cache
+from pathlib import Path
+from typing import Dict, FrozenSet, List, Optional, Tuple
+
+__all__ = ["LanguageTag", "LanguageTagError", "maximize", "parse", "standardize"]
+
+_DATA = Path(__file__).resolve().parent / "data"
+
+
+class LanguageTagError(ValueError):
+    """A string that is not a well-formed BCP 47 language tag."""
+
+
+@dataclass(frozen=True)
+class LanguageTag:
+    """The subtags of a language tag. ``language`` is ``None`` for ``und``.
+    ``whole`` holds a tag that is read whole: a private-use tag (``x-foo``)
+    or a grandfathered tag with no replacement."""
+    language: Optional[str] = None
+    extlangs: Tuple[str, ...] = ()
+    script: Optional[str] = None
+    region: Optional[str] = None
+    variants: Tuple[str, ...] = ()
+    extensions: Tuple[str, ...] = ()
+    private: Optional[str] = None
+    whole: Optional[str] = None
+
+    def __str__(self) -> str:
+        if self.whole:
+            return self.whole
+        parts = [self.language or "und", *self.extlangs]
+        parts += [p for p in (self.script, self.region) if p]
+        parts += [*self.variants, *self.extensions]
+        if self.private:
+            parts.append(self.private)
+        return "-".join(parts)
+
+
+@lru_cache(maxsize=None)
+def _load(name: str) -> dict:
+    return json.loads((_DATA / name).read_text(encoding="utf-8"))
+
+
+def _registry(kind: str) -> Dict[str, dict]:
+    return _load("subtags.json").get(kind, {})
+
+
+@lru_cache(maxsize=1)
+def _whole_tags() -> Dict[str, Optional[str]]:
+    """Grandfathered and redundant tags, lowercase, to their IANA
+    Preferred-Value or ``None``."""
+    tags = {**_registry("grandfathered"), **_registry("redundant")}
+    return {tag.lower(): record.get("preferred") for tag, record in tags.items()}
+
+
+@lru_cache(maxsize=1)
+def _irregular() -> FrozenSet[str]:
+    """The grandfathered tags, which are read whole (RFC 5646 section 2.1:
+    "The only exceptions to this ability to infer meaning from subtag
+    structure are the grandfathered tags")."""
+    return frozenset(tag.lower() for tag in _registry("grandfathered"))
+
+
+def _alphanum(subtag: str, low: int, high: int) -> bool:
+    return low <= len(subtag) <= high and subtag.isascii() and subtag.isalnum()
+
+
+def _is_variant(subtag: str) -> bool:
+    return (_alphanum(subtag, 5, 8)
+            or (len(subtag) == 4 and subtag[0].isdigit() and _alphanum(subtag, 4, 4)))
+
+
+def _is_region(subtag: str) -> bool:
+    return (len(subtag) == 2 and subtag.isalpha()) or (len(subtag) == 3 and subtag.isdigit())
+
+
+def _is_script(subtag: str) -> bool:
+    return len(subtag) == 4 and subtag.isalpha()
+
+
+def _parse_rest(subtags: List[str], language: Optional[str],
+                allow_extlang: bool) -> LanguageTag:
+    extlangs: List[str] = []
+    script = region = private = None
+    variants: List[str] = []
+    extensions: List[str] = []
+    index = 0
+    while (allow_extlang and index < len(subtags) and len(extlangs) < 3
+           and len(subtags[index]) == 3 and subtags[index].isalpha()):
+        extlangs.append(subtags[index])
+        index += 1
+    if index < len(subtags) and _is_script(subtags[index]):
+        script = subtags[index].title()
+        index += 1
+    if index < len(subtags) and _is_region(subtags[index]):
+        region = subtags[index].upper()
+        index += 1
+    while index < len(subtags) and _is_variant(subtags[index]):
+        variants.append(subtags[index])
+        index += 1
+    while index < len(subtags):
+        singleton = subtags[index]
+        if len(singleton) != 1:
+            raise LanguageTagError(f"subtag {singleton!r} is out of place")
+        rest = subtags[index + 1:]
+        if singleton == "x":
+            if not rest:
+                raise LanguageTagError("'x' must be followed by a private-use subtag")
+            private = "-".join(subtags[index:])
+            break
+        end = 0
+        while end < len(rest) and len(rest[end]) > 1:
+            end += 1
+        if end == 0:
+            raise LanguageTagError(f"extension {singleton!r} has no subtag")
+        if any(e.split("-")[0] == singleton for e in extensions):
+            raise LanguageTagError(f"extension {singleton!r} appears twice")
+        extensions.append("-".join([singleton, *rest[:end]]))
+        index += 1 + end
+    return LanguageTag(language=language, extlangs=tuple(extlangs), script=script,
+                       region=region, variants=tuple(variants),
+                       extensions=tuple(extensions), private=private)
+
+
+def parse(tag: str) -> LanguageTag:
+    """The subtags of ``tag``, with the BCP 47 case conventions and nothing
+    replaced.
+
+    Underscores count as hyphens and case does not matter. ``root`` is
+    ``und`` (UTS #35 section 3.8, "Unicode Locale Identifier: CLDR to BCP
+    47": "Replace the special language identifier "root" with the BCP 47
+    primary language tag "und"").
+
+    Raises:
+        LanguageTagError: ``tag`` is not well-formed (RFC 5646 section 2.1).
+    """
+    if not tag.isascii():
+        raise LanguageTagError(f"{tag!r} is not ASCII")
+    text = tag.replace("_", "-").lower()
+    if text in _irregular():
+        return LanguageTag(whole=text)
+    subtags = text.split("-")
+    for subtag in subtags:
+        if not _alphanum(subtag, 1, 8):
+            raise LanguageTagError(f"subtag {subtag!r} is not 1 to 8 letters and digits")
+    first = subtags[0]
+    if first == "x":
+        if len(subtags) == 1:
+            raise LanguageTagError("'x' must be followed by a private-use subtag")
+        return LanguageTag(whole=text)
+    if not first.isalpha() or len(first) < 2:
+        raise LanguageTagError(f"{first!r} is not a language subtag")
+    if first == "root":
+        first = "und"
+    language = None if first == "und" else first
+    return _parse_rest(subtags[1:], language, allow_extlang=len(first) <= 3)
+
+
+@dataclass(frozen=True)
+class _Rule:
+    """A UTS #35 Annex C alias rule: the fields of its type and of its
+    replacement. ``regions`` holds several regions for a territory alias that
+    names more than one."""
+    language: Optional[str]
+    script: Optional[str]
+    region: Optional[str]
+    variants: FrozenSet[str]
+    to_language: Optional[str]
+    to_script: Optional[str]
+    regions: Tuple[str, ...]
+    to_variants: FrozenSet[str] = field(default_factory=frozenset)
+
+    def order(self) -> tuple:
+        """UTS #35 Annex C, Preprocessing, step 5: more fields first, then
+        the fields present in the order L, S, R, V, then the values."""
+        fields = (self.language, self.script, self.region)
+        count = sum(f is not None for f in fields) + len(self.variants)
+        present = tuple(f is None for f in fields) + (not self.variants,)
+        values = tuple(f or "" for f in fields) + (tuple(sorted(self.variants)),)
+        return -count, present, values
+
+    def matches(self, tag: LanguageTag) -> bool:
+        return ((self.language is None or self.language == tag.language)
+                and (self.script is None or self.script == tag.script)
+                and (self.region is None or self.region == tag.region)
+                and self.variants <= set(tag.variants))
+
+
+def _language_id(text: str) -> Optional[LanguageTag]:
+    """``text`` as a UTS #35 unicode_language_id, or ``None`` when it is not
+    one (it has an extlang, an extension or a private-use part)."""
+    try:
+        tag = parse(text)
+    except LanguageTagError:
+        return None
+    if tag.whole or tag.extlangs or tag.extensions or tag.private:
+        return None
+    return tag
+
+
+def _rule(type_: str, replacement: str) -> Optional[_Rule]:
+    source = _language_id(type_)
+    targets = [_language_id(r) for r in replacement.split()]
+    if source is None or any(t is None for t in targets):
+        return None
+    first = targets[0]
+    return _Rule(source.language, source.script, source.region, frozenset(source.variants),
+                 first.language, first.script, tuple(t.region for t in targets if t.region),
+                 frozenset(first.variants))
+
+
+#: The ISO 639-2 codes that CLDR replaces as overlong with the macrolanguage
+#: of their ISO 639-1 code. The Library of Congress ISO 639-2 list gives
+#: "twi||tw|Twi|twi", so `twi` is `tw`; it gives "bih|||Bihari languages", no
+#: ISO 639-1 code, so `bih` stays (IANA replaces the deprecated `bh` with
+#: `bih`).
+_OVERLONG_WITHOUT_MACROLANGUAGE = {"twi": "tw", "bih": None}
+_ALIAS_KINDS = (("language", ""), ("script", "und-"), ("region", "und-"), ("variant", "und-"))
+
+
+@lru_cache(maxsize=2)
+def _alias_table(macrolanguage: bool) -> Tuple[Dict[str, str], Dict[str, str]]:
+    """``(rules, legacy)``: the alias types that are language ids, and the
+    language alias types that are not (UTS #35 Annex C, Preprocessing, steps
+    2 and 3), each lowercase to its replacement.
+
+    The CLDR rules come first and the IANA Preferred-Values over them, so a
+    deprecated subtag takes the value RFC 5646 section 4.5 names: `drh` is
+    `khk`, where CLDR goes on to the macrolanguage, `mn`."""
+    aliases = _load("aliases.json")
+    rules: Dict[str, str] = {}
+    legacy: Dict[str, str] = {}
+    for kind, prefix in _ALIAS_KINDS:
+        for type_, (replacement, reason) in aliases[kind].items():
+            if not macrolanguage:
+                if reason == "macrolanguage":
+                    continue
+                if type_ in _OVERLONG_WITHOUT_MACROLANGUAGE:
+                    replacement = _OVERLONG_WITHOUT_MACROLANGUAGE[type_]
+                    if replacement is None:
+                        continue
+            type_ = (prefix + type_).lower()
+            replacement = " ".join(prefix + r for r in replacement.split())
+            if _language_id(type_) is not None:
+                rules[type_] = replacement
+            elif kind == "language":
+                legacy[type_] = replacement
+    for kind, prefix in _ALIAS_KINDS:
+        for subtag, record in _registry(kind).items():
+            if "preferred" in record and ".." not in subtag:
+                rules[(prefix + subtag).lower()] = prefix + record["preferred"]
+    for tag, preferred in _whole_tags().items():
+        if preferred:
+            (rules if _language_id(tag) is not None else legacy)[tag] = preferred
+    return rules, legacy
+
+
+@lru_cache(maxsize=2)
+def _rules(macrolanguage: bool) -> Dict[str, List[_Rule]]:
+    """The alias rules in UTS #35 Annex C order, indexed by the first field
+    their type names, so a tag is tried only against rules that can match."""
+    table, _ = _alias_table(macrolanguage)
+    ordered = sorted(filter(None, (_rule(t, r) for t, r in table.items())),
+                     key=_Rule.order)
+    index: Dict[str, List[_Rule]] = {}
+    for rule in ordered:
+        key = rule.language or rule.script or rule.region or min(rule.variants)
+        index.setdefault(key, []).append(rule)
+    return index
+
+
+def _apply(rule: _Rule, tag: LanguageTag) -> LanguageTag:
+    """UTS #35 Annex C, 4. Replacement, with the Territory Exception."""
+    language = (rule.to_language if rule.language is not None
+                else tag.language or rule.to_language)
+    script = rule.to_script if rule.script is not None else tag.script or rule.to_script
+    if rule.region is not None or (tag.region is None and rule.regions):
+        region = rule.regions[0] if rule.regions else None
+        if len(rule.regions) > 1:
+            likely = _lookup(LanguageTag(language=language, script=script))
+            if likely is not None and likely.region in rule.regions:
+                region = likely.region
+    else:
+        region = tag.region
+    if rule.variants:
+        variants = (set(tag.variants) - rule.variants) | rule.to_variants
+    else:
+        variants = set(tag.variants or rule.to_variants)
+    return replace(tag, language=language, script=script, region=region,
+                   variants=tuple(sorted(variants)))
+
+
+def _canonical(tag: LanguageTag, macrolanguage: bool) -> LanguageTag:
+    rules, legacy = _alias_table(macrolanguage)
+    whole = str(tag).lower()
+    if whole in legacy and (not tag.extlangs or whole in _whole_tags()):
+        tag = parse(legacy[whole])
+    if tag.whole:
+        return tag
+    if tag.extlangs:
+        record = _registry("extlang").get(tag.extlangs[0], {})
+        if tag.language in record.get("prefix", ()) and "preferred" in record:
+            tag = replace(tag, language=record["preferred"], extlangs=tag.extlangs[1:])
+    index = _rules(macrolanguage)
+    seen = set()
+    while tag not in seen:
+        seen.add(tag)
+        keys = [tag.language, tag.script, tag.region, *tag.variants]
+        candidates = [rule for key in keys if key for rule in index.get(key, ())]
+        match = min((r for r in candidates if r.matches(tag)), key=_Rule.order, default=None)
+        if match is None:
+            break
+        tag = _apply(match, tag)
+    return replace(tag, variants=tuple(sorted(set(tag.variants))),
+                   extensions=tuple(sorted(tag.extensions)))
+
+
+def _without_suppressed_script(tag: LanguageTag) -> LanguageTag:
+    if tag.language and tag.script:
+        record = _registry("language").get(tag.language, {})
+        if record.get("suppress_script") == tag.script:
+            return replace(tag, script=None)
+    return tag
+
+
+@lru_cache(maxsize=4096)
+def standardize(tag: str) -> str:
+    """``tag`` in canonical form (RFC 5646 section 4.5), with the CLDR alias
+    rules other than the macrolanguage ones, and with no script that IANA
+    suppresses for its language.
+
+    ``en_us`` is ``en-US``, ``iw`` is ``he``, ``eng`` is ``en``, ``zh-yue`` is
+    ``yue``, ``sh`` is ``sr-Latn``, ``en-Latn`` is ``en`` and ``cmn`` stays
+    ``cmn``.
+
+    Raises:
+        LanguageTagError: ``tag`` is not well-formed.
+    """
+    return str(_without_suppressed_script(_canonical(parse(tag), macrolanguage=False)))
+
+
+def _lookup(tag: LanguageTag) -> Optional[LanguageTag]:
+    """The CLDR likely-subtags entry of the first of ``language_script_region``,
+    ``language_script``, ``language_region`` and ``language`` that has one
+    (UTS #35 section 4.3, "Lookup")."""
+    likely = _load("likely_subtags.json")["likely"]
+    language = tag.language or "und"
+    for parts in ((language, tag.script, tag.region), (language, tag.script),
+                  (language, tag.region), (language,)):
+        if None in parts:
+            continue
+        found = likely.get("-".join(parts))
+        if found is not None:
+            return parse(found)
+    return None
+
+
+@lru_cache(maxsize=4096)
+def maximize(tag: str) -> Optional[LanguageTag]:
+    """UTS #35 section 4.3, "Add Likely Subtags": ``tag`` with its empty
+    script and region filled from CLDR likely subtags.
+
+    ``zh-TW`` is ``zh-Hant-TW``, ``sr-ME`` is ``sr-Latn-ME`` and ``cmn`` is
+    ``zh-Hans-CN``. The language comes out canonical, macrolanguage rules
+    included. A tag with the language ``und`` is excluded, as section 4.3
+    allows ("An implementation may choose to exclude language tags with the
+    language subtag "und" from the following operation"), and gives
+    ``None``; so does a language with no entry ("If there is no match,
+    signal an error and stop") and a tag that is not well-formed.
+    """
+    try:
+        source = _canonical(parse(tag), macrolanguage=True)
+    except LanguageTagError:
+        return None
+    if source.whole or source.language is None:
+        return None
+    if source.script == "Zzzz":
+        source = replace(source, script=None)
+    if source.region == "ZZ":
+        source = replace(source, region=None)
+    if source.script and source.region:
+        return source
+    match = _lookup(source)
+    if match is None:
+        return None
+    return replace(source, script=source.script or match.script,
+                   region=source.region or match.region)

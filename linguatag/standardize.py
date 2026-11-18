@@ -1,27 +1,33 @@
 """One spelling for every way of writing a language tag."""
 from __future__ import annotations
 
-import json
 from functools import lru_cache
-from pathlib import Path
 from typing import Dict
+
+from linguatag.bcp47 import LanguageTagError, _registry, standardize
 
 __all__ = ["standardize_lang"]
 
 
-_DATA = Path(__file__).resolve().parent / "data"
-
-
 @lru_cache(maxsize=None)
-def _preferred_values(name: str) -> Dict[str, str]:
-    return json.loads((_DATA / name).read_text(encoding="utf-8"))["preferred"]
+def _preferred_values(kind: str) -> Dict[str, str]:
+    """The IANA Preferred-Value of each deprecated subtag of ``kind``
+    (``language`` or ``region``), lowercase; for ``extlang``, of each
+    ``prefix-extlang`` pair."""
+    if kind == "extlang":
+        return {f"{prefix}-{subtag}".lower(): record["preferred"].lower()
+                for subtag, record in _registry("extlang").items()
+                for prefix in record.get("prefix", [])}
+    return {subtag.lower(): record["preferred"].lower()
+            for subtag, record in _registry(kind).items()
+            if "deprecated" in record and "preferred" in record}
 
 
 def _without_extlang(tag: str) -> str:
     """A language and its extlang replaced by the extlang's IANA
     Preferred-Value (RFC 5646 section 4.5): `zh-hak-TW` is `hak-TW`."""
     parts = tag.replace("_", "-").split("-")
-    preferred = _preferred_values("extlangs.json").get("-".join(parts[:2]).lower())
+    preferred = _preferred_values("extlang").get("-".join(parts[:2]).lower())
     if preferred is None:
         return tag
     return "-".join([preferred, *parts[2:]])
@@ -29,10 +35,9 @@ def _without_extlang(tag: str) -> str:
 
 def _without_deprecated_language(tag: str) -> str:
     """A deprecated language subtag replaced by its IANA Preferred-Value
-    (RFC 5646 section 4.5): `ajp-JO` is `apc-JO`. The registry copy in
-    ``langcodes`` predates some deprecations, so the table comes first."""
+    (RFC 5646 section 4.5): `ajp-JO` is `apc-JO`."""
     language, sep, rest = tag.replace("_", "-").partition("-")
-    preferred = _preferred_values("deprecated_languages.json").get(language.lower())
+    preferred = _preferred_values("language").get(language.lower())
     return tag if preferred is None else preferred + sep + rest
 
 
@@ -47,9 +52,9 @@ def _case(index: int, subtag: str, after_singleton: bool) -> str:
 
 
 def _fold(tag: str) -> str:
-    """BCP-47 case conventions without ``langcodes``: language and variants
-    lowercase, script titlecase, region uppercase, and every subtag after a
-    singleton (an extension or private use) lowercase."""
+    """BCP-47 case conventions for a string that is not a well-formed tag:
+    language and variants lowercase, script titlecase, region uppercase, and
+    every subtag after a singleton (an extension or private use) lowercase."""
     out, after_singleton = [], False
     for index, subtag in enumerate(tag.replace("_", "-").split("-")):
         after_singleton = after_singleton or (index > 0 and len(subtag) == 1)
@@ -61,29 +66,31 @@ def _fold(tag: str) -> str:
 def standardize_lang(tag: str) -> str:
     """Normalize a BCP-47 language tag for comparison.
 
-    Folds underscores to hyphens and applies the BCP-47 case conventions. A
-    language and its extlang become the extlang's IANA Preferred-Value
-    (``zh-hak`` is ``hak``, ``ar-arz-EG`` is ``arz-EG``), and a deprecated
-    language subtag becomes its Preferred-Value (``ajp`` is ``apc``). With ``langcodes``
-    it also replaces deprecated forms (``iw`` is ``he``) and drops a redundant
-    script, so two spellings of one language (``en_us``, ``en-US``) reduce to
-    one string.
+    The tag is put in canonical form (RFC 5646 section 4.5) from the CLDR 49
+    alias rules and the IANA registry that this package carries (see
+    :mod:`linguatag.bcp47`): underscores become hyphens, each subtag takes
+    its BCP-47 case, a deprecated subtag becomes its Preferred-Value (``iw``
+    is ``he``, ``ajp`` is ``apc``, ``my-BU`` is ``my-MM``), a language and its
+    extlang become the extlang (``zh-hak`` is ``hak``, ``ar-arz-EG`` is
+    ``arz-EG``), an ISO 639-2 code becomes its ISO 639-1 code (``eng`` is
+    ``en``) and a script that IANA suppresses for the language goes
+    (``en-Latn`` is ``en``). An encompassed language keeps its own code
+    (``cmn`` stays ``cmn``). Two spellings of one language (``en_us``,
+    ``en-US``) reduce to one string.
 
     Args:
         tag: a BCP-47-like language tag, possibly underscore-separated or
             mixed-case, as directory names and config values often are.
 
     Returns:
-        ``langcodes.standardize_tag``'s output when ``langcodes`` is
-        installed and accepts the tag; otherwise the case-folded tag.
+        The canonical tag, or, for a string that is not a well-formed tag
+        (``zh-HK-HiuMaanNeural``), the string with its language and extlang
+        replaced as above and each subtag in its BCP-47 case.
     """
     if tag.lower() in ("tl", "tgl"):
-        # langcodes folds Tagalog into the `fil` macrolanguage; the tag stays
-        # `tl` here.
+        # CLDR replaces Tagalog with Filipino, `fil`; the tag stays `tl` here.
         return "tl"
-    tag = _without_deprecated_language(_without_extlang(tag))
     try:
-        from langcodes import standardize_tag
-        return str(standardize_tag(tag))
-    except Exception:
-        return _fold(tag)
+        return standardize(tag)
+    except LanguageTagError:
+        return _fold(_without_deprecated_language(_without_extlang(tag)))
