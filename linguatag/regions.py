@@ -138,22 +138,31 @@ def likely_script(tag: str) -> Optional[str]:
     `zh_Hans_CN`; `sr-ME` is `Latn` and `pa-PK` is `Arab`. A bare tag takes its
     default region first (:func:`with_default_region`), so `yue` is `yue-CN`
     and `Hans`. The table of this package corrects the `langcodes` snapshot
-    (`hyw` is `Armn`). None for a grandfathered form such as `zh-min-nan`,
-    when `langcodes` is absent and the table has no entry, or when no script
-    is known.
+    (`hyw` is `Armn`). None for a tag that `langcodes` cannot parse, for a
+    language that it does not know (`zzz`, `und`), when `langcodes` is absent
+    and the table has no entry, or when no script is known. The data is the
+    CLDR snapshot of `langcodes`, which differs from CLDR 49 for some tags,
+    as `ku-IQ`.
     """
     tag = with_default_region(tag)
-    _, script, _, extended = _split(tag)
+    language, script, _, extended = _split(tag)
     if script or extended:
         return script
     _, script, _, _ = _split(_with_likely_script(tag))
     if script:
         return script
     try:
-        from langcodes import Language
+        from langcodes import Language, LanguageTagError
+        from langcodes.data_dicts import LIKELY_SUBTAGS
     except ImportError:
         return None
-    return Language.get(tag).maximize().script
+    # langcodes gives a language with no likely-subtags entry the Latin script of `und`.
+    if language == "und" or language not in LIKELY_SUBTAGS:
+        return None
+    try:
+        return Language.get(tag).maximize().script
+    except LanguageTagError:
+        return None
 
 
 def _with_likely_script(tag: str) -> str:

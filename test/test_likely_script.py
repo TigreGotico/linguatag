@@ -45,3 +45,23 @@ def test_the_package_table_corrects_the_langcodes_snapshot():
 
 def test_an_underscore_tag_is_standardized_first():
     assert likely_script("zh_TW") == "Hant"
+
+
+@pytest.mark.parametrize("tag", ["zzz", "qaa", "und", "123"])
+def test_a_language_with_no_likely_subtags_has_no_script(tag):
+    assert likely_script(tag) is None
+
+
+@pytest.mark.parametrize("tag", ["", "a", "en--US", "-en"])
+def test_a_tag_that_langcodes_cannot_parse_has_no_script(tag):
+    assert likely_script(tag) is None
+
+
+def test_without_langcodes_only_the_package_table_gives_a_script(monkeypatch):
+    import sys
+
+    monkeypatch.setitem(sys.modules, "langcodes", None)
+    monkeypatch.setitem(sys.modules, "langcodes.data_dicts", None)
+    assert likely_script("zh-TW") is None
+    assert likely_script("zh-Hant") == "Hant"
+    assert likely_script("hyw") == "Armn"
