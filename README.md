@@ -4,10 +4,11 @@ BCP-47 language tags: standardization, distance, closest match, and the default 
 
 ```python
 from linguatag import (closest_lang, default_region, is_arabic_variety, lang_distance,
-                       with_default_region)
+                       likely_script, with_default_region)
 
 default_region("en")            # 'GB'
 with_default_region("zh-Hant")  # 'zh-Hant-TW'
+likely_script("zh-TW")          # 'Hant'
 lang_distance("pt", "pt-PT")    # 0
 lang_distance("pt", "pt-BR")    # 5
 closest_lang("en", ["en-US", "en-GB"])  # 'en-GB'
@@ -23,6 +24,10 @@ A tag with no region defaults to its motherland: the region where the language f
 CLDR likely-subtags is the base. CLDR picks the most-populous region, and for most languages that is also the motherland. `linguatag.OVERRIDES` replaces CLDR where the two differ, and each override cites its source: `en` is GB, `pt` is PT, `ur` is IN and `yue` is CN. An override holds for its own script only, so `yue-Hant` stays HK. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
 
 A bare `ar` is Modern Standard Arabic, the standard of no single country, so its region is `001`, the world, as CLDR spells it.
+
+## Likely script
+
+`likely_script(tag)` gives the script of a tag: its script subtag, or else the script that CLDR likely-subtags gives for the language in its region. `zh-TW` and `zh-HK` are `Hant`, `zh` is `Hans`, and `sr-ME` is `Latn`. A bare tag takes its default region first, so `yue` is `yue-CN` and `Hans`. It needs `langcodes` for every language that the package table does not hold.
 
 `linguatag/data/likely_regions.json` holds the CLDR regions. `scripts/build_likely_regions.py` rebuilds it from the installed `langcodes`.
 

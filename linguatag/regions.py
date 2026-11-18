@@ -19,7 +19,7 @@ from typing import Dict, Optional, Tuple
 
 from linguatag.standardize import standardize_lang
 
-__all__ = ["OVERRIDES", "default_region", "with_default_region"]
+__all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
 
 #: Language -> (script, region) of its default, where the region is not the
 #: CLDR likely region. The script is the one that region writes the language
@@ -127,6 +127,33 @@ def with_default_region(tag: str) -> str:
     parts = tag.split("-")
     at = 2 if script else 1
     return "-".join(parts[:at] + [region] + parts[at:])
+
+
+def likely_script(tag: str) -> Optional[str]:
+    """The ISO 15924 script that `tag` is written in: the script subtag of the
+    tag, or else the script that CLDR likely-subtags gives for the language in
+    its default region.
+
+    `zh-TW` is `Hant` and `zh` is `Hans`, as CLDR gives `zh_Hant_TW` and
+    `zh_Hans_CN`; `sr-ME` is `Latn` and `pa-PK` is `Arab`. A bare tag takes its
+    default region first (:func:`with_default_region`), so `yue` is `yue-CN`
+    and `Hans`. The table of this package corrects the `langcodes` snapshot
+    (`hyw` is `Armn`). None for a grandfathered form such as `zh-min-nan`,
+    when `langcodes` is absent and the table has no entry, or when no script
+    is known.
+    """
+    tag = with_default_region(tag)
+    _, script, _, extended = _split(tag)
+    if script or extended:
+        return script
+    _, script, _, _ = _split(_with_likely_script(tag))
+    if script:
+        return script
+    try:
+        from langcodes import Language
+    except ImportError:
+        return None
+    return Language.get(tag).maximize().script
 
 
 def _with_likely_script(tag: str) -> str:
