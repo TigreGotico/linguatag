@@ -19,7 +19,7 @@ from typing import Dict, Optional, Tuple
 
 from linguatag.standardize import standardize_lang
 
-__all__ = ["OVERRIDES", "default_region", "with_default_region"]
+__all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
 
 #: Language -> (script, region) of its default, where the region is not the
 #: CLDR likely region. The script is the one that region writes the language
@@ -127,6 +127,45 @@ def with_default_region(tag: str) -> str:
     parts = tag.split("-")
     at = 2 if script else 1
     return "-".join(parts[:at] + [region] + parts[at:])
+
+
+def likely_script(tag: str) -> Optional[str]:
+    """The ISO 15924 script that `tag` is written in: the script subtag of the
+    tag, or else the script that CLDR likely-subtags gives for the language in
+    its default region.
+
+    `zh-TW` is `Hant` and `zh` is `Hans`, as CLDR gives `zh_Hant_TW` and
+    `zh_Hans_CN`; `sr-ME` is `Latn` and `pa-PK` is `Arab`. A bare tag takes its
+    default region first (:func:`with_default_region`), so `yue` is `yue-CN`
+    and `Hans`. The table of this package corrects the `langcodes` snapshot
+    (`hyw` is `Armn`). None for a tag that `langcodes` cannot parse, for a
+    language that it does not know (`zzz`, `und`), when `langcodes` is absent
+    and the table has no entry, or when no script is known. The data is the
+    CLDR snapshot of `langcodes`, which differs from CLDR 49 for some tags,
+    as `ku-IQ`.
+    """
+    tag = with_default_region(tag)
+    language, script, _, extended = _split(tag)
+    if script or extended:
+        return script
+    _, script, _, _ = _split(_with_likely_script(tag))
+    if script:
+        return script
+    try:
+        from langcodes import Language, LanguageTagError
+        from langcodes.data_dicts import LIKELY_SUBTAGS
+    except ImportError:
+        return None
+    try:
+        parsed = Language.get(tag)
+    except LanguageTagError:
+        return None
+    # langcodes falls back to an `und` entry, the Latin script of the root locale, for a language that its
+    # likely-subtags data does not hold, alone or through its macrolanguage (`cmn` is `zh`).
+    entry = next((broader for broader in parsed.broader_tags() if broader in LIKELY_SUBTAGS), "und")
+    if entry.split("-")[0] == "und":
+        return None
+    return parsed.maximize().script
 
 
 def _with_likely_script(tag: str) -> str:
