@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.0a1](https://github.com/TigreGotico/linguatag/tree/0.3.0a1) (2026-11-18)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.7a1...0.3.0a1)
+
+**Merged pull requests:**
+
+- feat: likely\_script gives the script of a tag from CLDR likely-subtags [\#42](https://github.com/TigreGotico/linguatag/pull/42) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.2.7a1](https://github.com/TigreGotico/linguatag/tree/0.2.7a1) (2026-11-15)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.6a1...0.2.7a1)
