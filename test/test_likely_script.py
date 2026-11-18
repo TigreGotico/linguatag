@@ -65,3 +65,11 @@ def test_without_langcodes_only_the_package_table_gives_a_script(monkeypatch):
     assert likely_script("zh-TW") is None
     assert likely_script("zh-Hant") == "Hant"
     assert likely_script("hyw") == "Armn"
+
+
+@pytest.mark.parametrize("tag, script", [("arb", "Arab"), ("cmn", "Hans"), ("cmn-TW", "Hant"), ("pes", "Arab"),
+                                         ("npi", "Deva"), ("knn", "Deva")])
+def test_an_iso_639_3_code_takes_the_script_of_its_macrolanguage(tag, script):
+    # CLDR 49 likelySubtags.xml: zh -> zh_Hans_CN, zh_TW -> zh_Hant_TW, ar -> ar_Arab_EG, fa -> fa_Arab_IR,
+    # ne -> ne_Deva_NP, knn -> knn_Deva_IN.
+    assert likely_script(tag) == script

@@ -156,13 +156,16 @@ def likely_script(tag: str) -> Optional[str]:
         from langcodes.data_dicts import LIKELY_SUBTAGS
     except ImportError:
         return None
-    # langcodes gives a language with no likely-subtags entry the Latin script of `und`.
-    if language == "und" or language not in LIKELY_SUBTAGS:
-        return None
     try:
-        return Language.get(tag).maximize().script
+        parsed = Language.get(tag)
     except LanguageTagError:
         return None
+    # langcodes falls back to an `und` entry, the Latin script of the root locale, for a language that its
+    # likely-subtags data does not hold, alone or through its macrolanguage (`cmn` is `zh`).
+    entry = next((broader for broader in parsed.broader_tags() if broader in LIKELY_SUBTAGS), "und")
+    if entry.split("-")[0] == "und":
+        return None
+    return parsed.maximize().script
 
 
 def _with_likely_script(tag: str) -> str:
