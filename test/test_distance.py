@@ -98,6 +98,16 @@ def test_the_uts_35_nynorsk_example():
     assert tag_distance("nn-DE", "nb-FR") == 24
 
 
+# CLDR 49 names Serbo-Croatian in `<languageMatch desired="sh" supported="hr"
+# distance="4"/>` and `sh` => `sr` 4, but `<languageAlias type="sh"
+# replacement="sr_Latn" reason="legacy"/>` means a canonical tag is never
+# `sh`. No rule names `hr` with `sr`: `*` 80, and HR against RS `*_*_*` 4.
+# `<languageMatch desired="hr" supported="bs" distance="4"/>` is two-way.
+def test_croatian_and_serbian_are_two_languages():
+    assert lang_distance("hr", "sr-Latn") == lang_distance("sr-Latn", "hr") == 84
+    assert lang_distance("hr", "bs") == lang_distance("bs", "hr") == 8
+
+
 # `<matchVariable id="$maghreb" value="MA+DZ+TN+LY+MR+EH"/>`,
 # `ar_*_$maghreb` 4, `ar_*_$!maghreb` 4, `ar_*_*` 5. `001` contains regions
 # in and out of `$maghreb`, so it is 5 from both sides, the largest distance

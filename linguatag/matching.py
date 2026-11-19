@@ -267,9 +267,10 @@ def lang_matches(a: str, b: str,
 
     Args:
         a: the requested BCP-47 tag.
-        b: the candidate tag. The relation is symmetric except for the
-            Modern Standard Arabic fallback: ``arz`` is near ``ar``, but
-            ``ar`` is not near ``arz``.
+        b: the candidate tag. The relation is not symmetric: a CLDR
+            one-way rule and the Modern Standard Arabic fallback count in
+            one direction only, so ``arz`` is near ``ar``, but ``ar`` is not
+            near ``arz``.
         max_distance: the inclusive upper bound on an acceptable distance.
             Pass ``max_distance=0`` to require an exact match.
     """

@@ -114,9 +114,17 @@ def _all_match(fields: Tuple[_Field, ...], subtags: Tuple[str, ...]) -> bool:
     return all((subtag in values) != negated for (negated, values), subtag in zip(fields, subtags))
 
 
+@lru_cache(maxsize=None)
+def _rules_for(fields: int, language: str) -> tuple:
+    """The rules of ``fields`` fields, in data order, with a language field
+    that matches ``language``: only these can match a pair that starts with it."""
+    return tuple(rule for rule in _RULES[fields]
+                 if _all_match(rule[0][:1], (language,)) or _all_match(rule[1][:1], (language,)))
+
+
 def _rule_distance(desired: Tuple[str, ...], supported: Tuple[str, ...]) -> int:
     """The distance of the first rule that matches, in data order."""
-    for want, have, distance, oneway in _RULES[len(desired)]:
+    for want, have, distance, oneway in _rules_for(len(desired), desired[0]):
         if _all_match(want, desired) and _all_match(have, supported):
             return distance
         if not oneway and _all_match(want, supported) and _all_match(have, desired):
