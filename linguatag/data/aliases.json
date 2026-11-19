@@ -1,0 +1,4591 @@
+{
+ "source": "CLDR 49, cldr-json cldr-core/supplemental/aliases.json",
+ "language": {
+  "aa-saaho": [
+   "ssy",
+   "deprecated"
+  ],
+  "aam": [
+   "aas",
+   "deprecated"
+  ],
+  "aar": [
+   "aa",
+   "overlong"
+  ],
+  "abk": [
+   "ab",
+   "overlong"
+  ],
+  "adp": [
+   "dz",
+   "deprecated"
+  ],
+  "afr": [
+   "af",
+   "overlong"
+  ],
+  "agp": [
+   "apf",
+   "deprecated"
+  ],
+  "ais": [
+   "ami",
+   "deprecated"
+  ],
+  "ajp": [
+   "apc",
+   "deprecated"
+  ],
+  "ajt": [
+   "aeb",
+   "deprecated"
+  ],
+  "aju": [
+   "jrb",
+   "macrolanguage"
+  ],
+  "aka": [
+   "ak",
+   "overlong"
+  ],
+  "alb": [
+   "sq",
+   "bibliographic"
+  ],
+  "als": [
+   "sq",
+   "macrolanguage"
+  ],
+  "amh": [
+   "am",
+   "overlong"
+  ],
+  "ara": [
+   "ar",
+   "overlong"
+  ],
+  "arb": [
+   "ar",
+   "macrolanguage"
+  ],
+  "arg": [
+   "an",
+   "overlong"
+  ],
+  "arm": [
+   "hy",
+   "bibliographic"
+  ],
+  "art-lojban": [
+   "jbo",
+   "deprecated"
+  ],
+  "asd": [
+   "snz",
+   "deprecated"
+  ],
+  "asm": [
+   "as",
+   "overlong"
+  ],
+  "aue": [
+   "ktz",
+   "deprecated"
+  ],
+  "ava": [
+   "av",
+   "overlong"
+  ],
+  "ave": [
+   "ae",
+   "overlong"
+  ],
+  "aym": [
+   "ay",
+   "overlong"
+  ],
+  "ayr": [
+   "ay",
+   "macrolanguage"
+  ],
+  "ayx": [
+   "nun",
+   "deprecated"
+  ],
+  "aze": [
+   "az",
+   "overlong"
+  ],
+  "azj": [
+   "az",
+   "macrolanguage"
+  ],
+  "bak": [
+   "ba",
+   "overlong"
+  ],
+  "bam": [
+   "bm",
+   "overlong"
+  ],
+  "baq": [
+   "eu",
+   "bibliographic"
+  ],
+  "baz": [
+   "nvo",
+   "deprecated"
+  ],
+  "bcc": [
+   "bal",
+   "macrolanguage"
+  ],
+  "bcl": [
+   "bik",
+   "macrolanguage"
+  ],
+  "bel": [
+   "be",
+   "overlong"
+  ],
+  "ben": [
+   "bn",
+   "overlong"
+  ],
+  "bgm": [
+   "bcg",
+   "deprecated"
+  ],
+  "bh": [
+   "bho",
+   "macrolanguage"
+  ],
+  "bhk": [
+   "fbl",
+   "deprecated"
+  ],
+  "bic": [
+   "bir",
+   "deprecated"
+  ],
+  "bih": [
+   "bho",
+   "overlong"
+  ],
+  "bis": [
+   "bi",
+   "overlong"
+  ],
+  "bjd": [
+   "drl",
+   "deprecated"
+  ],
+  "bjq": [
+   "bzc",
+   "deprecated"
+  ],
+  "bkb": [
+   "ebk",
+   "deprecated"
+  ],
+  "blg": [
+   "iba",
+   "deprecated"
+  ],
+  "bod": [
+   "bo",
+   "overlong"
+  ],
+  "bos": [
+   "bs",
+   "overlong"
+  ],
+  "bre": [
+   "br",
+   "overlong"
+  ],
+  "btb": [
+   "beb",
+   "deprecated"
+  ],
+  "bul": [
+   "bg",
+   "overlong"
+  ],
+  "bur": [
+   "my",
+   "bibliographic"
+  ],
+  "bxk": [
+   "luy",
+   "macrolanguage"
+  ],
+  "bxr": [
+   "bua",
+   "macrolanguage"
+  ],
+  "cat": [
+   "ca",
+   "overlong"
+  ],
+  "ccq": [
+   "rki",
+   "deprecated"
+  ],
+  "cel-gaulish": [
+   "xtg",
+   "legacy"
+  ],
+  "ces": [
+   "cs",
+   "overlong"
+  ],
+  "cha": [
+   "ch",
+   "overlong"
+  ],
+  "che": [
+   "ce",
+   "overlong"
+  ],
+  "chi": [
+   "zh",
+   "bibliographic"
+  ],
+  "chu": [
+   "cu",
+   "overlong"
+  ],
+  "chv": [
+   "cv",
+   "overlong"
+  ],
+  "cjr": [
+   "mom",
+   "deprecated"
+  ],
+  "cka": [
+   "cmr",
+   "deprecated"
+  ],
+  "cld": [
+   "syr",
+   "macrolanguage"
+  ],
+  "cls": [
+   "sa",
+   "macrolanguage"
+  ],
+  "cmk": [
+   "xch",
+   "deprecated"
+  ],
+  "cmn": [
+   "zh",
+   "macrolanguage"
+  ],
+  "cnr": [
+   "sr-ME",
+   "legacy"
+  ],
+  "cor": [
+   "kw",
+   "overlong"
+  ],
+  "cos": [
+   "co",
+   "overlong"
+  ],
+  "coy": [
+   "pij",
+   "deprecated"
+  ],
+  "cqu": [
+   "quh",
+   "deprecated"
+  ],
+  "cre": [
+   "cr",
+   "overlong"
+  ],
+  "cwd": [
+   "cr",
+   "macrolanguage"
+  ],
+  "cym": [
+   "cy",
+   "overlong"
+  ],
+  "cze": [
+   "cs",
+   "bibliographic"
+  ],
+  "daf": [
+   "dnj",
+   "deprecated"
+  ],
+  "dan": [
+   "da",
+   "overlong"
+  ],
+  "dap": [
+   "njz",
+   "deprecated"
+  ],
+  "dek": [
+   "sqm",
+   "deprecated"
+  ],
+  "deu": [
+   "de",
+   "overlong"
+  ],
+  "dgo": [
+   "doi",
+   "macrolanguage"
+  ],
+  "dhd": [
+   "mwr",
+   "macrolanguage"
+  ],
+  "dik": [
+   "din",
+   "macrolanguage"
+  ],
+  "diq": [
+   "zza",
+   "macrolanguage"
+  ],
+  "dit": [
+   "dif",
+   "deprecated"
+  ],
+  "div": [
+   "dv",
+   "overlong"
+  ],
+  "djl": [
+   "dze",
+   "deprecated"
+  ],
+  "dkl": [
+   "aqd",
+   "deprecated"
+  ],
+  "drh": [
+   "mn",
+   "deprecated"
+  ],
+  "drr": [
+   "kzk",
+   "deprecated"
+  ],
+  "drw": [
+   "fa-AF",
+   "deprecated"
+  ],
+  "dud": [
+   "uth",
+   "deprecated"
+  ],
+  "duj": [
+   "dwu",
+   "deprecated"
+  ],
+  "dut": [
+   "nl",
+   "bibliographic"
+  ],
+  "dwl": [
+   "dbt",
+   "deprecated"
+  ],
+  "dzo": [
+   "dz",
+   "overlong"
+  ],
+  "ekk": [
+   "et",
+   "macrolanguage"
+  ],
+  "ell": [
+   "el",
+   "overlong"
+  ],
+  "elp": [
+   "amq",
+   "deprecated"
+  ],
+  "emk": [
+   "man",
+   "macrolanguage"
+  ],
+  "en-GB-oed": [
+   "en-GB-oxendict",
+   "deprecated"
+  ],
+  "eng": [
+   "en",
+   "overlong"
+  ],
+  "epo": [
+   "eo",
+   "overlong"
+  ],
+  "esk": [
+   "ik",
+   "macrolanguage"
+  ],
+  "est": [
+   "et",
+   "overlong"
+  ],
+  "eus": [
+   "eu",
+   "overlong"
+  ],
+  "ewe": [
+   "ee",
+   "overlong"
+  ],
+  "fao": [
+   "fo",
+   "overlong"
+  ],
+  "fas": [
+   "fa",
+   "overlong"
+  ],
+  "fij": [
+   "fj",
+   "overlong"
+  ],
+  "fin": [
+   "fi",
+   "overlong"
+  ],
+  "fra": [
+   "fr",
+   "overlong"
+  ],
+  "fre": [
+   "fr",
+   "bibliographic"
+  ],
+  "fry": [
+   "fy",
+   "overlong"
+  ],
+  "fuc": [
+   "ff",
+   "macrolanguage"
+  ],
+  "ful": [
+   "ff",
+   "overlong"
+  ],
+  "gav": [
+   "dev",
+   "deprecated"
+  ],
+  "gaz": [
+   "om",
+   "macrolanguage"
+  ],
+  "gbc": [
+   "wny",
+   "deprecated"
+  ],
+  "gbo": [
+   "grb",
+   "macrolanguage"
+  ],
+  "geo": [
+   "ka",
+   "bibliographic"
+  ],
+  "ger": [
+   "de",
+   "bibliographic"
+  ],
+  "gfx": [
+   "vaj",
+   "deprecated"
+  ],
+  "ggn": [
+   "gvr",
+   "deprecated"
+  ],
+  "ggo": [
+   "esg",
+   "deprecated"
+  ],
+  "ggr": [
+   "gtu",
+   "deprecated"
+  ],
+  "gio": [
+   "aou",
+   "deprecated"
+  ],
+  "gla": [
+   "gd",
+   "overlong"
+  ],
+  "gle": [
+   "ga",
+   "overlong"
+  ],
+  "glg": [
+   "gl",
+   "overlong"
+  ],
+  "gli": [
+   "kzk",
+   "deprecated"
+  ],
+  "glv": [
+   "gv",
+   "overlong"
+  ],
+  "gno": [
+   "gon",
+   "macrolanguage"
+  ],
+  "gom": [
+   "kok",
+   "macrolanguage"
+  ],
+  "gre": [
+   "el",
+   "bibliographic"
+  ],
+  "grn": [
+   "gn",
+   "overlong"
+  ],
+  "gti": [
+   "nyc",
+   "deprecated"
+  ],
+  "gug": [
+   "gn",
+   "macrolanguage"
+  ],
+  "guj": [
+   "gu",
+   "overlong"
+  ],
+  "guv": [
+   "duz",
+   "deprecated"
+  ],
+  "gya": [
+   "gba",
+   "macrolanguage"
+  ],
+  "hat": [
+   "ht",
+   "overlong"
+  ],
+  "hau": [
+   "ha",
+   "overlong"
+  ],
+  "hbs": [
+   "sr-Latn",
+   "overlong"
+  ],
+  "hdn": [
+   "hai",
+   "macrolanguage"
+  ],
+  "hea": [
+   "hmn",
+   "macrolanguage"
+  ],
+  "heb": [
+   "he",
+   "overlong"
+  ],
+  "her": [
+   "hz",
+   "overlong"
+  ],
+  "him": [
+   "srx",
+   "macrolanguage"
+  ],
+  "hin": [
+   "hi",
+   "overlong"
+  ],
+  "hmo": [
+   "ho",
+   "overlong"
+  ],
+  "hrr": [
+   "jal",
+   "deprecated"
+  ],
+  "hrv": [
+   "hr",
+   "overlong"
+  ],
+  "hun": [
+   "hu",
+   "overlong"
+  ],
+  "hy-arevmda": [
+   "hyw",
+   "deprecated"
+  ],
+  "hye": [
+   "hy",
+   "overlong"
+  ],
+  "i-ami": [
+   "ami",
+   "deprecated"
+  ],
+  "i-bnn": [
+   "bnn",
+   "deprecated"
+  ],
+  "i-default": [
+   "en-x-i-default",
+   "legacy"
+  ],
+  "i-enochian": [
+   "und-x-i-enochian",
+   "legacy"
+  ],
+  "i-hak": [
+   "hak",
+   "deprecated"
+  ],
+  "i-klingon": [
+   "tlh",
+   "deprecated"
+  ],
+  "i-lux": [
+   "lb",
+   "deprecated"
+  ],
+  "i-mingo": [
+   "see-x-i-mingo",
+   "legacy"
+  ],
+  "i-navajo": [
+   "nv",
+   "deprecated"
+  ],
+  "i-pwn": [
+   "pwn",
+   "deprecated"
+  ],
+  "i-tao": [
+   "tao",
+   "deprecated"
+  ],
+  "i-tay": [
+   "tay",
+   "deprecated"
+  ],
+  "i-tsu": [
+   "tsu",
+   "deprecated"
+  ],
+  "ibi": [
+   "opa",
+   "deprecated"
+  ],
+  "ibo": [
+   "ig",
+   "overlong"
+  ],
+  "ice": [
+   "is",
+   "bibliographic"
+  ],
+  "ido": [
+   "io",
+   "overlong"
+  ],
+  "iii": [
+   "ii",
+   "overlong"
+  ],
+  "ike": [
+   "iu",
+   "macrolanguage"
+  ],
+  "iku": [
+   "iu",
+   "overlong"
+  ],
+  "ile": [
+   "ie",
+   "overlong"
+  ],
+  "ill": [
+   "ilm",
+   "deprecated"
+  ],
+  "ilw": [
+   "gal",
+   "deprecated"
+  ],
+  "in": [
+   "id",
+   "deprecated"
+  ],
+  "ina": [
+   "ia",
+   "overlong"
+  ],
+  "ind": [
+   "id",
+   "overlong"
+  ],
+  "ipk": [
+   "ik",
+   "overlong"
+  ],
+  "isl": [
+   "is",
+   "overlong"
+  ],
+  "ita": [
+   "it",
+   "overlong"
+  ],
+  "iw": [
+   "he",
+   "deprecated"
+  ],
+  "izi": [
+   "eza",
+   "deprecated"
+  ],
+  "jar": [
+   "jgk",
+   "deprecated"
+  ],
+  "jav": [
+   "jv",
+   "overlong"
+  ],
+  "jeg": [
+   "oyb",
+   "deprecated"
+  ],
+  "ji": [
+   "yi",
+   "deprecated"
+  ],
+  "jpn": [
+   "ja",
+   "overlong"
+  ],
+  "jw": [
+   "jv",
+   "deprecated"
+  ],
+  "kal": [
+   "kl",
+   "overlong"
+  ],
+  "kan": [
+   "kn",
+   "overlong"
+  ],
+  "kas": [
+   "ks",
+   "overlong"
+  ],
+  "kat": [
+   "ka",
+   "overlong"
+  ],
+  "kau": [
+   "kr",
+   "overlong"
+  ],
+  "kaz": [
+   "kk",
+   "overlong"
+  ],
+  "kdv": [
+   "zkd",
+   "deprecated"
+  ],
+  "kgc": [
+   "tdf",
+   "deprecated"
+  ],
+  "kgd": [
+   "ncq",
+   "deprecated"
+  ],
+  "kgh": [
+   "kml",
+   "deprecated"
+  ],
+  "kgm": [
+   "plu",
+   "deprecated"
+  ],
+  "khk": [
+   "mn",
+   "macrolanguage"
+  ],
+  "khm": [
+   "km",
+   "overlong"
+  ],
+  "kik": [
+   "ki",
+   "overlong"
+  ],
+  "kin": [
+   "rw",
+   "overlong"
+  ],
+  "kir": [
+   "ky",
+   "overlong"
+  ],
+  "kmr": [
+   "ku",
+   "macrolanguage"
+  ],
+  "knc": [
+   "kr",
+   "macrolanguage"
+  ],
+  "kng": [
+   "kg",
+   "macrolanguage"
+  ],
+  "koj": [
+   "kwv",
+   "deprecated"
+  ],
+  "kom": [
+   "kv",
+   "overlong"
+  ],
+  "kon": [
+   "kg",
+   "overlong"
+  ],
+  "kor": [
+   "ko",
+   "overlong"
+  ],
+  "kpp": [
+   "jkm",
+   "deprecated"
+  ],
+  "kpv": [
+   "kv",
+   "macrolanguage"
+  ],
+  "krm": [
+   "bmf",
+   "deprecated"
+  ],
+  "ktr": [
+   "dtp",
+   "deprecated"
+  ],
+  "kua": [
+   "kj",
+   "overlong"
+  ],
+  "kur": [
+   "ku",
+   "overlong"
+  ],
+  "kvs": [
+   "gdj",
+   "deprecated"
+  ],
+  "kwq": [
+   "yam",
+   "deprecated"
+  ],
+  "kxe": [
+   "tvd",
+   "deprecated"
+  ],
+  "kxl": [
+   "kru",
+   "deprecated"
+  ],
+  "kzh": [
+   "dgl",
+   "deprecated"
+  ],
+  "kzj": [
+   "dtp",
+   "deprecated"
+  ],
+  "kzt": [
+   "dtp",
+   "deprecated"
+  ],
+  "lak": [
+   "ksp",
+   "deprecated"
+  ],
+  "lao": [
+   "lo",
+   "overlong"
+  ],
+  "lat": [
+   "la",
+   "overlong"
+  ],
+  "lav": [
+   "lv",
+   "overlong"
+  ],
+  "lbk": [
+   "bnc",
+   "macrolanguage"
+  ],
+  "leg": [
+   "enl",
+   "deprecated"
+  ],
+  "lii": [
+   "raq",
+   "deprecated"
+  ],
+  "lim": [
+   "li",
+   "overlong"
+  ],
+  "lin": [
+   "ln",
+   "overlong"
+  ],
+  "lit": [
+   "lt",
+   "overlong"
+  ],
+  "llo": [
+   "ngt",
+   "deprecated"
+  ],
+  "lmm": [
+   "rmx",
+   "deprecated"
+  ],
+  "ltz": [
+   "lb",
+   "overlong"
+  ],
+  "lub": [
+   "lu",
+   "overlong"
+  ],
+  "lug": [
+   "lg",
+   "overlong"
+  ],
+  "lvs": [
+   "lv",
+   "macrolanguage"
+  ],
+  "mac": [
+   "mk",
+   "bibliographic"
+  ],
+  "mah": [
+   "mh",
+   "overlong"
+  ],
+  "mal": [
+   "ml",
+   "overlong"
+  ],
+  "mao": [
+   "mi",
+   "bibliographic"
+  ],
+  "mar": [
+   "mr",
+   "overlong"
+  ],
+  "may": [
+   "ms",
+   "bibliographic"
+  ],
+  "meg": [
+   "cir",
+   "deprecated"
+  ],
+  "mgx": [
+   "jbk",
+   "deprecated"
+  ],
+  "mhr": [
+   "chm",
+   "macrolanguage"
+  ],
+  "mkd": [
+   "mk",
+   "overlong"
+  ],
+  "mlg": [
+   "mg",
+   "overlong"
+  ],
+  "mlt": [
+   "mt",
+   "overlong"
+  ],
+  "mnt": [
+   "wnn",
+   "deprecated"
+  ],
+  "mo": [
+   "ro",
+   "deprecated"
+  ],
+  "mof": [
+   "xnt",
+   "deprecated"
+  ],
+  "mol": [
+   "ro",
+   "overlong"
+  ],
+  "mon": [
+   "mn",
+   "overlong"
+  ],
+  "mrd": [
+   "mgp",
+   "deprecated"
+  ],
+  "mri": [
+   "mi",
+   "overlong"
+  ],
+  "msa": [
+   "ms",
+   "overlong"
+  ],
+  "mst": [
+   "mry",
+   "deprecated"
+  ],
+  "mup": [
+   "raj",
+   "macrolanguage"
+  ],
+  "mwd": [
+   "dmw",
+   "deprecated"
+  ],
+  "mwj": [
+   "vaj",
+   "deprecated"
+  ],
+  "mya": [
+   "my",
+   "overlong"
+  ],
+  "myd": [
+   "aog",
+   "deprecated"
+  ],
+  "myt": [
+   "mry",
+   "deprecated"
+  ],
+  "nad": [
+   "xny",
+   "deprecated"
+  ],
+  "nau": [
+   "na",
+   "overlong"
+  ],
+  "nav": [
+   "nv",
+   "overlong"
+  ],
+  "nbf": [
+   "nru",
+   "deprecated"
+  ],
+  "nbl": [
+   "nr",
+   "overlong"
+  ],
+  "nbx": [
+   "gll",
+   "deprecated"
+  ],
+  "ncp": [
+   "kdz",
+   "deprecated"
+  ],
+  "nde": [
+   "nd",
+   "overlong"
+  ],
+  "ndo": [
+   "ng",
+   "overlong"
+  ],
+  "nep": [
+   "ne",
+   "overlong"
+  ],
+  "nld": [
+   "nl",
+   "overlong"
+  ],
+  "nln": [
+   "azd",
+   "deprecated"
+  ],
+  "nlr": [
+   "nrk",
+   "deprecated"
+  ],
+  "nno": [
+   "nn",
+   "overlong"
+  ],
+  "nns": [
+   "nbr",
+   "deprecated"
+  ],
+  "nnx": [
+   "ngv",
+   "deprecated"
+  ],
+  "no-bok": [
+   "nb",
+   "deprecated"
+  ],
+  "no-bokmal": [
+   "nb",
+   "deprecated"
+  ],
+  "no-nyn": [
+   "nn",
+   "deprecated"
+  ],
+  "no-nynorsk": [
+   "nn",
+   "deprecated"
+  ],
+  "nob": [
+   "nb",
+   "overlong"
+  ],
+  "nom": [
+   "cbr",
+   "deprecated"
+  ],
+  "noo": [
+   "dtd",
+   "deprecated"
+  ],
+  "nor": [
+   "no",
+   "overlong"
+  ],
+  "npi": [
+   "ne",
+   "macrolanguage"
+  ],
+  "nte": [
+   "eko",
+   "deprecated"
+  ],
+  "nts": [
+   "pij",
+   "deprecated"
+  ],
+  "nxu": [
+   "bpp",
+   "deprecated"
+  ],
+  "nya": [
+   "ny",
+   "overlong"
+  ],
+  "oci": [
+   "oc",
+   "overlong"
+  ],
+  "ojg": [
+   "oj",
+   "macrolanguage"
+  ],
+  "oji": [
+   "oj",
+   "overlong"
+  ],
+  "ori": [
+   "or",
+   "overlong"
+  ],
+  "orm": [
+   "om",
+   "overlong"
+  ],
+  "ory": [
+   "or",
+   "macrolanguage"
+  ],
+  "oss": [
+   "os",
+   "overlong"
+  ],
+  "oun": [
+   "vaj",
+   "deprecated"
+  ],
+  "pan": [
+   "pa",
+   "overlong"
+  ],
+  "pat": [
+   "kxr",
+   "deprecated"
+  ],
+  "pbu": [
+   "ps",
+   "macrolanguage"
+  ],
+  "pcr": [
+   "adx",
+   "deprecated"
+  ],
+  "per": [
+   "fa",
+   "bibliographic"
+  ],
+  "pes": [
+   "fa",
+   "macrolanguage"
+  ],
+  "pli": [
+   "pi",
+   "overlong"
+  ],
+  "plt": [
+   "mg",
+   "macrolanguage"
+  ],
+  "pmc": [
+   "huw",
+   "deprecated"
+  ],
+  "pmk": [
+   "crr",
+   "deprecated"
+  ],
+  "pmu": [
+   "phr",
+   "deprecated"
+  ],
+  "pnb": [
+   "lah",
+   "macrolanguage"
+  ],
+  "pol": [
+   "pl",
+   "overlong"
+  ],
+  "por": [
+   "pt",
+   "overlong"
+  ],
+  "ppa": [
+   "bfy",
+   "deprecated"
+  ],
+  "ppr": [
+   "lcq",
+   "deprecated"
+  ],
+  "prp": [
+   "gu",
+   "deprecated"
+  ],
+  "prs": [
+   "fa-AF",
+   "overlong"
+  ],
+  "pry": [
+   "prt",
+   "deprecated"
+  ],
+  "pus": [
+   "ps",
+   "overlong"
+  ],
+  "puz": [
+   "pub",
+   "deprecated"
+  ],
+  "que": [
+   "qu",
+   "overlong"
+  ],
+  "quz": [
+   "qu",
+   "macrolanguage"
+  ],
+  "rmr": [
+   "emx",
+   "deprecated"
+  ],
+  "rmy": [
+   "rom",
+   "macrolanguage"
+  ],
+  "roh": [
+   "rm",
+   "overlong"
+  ],
+  "ron": [
+   "ro",
+   "overlong"
+  ],
+  "rum": [
+   "ro",
+   "bibliographic"
+  ],
+  "run": [
+   "rn",
+   "overlong"
+  ],
+  "rus": [
+   "ru",
+   "overlong"
+  ],
+  "sag": [
+   "sg",
+   "overlong"
+  ],
+  "san": [
+   "sa",
+   "overlong"
+  ],
+  "sap": [
+   "aqt",
+   "deprecated"
+  ],
+  "sca": [
+   "hle",
+   "deprecated"
+  ],
+  "scc": [
+   "sr",
+   "deprecated"
+  ],
+  "scr": [
+   "hr",
+   "deprecated"
+  ],
+  "sgl": [
+   "isk",
+   "deprecated"
+  ],
+  "sgn-BE-FR": [
+   "sfb",
+   "deprecated"
+  ],
+  "sgn-BE-NL": [
+   "vgt",
+   "deprecated"
+  ],
+  "sgn-BR": [
+   "bzs",
+   "deprecated"
+  ],
+  "sgn-CH-DE": [
+   "sgg",
+   "deprecated"
+  ],
+  "sgn-CO": [
+   "csn",
+   "deprecated"
+  ],
+  "sgn-DE": [
+   "gsg",
+   "deprecated"
+  ],
+  "sgn-DK": [
+   "dsl",
+   "deprecated"
+  ],
+  "sgn-ES": [
+   "ssp",
+   "deprecated"
+  ],
+  "sgn-FR": [
+   "fsl",
+   "deprecated"
+  ],
+  "sgn-GB": [
+   "bfi",
+   "deprecated"
+  ],
+  "sgn-GR": [
+   "gss",
+   "deprecated"
+  ],
+  "sgn-IE": [
+   "isg",
+   "deprecated"
+  ],
+  "sgn-IT": [
+   "ise",
+   "deprecated"
+  ],
+  "sgn-JP": [
+   "jsl",
+   "deprecated"
+  ],
+  "sgn-MX": [
+   "mfs",
+   "deprecated"
+  ],
+  "sgn-NI": [
+   "ncs",
+   "deprecated"
+  ],
+  "sgn-NL": [
+   "dse",
+   "deprecated"
+  ],
+  "sgn-NO": [
+   "nsi",
+   "deprecated"
+  ],
+  "sgn-PT": [
+   "psr",
+   "deprecated"
+  ],
+  "sgn-SE": [
+   "swl",
+   "deprecated"
+  ],
+  "sgn-US": [
+   "ase",
+   "deprecated"
+  ],
+  "sgn-ZA": [
+   "sfs",
+   "deprecated"
+  ],
+  "sh": [
+   "sr-Latn",
+   "legacy"
+  ],
+  "shl": [
+   "mrh",
+   "deprecated"
+  ],
+  "sin": [
+   "si",
+   "overlong"
+  ],
+  "skk": [
+   "oyb",
+   "deprecated"
+  ],
+  "slk": [
+   "sk",
+   "overlong"
+  ],
+  "slo": [
+   "sk",
+   "bibliographic"
+  ],
+  "slv": [
+   "sl",
+   "overlong"
+  ],
+  "smd": [
+   "kmb",
+   "deprecated"
+  ],
+  "sme": [
+   "se",
+   "overlong"
+  ],
+  "smo": [
+   "sm",
+   "overlong"
+  ],
+  "sna": [
+   "sn",
+   "overlong"
+  ],
+  "snb": [
+   "iba",
+   "deprecated"
+  ],
+  "snd": [
+   "sd",
+   "overlong"
+  ],
+  "som": [
+   "so",
+   "overlong"
+  ],
+  "sot": [
+   "st",
+   "overlong"
+  ],
+  "spa": [
+   "es",
+   "overlong"
+  ],
+  "spy": [
+   "kln",
+   "macrolanguage"
+  ],
+  "sqi": [
+   "sq",
+   "overlong"
+  ],
+  "src": [
+   "sc",
+   "macrolanguage"
+  ],
+  "srd": [
+   "sc",
+   "overlong"
+  ],
+  "srp": [
+   "sr",
+   "overlong"
+  ],
+  "ssw": [
+   "ss",
+   "overlong"
+  ],
+  "sul": [
+   "sgd",
+   "deprecated"
+  ],
+  "sum": [
+   "ulw",
+   "deprecated"
+  ],
+  "sun": [
+   "su",
+   "overlong"
+  ],
+  "swa": [
+   "sw",
+   "overlong"
+  ],
+  "swc": [
+   "sw-CD",
+   "overlong"
+  ],
+  "swe": [
+   "sv",
+   "overlong"
+  ],
+  "swh": [
+   "sw",
+   "macrolanguage"
+  ],
+  "szd": [
+   "umi",
+   "deprecated"
+  ],
+  "tah": [
+   "ty",
+   "overlong"
+  ],
+  "tam": [
+   "ta",
+   "overlong"
+  ],
+  "tat": [
+   "tt",
+   "overlong"
+  ],
+  "tdu": [
+   "dtp",
+   "deprecated"
+  ],
+  "tel": [
+   "te",
+   "overlong"
+  ],
+  "tgg": [
+   "bjp",
+   "deprecated"
+  ],
+  "tgk": [
+   "tg",
+   "overlong"
+  ],
+  "tgl": [
+   "fil",
+   "overlong"
+  ],
+  "tha": [
+   "th",
+   "overlong"
+  ],
+  "thc": [
+   "tpo",
+   "deprecated"
+  ],
+  "thw": [
+   "ola",
+   "deprecated"
+  ],
+  "thx": [
+   "oyb",
+   "deprecated"
+  ],
+  "tib": [
+   "bo",
+   "bibliographic"
+  ],
+  "tid": [
+   "itd",
+   "deprecated"
+  ],
+  "tie": [
+   "ras",
+   "deprecated"
+  ],
+  "tir": [
+   "ti",
+   "overlong"
+  ],
+  "tkk": [
+   "twm",
+   "deprecated"
+  ],
+  "tl": [
+   "fil",
+   "legacy"
+  ],
+  "tlw": [
+   "weo",
+   "deprecated"
+  ],
+  "tmk": [
+   "tdg",
+   "deprecated"
+  ],
+  "tmp": [
+   "tyj",
+   "deprecated"
+  ],
+  "tne": [
+   "kak",
+   "deprecated"
+  ],
+  "tnf": [
+   "fa-AF",
+   "deprecated"
+  ],
+  "ton": [
+   "to",
+   "overlong"
+  ],
+  "tpw": [
+   "tpn",
+   "deprecated"
+  ],
+  "tsf": [
+   "taj",
+   "deprecated"
+  ],
+  "tsn": [
+   "tn",
+   "overlong"
+  ],
+  "tso": [
+   "ts",
+   "overlong"
+  ],
+  "ttq": [
+   "tmh",
+   "macrolanguage"
+  ],
+  "tuk": [
+   "tk",
+   "overlong"
+  ],
+  "tur": [
+   "tr",
+   "overlong"
+  ],
+  "tw": [
+   "ak",
+   "macrolanguage"
+  ],
+  "twi": [
+   "ak",
+   "overlong"
+  ],
+  "uig": [
+   "ug",
+   "overlong"
+  ],
+  "ukr": [
+   "uk",
+   "overlong"
+  ],
+  "umu": [
+   "del",
+   "macrolanguage"
+  ],
+  "und-aaland": [
+   "und-AX",
+   "deprecated"
+  ],
+  "und-arevela": [
+   "und",
+   "deprecated"
+  ],
+  "und-arevmda": [
+   "und",
+   "deprecated"
+  ],
+  "und-bokmal": [
+   "und",
+   "deprecated"
+  ],
+  "und-hakka": [
+   "und",
+   "deprecated"
+  ],
+  "und-hepburn-heploc": [
+   "und-alalc97",
+   "deprecated"
+  ],
+  "und-lojban": [
+   "und",
+   "deprecated"
+  ],
+  "und-nynorsk": [
+   "und",
+   "deprecated"
+  ],
+  "und-saaho": [
+   "und",
+   "deprecated"
+  ],
+  "und-xiang": [
+   "und",
+   "deprecated"
+  ],
+  "unp": [
+   "wro",
+   "deprecated"
+  ],
+  "uok": [
+   "ema",
+   "deprecated"
+  ],
+  "urd": [
+   "ur",
+   "overlong"
+  ],
+  "uzb": [
+   "uz",
+   "overlong"
+  ],
+  "uzn": [
+   "uz",
+   "macrolanguage"
+  ],
+  "ven": [
+   "ve",
+   "overlong"
+  ],
+  "vie": [
+   "vi",
+   "overlong"
+  ],
+  "vol": [
+   "vo",
+   "overlong"
+  ],
+  "wel": [
+   "cy",
+   "bibliographic"
+  ],
+  "wgw": [
+   "wgb",
+   "deprecated"
+  ],
+  "wit": [
+   "nol",
+   "deprecated"
+  ],
+  "wiw": [
+   "nwo",
+   "deprecated"
+  ],
+  "wln": [
+   "wa",
+   "overlong"
+  ],
+  "wol": [
+   "wo",
+   "overlong"
+  ],
+  "xba": [
+   "cax",
+   "deprecated"
+  ],
+  "xho": [
+   "xh",
+   "overlong"
+  ],
+  "xia": [
+   "acn",
+   "deprecated"
+  ],
+  "xkh": [
+   "waw",
+   "deprecated"
+  ],
+  "xpe": [
+   "kpe",
+   "macrolanguage"
+  ],
+  "xrq": [
+   "dmw",
+   "deprecated"
+  ],
+  "xsj": [
+   "suj",
+   "deprecated"
+  ],
+  "xsl": [
+   "den",
+   "macrolanguage"
+  ],
+  "xss": [
+   "zko",
+   "deprecated"
+  ],
+  "ybd": [
+   "rki",
+   "deprecated"
+  ],
+  "ydd": [
+   "yi",
+   "macrolanguage"
+  ],
+  "yen": [
+   "ynq",
+   "deprecated"
+  ],
+  "yid": [
+   "yi",
+   "overlong"
+  ],
+  "yiy": [
+   "yrm",
+   "deprecated"
+  ],
+  "yma": [
+   "lrr",
+   "deprecated"
+  ],
+  "ymt": [
+   "mtm",
+   "deprecated"
+  ],
+  "yol": [
+   "enm",
+   "deprecated"
+  ],
+  "yor": [
+   "yo",
+   "overlong"
+  ],
+  "yos": [
+   "zom",
+   "deprecated"
+  ],
+  "yuu": [
+   "yug",
+   "deprecated"
+  ],
+  "zai": [
+   "zap",
+   "macrolanguage"
+  ],
+  "zh-cmn": [
+   "zh",
+   "deprecated"
+  ],
+  "zh-cmn-Hans": [
+   "zh-Hans",
+   "deprecated"
+  ],
+  "zh-cmn-Hant": [
+   "zh-Hant",
+   "deprecated"
+  ],
+  "zh-gan": [
+   "gan",
+   "deprecated"
+  ],
+  "zh-guoyu": [
+   "zh",
+   "deprecated"
+  ],
+  "zh-hakka": [
+   "hak",
+   "deprecated"
+  ],
+  "zh-min": [
+   "nan-x-zh-min",
+   "legacy"
+  ],
+  "zh-min-nan": [
+   "nan",
+   "deprecated"
+  ],
+  "zh-wuu": [
+   "wuu",
+   "deprecated"
+  ],
+  "zh-xiang": [
+   "hsn",
+   "deprecated"
+  ],
+  "zh-yue": [
+   "yue",
+   "deprecated"
+  ],
+  "zha": [
+   "za",
+   "overlong"
+  ],
+  "zho": [
+   "zh",
+   "overlong"
+  ],
+  "zir": [
+   "scv",
+   "deprecated"
+  ],
+  "zkb": [
+   "kjh",
+   "deprecated"
+  ],
+  "zsm": [
+   "ms",
+   "macrolanguage"
+  ],
+  "zul": [
+   "zu",
+   "overlong"
+  ],
+  "zyb": [
+   "za",
+   "macrolanguage"
+  ]
+ },
+ "script": {
+  "Qaai": [
+   "Zinh",
+   "deprecated"
+  ]
+ },
+ "region": {
+  "004": [
+   "AF",
+   "overlong"
+  ],
+  "008": [
+   "AL",
+   "overlong"
+  ],
+  "010": [
+   "AQ",
+   "overlong"
+  ],
+  "012": [
+   "DZ",
+   "overlong"
+  ],
+  "016": [
+   "AS",
+   "overlong"
+  ],
+  "020": [
+   "AD",
+   "overlong"
+  ],
+  "024": [
+   "AO",
+   "overlong"
+  ],
+  "028": [
+   "AG",
+   "overlong"
+  ],
+  "031": [
+   "AZ",
+   "overlong"
+  ],
+  "032": [
+   "AR",
+   "overlong"
+  ],
+  "036": [
+   "AU",
+   "overlong"
+  ],
+  "040": [
+   "AT",
+   "overlong"
+  ],
+  "044": [
+   "BS",
+   "overlong"
+  ],
+  "048": [
+   "BH",
+   "overlong"
+  ],
+  "050": [
+   "BD",
+   "overlong"
+  ],
+  "051": [
+   "AM",
+   "overlong"
+  ],
+  "052": [
+   "BB",
+   "overlong"
+  ],
+  "056": [
+   "BE",
+   "overlong"
+  ],
+  "060": [
+   "BM",
+   "overlong"
+  ],
+  "062": [
+   "034 143",
+   "deprecated"
+  ],
+  "064": [
+   "BT",
+   "overlong"
+  ],
+  "068": [
+   "BO",
+   "overlong"
+  ],
+  "070": [
+   "BA",
+   "overlong"
+  ],
+  "072": [
+   "BW",
+   "overlong"
+  ],
+  "074": [
+   "BV",
+   "overlong"
+  ],
+  "076": [
+   "BR",
+   "overlong"
+  ],
+  "084": [
+   "BZ",
+   "overlong"
+  ],
+  "086": [
+   "IO",
+   "overlong"
+  ],
+  "090": [
+   "SB",
+   "overlong"
+  ],
+  "092": [
+   "VG",
+   "overlong"
+  ],
+  "096": [
+   "BN",
+   "overlong"
+  ],
+  "100": [
+   "BG",
+   "overlong"
+  ],
+  "104": [
+   "MM",
+   "overlong"
+  ],
+  "108": [
+   "BI",
+   "overlong"
+  ],
+  "112": [
+   "BY",
+   "overlong"
+  ],
+  "116": [
+   "KH",
+   "overlong"
+  ],
+  "120": [
+   "CM",
+   "overlong"
+  ],
+  "124": [
+   "CA",
+   "overlong"
+  ],
+  "132": [
+   "CV",
+   "overlong"
+  ],
+  "136": [
+   "KY",
+   "overlong"
+  ],
+  "140": [
+   "CF",
+   "overlong"
+  ],
+  "144": [
+   "LK",
+   "overlong"
+  ],
+  "148": [
+   "TD",
+   "overlong"
+  ],
+  "152": [
+   "CL",
+   "overlong"
+  ],
+  "156": [
+   "CN",
+   "overlong"
+  ],
+  "158": [
+   "TW",
+   "overlong"
+  ],
+  "162": [
+   "CX",
+   "overlong"
+  ],
+  "166": [
+   "CC",
+   "overlong"
+  ],
+  "170": [
+   "CO",
+   "overlong"
+  ],
+  "172": [
+   "RU AM AZ BY GE KG KZ MD TJ TM UA UZ",
+   "deprecated"
+  ],
+  "174": [
+   "KM",
+   "overlong"
+  ],
+  "175": [
+   "YT",
+   "overlong"
+  ],
+  "178": [
+   "CG",
+   "overlong"
+  ],
+  "180": [
+   "CD",
+   "overlong"
+  ],
+  "184": [
+   "CK",
+   "overlong"
+  ],
+  "188": [
+   "CR",
+   "overlong"
+  ],
+  "191": [
+   "HR",
+   "overlong"
+  ],
+  "192": [
+   "CU",
+   "overlong"
+  ],
+  "196": [
+   "CY",
+   "overlong"
+  ],
+  "200": [
+   "CZ SK",
+   "deprecated"
+  ],
+  "203": [
+   "CZ",
+   "overlong"
+  ],
+  "204": [
+   "BJ",
+   "overlong"
+  ],
+  "208": [
+   "DK",
+   "overlong"
+  ],
+  "212": [
+   "DM",
+   "overlong"
+  ],
+  "214": [
+   "DO",
+   "overlong"
+  ],
+  "218": [
+   "EC",
+   "overlong"
+  ],
+  "222": [
+   "SV",
+   "overlong"
+  ],
+  "226": [
+   "GQ",
+   "overlong"
+  ],
+  "230": [
+   "ET",
+   "deprecated"
+  ],
+  "231": [
+   "ET",
+   "overlong"
+  ],
+  "232": [
+   "ER",
+   "overlong"
+  ],
+  "233": [
+   "EE",
+   "overlong"
+  ],
+  "234": [
+   "FO",
+   "overlong"
+  ],
+  "238": [
+   "FK",
+   "overlong"
+  ],
+  "239": [
+   "GS",
+   "overlong"
+  ],
+  "242": [
+   "FJ",
+   "overlong"
+  ],
+  "246": [
+   "FI",
+   "overlong"
+  ],
+  "248": [
+   "AX",
+   "overlong"
+  ],
+  "249": [
+   "FR",
+   "overlong"
+  ],
+  "250": [
+   "FR",
+   "overlong"
+  ],
+  "254": [
+   "GF",
+   "overlong"
+  ],
+  "258": [
+   "PF",
+   "overlong"
+  ],
+  "260": [
+   "TF",
+   "overlong"
+  ],
+  "262": [
+   "DJ",
+   "overlong"
+  ],
+  "266": [
+   "GA",
+   "overlong"
+  ],
+  "268": [
+   "GE",
+   "overlong"
+  ],
+  "270": [
+   "GM",
+   "overlong"
+  ],
+  "275": [
+   "PS",
+   "overlong"
+  ],
+  "276": [
+   "DE",
+   "overlong"
+  ],
+  "278": [
+   "DE",
+   "overlong"
+  ],
+  "280": [
+   "DE",
+   "deprecated"
+  ],
+  "288": [
+   "GH",
+   "overlong"
+  ],
+  "292": [
+   "GI",
+   "overlong"
+  ],
+  "296": [
+   "KI",
+   "overlong"
+  ],
+  "300": [
+   "GR",
+   "overlong"
+  ],
+  "304": [
+   "GL",
+   "overlong"
+  ],
+  "308": [
+   "GD",
+   "overlong"
+  ],
+  "312": [
+   "GP",
+   "overlong"
+  ],
+  "316": [
+   "GU",
+   "overlong"
+  ],
+  "320": [
+   "GT",
+   "overlong"
+  ],
+  "324": [
+   "GN",
+   "overlong"
+  ],
+  "328": [
+   "GY",
+   "overlong"
+  ],
+  "332": [
+   "HT",
+   "overlong"
+  ],
+  "334": [
+   "HM",
+   "overlong"
+  ],
+  "336": [
+   "VA",
+   "overlong"
+  ],
+  "340": [
+   "HN",
+   "overlong"
+  ],
+  "344": [
+   "HK",
+   "overlong"
+  ],
+  "348": [
+   "HU",
+   "overlong"
+  ],
+  "352": [
+   "IS",
+   "overlong"
+  ],
+  "356": [
+   "IN",
+   "overlong"
+  ],
+  "360": [
+   "ID",
+   "overlong"
+  ],
+  "364": [
+   "IR",
+   "overlong"
+  ],
+  "368": [
+   "IQ",
+   "overlong"
+  ],
+  "372": [
+   "IE",
+   "overlong"
+  ],
+  "376": [
+   "IL",
+   "overlong"
+  ],
+  "380": [
+   "IT",
+   "overlong"
+  ],
+  "384": [
+   "CI",
+   "overlong"
+  ],
+  "388": [
+   "JM",
+   "overlong"
+  ],
+  "392": [
+   "JP",
+   "overlong"
+  ],
+  "398": [
+   "KZ",
+   "overlong"
+  ],
+  "400": [
+   "JO",
+   "overlong"
+  ],
+  "404": [
+   "KE",
+   "overlong"
+  ],
+  "408": [
+   "KP",
+   "overlong"
+  ],
+  "410": [
+   "KR",
+   "overlong"
+  ],
+  "414": [
+   "KW",
+   "overlong"
+  ],
+  "417": [
+   "KG",
+   "overlong"
+  ],
+  "418": [
+   "LA",
+   "overlong"
+  ],
+  "422": [
+   "LB",
+   "overlong"
+  ],
+  "426": [
+   "LS",
+   "overlong"
+  ],
+  "428": [
+   "LV",
+   "overlong"
+  ],
+  "430": [
+   "LR",
+   "overlong"
+  ],
+  "434": [
+   "LY",
+   "overlong"
+  ],
+  "438": [
+   "LI",
+   "overlong"
+  ],
+  "440": [
+   "LT",
+   "overlong"
+  ],
+  "442": [
+   "LU",
+   "overlong"
+  ],
+  "446": [
+   "MO",
+   "overlong"
+  ],
+  "450": [
+   "MG",
+   "overlong"
+  ],
+  "454": [
+   "MW",
+   "overlong"
+  ],
+  "458": [
+   "MY",
+   "overlong"
+  ],
+  "462": [
+   "MV",
+   "overlong"
+  ],
+  "466": [
+   "ML",
+   "overlong"
+  ],
+  "470": [
+   "MT",
+   "overlong"
+  ],
+  "474": [
+   "MQ",
+   "overlong"
+  ],
+  "478": [
+   "MR",
+   "overlong"
+  ],
+  "480": [
+   "MU",
+   "overlong"
+  ],
+  "484": [
+   "MX",
+   "overlong"
+  ],
+  "492": [
+   "MC",
+   "overlong"
+  ],
+  "496": [
+   "MN",
+   "overlong"
+  ],
+  "498": [
+   "MD",
+   "overlong"
+  ],
+  "499": [
+   "ME",
+   "overlong"
+  ],
+  "500": [
+   "MS",
+   "overlong"
+  ],
+  "504": [
+   "MA",
+   "overlong"
+  ],
+  "508": [
+   "MZ",
+   "overlong"
+  ],
+  "512": [
+   "OM",
+   "overlong"
+  ],
+  "516": [
+   "NA",
+   "overlong"
+  ],
+  "520": [
+   "NR",
+   "overlong"
+  ],
+  "524": [
+   "NP",
+   "overlong"
+  ],
+  "528": [
+   "NL",
+   "overlong"
+  ],
+  "530": [
+   "CW SX BQ",
+   "overlong"
+  ],
+  "531": [
+   "CW",
+   "overlong"
+  ],
+  "532": [
+   "CW SX BQ",
+   "deprecated"
+  ],
+  "533": [
+   "AW",
+   "overlong"
+  ],
+  "534": [
+   "SX",
+   "overlong"
+  ],
+  "535": [
+   "BQ",
+   "overlong"
+  ],
+  "536": [
+   "SA IQ",
+   "overlong"
+  ],
+  "540": [
+   "NC",
+   "overlong"
+  ],
+  "548": [
+   "VU",
+   "overlong"
+  ],
+  "554": [
+   "NZ",
+   "overlong"
+  ],
+  "558": [
+   "NI",
+   "overlong"
+  ],
+  "562": [
+   "NE",
+   "overlong"
+  ],
+  "566": [
+   "NG",
+   "overlong"
+  ],
+  "570": [
+   "NU",
+   "overlong"
+  ],
+  "574": [
+   "NF",
+   "overlong"
+  ],
+  "578": [
+   "NO",
+   "overlong"
+  ],
+  "580": [
+   "MP",
+   "overlong"
+  ],
+  "581": [
+   "UM",
+   "overlong"
+  ],
+  "582": [
+   "FM MH MP PW",
+   "deprecated"
+  ],
+  "583": [
+   "FM",
+   "overlong"
+  ],
+  "584": [
+   "MH",
+   "overlong"
+  ],
+  "585": [
+   "PW",
+   "overlong"
+  ],
+  "586": [
+   "PK",
+   "overlong"
+  ],
+  "591": [
+   "PA",
+   "overlong"
+  ],
+  "598": [
+   "PG",
+   "overlong"
+  ],
+  "600": [
+   "PY",
+   "overlong"
+  ],
+  "604": [
+   "PE",
+   "overlong"
+  ],
+  "608": [
+   "PH",
+   "overlong"
+  ],
+  "612": [
+   "PN",
+   "overlong"
+  ],
+  "616": [
+   "PL",
+   "overlong"
+  ],
+  "620": [
+   "PT",
+   "overlong"
+  ],
+  "624": [
+   "GW",
+   "overlong"
+  ],
+  "626": [
+   "TL",
+   "overlong"
+  ],
+  "630": [
+   "PR",
+   "overlong"
+  ],
+  "634": [
+   "QA",
+   "overlong"
+  ],
+  "638": [
+   "RE",
+   "overlong"
+  ],
+  "642": [
+   "RO",
+   "overlong"
+  ],
+  "643": [
+   "RU",
+   "overlong"
+  ],
+  "646": [
+   "RW",
+   "overlong"
+  ],
+  "652": [
+   "BL",
+   "overlong"
+  ],
+  "654": [
+   "SH",
+   "overlong"
+  ],
+  "659": [
+   "KN",
+   "overlong"
+  ],
+  "660": [
+   "AI",
+   "overlong"
+  ],
+  "662": [
+   "LC",
+   "overlong"
+  ],
+  "663": [
+   "MF",
+   "overlong"
+  ],
+  "666": [
+   "PM",
+   "overlong"
+  ],
+  "670": [
+   "VC",
+   "overlong"
+  ],
+  "674": [
+   "SM",
+   "overlong"
+  ],
+  "678": [
+   "ST",
+   "overlong"
+  ],
+  "682": [
+   "SA",
+   "overlong"
+  ],
+  "686": [
+   "SN",
+   "overlong"
+  ],
+  "688": [
+   "RS",
+   "overlong"
+  ],
+  "690": [
+   "SC",
+   "overlong"
+  ],
+  "694": [
+   "SL",
+   "overlong"
+  ],
+  "702": [
+   "SG",
+   "overlong"
+  ],
+  "703": [
+   "SK",
+   "overlong"
+  ],
+  "704": [
+   "VN",
+   "overlong"
+  ],
+  "705": [
+   "SI",
+   "overlong"
+  ],
+  "706": [
+   "SO",
+   "overlong"
+  ],
+  "710": [
+   "ZA",
+   "overlong"
+  ],
+  "716": [
+   "ZW",
+   "overlong"
+  ],
+  "720": [
+   "YE",
+   "overlong"
+  ],
+  "724": [
+   "ES",
+   "overlong"
+  ],
+  "728": [
+   "SS",
+   "overlong"
+  ],
+  "729": [
+   "SD",
+   "overlong"
+  ],
+  "732": [
+   "EH",
+   "overlong"
+  ],
+  "736": [
+   "SD",
+   "deprecated"
+  ],
+  "740": [
+   "SR",
+   "overlong"
+  ],
+  "744": [
+   "SJ",
+   "overlong"
+  ],
+  "748": [
+   "SZ",
+   "overlong"
+  ],
+  "752": [
+   "SE",
+   "overlong"
+  ],
+  "756": [
+   "CH",
+   "overlong"
+  ],
+  "760": [
+   "SY",
+   "overlong"
+  ],
+  "762": [
+   "TJ",
+   "overlong"
+  ],
+  "764": [
+   "TH",
+   "overlong"
+  ],
+  "768": [
+   "TG",
+   "overlong"
+  ],
+  "772": [
+   "TK",
+   "overlong"
+  ],
+  "776": [
+   "TO",
+   "overlong"
+  ],
+  "780": [
+   "TT",
+   "overlong"
+  ],
+  "784": [
+   "AE",
+   "overlong"
+  ],
+  "788": [
+   "TN",
+   "overlong"
+  ],
+  "792": [
+   "TR",
+   "overlong"
+  ],
+  "795": [
+   "TM",
+   "overlong"
+  ],
+  "796": [
+   "TC",
+   "overlong"
+  ],
+  "798": [
+   "TV",
+   "overlong"
+  ],
+  "800": [
+   "UG",
+   "overlong"
+  ],
+  "804": [
+   "UA",
+   "overlong"
+  ],
+  "807": [
+   "MK",
+   "overlong"
+  ],
+  "810": [
+   "RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ",
+   "overlong"
+  ],
+  "818": [
+   "EG",
+   "overlong"
+  ],
+  "826": [
+   "GB",
+   "overlong"
+  ],
+  "830": [
+   "JE GG",
+   "deprecated"
+  ],
+  "831": [
+   "GG",
+   "overlong"
+  ],
+  "832": [
+   "JE",
+   "overlong"
+  ],
+  "833": [
+   "IM",
+   "overlong"
+  ],
+  "834": [
+   "TZ",
+   "overlong"
+  ],
+  "840": [
+   "US",
+   "overlong"
+  ],
+  "850": [
+   "VI",
+   "overlong"
+  ],
+  "854": [
+   "BF",
+   "overlong"
+  ],
+  "858": [
+   "UY",
+   "overlong"
+  ],
+  "860": [
+   "UZ",
+   "overlong"
+  ],
+  "862": [
+   "VE",
+   "overlong"
+  ],
+  "876": [
+   "WF",
+   "overlong"
+  ],
+  "882": [
+   "WS",
+   "overlong"
+  ],
+  "886": [
+   "YE",
+   "deprecated"
+  ],
+  "887": [
+   "YE",
+   "overlong"
+  ],
+  "890": [
+   "RS ME SI HR MK BA",
+   "deprecated"
+  ],
+  "891": [
+   "RS ME",
+   "overlong"
+  ],
+  "894": [
+   "ZM",
+   "overlong"
+  ],
+  "958": [
+   "AA",
+   "overlong"
+  ],
+  "959": [
+   "QM",
+   "overlong"
+  ],
+  "960": [
+   "QN",
+   "overlong"
+  ],
+  "962": [
+   "QP",
+   "overlong"
+  ],
+  "963": [
+   "QQ",
+   "overlong"
+  ],
+  "964": [
+   "QR",
+   "overlong"
+  ],
+  "965": [
+   "QS",
+   "overlong"
+  ],
+  "966": [
+   "QT",
+   "overlong"
+  ],
+  "967": [
+   "EU",
+   "overlong"
+  ],
+  "968": [
+   "QV",
+   "overlong"
+  ],
+  "969": [
+   "QW",
+   "overlong"
+  ],
+  "970": [
+   "QX",
+   "overlong"
+  ],
+  "971": [
+   "QY",
+   "overlong"
+  ],
+  "972": [
+   "QZ",
+   "overlong"
+  ],
+  "973": [
+   "XA",
+   "overlong"
+  ],
+  "974": [
+   "XB",
+   "overlong"
+  ],
+  "975": [
+   "XC",
+   "overlong"
+  ],
+  "976": [
+   "XD",
+   "overlong"
+  ],
+  "977": [
+   "XE",
+   "overlong"
+  ],
+  "978": [
+   "XF",
+   "overlong"
+  ],
+  "979": [
+   "XG",
+   "overlong"
+  ],
+  "980": [
+   "XH",
+   "overlong"
+  ],
+  "981": [
+   "XI",
+   "overlong"
+  ],
+  "982": [
+   "XJ",
+   "overlong"
+  ],
+  "983": [
+   "XK",
+   "overlong"
+  ],
+  "984": [
+   "XL",
+   "overlong"
+  ],
+  "985": [
+   "XM",
+   "overlong"
+  ],
+  "986": [
+   "XN",
+   "overlong"
+  ],
+  "987": [
+   "XO",
+   "overlong"
+  ],
+  "988": [
+   "XP",
+   "overlong"
+  ],
+  "989": [
+   "XQ",
+   "overlong"
+  ],
+  "990": [
+   "XR",
+   "overlong"
+  ],
+  "991": [
+   "XS",
+   "overlong"
+  ],
+  "992": [
+   "XT",
+   "overlong"
+  ],
+  "993": [
+   "XU",
+   "overlong"
+  ],
+  "994": [
+   "XV",
+   "overlong"
+  ],
+  "995": [
+   "XW",
+   "overlong"
+  ],
+  "996": [
+   "XX",
+   "overlong"
+  ],
+  "997": [
+   "XY",
+   "overlong"
+  ],
+  "998": [
+   "XZ",
+   "overlong"
+  ],
+  "999": [
+   "ZZ",
+   "overlong"
+  ],
+  "AAA": [
+   "AA",
+   "overlong"
+  ],
+  "ABW": [
+   "AW",
+   "overlong"
+  ],
+  "AFG": [
+   "AF",
+   "overlong"
+  ],
+  "AGO": [
+   "AO",
+   "overlong"
+  ],
+  "AIA": [
+   "AI",
+   "overlong"
+  ],
+  "ALA": [
+   "AX",
+   "overlong"
+  ],
+  "ALB": [
+   "AL",
+   "overlong"
+  ],
+  "AN": [
+   "CW SX BQ",
+   "deprecated"
+  ],
+  "AND": [
+   "AD",
+   "overlong"
+  ],
+  "ANT": [
+   "CW SX BQ",
+   "overlong"
+  ],
+  "ARE": [
+   "AE",
+   "overlong"
+  ],
+  "ARG": [
+   "AR",
+   "overlong"
+  ],
+  "ARM": [
+   "AM",
+   "overlong"
+  ],
+  "ASC": [
+   "AC",
+   "overlong"
+  ],
+  "ASM": [
+   "AS",
+   "overlong"
+  ],
+  "ATA": [
+   "AQ",
+   "overlong"
+  ],
+  "ATF": [
+   "TF",
+   "overlong"
+  ],
+  "ATG": [
+   "AG",
+   "overlong"
+  ],
+  "AUS": [
+   "AU",
+   "overlong"
+  ],
+  "AUT": [
+   "AT",
+   "overlong"
+  ],
+  "AZE": [
+   "AZ",
+   "overlong"
+  ],
+  "BDI": [
+   "BI",
+   "overlong"
+  ],
+  "BEL": [
+   "BE",
+   "overlong"
+  ],
+  "BEN": [
+   "BJ",
+   "overlong"
+  ],
+  "BES": [
+   "BQ",
+   "overlong"
+  ],
+  "BFA": [
+   "BF",
+   "overlong"
+  ],
+  "BGD": [
+   "BD",
+   "overlong"
+  ],
+  "BGR": [
+   "BG",
+   "overlong"
+  ],
+  "BHR": [
+   "BH",
+   "overlong"
+  ],
+  "BHS": [
+   "BS",
+   "overlong"
+  ],
+  "BIH": [
+   "BA",
+   "overlong"
+  ],
+  "BLM": [
+   "BL",
+   "overlong"
+  ],
+  "BLR": [
+   "BY",
+   "overlong"
+  ],
+  "BLZ": [
+   "BZ",
+   "overlong"
+  ],
+  "BMU": [
+   "BM",
+   "overlong"
+  ],
+  "BOL": [
+   "BO",
+   "overlong"
+  ],
+  "BRA": [
+   "BR",
+   "overlong"
+  ],
+  "BRB": [
+   "BB",
+   "overlong"
+  ],
+  "BRN": [
+   "BN",
+   "overlong"
+  ],
+  "BTN": [
+   "BT",
+   "overlong"
+  ],
+  "BU": [
+   "MM",
+   "deprecated"
+  ],
+  "BUR": [
+   "MM",
+   "overlong"
+  ],
+  "BVT": [
+   "BV",
+   "overlong"
+  ],
+  "BWA": [
+   "BW",
+   "overlong"
+  ],
+  "CAF": [
+   "CF",
+   "overlong"
+  ],
+  "CAN": [
+   "CA",
+   "overlong"
+  ],
+  "CCK": [
+   "CC",
+   "overlong"
+  ],
+  "CHE": [
+   "CH",
+   "overlong"
+  ],
+  "CHL": [
+   "CL",
+   "overlong"
+  ],
+  "CHN": [
+   "CN",
+   "overlong"
+  ],
+  "CIV": [
+   "CI",
+   "overlong"
+  ],
+  "CMR": [
+   "CM",
+   "overlong"
+  ],
+  "COD": [
+   "CD",
+   "overlong"
+  ],
+  "COG": [
+   "CG",
+   "overlong"
+  ],
+  "COK": [
+   "CK",
+   "overlong"
+  ],
+  "COL": [
+   "CO",
+   "overlong"
+  ],
+  "COM": [
+   "KM",
+   "overlong"
+  ],
+  "CPT": [
+   "CP",
+   "overlong"
+  ],
+  "CPV": [
+   "CV",
+   "overlong"
+  ],
+  "CRI": [
+   "CR",
+   "overlong"
+  ],
+  "CS": [
+   "RS ME",
+   "deprecated"
+  ],
+  "CT": [
+   "KI",
+   "deprecated"
+  ],
+  "CUB": [
+   "CU",
+   "overlong"
+  ],
+  "CUW": [
+   "CW",
+   "overlong"
+  ],
+  "CXR": [
+   "CX",
+   "overlong"
+  ],
+  "CYM": [
+   "KY",
+   "overlong"
+  ],
+  "CYP": [
+   "CY",
+   "overlong"
+  ],
+  "CZE": [
+   "CZ",
+   "overlong"
+  ],
+  "DD": [
+   "DE",
+   "deprecated"
+  ],
+  "DDR": [
+   "DE",
+   "overlong"
+  ],
+  "DEU": [
+   "DE",
+   "overlong"
+  ],
+  "DGA": [
+   "DG",
+   "overlong"
+  ],
+  "DJI": [
+   "DJ",
+   "overlong"
+  ],
+  "DMA": [
+   "DM",
+   "overlong"
+  ],
+  "DNK": [
+   "DK",
+   "overlong"
+  ],
+  "DOM": [
+   "DO",
+   "overlong"
+  ],
+  "DY": [
+   "BJ",
+   "deprecated"
+  ],
+  "DZA": [
+   "DZ",
+   "overlong"
+  ],
+  "ECU": [
+   "EC",
+   "overlong"
+  ],
+  "EGY": [
+   "EG",
+   "overlong"
+  ],
+  "ERI": [
+   "ER",
+   "overlong"
+  ],
+  "ESH": [
+   "EH",
+   "overlong"
+  ],
+  "ESP": [
+   "ES",
+   "overlong"
+  ],
+  "EST": [
+   "EE",
+   "overlong"
+  ],
+  "ETH": [
+   "ET",
+   "overlong"
+  ],
+  "FIN": [
+   "FI",
+   "overlong"
+  ],
+  "FJI": [
+   "FJ",
+   "overlong"
+  ],
+  "FLK": [
+   "FK",
+   "overlong"
+  ],
+  "FQ": [
+   "AQ TF",
+   "deprecated"
+  ],
+  "FRA": [
+   "FR",
+   "overlong"
+  ],
+  "FRO": [
+   "FO",
+   "overlong"
+  ],
+  "FSM": [
+   "FM",
+   "overlong"
+  ],
+  "FX": [
+   "FR",
+   "deprecated"
+  ],
+  "FXX": [
+   "FR",
+   "overlong"
+  ],
+  "GAB": [
+   "GA",
+   "overlong"
+  ],
+  "GBR": [
+   "GB",
+   "overlong"
+  ],
+  "GEO": [
+   "GE",
+   "overlong"
+  ],
+  "GGY": [
+   "GG",
+   "overlong"
+  ],
+  "GHA": [
+   "GH",
+   "overlong"
+  ],
+  "GIB": [
+   "GI",
+   "overlong"
+  ],
+  "GIN": [
+   "GN",
+   "overlong"
+  ],
+  "GLP": [
+   "GP",
+   "overlong"
+  ],
+  "GMB": [
+   "GM",
+   "overlong"
+  ],
+  "GNB": [
+   "GW",
+   "overlong"
+  ],
+  "GNQ": [
+   "GQ",
+   "overlong"
+  ],
+  "GRC": [
+   "GR",
+   "overlong"
+  ],
+  "GRD": [
+   "GD",
+   "overlong"
+  ],
+  "GRL": [
+   "GL",
+   "overlong"
+  ],
+  "GTM": [
+   "GT",
+   "overlong"
+  ],
+  "GUF": [
+   "GF",
+   "overlong"
+  ],
+  "GUM": [
+   "GU",
+   "overlong"
+  ],
+  "GUY": [
+   "GY",
+   "overlong"
+  ],
+  "HKG": [
+   "HK",
+   "overlong"
+  ],
+  "HMD": [
+   "HM",
+   "overlong"
+  ],
+  "HND": [
+   "HN",
+   "overlong"
+  ],
+  "HRV": [
+   "HR",
+   "overlong"
+  ],
+  "HTI": [
+   "HT",
+   "overlong"
+  ],
+  "HUN": [
+   "HU",
+   "overlong"
+  ],
+  "HV": [
+   "BF",
+   "deprecated"
+  ],
+  "IDN": [
+   "ID",
+   "overlong"
+  ],
+  "IMN": [
+   "IM",
+   "overlong"
+  ],
+  "IND": [
+   "IN",
+   "overlong"
+  ],
+  "IOT": [
+   "IO",
+   "overlong"
+  ],
+  "IRL": [
+   "IE",
+   "overlong"
+  ],
+  "IRN": [
+   "IR",
+   "overlong"
+  ],
+  "IRQ": [
+   "IQ",
+   "overlong"
+  ],
+  "ISL": [
+   "IS",
+   "overlong"
+  ],
+  "ISR": [
+   "IL",
+   "overlong"
+  ],
+  "ITA": [
+   "IT",
+   "overlong"
+  ],
+  "JAM": [
+   "JM",
+   "overlong"
+  ],
+  "JEY": [
+   "JE",
+   "overlong"
+  ],
+  "JOR": [
+   "JO",
+   "overlong"
+  ],
+  "JPN": [
+   "JP",
+   "overlong"
+  ],
+  "JT": [
+   "UM",
+   "deprecated"
+  ],
+  "KAZ": [
+   "KZ",
+   "overlong"
+  ],
+  "KEN": [
+   "KE",
+   "overlong"
+  ],
+  "KGZ": [
+   "KG",
+   "overlong"
+  ],
+  "KHM": [
+   "KH",
+   "overlong"
+  ],
+  "KIR": [
+   "KI",
+   "overlong"
+  ],
+  "KNA": [
+   "KN",
+   "overlong"
+  ],
+  "KOR": [
+   "KR",
+   "overlong"
+  ],
+  "KWT": [
+   "KW",
+   "overlong"
+  ],
+  "LAO": [
+   "LA",
+   "overlong"
+  ],
+  "LBN": [
+   "LB",
+   "overlong"
+  ],
+  "LBR": [
+   "LR",
+   "overlong"
+  ],
+  "LBY": [
+   "LY",
+   "overlong"
+  ],
+  "LCA": [
+   "LC",
+   "overlong"
+  ],
+  "LIE": [
+   "LI",
+   "overlong"
+  ],
+  "LKA": [
+   "LK",
+   "overlong"
+  ],
+  "LSO": [
+   "LS",
+   "overlong"
+  ],
+  "LTU": [
+   "LT",
+   "overlong"
+  ],
+  "LUX": [
+   "LU",
+   "overlong"
+  ],
+  "LVA": [
+   "LV",
+   "overlong"
+  ],
+  "MAC": [
+   "MO",
+   "overlong"
+  ],
+  "MAF": [
+   "MF",
+   "overlong"
+  ],
+  "MAR": [
+   "MA",
+   "overlong"
+  ],
+  "MCO": [
+   "MC",
+   "overlong"
+  ],
+  "MDA": [
+   "MD",
+   "overlong"
+  ],
+  "MDG": [
+   "MG",
+   "overlong"
+  ],
+  "MDV": [
+   "MV",
+   "overlong"
+  ],
+  "MEX": [
+   "MX",
+   "overlong"
+  ],
+  "MHL": [
+   "MH",
+   "overlong"
+  ],
+  "MI": [
+   "UM",
+   "deprecated"
+  ],
+  "MKD": [
+   "MK",
+   "overlong"
+  ],
+  "MLI": [
+   "ML",
+   "overlong"
+  ],
+  "MLT": [
+   "MT",
+   "overlong"
+  ],
+  "MMR": [
+   "MM",
+   "overlong"
+  ],
+  "MNE": [
+   "ME",
+   "overlong"
+  ],
+  "MNG": [
+   "MN",
+   "overlong"
+  ],
+  "MNP": [
+   "MP",
+   "overlong"
+  ],
+  "MOZ": [
+   "MZ",
+   "overlong"
+  ],
+  "MRT": [
+   "MR",
+   "overlong"
+  ],
+  "MSR": [
+   "MS",
+   "overlong"
+  ],
+  "MTQ": [
+   "MQ",
+   "overlong"
+  ],
+  "MUS": [
+   "MU",
+   "overlong"
+  ],
+  "MWI": [
+   "MW",
+   "overlong"
+  ],
+  "MYS": [
+   "MY",
+   "overlong"
+  ],
+  "MYT": [
+   "YT",
+   "overlong"
+  ],
+  "NAM": [
+   "NA",
+   "overlong"
+  ],
+  "NCL": [
+   "NC",
+   "overlong"
+  ],
+  "NER": [
+   "NE",
+   "overlong"
+  ],
+  "NFK": [
+   "NF",
+   "overlong"
+  ],
+  "NGA": [
+   "NG",
+   "overlong"
+  ],
+  "NH": [
+   "VU",
+   "deprecated"
+  ],
+  "NIC": [
+   "NI",
+   "overlong"
+  ],
+  "NIU": [
+   "NU",
+   "overlong"
+  ],
+  "NLD": [
+   "NL",
+   "overlong"
+  ],
+  "NOR": [
+   "NO",
+   "overlong"
+  ],
+  "NPL": [
+   "NP",
+   "overlong"
+  ],
+  "NQ": [
+   "AQ",
+   "deprecated"
+  ],
+  "NRU": [
+   "NR",
+   "overlong"
+  ],
+  "NT": [
+   "SA IQ",
+   "deprecated"
+  ],
+  "NTZ": [
+   "SA IQ",
+   "overlong"
+  ],
+  "NZL": [
+   "NZ",
+   "overlong"
+  ],
+  "OMN": [
+   "OM",
+   "overlong"
+  ],
+  "PAK": [
+   "PK",
+   "overlong"
+  ],
+  "PAN": [
+   "PA",
+   "overlong"
+  ],
+  "PC": [
+   "FM MH MP PW",
+   "deprecated"
+  ],
+  "PCN": [
+   "PN",
+   "overlong"
+  ],
+  "PER": [
+   "PE",
+   "overlong"
+  ],
+  "PHL": [
+   "PH",
+   "overlong"
+  ],
+  "PLW": [
+   "PW",
+   "overlong"
+  ],
+  "PNG": [
+   "PG",
+   "overlong"
+  ],
+  "POL": [
+   "PL",
+   "overlong"
+  ],
+  "PRI": [
+   "PR",
+   "overlong"
+  ],
+  "PRK": [
+   "KP",
+   "overlong"
+  ],
+  "PRT": [
+   "PT",
+   "overlong"
+  ],
+  "PRY": [
+   "PY",
+   "overlong"
+  ],
+  "PSE": [
+   "PS",
+   "overlong"
+  ],
+  "PU": [
+   "UM",
+   "deprecated"
+  ],
+  "PYF": [
+   "PF",
+   "overlong"
+  ],
+  "PZ": [
+   "PA",
+   "deprecated"
+  ],
+  "QAT": [
+   "QA",
+   "overlong"
+  ],
+  "QMM": [
+   "QM",
+   "overlong"
+  ],
+  "QNN": [
+   "QN",
+   "overlong"
+  ],
+  "QPP": [
+   "QP",
+   "overlong"
+  ],
+  "QQQ": [
+   "QQ",
+   "overlong"
+  ],
+  "QRR": [
+   "QR",
+   "overlong"
+  ],
+  "QSS": [
+   "QS",
+   "overlong"
+  ],
+  "QTT": [
+   "QT",
+   "overlong"
+  ],
+  "QU": [
+   "EU",
+   "deprecated"
+  ],
+  "QUU": [
+   "EU",
+   "overlong"
+  ],
+  "QVV": [
+   "QV",
+   "overlong"
+  ],
+  "QWW": [
+   "QW",
+   "overlong"
+  ],
+  "QXX": [
+   "QX",
+   "overlong"
+  ],
+  "QYY": [
+   "QY",
+   "overlong"
+  ],
+  "QZZ": [
+   "QZ",
+   "overlong"
+  ],
+  "REU": [
+   "RE",
+   "overlong"
+  ],
+  "RH": [
+   "ZW",
+   "deprecated"
+  ],
+  "ROU": [
+   "RO",
+   "overlong"
+  ],
+  "RUS": [
+   "RU",
+   "overlong"
+  ],
+  "RWA": [
+   "RW",
+   "overlong"
+  ],
+  "SAU": [
+   "SA",
+   "overlong"
+  ],
+  "SCG": [
+   "RS ME",
+   "overlong"
+  ],
+  "SDN": [
+   "SD",
+   "overlong"
+  ],
+  "SEN": [
+   "SN",
+   "overlong"
+  ],
+  "SGP": [
+   "SG",
+   "overlong"
+  ],
+  "SGS": [
+   "GS",
+   "overlong"
+  ],
+  "SHN": [
+   "SH",
+   "overlong"
+  ],
+  "SJM": [
+   "SJ",
+   "overlong"
+  ],
+  "SLB": [
+   "SB",
+   "overlong"
+  ],
+  "SLE": [
+   "SL",
+   "overlong"
+  ],
+  "SLV": [
+   "SV",
+   "overlong"
+  ],
+  "SMR": [
+   "SM",
+   "overlong"
+  ],
+  "SOM": [
+   "SO",
+   "overlong"
+  ],
+  "SPM": [
+   "PM",
+   "overlong"
+  ],
+  "SRB": [
+   "RS",
+   "overlong"
+  ],
+  "SSD": [
+   "SS",
+   "overlong"
+  ],
+  "STP": [
+   "ST",
+   "overlong"
+  ],
+  "SU": [
+   "RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ",
+   "deprecated"
+  ],
+  "SUN": [
+   "RU AM AZ BY EE GE KZ KG LV LT MD TJ TM UA UZ",
+   "overlong"
+  ],
+  "SUR": [
+   "SR",
+   "overlong"
+  ],
+  "SVK": [
+   "SK",
+   "overlong"
+  ],
+  "SVN": [
+   "SI",
+   "overlong"
+  ],
+  "SWE": [
+   "SE",
+   "overlong"
+  ],
+  "SWZ": [
+   "SZ",
+   "overlong"
+  ],
+  "SXM": [
+   "SX",
+   "overlong"
+  ],
+  "SYC": [
+   "SC",
+   "overlong"
+  ],
+  "SYR": [
+   "SY",
+   "overlong"
+  ],
+  "TAA": [
+   "TA",
+   "overlong"
+  ],
+  "TCA": [
+   "TC",
+   "overlong"
+  ],
+  "TCD": [
+   "TD",
+   "overlong"
+  ],
+  "TGO": [
+   "TG",
+   "overlong"
+  ],
+  "THA": [
+   "TH",
+   "overlong"
+  ],
+  "TJK": [
+   "TJ",
+   "overlong"
+  ],
+  "TKL": [
+   "TK",
+   "overlong"
+  ],
+  "TKM": [
+   "TM",
+   "overlong"
+  ],
+  "TLS": [
+   "TL",
+   "overlong"
+  ],
+  "TMP": [
+   "TL",
+   "overlong"
+  ],
+  "TON": [
+   "TO",
+   "overlong"
+  ],
+  "TP": [
+   "TL",
+   "deprecated"
+  ],
+  "TTO": [
+   "TT",
+   "overlong"
+  ],
+  "TUN": [
+   "TN",
+   "overlong"
+  ],
+  "TUR": [
+   "TR",
+   "overlong"
+  ],
+  "TUV": [
+   "TV",
+   "overlong"
+  ],
+  "TWN": [
+   "TW",
+   "overlong"
+  ],
+  "TZA": [
+   "TZ",
+   "overlong"
+  ],
+  "UGA": [
+   "UG",
+   "overlong"
+  ],
+  "UK": [
+   "GB",
+   "deprecated"
+  ],
+  "UKR": [
+   "UA",
+   "overlong"
+  ],
+  "UMI": [
+   "UM",
+   "overlong"
+  ],
+  "URY": [
+   "UY",
+   "overlong"
+  ],
+  "USA": [
+   "US",
+   "overlong"
+  ],
+  "UZB": [
+   "UZ",
+   "overlong"
+  ],
+  "VAT": [
+   "VA",
+   "overlong"
+  ],
+  "VCT": [
+   "VC",
+   "overlong"
+  ],
+  "VD": [
+   "VN",
+   "deprecated"
+  ],
+  "VEN": [
+   "VE",
+   "overlong"
+  ],
+  "VGB": [
+   "VG",
+   "overlong"
+  ],
+  "VIR": [
+   "VI",
+   "overlong"
+  ],
+  "VNM": [
+   "VN",
+   "overlong"
+  ],
+  "VUT": [
+   "VU",
+   "overlong"
+  ],
+  "WK": [
+   "UM",
+   "deprecated"
+  ],
+  "WLF": [
+   "WF",
+   "overlong"
+  ],
+  "WSM": [
+   "WS",
+   "overlong"
+  ],
+  "XAA": [
+   "XA",
+   "overlong"
+  ],
+  "XBB": [
+   "XB",
+   "overlong"
+  ],
+  "XCC": [
+   "XC",
+   "overlong"
+  ],
+  "XDD": [
+   "XD",
+   "overlong"
+  ],
+  "XEE": [
+   "XE",
+   "overlong"
+  ],
+  "XFF": [
+   "XF",
+   "overlong"
+  ],
+  "XGG": [
+   "XG",
+   "overlong"
+  ],
+  "XHH": [
+   "XH",
+   "overlong"
+  ],
+  "XII": [
+   "XI",
+   "overlong"
+  ],
+  "XJJ": [
+   "XJ",
+   "overlong"
+  ],
+  "XKK": [
+   "XK",
+   "overlong"
+  ],
+  "XLL": [
+   "XL",
+   "overlong"
+  ],
+  "XMM": [
+   "XM",
+   "overlong"
+  ],
+  "XNN": [
+   "XN",
+   "overlong"
+  ],
+  "XOO": [
+   "XO",
+   "overlong"
+  ],
+  "XPP": [
+   "XP",
+   "overlong"
+  ],
+  "XQQ": [
+   "XQ",
+   "overlong"
+  ],
+  "XRR": [
+   "XR",
+   "overlong"
+  ],
+  "XSS": [
+   "XS",
+   "overlong"
+  ],
+  "XTT": [
+   "XT",
+   "overlong"
+  ],
+  "XUU": [
+   "XU",
+   "overlong"
+  ],
+  "XVV": [
+   "XV",
+   "overlong"
+  ],
+  "XWW": [
+   "XW",
+   "overlong"
+  ],
+  "XXX": [
+   "XX",
+   "overlong"
+  ],
+  "XYY": [
+   "XY",
+   "overlong"
+  ],
+  "XZZ": [
+   "XZ",
+   "overlong"
+  ],
+  "YD": [
+   "YE",
+   "deprecated"
+  ],
+  "YEM": [
+   "YE",
+   "overlong"
+  ],
+  "YMD": [
+   "YE",
+   "overlong"
+  ],
+  "YU": [
+   "RS ME",
+   "deprecated"
+  ],
+  "YUG": [
+   "RS ME",
+   "overlong"
+  ],
+  "ZAF": [
+   "ZA",
+   "overlong"
+  ],
+  "ZAR": [
+   "CD",
+   "overlong"
+  ],
+  "ZMB": [
+   "ZM",
+   "overlong"
+  ],
+  "ZR": [
+   "CD",
+   "deprecated"
+  ],
+  "ZWE": [
+   "ZW",
+   "overlong"
+  ],
+  "ZZZ": [
+   "ZZ",
+   "overlong"
+  ]
+ },
+ "variant": {
+  "heploc": [
+   "alalc97",
+   "deprecated"
+  ],
+  "polytoni": [
+   "polyton",
+   "deprecated"
+  ]
+ }
+}

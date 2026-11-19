@@ -1,4 +1,4 @@
-"""The likely script of a language whose langcodes entry differs from CLDR 49."""
+"""The likely script of a language whose langcodes 3.5.1 entry differs from CLDR 49."""
 import json
 from pathlib import Path
 
@@ -8,8 +8,8 @@ import linguatag.matching as matching
 from linguatag import (DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang, default_region,
                        lang_distance, with_default_region)
 
-DATA = json.loads((Path(matching.__file__).parent / "data" / "likely_regions.json")
-                  .read_text(encoding="utf-8"))
+LIKELY = json.loads((Path(matching.__file__).parent / "data" / "likely_subtags.json")
+                    .read_text(encoding="utf-8"))["likely"]
 
 
 # CLDR 49 likelySubtags.xml (unicode-org/cldr, tag release-49), every entry of
@@ -35,18 +35,9 @@ CLDR_49_OTHER = {"hyw": "hyw_Armn_AM", "lzh": "lzh_Hant_CN"}
 CLDR_49 = {**CLDR_49_ARABIC, **CLDR_49_OTHER}
 
 
-def test_the_tables_hold_every_cldr_entry_of_the_arabic_varieties_hyw_and_lzh():
-    scripts, regions = {}, {}
+def test_the_data_holds_every_cldr_entry_of_the_arabic_varieties_hyw_and_lzh():
     for source, likely in CLDR_49.items():
-        _, script, region = likely.split("_")
-        _, *named = source.split("_")
-        tag = source.replace("_", "-")
-        if not named or len(named[0]) == 2:
-            scripts[tag] = script
-        if not named or len(named[0]) == 4:
-            regions[tag] = region
-    assert DATA["scripts"] == scripts
-    assert {tag: DATA["regions"].get(tag) for tag in regions} == regions
+        assert LIKELY[source.replace("_", "-")] == likely.replace("_", "-")
 
 
 @pytest.mark.parametrize("source,likely", CLDR_49.items())

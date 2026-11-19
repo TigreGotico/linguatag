@@ -38,7 +38,7 @@ def test_a_bare_tag_takes_its_default_region_first():
     assert likely_script("yue") == likely_script("yue-CN") == "Hans"
 
 
-def test_the_package_table_corrects_the_langcodes_snapshot():
+def test_western_armenian_is_in_armenian_script():
     # CLDR 49: <likelySubtag from="hyw" to="hyw_Armn_AM" origin="sil1"/>; langcodes 3.5.1 gives Latn.
     assert likely_script("hyw") == "Armn"
 
@@ -53,16 +53,16 @@ def test_a_language_with_no_likely_subtags_has_no_script(tag):
 
 
 @pytest.mark.parametrize("tag", ["", "a", "en--US", "-en"])
-def test_a_tag_that_langcodes_cannot_parse_has_no_script(tag):
+def test_a_tag_that_is_not_well_formed_has_no_script(tag):
     assert likely_script(tag) is None
 
 
-def test_without_langcodes_only_the_package_table_gives_a_script(monkeypatch):
+def test_without_langcodes_the_script_is_the_same(monkeypatch):
     import sys
 
     monkeypatch.setitem(sys.modules, "langcodes", None)
     monkeypatch.setitem(sys.modules, "langcodes.data_dicts", None)
-    assert likely_script("zh-TW") is None
+    assert likely_script("zh-TW") == "Hant"
     assert likely_script("zh-Hant") == "Hant"
     assert likely_script("hyw") == "Armn"
 
