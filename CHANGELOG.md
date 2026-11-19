@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.3.1a1](https://github.com/TigreGotico/linguatag/tree/0.3.1a1) (2026-11-19)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.0a1...0.3.1a1)
+
+**Merged pull requests:**
+
+- fix: read CLDR 49 and IANA data from the package, not from langcodes [\#44](https://github.com/TigreGotico/linguatag/pull/44) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.3.0a1](https://github.com/TigreGotico/linguatag/tree/0.3.0a1) (2026-11-18)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.7a1...0.3.0a1)
