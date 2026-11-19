@@ -1,6 +1,7 @@
 """How near two lects are: tags that name a dialect with a private-use subtag.
 
-BCP-47 gives a private-use subtag no meaning, so ``langcodes`` ignores it:
+BCP-47 gives a private-use subtag no meaning, so the UTS #35 matching
+distance ignores it:
 ``an-x-cheso``, ``an-x-ansotano`` and ``an`` are all at distance 0. The
 orthography2ipa specs place each lect in a tree, a dialect under its language
 and a sub-dialect under its dialect. ``data/lineage.json`` is that tree, cut to

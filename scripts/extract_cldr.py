@@ -1,6 +1,6 @@
 """Write the CLDR and IANA data files of linguatag/data.
 
-Three files come out, and each names its source and version in a `source`
+Five files come out, and each names its source and version in a `source`
 field:
 
 - `likely_subtags.json`: the CLDR `supplemental/likelySubtags.json` table,
@@ -16,11 +16,20 @@ field:
   `Suppress-Script` and `Macrolanguage`. A subtag that is in the file is
   valid; a subtag with `deprecated` is deprecated; `preferred` is the value
   that replaces it (RFC 5646 section 4.5).
+- `language_matching.json`: the `written-new` language matching data of the
+  CLDR `supplemental/languageMatching.json`: the paradigm locales, the match
+  variables and the `languageMatch` rules, in their order. UTS #35 section
+  4.4, "Language Matching", reads them.
+- `territory_containment.json`: the regions that each CLDR
+  `supplemental/territoryContainment.json` region contains, without the
+  deprecated codes. A match variable such as `$americas` (`019`) is the set
+  of regions that its macroregions contain.
 
 Each source is a file or a URL. The defaults are the CLDR 49 release of
 `cldr-json` and the IANA registry:
 
-    python scripts/extract_cldr.py [likelySubtags.json] [aliases.json] [registry]
+    python scripts/extract_cldr.py [likelySubtags.json] [aliases.json] [registry] \
+        [languageMatching.json] [territoryContainment.json]
 
 Run it again after a CLDR release or an IANA registry change. It prints the
 number of entries in and out for each file.
@@ -116,11 +125,42 @@ def subtags(text: str) -> None:
           f"{sum(len(v) for k, v in payload.items() if k != 'source')} out", file=sys.stderr)
 
 
+def language_matching(text: str) -> None:
+    supplemental = json.loads(text)["supplemental"]
+    matching = supplemental["languageMatching"]["written-new"]
+    rules = [[rule["_desired"], rule["_supported"], rule["_distance"], rule.get("_oneway", False)]
+             for rule in matching["languageMatch"]]
+    write("language_matching.json", {
+        "source": f"CLDR {cldr_version(supplemental)}, cldr-json "
+                  "cldr-core/supplemental/languageMatching.json, written-new",
+        "paradigm_locales": matching["paradigmLocales"]["_locales"],
+        "variables": {name: variable["_value"]
+                      for name, variable in matching["matchVariables"].items()},
+        "rules": rules})
+    print(f"languageMatch: {len(matching['languageMatch'])} in, {len(rules)} out",
+          file=sys.stderr)
+
+
+def territory_containment(text: str) -> None:
+    supplemental = json.loads(text)["supplemental"]
+    table = supplemental["territoryContainment"]
+    contains = {region: entry["_contains"] for region, entry in sorted(table.items())
+                if "-status-" not in region}
+    write("territory_containment.json", {
+        "source": f"CLDR {cldr_version(supplemental)}, cldr-json "
+                  "cldr-core/supplemental/territoryContainment.json",
+        "contains": contains})
+    print(f"territoryContainment: {len(table)} in, {len(contains)} out "
+          f"({len(table) - len(contains)} status entries left out)", file=sys.stderr)
+
+
 def main() -> None:
-    sources = sys.argv[1:] + [None] * (3 - len(sys.argv[1:]))
+    sources = sys.argv[1:] + [None] * (5 - len(sys.argv[1:]))
     likely_subtags(read(sources[0] or CLDR_URL.format(CLDR_JSON, "likelySubtags")))
     aliases(read(sources[1] or CLDR_URL.format(CLDR_JSON, "aliases")))
     subtags(read(sources[2] or IANA_URL))
+    language_matching(read(sources[3] or CLDR_URL.format(CLDR_JSON, "languageMatching")))
+    territory_containment(read(sources[4] or CLDR_URL.format(CLDR_JSON, "territoryContainment")))
 
 
 if __name__ == "__main__":
