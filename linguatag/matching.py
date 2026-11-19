@@ -74,6 +74,21 @@ extlangs, the original primary language subtag is also replaced if there is
 a primary language subtag in the 'Preferred-Value'." So ``ar-apc`` and
 ``apc`` are one tag, and so are ``my-BU`` and ``my-MM``.
 
+A bare ``und`` and a tag of private-use subtags only match the same tag.
+RFC 5646 section 4.1: "The 'und' (Undetermined) primary language subtag
+identifies linguistic content whose language is not determined." UTS #35
+section 4.4 says why ``und`` is not measured as English, which CLDR likely
+subtags make of it: "Part of this is because 'und' has a special function in
+BCP 47; it stands in for 'no supplied base language'." RFC 5646 section
+2.2.1: "The single-character subtag 'x' as the primary subtag indicates that
+the language tag consists solely of subtags whose meaning is defined by
+private agreement", and section 4.6: "Private use subtags have no meaning
+outside the private agreement between the parties that intend to use or
+exchange language tags that employ them." So ``x-clade-abkh1242`` is not
+``und`` and not ``x-foo``, and ``und-x-foo`` is not ``und``. ``und`` with a
+script or a region (``und-Latn``, ``und-US``) keeps the CLDR distance, which
+is 80 or more from every tag of another language.
+
 Standardization, default regions and likely scripts come from
 :mod:`linguatag.bcp47`, and the distance from :mod:`linguatag.distance`.
 Both read the CLDR 49 and IANA data of this package, so the output does not
@@ -202,6 +217,8 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     measured as its longest well-formed prefix: ``zh-HK-HiuMaanNeural`` as
     ``zh-HK``. A tag with an empty subtag (``ar-``, ``ar_``, ``-ar``,
     ``en--US``) is not a language tag, and it is no usable match for any tag.
+    A bare ``und`` (``und-x-foo`` included) and a private-use-only tag
+    (``x-foo``) are no usable match for any tag but themselves.
 
     The distance is the CLDR 49 matching distance of UTS #35 section 4.4
     (:func:`linguatag.distance.tag_distance`).
@@ -243,6 +260,10 @@ def _language_distance(desired: str, supported: str) -> int:
     b = _as_world_arabic(_parseable_prefix(b))
     if a.lower() == b.lower():
         return 0
+    # A bare und and a private-use-only tag name no language (module docstring).
+    if any(tag.lower().partition("-x-")[0] == "und" or tag.lower().startswith("x-")
+           for tag in (a, b)):
+        return _DIFFERENT_LANGUAGE_DISTANCE
     to_msa = without_private_use(b).lower() in _MSA
     a = _with_likely_script(with_default_region(a))
     b = _with_likely_script(with_default_region(b))

@@ -168,7 +168,8 @@ def _triple(tag: str) -> _Triple:
         except LanguageTagError:
             return _UNKNOWN
     if maximized.whole:
-        return _UNKNOWN
+        # A private-use tag (x-foo) is a language of its own, not und.
+        return (maximized.whole.lower(), "Zzzz", "ZZ")
     return (maximized.language or "und", maximized.script or "Zzzz", maximized.region or "ZZ")
 
 
