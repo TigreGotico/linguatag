@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional, Tuple
 
-from linguatag.bcp47 import _load, maximize
+from linguatag.bcp47 import is_region, is_script, load_data, maximize
 from linguatag.standardize import standardize_lang
 
 __all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
@@ -47,13 +47,6 @@ OVERRIDES: Dict[str, Tuple[str, str]] = {
     "yue": ("Hans", "CN"),
 }
 
-def _is_script(subtag: str) -> bool:
-    return len(subtag) == 4 and subtag.isalpha()
-
-
-def _is_region(subtag: str) -> bool:
-    return (len(subtag) == 2 and subtag.isalpha()) or (len(subtag) == 3 and subtag.isdigit())
-
 
 def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     """`(language, script, region, extended)` of a standardized tag.
@@ -66,9 +59,9 @@ def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     language, index = parts[0], 1
     script = region = None
     extended = index < len(parts) and len(parts[index]) == 3 and parts[index].isalpha()
-    if index < len(parts) and _is_script(parts[index]):
+    if index < len(parts) and is_script(parts[index]):
         script, index = parts[index], index + 1
-    if index < len(parts) and _is_region(parts[index]):
+    if index < len(parts) and is_region(parts[index]):
         region = parts[index]
     return language, script, region, extended
 
@@ -93,7 +86,7 @@ def default_region(tag: str) -> Optional[str]:
     if extended or language == "und":
         return None
     if script:
-        likely = _load("likely_subtags.json")["likely"].get(f"{language}-{script}")
+        likely = load_data("likely_subtags.json")["likely"].get(f"{language}-{script}")
         if likely is not None:
             return likely.split("-")[-1]
     maximized = maximize(f"{language}-{script}" if script else language)
