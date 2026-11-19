@@ -41,11 +41,8 @@ def test_the_data_holds_every_cldr_entry_of_the_arabic_varieties_hyw_and_lzh():
 
 
 @pytest.mark.parametrize("source,likely", CLDR_49.items())
-@pytest.mark.parametrize("with_langcodes", [True, False])
 def test_a_language_is_measured_in_its_cldr_script_and_region(
-        source, likely, with_langcodes, request):
-    if not with_langcodes:
-        request.getfixturevalue("no_langcodes")
+        source, likely):
     tag, likely = source.replace("_", "-"), likely.replace("_", "-")
     assert lang_distance(tag, likely) == 0
     assert lang_distance(likely, tag) == 0
@@ -82,10 +79,7 @@ def test_an_arabic_variety_in_arabic_script_keeps_its_own_language(tag, lect):
 
 
 @pytest.mark.parametrize("language,likely", CLDR_49_OTHER.items())
-@pytest.mark.parametrize("with_langcodes", [True, False])
-def test_the_default_region_is_the_cldr_49_region(language, likely, with_langcodes, request):
-    if not with_langcodes:
-        request.getfixturevalue("no_langcodes")
+def test_the_default_region_is_the_cldr_49_region(language, likely):
     _, script, region = likely.split("_")
     assert default_region(language) == region
     assert default_region(f"{language}-{script}") == region

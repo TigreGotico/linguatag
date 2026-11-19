@@ -20,8 +20,10 @@ classifiers = [
 ]
 
 [project.optional-dependencies]
-langcodes = ["langcodes"]
-test = ["pytest", "langcodes"]
+# Installs nothing: linguatag reads its own CLDR and IANA data. Downstream
+# pins on linguatag[langcodes] still resolve.
+langcodes = []
+test = ["pytest"]
 
 [project.urls]
 Homepage = "https://github.com/TigreGotico/linguatag"

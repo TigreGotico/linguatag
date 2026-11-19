@@ -3,38 +3,26 @@
 Everything rests on one distance function, :func:`lang_distance`;
 :func:`closest_lang` is the candidate with the smallest distance. All policy
 lives inside :func:`lang_distance`: tag standardization, the default region of
-a bare tag, the Modern Standard Arabic fallback, and the behaviour when
-``langcodes`` is absent.
+a bare tag, the Modern Standard Arabic fallback, and the members of ``zh``
+that are not Mandarin.
 
 The distance ladder, from nearest to farthest: identical tags (``0``), a bare
-tag against its own default region (``0``), two regions of one language (a
-small distance), a member language against its macrolanguage tag (``10``, the
-threshold itself), and a different language (``>= 100`` with the coarse
-measure, never a usable match).
+tag against its own default region (``0``), two regions of one language (4
+or 5), a member language against its macrolanguage tag (``10``, the threshold
+itself), and a different language (80 or more, never a usable match).
 
-``langcodes`` replaces an encompassed language with its macrolanguage
-before it measures, from the CLDR ``languageAlias`` entries with
-``reason="macrolanguage"``. UTS #35 (revision 79, CLDR 49), BCP 47
-Conformance: "Each macrolanguage has an identified primary encompassed
-language, which is treated as an alias for the macrolanguage, and thus is
-replaced when canonicalizing". So ``tw`` against ``ak`` and ``cmn`` against
-``zh`` are ``0``. The ``langcodes`` copy is older than CLDR 49 and still holds
-three such entries that CLDR has removed::
-
-    <languageAlias type="fat" replacement="ak" reason="macrolanguage"/> <!-- Fanti ⇒ Akan -->
-    <languageAlias type="mnk" replacement="man" reason="macrolanguage"/> <!-- Mandinka ⇒ Mandingo -->
-    <languageAlias type="knn" replacement="kok" reason="macrolanguage"/> <!-- Konkani (individual language) ⇒ Konkani -->
-
-CLDR 46 dropped the ``knn`` entry and CLDR 48 the ``mnk`` entry. CLDR 49
-dropped the ``fat`` entry (CLDR-19720, "Akan (ak) should only have one
-encompassed language") and kept
-``<languageAlias type="tw" replacement="ak" reason="macrolanguage"/>``. The
-CLDR 49 ``languageMatching`` data names neither ``fat`` nor ``mnk``, so their
-distance to any other language comes from
-``<languageMatch desired="*" supported="*" distance="80"/>``: a different
-language. Fanti and Mandinka measured against another language, their
-macrolanguage included, are a different language here too. ``knn`` is not in
-this rule, because CLDR 49 gives it
+The distance is the CLDR 49 language matching distance of UTS #35 section
+4.4 (:mod:`linguatag.distance`). Add Likely Subtags replaces an encompassed
+language with its macrolanguage before it measures, from the CLDR
+``languageAlias`` entries with ``reason="macrolanguage"``. UTS #35 (revision
+79, CLDR 49), BCP 47 Conformance: "Each macrolanguage has an identified
+primary encompassed language, which is treated as an alias for the
+macrolanguage, and thus is replaced when canonicalizing". So ``tw`` against
+``ak`` and ``cmn`` against ``zh`` are ``0``. CLDR 49 has no such entry for
+Fanti (``fat``) or Mandinka (``mnk``), and its ``languageMatching`` data names
+neither, so their distance to any other language, their macrolanguage
+included, comes from ``<languageMatch desired="*" supported="*"
+distance="80"/>``: a different language. ``knn`` gets
 ``<languageMatch desired="knn" supported="kok" distance="10" oneway="true"/>``.
 
 The IANA registry names 19 language subtags with ``Macrolanguage: zh``:
@@ -86,12 +74,10 @@ extlangs, the original primary language subtag is also replaced if there is
 a primary language subtag in the 'Preferred-Value'." So ``ar-apc`` and
 ``apc`` are one tag, and so are ``my-BU`` and ``my-MM``.
 
-The distance itself is ``langcodes.tag_distance``, which ``langcodes``
-computes from its own CLDR snapshot. Standardization, default regions and
-likely scripts come from :mod:`linguatag.bcp47`, which reads the CLDR 49 data
-of this package. ``langcodes`` is optional. Without it, :func:`lang_distance`
-falls back to a coarse same-language measure with the same ordering for the
-cases locale resolution depends on.
+Standardization, default regions and likely scripts come from
+:mod:`linguatag.bcp47`, and the distance from :mod:`linguatag.distance`.
+Both read the CLDR 49 and IANA data of this package, so the output does not
+depend on what else is installed.
 """
 from __future__ import annotations
 
@@ -99,6 +85,7 @@ from functools import lru_cache
 from typing import Optional, Sequence
 
 from linguatag.bcp47 import LanguageTagError, is_region, maximize, parse
+from linguatag.distance import is_paradigm, tag_distance
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import _with_likely_script, with_default_region
 from linguatag.standardize import (_preferred_values, _without_deprecated_language,
@@ -113,11 +100,12 @@ __all__ = [
     "DEFAULT_MAX_LANGUAGE_DISTANCE",
 ]
 
-# langcodes rates a distance of 4 to 9 an unproblematic regional difference
-# and 10 to 24 a gray area that depends on the use case. This module accepts
-# 10 or less. The bound is inclusive because langcodes uses 10 for a specific
-# language against its more-commonly-used macrolanguage tag, such as "arz"
-# against "ar".
+# UTS #35 section 4.4: "The threshold is implementation-defined, typically set
+# to greater than a default region difference, and less than a default script
+# difference." CLDR 49 puts a default region difference at 4 and a default
+# script difference at 50. This module accepts 10 or less. The bound is
+# inclusive because CLDR uses 10 for a specific language against its
+# more-commonly-used macrolanguage tag, such as "arz" against "ar".
 DEFAULT_MAX_LANGUAGE_DISTANCE = 10
 
 # The individual languages of the ISO 639-3 `ara` macrolanguage (SIL
@@ -146,23 +134,18 @@ _ARABIC_FALLBACK_DISTANCE = 5
 
 # The spoken members of the `zh` macrolanguage other than Mandarin (see the
 # module docstring), among them Cantonese, Hakka, Min Nan, Wu, Gan and Xiang,
-# are never served as Mandarin. langcodes measures `yue-CN`, `hak` or
+# are never served as Mandarin. CLDR 49 measures `yue-CN`, `hak` or
 # `cdo-Hans` against `zh-CN` or `cmn` at 10, a member against its
 # macrolanguage in one script, and that is a usable match; they are not
 # mutually intelligible with Mandarin. Against `cmn`, and against `zh` in
-# Simplified script, they count as different languages, as the coarse measure
-# counts them. `zh` in Traditional script keeps the langcodes distance: a
-# `zh-HK` resource is often Cantonese. Literary Chinese (`lzh`) has no
-# speakers and is not in the set.
+# Simplified script, they count as different languages. `zh` in Traditional
+# script keeps the CLDR distance: a `zh-HK` resource is often Cantonese.
+# Literary Chinese (`lzh`) has no speakers and is not in the set.
 _NOT_MANDARIN = frozenset(
     "cdo cjy cnp cpx csp czh czo gan hak hnm hsn luh mnp nan sjc wuu yue".split())
 _MANDARIN = "cmn"
 _CHINESE = "zh"
 _DIFFERENT_LANGUAGE_DISTANCE = 100
-
-# Fanti and Mandinka, which langcodes reads as Akan and Mandingo (see the
-# module docstring).
-_FORMER_MACROLANGUAGE_ALIASES = frozenset({"fat", "mnk"})
 
 
 def _is_simplified(tag: str) -> bool:
@@ -197,41 +180,6 @@ def _sinitic_against_mandarin(a: str, b: str) -> bool:
                                       and _is_simplified(languages[_CHINESE]))
 
 
-def _former_macrolanguage_alias(a: str, b: str) -> bool:
-    languages = {a.split("-")[0].lower(), b.split("-")[0].lower()}
-    return len(languages) == 2 and not _FORMER_MACROLANGUAGE_ALIASES.isdisjoint(languages)
-
-
-def _langcodes_distance(desired: str, supported: str) -> Optional[int]:
-    """``langcodes.tag_distance``, or ``None`` if no distance can be computed,
-    including when ``langcodes`` is not installed."""
-    try:
-        from langcodes import tag_distance
-        return int(tag_distance(desired, supported))
-    except Exception:
-        return None
-
-
-def _coarse_distance(desired: str, supported: str) -> int:
-    """A ``langcodes``-free distance.
-
-    The two tags are already standardized and region-expanded. A shared
-    primary subtag is near, a differing one is far; the generic (region-less)
-    form of a language counts as nearer than a sibling region of it. The
-    values 3, 5 and 100 carry ordering only: what matters is their relative
-    order and whether they reach the threshold of 10. Private-use subtags
-    count for nothing, as in ``langcodes``.
-    """
-    desired, supported = without_private_use(desired), without_private_use(supported)
-    if desired.lower() == supported.lower():
-        return 0
-    if desired.split("-")[0].lower() != supported.split("-")[0].lower():
-        return 100  # a different language, beyond any usable threshold
-    if "-" not in desired or "-" not in supported:
-        return 3  # one side is the generic language tag
-    return 5  # two different regions of the same language
-
-
 def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int:
     """The distance between two BCP-47 language tags.
 
@@ -247,7 +195,7 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     macrolanguage other than Mandarin (``yue``, ``hak``, ``nan``, ``wuu``,
     ``cdo`` and the others the module docstring names) measured against
     ``cmn``, or against ``zh`` in Simplified script, is a different language.
-    So is Fanti (``fat``) or Mandinka (``mnk``) measured against another
+    Fanti (``fat``) and Mandinka (``mnk``) are 80 or more from any other
     language, Akan (``ak``) and Mandingo (``man``) included.
 
     A tag that is not a well-formed BCP 47 tag, such as a voice id, is
@@ -255,8 +203,8 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     ``zh-HK``. A tag with an empty subtag (``ar-``, ``ar_``, ``-ar``,
     ``en--US``) is not a language tag, and it is no usable match for any tag.
 
-    Uses ``langcodes.tag_distance`` when available, and a coarse
-    same-language measure otherwise.
+    The distance is the CLDR 49 matching distance of UTS #35 section 4.4
+    (:func:`linguatag.distance.tag_distance`).
 
     A private-use subtag counts for nothing unless ``lects`` asks for it:
     ``"dialect"`` scores the nearest other dialect before the standard
@@ -273,8 +221,8 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
 
 def _as_world_arabic(tag: str) -> str:
     """Every spelling of Modern Standard Arabic as ``ar-001``, the region the
-    default-region rule gives a bare ``ar``. ``langcodes`` would otherwise
-    place ``arb`` in Egypt. A private-use part is kept."""
+    default-region rule gives a bare ``ar``. CLDR likely subtags would
+    otherwise place ``arb`` in Egypt. A private-use part is kept."""
     base, separator, private = tag.partition("-x-")
     if base.lower() in _MSA:
         return "ar-001" + separator + private
@@ -300,10 +248,8 @@ def _language_distance(desired: str, supported: str) -> int:
     b = _with_likely_script(with_default_region(b))
     if a.lower() == b.lower():
         return 0
-    distance = _langcodes_distance(a, b)
-    if distance is None:
-        distance = _coarse_distance(a, b)
-    if _sinitic_against_mandarin(a, b) or _former_macrolanguage_alias(a, b):
+    distance = tag_distance(a, b)
+    if _sinitic_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     language = a.split("-")[0].lower()
     scripts = [t.lower() for t in without_private_use(a).split("-")[1:]
@@ -321,9 +267,10 @@ def lang_matches(a: str, b: str,
 
     Args:
         a: the requested BCP-47 tag.
-        b: the candidate tag. The relation is symmetric except for the
-            Modern Standard Arabic fallback: ``arz`` is near ``ar``, but
-            ``ar`` is not near ``arz``.
+        b: the candidate tag. The relation is not symmetric: a CLDR
+            one-way rule and the Modern Standard Arabic fallback count in
+            one direction only, so ``arz`` is near ``ar``, but ``ar`` is not
+            near ``arz``.
         max_distance: the inclusive upper bound on an acceptable distance.
             Pass ``max_distance=0`` to require an exact match.
     """
@@ -412,7 +359,11 @@ def closest_lang(target: str, available: Sequence[str],
     ``fra`` for ``fr`` is not such a code. Next, a candidate with a language,
     extlang or region subtag that has a Preferred-Value loses the tie, so
     ``ar-apc`` picks ``apc`` over ``ajp`` and ``my-MM`` picks ``my-MM`` over
-    ``my-BU``. Other ties resolve to the first candidate in iteration order.
+    ``my-BU``. Next, a CLDR 49 paradigm locale (``en-US``, ``en-GB``,
+    ``es-ES``, ``es-419``, ``pt-BR``, ``pt-PT``) wins, as UTS #35 section 4.4
+    says: "These are locales that are preferred within a cluster." So
+    ``closest_lang("es-MX", ["es-CR", "es-419"])`` is ``es-419``. Other ties
+    resolve to the first candidate in iteration order.
     With ``lects``, the lect score orders the candidates within
     ``max_distance``; it decides no match.
 
@@ -439,7 +390,8 @@ def closest_lang(target: str, available: Sequence[str],
         rank = (distance if lects is None else lang_distance(target, candidate, lects),
                 standardize_lang(candidate).casefold() != wanted,
                 _is_other_code_of_language(target, candidate),
-                _has_noncanonical_subtag(candidate))
+                _has_noncanonical_subtag(candidate),
+                not is_paradigm(_parseable_prefix(standardize_lang(candidate))))
         if best_rank is None or rank < best_rank:
             best, best_rank = candidate, rank
     return best

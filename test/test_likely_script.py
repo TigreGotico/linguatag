@@ -57,14 +57,9 @@ def test_a_tag_that_is_not_well_formed_has_no_script(tag):
     assert likely_script(tag) is None
 
 
-def test_without_langcodes_the_script_is_the_same(monkeypatch):
-    import sys
-
-    monkeypatch.setitem(sys.modules, "langcodes", None)
-    monkeypatch.setitem(sys.modules, "langcodes.data_dicts", None)
+def test_a_chinese_tag_takes_the_script_of_its_region_or_its_own():
     assert likely_script("zh-TW") == "Hant"
     assert likely_script("zh-Hant") == "Hant"
-    assert likely_script("hyw") == "Armn"
 
 
 @pytest.mark.parametrize("tag, script", [("arb", "Arab"), ("cmn", "Hans"), ("cmn-TW", "Hant"), ("pes", "Arab"),

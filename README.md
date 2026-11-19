@@ -31,17 +31,19 @@ A bare `ar` is Modern Standard Arabic, the standard of no single country, so its
 
 ## CLDR and IANA data
 
-Standardization, the default region and the likely script come from data that this package carries, never from what else is installed. `linguatag/bcp47.py` parses a tag (RFC 5646 section 2.1), puts it in canonical form (RFC 5646 section 4.5 and UTS #35 Annex C) and adds likely subtags (UTS #35 section 4.3). It reads three files in `linguatag/data`, and each names its source in a `source` field:
+Standardization, the default region, the likely script and the distance come from data that this package carries, never from what else is installed. `linguatag/bcp47.py` parses a tag (RFC 5646 section 2.1), puts it in canonical form (RFC 5646 section 4.5 and UTS #35 Annex C) and adds likely subtags (UTS #35 section 4.3). `linguatag/distance.py` measures the language matching distance (UTS #35 section 4.4). They read five files in `linguatag/data`, and each names its source in a `source` field:
 
 | File | Source |
 | --- | --- |
 | `likely_subtags.json` | CLDR 49 `supplemental/likelySubtags.json` |
 | `aliases.json` | CLDR 49 `supplemental/aliases.json`: language, script, territory and variant aliases |
 | `subtags.json` | the IANA Language Subtag Registry: every subtag, with its deprecation, Preferred-Value, Prefix, Suppress-Script and Macrolanguage |
+| `language_matching.json` | CLDR 49 `supplemental/languageMatching.json`, `written-new`: paradigm locales, match variables and `languageMatch` rules |
+| `territory_containment.json` | CLDR 49 `supplemental/territoryContainment.json`: the regions that each macroregion contains |
 
-`scripts/extract_cldr.py` writes the three files. Run it again after a CLDR release or an IANA registry change.
+`scripts/extract_cldr.py` writes the five files. Run it again after a CLDR release or an IANA registry change.
 
-The parser and the canonicalization follow the code of `langcodes` (see NOTICE).
+The parser, the canonicalization and the distance follow the code of `langcodes` (see NOTICE).
 
 ## Distance and closest match
 
@@ -49,11 +51,11 @@ The parser and the canonicalization follow the code of `langcodes` (see NOTICE).
 
 Standardization replaces an extlang tag and a deprecated subtag with their IANA Preferred-Values, as RFC 5646 section 4.5 says: `zh-hak` is Hakka (`hak`), `ar-arz-EG` is `arz-EG`, `ajp-JO` is `apc-JO` and `my-BU` is `my-MM`. It replaces an ISO 639-2 code with its two-letter code (`eng` is `en`) and drops a script that the registry suppresses for the language (`en-Latn` is `en`). An encompassed language keeps its own code: `cmn` stays `cmn` and `arb` stays `arb`.
 
-The distance itself comes from `langcodes.tag_distance`.
+The distance is the CLDR 49 language matching distance of UTS #35 section 4.4. Each tag gets its likely subtags, then each subtag that differs adds the distance of the first CLDR rule that matches it. Two regions of one language are 4 apart, or 5 when CLDR puts them in two clusters: `en-CA` is 4 from `en-US`, because CLDR puts Canada in the US English cluster, and 5 from `en-GB`. An English region outside the US cluster is 3 from `en-GB`, so `en-AU` is 3 from `en-GB` and 4 from `en-NZ`. Two scripts of one language are 50 apart unless a rule says less (`sr-Latn` and `sr-Cyrl` are 5), and two languages 80 unless a rule says less (`nb` and `no` are 1, `arz` is 10 from `ar`).
 
-`closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only. Among candidates at the same distance, the code that the request names wins first, and a code with no language, extlang or region subtag that has a Preferred-Value wins next: `closest_lang("zh-hak", ["hak", "zh-hak"])` is `zh-hak`, `closest_lang("ar-apc", ["ajp", "apc"])` is `apc`, and `closest_lang("my-MM", ["my-BU", "my-MM"])` is `my-MM`.
+`closest_lang` returns the candidate with the smallest distance, verbatim, when that distance is within `max_distance` (default 10). Pass `max_distance=0` to accept exact matches only. Among candidates at the same distance, the code that the request names wins first, and a code with no language, extlang or region subtag that has a Preferred-Value wins next: `closest_lang("zh-hak", ["hak", "zh-hak"])` is `zh-hak`, `closest_lang("ar-apc", ["ajp", "apc"])` is `apc`, and `closest_lang("my-MM", ["my-BU", "my-MM"])` is `my-MM`. A CLDR paradigm locale (`en-US`, `en-GB`, `es-ES`, `es-419`, `pt-BR`, `pt-PT`) wins after that: `closest_lang("es-MX", ["es-CR", "es-419"])` is `es-419`.
 
-An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`), Cypriot Maronite Arabic (`acy`) and Hassaniyya in Senegal (`mey-SN`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. No spoken member of the `zh` macrolanguage other than Mandarin matches `cmn` or `zh` in Simplified script: Cantonese, Hakka, Min Nan, Wu, Gan, Xiang, Min Dong, Min Bei, Jinyu and the others the IANA registry lists under `zh`. `zh` in Traditional script and `zh-Latn` keep the langcodes distance for them. Literary Chinese (`lzh`) has no speakers, so this rule leaves it out. CLDR 49 writes it in Traditional script in China, so a Chinese resource in the same script and region serves an `lzh` request: `lzh` gets `zh-Hant-CN`, `lzh-TW` gets `zh-Hant`, and `lzh-Hans` gets `zh` or `cmn`. A bare `lzh` is 14 from `zh-Hant`, which is Taiwan, because the regions differ. It does not match Simplified Chinese. Fanti (`fat`) and Mandinka (`mnk`) match no other language, Akan (`ak`), Twi (`tw`), Mandingo (`man`) and Eastern Maninkakan (`emk`) included: CLDR 49 does not make them aliases of a macrolanguage. Twi is an alias of Akan.
+An Arabic variety (`arz`, `apc`, `ar-MA`, Hassaniyya `mey`) in Arabic script is at most 5 from Modern Standard Arabic (`ar`, `arb`). Juba Arabic (`pga`), Cypriot Maronite Arabic (`acy`) and Hassaniyya in Senegal (`mey-SN`) are written in Latin script, so they get this rule only with an explicit `-Arab` subtag. No other macrolanguage gets this rule. No spoken member of the `zh` macrolanguage other than Mandarin matches `cmn` or `zh` in Simplified script: Cantonese, Hakka, Min Nan, Wu, Gan, Xiang, Min Dong, Min Bei, Jinyu and the others the IANA registry lists under `zh`. `zh` in Traditional script and `zh-Latn` keep the CLDR distance for them. Literary Chinese (`lzh`) has no speakers, so this rule leaves it out. CLDR 49 writes it in Traditional script in China, so a Chinese resource in the same script and region serves an `lzh` request: `lzh` gets `zh-Hant-CN`, `lzh-TW` gets `zh-Hant`, and `lzh-Hans` gets `zh` or `cmn`. A bare `lzh` is 14 from `zh-Hant`, which is Taiwan, because the regions differ. It does not match Simplified Chinese. Fanti (`fat`) and Mandinka (`mnk`) match no other language, Akan (`ak`), Twi (`tw`), Mandingo (`man`) and Eastern Maninkakan (`emk`) included: CLDR 49 does not make them aliases of a macrolanguage, and no CLDR rule names them. Twi is an alias of Akan.
 
 ## Arabic varieties
 
@@ -77,7 +79,7 @@ closest_lang("an-x-cheso", ["an", "an-x-ansotano"], lects="standard")  # 'an'
 ## Install
 
 ```
-pip install linguatag[langcodes]
+pip install linguatag
 ```
 
-`langcodes` is optional, and only `lang_distance` and `closest_lang` use it. Without it, distance uses a coarse same-language measure with the same ordering. Standardization, the default region, the likely script and `is_arabic_variety` give the same output with `langcodes` and without it.
+linguatag has no dependencies. The `langcodes` extra installs nothing, so a pin on `linguatag[langcodes]` still resolves.

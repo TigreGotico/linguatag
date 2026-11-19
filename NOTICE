@@ -1,6 +1,7 @@
-linguatag/bcp47.py ports code from langcodes 3.5.1
-(https://github.com/georgkrause/langcodes), its tag_parser.py and the
-Language.get, Language.maximize and standardize_tag functions:
+linguatag/bcp47.py and linguatag/distance.py port code from langcodes 3.5.1
+(https://github.com/georgkrause/langcodes): its tag_parser.py and
+language_distance.py, and the Language.get, Language.maximize,
+Language.distance and standardize_tag functions:
 
     Copyright (C) 2021 Robyn Speer (rspeer@arborelia.net)
     MIT License
@@ -23,11 +24,12 @@ Language.get, Language.maximize and standardize_tag functions:
     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
     SOFTWARE.
 
-linguatag/data/likely_subtags.json and linguatag/data/aliases.json hold data
-from the Unicode CLDR, release 49 (cldr-json 49.0.0): Copyright (C)
-2015-2024 Unicode, Inc., under the Unicode License v3. LICENSE-CLDR holds
-the full copyright and permission notice, as the cldr-json 49.0.0 LICENSE
-file gives it.
+linguatag/data/likely_subtags.json, linguatag/data/aliases.json,
+linguatag/data/language_matching.json and
+linguatag/data/territory_containment.json hold data from the Unicode CLDR,
+release 49 (cldr-json 49.0.0): Copyright (C) 2015-2024 Unicode, Inc., under
+the Unicode License v3. LICENSE-CLDR holds the full copyright and permission
+notice, as the cldr-json 49.0.0 LICENSE file gives it.
 
 linguatag/data/subtags.json holds data from the IANA Language Subtag
 Registry (https://www.iana.org/assignments/language-subtag-registry). IANA
