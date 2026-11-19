@@ -4,7 +4,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict
 
-from linguatag.bcp47 import LanguageTagError, _registry, standardize
+from linguatag.bcp47 import LanguageTagError, registry, standardize
 
 __all__ = ["standardize_lang"]
 
@@ -16,10 +16,10 @@ def _preferred_values(kind: str) -> Dict[str, str]:
     ``prefix-extlang`` pair."""
     if kind == "extlang":
         return {f"{prefix}-{subtag}".lower(): record["preferred"].lower()
-                for subtag, record in _registry("extlang").items()
+                for subtag, record in registry("extlang").items()
                 for prefix in record.get("prefix", [])}
     return {subtag.lower(): record["preferred"].lower()
-            for subtag, record in _registry(kind).items()
+            for subtag, record in registry(kind).items()
             if "deprecated" in record and "preferred" in record}
 
 

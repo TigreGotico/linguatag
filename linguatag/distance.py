@@ -59,15 +59,15 @@ import re
 from functools import lru_cache, reduce
 from typing import Dict, FrozenSet, List, Tuple
 
-from linguatag.bcp47 import LanguageTagError, _canonical, _load, maximize, parse
+from linguatag.bcp47 import LanguageTagError, _canonical, load_data, maximize, parse
 
 __all__ = ["is_paradigm", "tag_distance"]
 
 _Triple = Tuple[str, str, str]
 _Field = Tuple[bool, FrozenSet[str]]
 
-_MATCHING = _load("language_matching.json")
-_CONTAINS = _load("territory_containment.json")["contains"]
+_MATCHING = load_data("language_matching.json")
+_CONTAINS = load_data("territory_containment.json")["contains"]
 _UNKNOWN = ("und", "Zzzz", "ZZ")
 
 

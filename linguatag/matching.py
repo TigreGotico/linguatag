@@ -84,10 +84,10 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Optional, Sequence
 
-from linguatag.bcp47 import LanguageTagError, maximize, parse
+from linguatag.bcp47 import LanguageTagError, is_region, maximize, parse
 from linguatag.distance import is_paradigm, tag_distance
 from linguatag.lects import lect_score, without_private_use
-from linguatag.regions import _is_region, _with_likely_script, with_default_region
+from linguatag.regions import _with_likely_script, with_default_region
 from linguatag.standardize import (_preferred_values, _without_deprecated_language,
                                    _without_extlang, standardize_lang)
 
@@ -310,7 +310,7 @@ def _region_subtag(tag: str) -> str:
     for subtag in tag.replace("_", "-").split("-")[1:]:
         if len(subtag) == 1:
             break
-        if _is_region(subtag):
+        if is_region(subtag):
             return subtag.lower()
     return ""
 
