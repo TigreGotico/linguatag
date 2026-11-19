@@ -22,9 +22,11 @@ field:
   4.4, "Language Matching", reads them.
 - `territory_containment.json`: the regions that each CLDR
   `supplemental/territoryContainment.json` region contains, without the
-  `-status-` entries: the deprecated codes (`SU`, `YU`) and the groupings
-  (`EU`, `UN`, `419` in `019`). A match variable such as `$americas` (`019`)
-  is the set of regions that its macroregions contain.
+  `-status-` entries: the deprecated codes (`SU`, `YU`) and the grouping
+  entries, which put `EU`, `EZ` and `UN` in `001`, `202` in `002`, and `003`
+  and `419` in `019`. `EU`, `EZ` and `UN` stay as macroregions with their own
+  members. A match variable such as `$americas` (`019`) is the set of regions
+  that its macroregions contain.
 
 Each source is a file or a URL. The defaults are the CLDR 49 release of
 `cldr-json` and the IANA registry:
