@@ -119,7 +119,7 @@ def _all_match(fields: Tuple[_Field, ...], subtags: Tuple[str, ...]) -> bool:
     return True
 
 
-@lru_cache(maxsize=1 << 12)
+@lru_cache(maxsize=1 << 16)
 def _rules_for(fields: int, language: str) -> tuple:
     """The rules of ``fields`` fields, in data order, with a language field
     that matches ``language``: only these can match a pair that starts with it."""
