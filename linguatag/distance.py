@@ -109,9 +109,17 @@ _NAMED_REGIONS = frozenset(
     field for rule in _MATCHING["rules"] for side in rule[:2]
     for field in side.split("-")[2:] if field != "*" and not field.startswith("$"))
 
+# Languages and scripts a region rule names, such as ``en`` in ``en_*_GB``.
+_REGION_RULE_NAMES = frozenset(
+    field for rule in _MATCHING["rules"] if rule[0].count("-") == 2 for side in rule[:2]
+    for field in side.split("-")[:2])
+
 
 def _all_match(fields: Tuple[_Field, ...], subtags: Tuple[str, ...]) -> bool:
-    return all((subtag in values) != negated for (negated, values), subtag in zip(fields, subtags))
+    for (negated, values), subtag in zip(fields, subtags):
+        if (subtag in values) == negated:
+            return False
+    return True
 
 
 @lru_cache(maxsize=None)
@@ -122,6 +130,7 @@ def _rules_for(fields: int, language: str) -> tuple:
                  if _all_match(rule[0][:1], (language,)) or _all_match(rule[1][:1], (language,)))
 
 
+@lru_cache(maxsize=None)
 def _rule_distance(desired: Tuple[str, ...], supported: Tuple[str, ...]) -> int:
     """The distance of the first rule that matches, in data order."""
     for want, have, distance, oneway in _rules_for(len(desired), desired[0]):
@@ -132,15 +141,19 @@ def _rule_distance(desired: Tuple[str, ...], supported: Tuple[str, ...]) -> int:
     raise LookupError(f"no languageMatch rule for {desired} and {supported}")
 
 
+_LEAVES: Dict[tuple, str] = {}
+
+
 @lru_cache(maxsize=None)
 def _clusters(region: str) -> Tuple[str, ...]:
-    """One leaf of ``region`` for each set of match variables and named
-    regions that its leaves fall in."""
+    """One leaf for each set of match variables and named regions that the
+    leaves of ``region`` fall in. The rules cannot tell two leaves of one set
+    apart, so every region gets the same leaf for a set."""
     representatives: Dict[tuple, str] = {}
     for part in sorted(_contents(region)):
         key = (frozenset(name for name, members in _VARIABLES.items() if part in members),
                part if part in _NAMED_REGIONS else None)
-        representatives.setdefault(key, part)
+        representatives.setdefault(key, _LEAVES.setdefault(key, part))
     return tuple(representatives.values())
 
 
@@ -159,7 +172,7 @@ def _triple(tag: str) -> _Triple:
     return (maximized.language or "und", maximized.script or "Zzzz", maximized.region or "ZZ")
 
 
-@lru_cache(maxsize=8192)
+@lru_cache(maxsize=None)
 def _triple_distance(desired: _Triple, supported: _Triple) -> int:
     (language, script, region), (other_language, other_script, other_region) = desired, supported
     distance = 0
@@ -168,6 +181,10 @@ def _triple_distance(desired: _Triple, supported: _Triple) -> int:
     if script != other_script:
         distance += _rule_distance((language, script), (other_language, other_script))
     if region != other_region:
+        # ``*`` stands for a language or script that no region rule names.
+        language, script, other_language, other_script = (
+            subtag if subtag in _REGION_RULE_NAMES else "*"
+            for subtag in (language, script, other_language, other_script))
         distance += max(_rule_distance((language, script, part), (other_language, other_script, other))
                         for part in _clusters(region) for other in _clusters(other_region))
     return distance
