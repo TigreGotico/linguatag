@@ -4,7 +4,7 @@
 covers: the data files that linguatag reads, how to regenerate them, and their licences.
 source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/build_lineage.py, NOTICE, LICENSE-CLDR
 generated: no. scripts/extract_cldr.py writes the five CLDR and IANA files and scripts/build_lineage.py writes lineage.json, so edit the scripts, never the JSON.
-verify: `python3 -c "import json,pathlib,sys;t=pathlib.Path(sys.argv[1]).read_text();g=[f.name+' | '+json.loads(f.read_text())['source'] for f in sorted(pathlib.Path('linguatag/data').glob('*.json'))];m=[l for l in g if l not in t];print('OK',len(g)) if not m else print('MISSING',m)" docs/data-and-licence.md`
+verify: `python3 -c "import json,pathlib,sys;t=pathlib.Path(sys.argv[1]).read_text();g=[f.name+' | '+json.loads(f.read_text())['source'] for f in sorted(pathlib.Path('linguatag/data').glob('*.json'))];m=[l for l in g if l not in t];print('OK',len(g)) if not m else sys.exit('MISSING '+repr(m))" docs/data-and-licence.md`
 see: ../NOTICE, ../LICENSE-CLDR
 -->
 
