@@ -4,11 +4,11 @@
 covers: what linguatag does, a quickstart, its place in the stack, and how to install it.
 source: linguatag/__init__.py:__all__, linguatag/matching.py, linguatag/regions.py, linguatag/standardize.py, pyproject.toml
 generated: no
-verify: run the quickstart block in a fresh venv that has linguatag installed
+verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else print('MISMATCH',[p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g)))" README.md`
 see: docs/index.md, docs/getting-started.md, AGENTS.md
 -->
 
-linguatag reads BCP 47 language tags. It puts a tag in one canonical form and gives a bare tag its default region and its likely script. It also measures how near two tags are. It picks the best tag from a list of available tags. All the data comes from CLDR 49 and the IANA Language Subtag Registry, which the package carries.
+linguatag reads BCP 47 language tags. It puts a tag in one canonical form and gives a bare tag its default region and its likely script. It also measures how near two tags are. It picks the best tag from a list of available tags. The package carries all its data: CLDR 49, the IANA Language Subtag Registry, and a dialect tree from orthography2ipa in `lineage.json`.
 
 ```python
 from linguatag import closest_lang, lang_distance, likely_script, standardize_lang, with_default_region

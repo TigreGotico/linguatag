@@ -4,7 +4,7 @@
 covers: the data files that linguatag reads, how to regenerate them, and their licences.
 source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/build_lineage.py, NOTICE, LICENSE-CLDR
 generated: no. scripts/extract_cldr.py writes the five CLDR and IANA files and scripts/build_lineage.py writes lineage.json, so edit the scripts, never the JSON.
-verify: python3 scripts/extract_cldr.py, then git diff --stat linguatag/data
+verify: `python3 -c "import json,pathlib,sys;t=pathlib.Path(sys.argv[1]).read_text();g=[f.name+' | '+json.loads(f.read_text())['source'] for f in sorted(pathlib.Path('linguatag/data').glob('*.json'))];m=[l for l in g if l not in t];print('OK',len(g)) if not m else print('MISSING',m)" docs/data-and-licence.md`
 see: ../NOTICE, ../LICENSE-CLDR
 -->
 
@@ -32,6 +32,8 @@ lineage.json | TigreGotico/orthography2ipa@1e6e911705761de8d5724276187c4903ae92e
 subtags.json | IANA Language Subtag Registry, File-Date: 2026-09-17
 territory_containment.json | CLDR 49, cldr-json cldr-core/supplemental/territoryContainment.json
 ```
+
+Nobody edits these files by hand. To change one, change its script or its source, run the script, and commit the script and the data together.
 
 ## Regenerate the CLDR and IANA files
 
@@ -66,10 +68,10 @@ To move to a different CLDR release, change the `CLDR_JSON` constant in the scri
 
 ## Regenerate the dialect tree
 
-`scripts/build_lineage.py` writes `lineage.json` from an orthography2ipa clone. It reads the spec files at a git ref, so the clone needs no checkout of that ref. The second argument defaults to `origin/dev`. The script imports linguatag, so run it with a Python that has linguatag installed.
+`scripts/build_lineage.py` writes `lineage.json` from an orthography2ipa clone. It reads the spec files at a git ref, so the clone needs no checkout of that ref. The second argument defaults to `origin/dev`. The script imports linguatag, so run it with a Python that has linguatag installed. This run uses the commit that the `source` field of the committed `lineage.json` names, so it writes the same file:
 
 ```
-$ python scripts/build_lineage.py ~/path/to/orthography2ipa origin/dev
+$ python scripts/build_lineage.py ~/path/to/orthography2ipa 1e6e911705761de8d5724276187c4903ae92eaf4
 7672 spec files in, 7671 codes read
 265 parent links out
 ```

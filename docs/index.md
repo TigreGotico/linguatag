@@ -4,7 +4,7 @@
 covers: the reading order of the linguatag docs, with one line for each page.
 source: docs/*.md
 generated: no
-verify: ls docs/*.md
+verify: `python3 -c "import re,os,glob;p=glob.glob('docs/*.md');i=open('docs/index.md').read();b=[(f,u) for f in p for u in re.findall(r'\]\(([^)#\s]+)',open(f).read()) if '://' not in u and not os.path.exists(os.path.join('docs',u))]+[f for f in p if os.path.basename(f) not in i and not f.endswith('index.md')];print('OK',len(p)) if not b else print('BROKEN',b)"`
 see: getting-started.md
 -->
 

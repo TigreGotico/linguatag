@@ -4,7 +4,7 @@
 covers: the default region and the likely script of a bare tag, and the CLDR maximize call.
 source: linguatag/regions.py:default_region, linguatag/regions.py:OVERRIDES, linguatag/regions.py:likely_script, linguatag/bcp47.py:maximize, linguatag/data/likely_subtags.json
 generated: no
-verify: .venv/bin/python -m pytest -q test/test_regions.py test/test_likely_script.py test/test_likely_scripts.py
+verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else print('MISMATCH',[p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g)))" docs/likely-subtags.md`
 see: matching.md, data-and-licence.md
 -->
 
@@ -29,7 +29,7 @@ print(with_default_region("gl-x-central"))  # gl-ES-x-central
 print(with_default_region("und"))           # und
 ```
 
-`default_region` returns the region that a tag names, or else its default region. It returns `None` for `und`, for a language that CLDR does not know, and for a string that is not a tag. `with_default_region` returns the standardized tag with that region in place. A variant or a private-use subtag stays after the region. A tag with no default region comes back standardized and with no other change.
+`default_region` returns the region that a tag names, or else its default region. It returns `None` for `und` and for a language that CLDR does not know. `with_default_region` returns the standardized tag with that region in place. A variant or a private-use subtag stays after the region. A tag with no default region comes back standardized and with no other change.
 
 The tag is standardized first, so `iw` gives `IL`. An encompassed language that CLDR replaces with its macrolanguage takes the region of the macrolanguage, so `cmn` gives `CN`.
 
@@ -40,11 +40,17 @@ CLDR 49 likely subtags are the base. CLDR picks the most-populous region of each
 ```python
 from linguatag import OVERRIDES
 
-print(OVERRIDES)
-# {'ar': ('Arab', '001'), 'en': ('Latn', 'GB'), 'pt': ('Latn', 'PT'), 'ur': ('Arab', 'IN'), 'yue': ('Hans', 'CN')}
+print(sorted(OVERRIDES))  # ['ar', 'en', 'pt', 'ur', 'yue']
+print(OVERRIDES["ar"])     # ('Arab', '001')
+print(OVERRIDES["en"])     # ('Latn', 'GB')
+print(OVERRIDES["pt"])     # ('Latn', 'PT')
+print(OVERRIDES["ur"])     # ('Arab', 'IN')
+print(OVERRIDES["yue"])    # ('Hans', 'CN')
 ```
 
 Each entry gives the script and the region of the default. An override holds only for its own script, so `yue-Hant` keeps the CLDR region `HK` and `en-Dsrt` keeps `US`. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
+
+Each entry in `OVERRIDES` cites its source in a comment beside it in `linguatag/regions.py`. An entry added to the map cites its source in the same way.
 
 A bare `ar` is Modern Standard Arabic. It is the standard of no single country.
 
@@ -65,7 +71,7 @@ print(likely_script("mey-SN"))  # Latn
 print(likely_script("zzz"))     # None
 ```
 
-`likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und`, for a language that CLDR does not know, and for a string that is not a tag.
+`likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und` and for a language that CLDR does not know.
 
 <!-- agent-hint: maximize gives en-Latn-US, while default_region gives GB for en. Do not use one in place of the other. -->
 ## maximize: the CLDR algorithm
@@ -82,7 +88,7 @@ print(maximize("en"))     # en-Latn-US
 print(maximize("und"))    # None
 ```
 
-`maximize` returns a `LanguageTag`, or `None`. It replaces an encompassed language with its macrolanguage, as section 4.3 requires, so `cmn` becomes `zh`. It returns `None` for `und`, for a language with no CLDR entry, and for a string that is not a tag. Because it uses CLDR alone, `en` gives `US`. Use `default_region` when you want the motherland. linguatag has no "remove likely subtags" call.
+`maximize` returns a `LanguageTag`, or `None`. It replaces an encompassed language with its macrolanguage, as section 4.3 requires, so `cmn` becomes `zh`. It returns `None` for `und` and for a language with no CLDR entry. Because it uses CLDR alone, `en` gives `US`. Use `default_region` when you want the motherland. linguatag has no "remove likely subtags" call.
 
 ---
 [Index](index.md) · [← Parsing and normalising tags](parsing.md) · [Matching →](matching.md)

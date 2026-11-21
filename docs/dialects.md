@@ -4,7 +4,7 @@
 covers: how the lects argument orders tags that name a dialect with a private-use subtag.
 source: linguatag/lects.py:lect_score, linguatag/lects.py:lect_steps, linguatag/data/lineage.json
 generated: no
-verify: .venv/bin/python -m pytest -q test/test_lects.py
+verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else print('MISMATCH',[p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g)))" docs/dialects.md`
 see: matching.md, data-and-licence.md
 -->
 
@@ -45,13 +45,19 @@ print(lang_distance("an-x-cheso", "an-x-ansotano", lects="standard"))  # 3
 | `"dialect"` | 4 | its steps, at most 3 |
 | `"standard"` | 1 | its steps plus 1, at most 4 |
 
-A request for the standard language scores a dialect of it by its steps plus 1, in both modes. A value other than `None`, `"dialect"` or `"standard"` raises `ValueError`.
+A request for the standard language scores a dialect of it by its steps plus 1, in both modes. `lang_distance` raises `ValueError` for a `lects` value other than `None`, `"dialect"` or `"standard"`. `closest_lang` computes the lect score only for a candidate within `max_distance`, so with no such candidate it returns `None` and does not raise:
+
+```python
+from linguatag import closest_lang
+
+print(closest_lang("en", ["fr"], lects="bogus"))  # None
+```
 
 The lect score never raises a distance that is 10 or less to a value above 10. So `closest_lang` uses it only to order the candidates that already match.
 
 ## The dialect tree
 
-`linguatag/data/lineage.json` holds the tree. It is the part of the orthography2ipa spec tree that the lects need: each spec code with a private-use subtag, and its ancestors. Its `source` field names the orthography2ipa commit that it comes from. [Data and licence](data-and-licence.md) shows how to rebuild it.
+`linguatag/data/lineage.json` holds the tree. It is the part of the orthography2ipa spec tree that the lects need: each spec code with a private-use subtag, and its ancestors up to 4 levels above it. Its `source` field names the orthography2ipa commit that it comes from. [Data and licence](data-and-licence.md) shows how to rebuild it.
 
 ---
 [Index](index.md) · [← Matching](matching.md) · [Data and licence →](data-and-licence.md)

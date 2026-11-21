@@ -4,7 +4,7 @@
 covers: how lang_distance measures two tags and how closest_lang picks a tag from a list.
 source: linguatag/matching.py:lang_distance, linguatag/matching.py:closest_lang, linguatag/distance.py:tag_distance, linguatag/data/language_matching.json
 generated: no
-verify: .venv/bin/python -m pytest -q test/test_matching.py test/test_distance.py
+verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else print('MISMATCH',[p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g)))" docs/matching.md`
 see: dialects.md
 -->
 
@@ -51,7 +51,7 @@ print(lang_distance("nb", "no"))             # 1
 print(lang_distance("en", "fr"))             # 84
 ```
 
-Two regions of one language are 4 apart, or 5 when CLDR puts them in two clusters. Canada is in the US English cluster. Australia and New Zealand are outside it, and each is 3 from `en-GB`. Two scripts of one language are 50 apart unless a CLDR rule gives less, as for Serbian. Two languages are 80 apart unless a rule gives less, as for Norwegian Bokmål and Norwegian. A differing region adds to the script or language distance, so `zh-Hans` (China) and `zh-Hant` (Taiwan) are 54 apart.
+Two regions of one language are 4 apart, or 5 when CLDR puts them in two clusters. Canada is in the US English cluster. Every English region outside that cluster is 3 from `en-GB`, so `en-AU` is 3 from `en-GB` and 4 from `en-NZ`. Two scripts of one language are 50 apart unless a CLDR rule gives less, as for Serbian. Two languages are 80 apart unless a rule gives less, as for Norwegian Bokmål and Norwegian. A differing region adds to the script or language distance, so `zh-Hans` (China) and `zh-Hant` (Taiwan) are 54 apart.
 
 The distance is not symmetric. CLDR has one-way rules, so a speaker of Swiss German accepts German, but not the reverse:
 
@@ -84,13 +84,20 @@ Pass `max_distance=0` to accept exact matches only. `lang_matches(a, b)` is `lan
 
 When two candidates have the same distance, `closest_lang` applies these rules in order:
 
-1. A candidate that spells the requested tag itself wins: `closest_lang("pt-PT", ["pt", "pt-PT"])` is `pt-PT`.
+1. A candidate that spells the requested tag itself, after `standardize_lang`, wins: `closest_lang("pt-PT", ["pt", "pt-PT"])` is `pt-PT`.
 2. A candidate that writes the language with another code of it (a deprecated code or an extlang form) loses: `closest_lang("hak", ["hak", "zh-hak"])` is `hak`, and `closest_lang("zh-hak", ["hak", "zh-hak"])` is `zh-hak`.
 3. A candidate with a language, extlang or region subtag that has an IANA Preferred-Value loses: `closest_lang("ar-apc", ["ajp", "apc"])` is `apc`, and `closest_lang("my-MM", ["my-BU", "my-MM"])` is `my-MM`.
 4. A CLDR paradigm locale wins (`en-US`, `en-GB`, `es-ES`, `es-419`, `pt-BR`, `pt-PT`): `closest_lang("es-MX", ["es-CR", "es-419"])` is `es-419`.
 5. Otherwise the first candidate in the list wins.
 
-An ISO 639-2 code such as `fra` for `fr` has no Preferred-Value, so rules 2 and 3 do not apply to it.
+`standardize_lang` turns an ISO 639-2 code such as `fra` into `fr`, so `fra` spells `fr` for rule 1. It has no Preferred-Value, so rules 2 and 3 do not apply to it. The first of the two in the list wins:
+
+```python
+from linguatag import closest_lang
+
+print(closest_lang("fr", ["fra", "fr"]))  # fra
+print(closest_lang("fr", ["fr", "fra"]))  # fr
+```
 
 ## und and private-use tags
 
@@ -109,7 +116,7 @@ print(lang_distance("und-Latn", "en"))               # 84
 print(lang_distance("und-US", "en"))                 # 134
 ```
 
-`und` with a script or a region keeps the CLDR distance, which is 80 or more from every language. A tag with an empty subtag, such as `ar-` or `en--US`, is not a tag, and its distance to any other tag is also 100.
+`und` with a script or a region keeps the CLDR distance, which is 80 or more from every language.
 
 ## Arabic
 

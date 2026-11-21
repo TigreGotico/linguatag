@@ -40,10 +40,7 @@ A pull request title is a conventional commit. A label workflow reads it, and th
 
 The release workflow writes `linguatag/version.py` and `CHANGELOG.md`. Nobody edits them by hand.
 
-The docs show real output. A change that alters a documented result updates the page and its example in the same commit ([docs index](docs/index.md)).
-
 ## Before a push
 
 1. Run `.venv/bin/python -m pytest -q test`.
 2. After a data change, run `python3 scripts/extract_cldr.py` and make sure each "in" count agrees with its "out" count.
-3. After a change to a documented behaviour, run the code blocks of the pages that show it, and compare the output with the comments.
