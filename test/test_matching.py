@@ -296,6 +296,41 @@ def test_lang_distance_is_symmetric_enough_for_identity():
     assert lang_distance("EN_us", "en-US") == 0
 
 
+# RFC 5646 section 4.1: "The 'und' (Undetermined) primary language subtag
+# identifies linguistic content whose language is not determined." Section 4.6:
+# "Private use subtags have no meaning outside the private agreement between the
+# parties that intend to use or exchange language tags that employ them."
+_NO_LANGUAGE = ["und", "und-x-foo", "x-foo", "x-clade-abkh1242"]
+
+
+@pytest.mark.parametrize("tag", _NO_LANGUAGE)
+@pytest.mark.parametrize("other", _NO_LANGUAGE + [
+    "und-x-bar", "und-US", "und-Latn", "und-Latn-US", "x-bar", "x-clade", "en", "en-US",
+    "pt", "ab", "zxx", "mul", "qaa", "i-enochian"])
+def test_a_tag_that_names_no_language_matches_only_itself(tag, other):
+    expected = 0 if tag == other else 100
+    assert lang_distance(tag, other) == expected
+    assert lang_distance(other, tag) == expected
+    assert lang_distance(tag, other, lects="dialect") == expected
+
+
+def test_closest_lang_finds_nothing_for_und_or_a_private_use_tag():
+    available = ["pt", "en", "x-clade-abkh1242", "ab", "und-US", "und-x-foo"]
+    assert closest_lang("und", available) is None
+    assert closest_lang("und-US", ["x-clade-abkh1242", "x-foo", "und", "en-US"]) is None
+    assert closest_lang("x-foo", available) is None
+    assert closest_lang("x-CLADE-abkh1242", ["und", "x-foo", "x-clade-abkh1242"]) \
+        == "x-clade-abkh1242"
+    assert closest_lang("und", ["en", "und"]) == "und"
+
+
+def test_und_with_a_script_or_a_region_keeps_its_cldr_distance():
+    # Values of linguatag 0.4.0a1, before the bare-und rule.
+    assert lang_distance("und-Latn", "en") == 84
+    assert lang_distance("und-Latn-US", "en") == 84
+    assert lang_distance("und-US", "und-Latn") == 54
+
+
 def test_lang_distance_regional_versus_different_language():
     assert lang_distance("de-DE", "de-AT") < 10    # a usable regional match
     assert lang_distance("de-DE", "nl-NL") >= 10   # a different language

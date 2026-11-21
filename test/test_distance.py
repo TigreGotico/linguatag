@@ -128,6 +128,17 @@ def test_und_is_not_maximized():
     assert tag_distance("und", "en") == 134
 
 
+# RFC 5646 section 2.2.1: "The single-character subtag 'x' as the primary subtag
+# indicates that the language tag consists solely of subtags whose meaning is
+# defined by private agreement." Such a tag is its own language: `*` 80.
+def test_a_private_use_tag_is_not_und():
+    assert tag_distance("x-foo", "und") == 80
+    assert tag_distance("und", "x-foo") == 80
+    assert tag_distance("x-foo", "x-bar") == 80
+    assert tag_distance("x-foo", "X-Foo") == 0
+    assert tag_distance("x-foo", "en") == 134
+
+
 _PAIRS = [("en-CA", "en-US"), ("en-CA", "en-GB"), ("es-MX", "es-419"), ("sr-Latn", "hr"),
           ("gsw", "de"), ("nb", "no"), ("ar-EG", "ar"), ("zh-HK", "zh-TW"), ("zzz", "en")]
 _WITHOUT_LANGCODES = """
