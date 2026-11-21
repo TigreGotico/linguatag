@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.1a1](https://github.com/TigreGotico/linguatag/tree/0.4.1a1) (2026-11-21)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.0a1...0.4.1a1)
+
+**Merged pull requests:**
+
+- fix: und and a private-use-only tag match no other tag [\#48](https://github.com/TigreGotico/linguatag/pull/48) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.4.0a1](https://github.com/TigreGotico/linguatag/tree/0.4.0a1) (2026-11-19)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.1a1...0.4.0a1)
+
+**Merged pull requests:**
+
+- feat: port CLDR 49 language matching and drop the langcodes dependency [\#45](https://github.com/TigreGotico/linguatag/pull/45) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.3.1a1](https://github.com/TigreGotico/linguatag/tree/0.3.1a1) (2026-11-19)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.0a1...0.3.1a1)
