@@ -324,6 +324,13 @@ def test_closest_lang_finds_nothing_for_und_or_a_private_use_tag():
     assert closest_lang("und", ["en", "und"]) == "und"
 
 
+def test_und_with_a_script_or_a_region_keeps_its_cldr_distance():
+    # Values of linguatag 0.4.0a1, before the bare-und rule.
+    assert lang_distance("und-Latn", "en") == 84
+    assert lang_distance("und-Latn-US", "en") == 84
+    assert lang_distance("und-US", "und-Latn") == 54
+
+
 def test_lang_distance_regional_versus_different_language():
     assert lang_distance("de-DE", "de-AT") < 10    # a usable regional match
     assert lang_distance("de-DE", "nl-NL") >= 10   # a different language
