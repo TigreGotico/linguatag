@@ -71,7 +71,7 @@ print(likely_script("mey-SN"))  # Latn
 print(likely_script("zzz"))     # None
 ```
 
-`likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und` and for a language that CLDR does not know.
+`likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und`, for a language that CLDR does not know, and for a string that is not a language tag, such as `en-Latn-`.
 
 <!-- agent-hint: maximize gives en-Latn-US, while default_region gives GB for en. Do not use one in place of the other. -->
 ## maximize: the CLDR algorithm

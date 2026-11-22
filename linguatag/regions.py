@@ -134,6 +134,10 @@ def likely_script(tag: str) -> Optional[str]:
     tag that is not a language tag, for a language that CLDR does not know
     (`zzz`) or `und`, or when no script is known.
     """
+    try:
+        parse(tag)
+    except LanguageTagError:
+        return None
     tag = with_default_region(tag)
     _, script, _, extended = _split(tag)
     if script or extended:

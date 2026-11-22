@@ -52,7 +52,8 @@ def test_a_language_with_no_likely_subtags_has_no_script(tag):
     assert likely_script(tag) is None
 
 
-@pytest.mark.parametrize("tag", ["", "a", "en--US", "-en"])
+@pytest.mark.parametrize("tag", ["", "a", "en--US", "-en", "en-Latn-", "zh-Hant-", "sr-Latn-RS-",
+                                 "zh-Hant-HiuMaanNeural"])
 def test_a_tag_that_is_not_well_formed_has_no_script(tag):
     assert likely_script(tag) is None
 
