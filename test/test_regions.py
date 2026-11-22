@@ -109,6 +109,19 @@ def test_an_unknown_language_has_no_region():
     assert with_default_region("qaa") == "qaa"
 
 
+# RFC 5646 section 2.1: a subtag is 1 to 8 letters and digits, so a leading,
+# trailing or doubled separator, a space or a non-ASCII letter makes no tag.
+@pytest.mark.parametrize("tag", ["", "-en", "_en", "en-", "en_", "en--US", "en__US", "-US", "en-US-",
+                                 "en-a", "en-é", "en ", "zh-HK-HiuMaanNeural"])
+def test_a_string_that_is_not_a_language_tag_has_no_region(tag):
+    assert default_region(tag) is None
+
+
+@pytest.mark.parametrize("tag,expected", [("en-", "en-"), ("en--US", "en--US"), ("en-a", "en-a")])
+def test_a_string_that_is_not_a_language_tag_gets_no_region_inserted(tag, expected):
+    assert with_default_region(tag) == expected
+
+
 @pytest.mark.parametrize("tag,region", [
     ("eng", "GB"), ("por", "PT"), ("urd", "IN"), ("iw", "IL"), ("mo", "RO"),
     ("EN", "GB"), ("zh_hant", "TW"), ("zh-yue", "CN")])
