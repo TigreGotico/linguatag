@@ -1,5 +1,5 @@
 {
- "source": "IANA Language Subtag Registry, File-Date: 2026-09-17",
+ "source": "IANA Language Subtag Registry, File-Date: 2026-11-18",
  "language": {
   "aa": {},
   "aaa": {},
@@ -12250,9 +12250,21 @@
     "sl-rozaj-solba"
    ]
   },
+  "1995": {
+   "prefix": [
+    "uz",
+    "uz-Latn"
+   ]
+  },
   "1996": {
    "prefix": [
     "de"
+   ]
+  },
+  "2026": {
+   "prefix": [
+    "uz",
+    "uz-Latn"
    ]
   },
   "abl1943": {

@@ -29,7 +29,7 @@ aliases.json | CLDR 49, cldr-json cldr-core/supplemental/aliases.json
 language_matching.json | CLDR 49, cldr-json cldr-core/supplemental/languageMatching.json, written-new
 likely_subtags.json | CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json
 lineage.json | TigreGotico/orthography2ipa@1e6e911705761de8d5724276187c4903ae92eaf4
-subtags.json | IANA Language Subtag Registry, File-Date: 2026-09-17
+subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
 territory_containment.json | CLDR 49, cldr-json cldr-core/supplemental/territoryContainment.json
 ```
 

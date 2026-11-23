@@ -23,7 +23,7 @@ def test_standardize_keeps_tagalog_as_tl():
 
 def _registry(kind):
     """The IANA Language Subtag Registry records of one type, File-Date
-    2026-09-17, as ``linguatag/data/subtags.json`` holds them."""
+    2026-11-18, as ``linguatag/data/subtags.json`` holds them."""
     return json.loads((files("linguatag") / "data" / "subtags.json").read_text("utf-8"))[kind]
 
 
@@ -106,7 +106,7 @@ def test_a_tie_goes_to_the_preferred_value_of_a_deprecated_region(subtag, prefer
     assert closest_lang(canonical, [canonical, deprecated]) == canonical
 
 
-# IANA Language Subtag Registry, File-Date 2026-09-17:
+# IANA Language Subtag Registry, File-Date 2026-11-18:
 #   Type: region  Subtag: BU  Description: Burma  Deprecated: 1989-12-05  Preferred-Value: MM
 #   Type: region  Subtag: DD  Description: German Democratic Republic  Deprecated: 1990-10-30
 #     Preferred-Value: DE
@@ -150,7 +150,7 @@ def test_a_tie_without_a_preferred_value_keeps_its_order(target, available, expe
     assert closest_lang(target, available) == expected
 
 
-# IANA Language Subtag Registry, File-Date 2026-09-17: `aka`, `fra`, `tur` and
+# IANA Language Subtag Registry, File-Date 2026-11-18: `aka`, `fra`, `tur` and
 # `fas` are no language subtags; the subtags are `ak`, `fr`, `tr` and `fa`.
 # `fat` (Fanti) and `pes` (Iranian Persian) are member languages of the `ak`
 # and `fa` macrolanguages. `rev` and `red` are no registered variants.
@@ -167,7 +167,7 @@ def test_an_iso_639_alias_does_not_lose_a_tie(target, available, expected):
     assert closest_lang(target, available) == expected
 
 
-# IANA Language Subtag Registry, File-Date 2026-09-17. The langcodes copy
+# IANA Language Subtag Registry, File-Date 2026-11-18. The langcodes copy
 # predates these records:
 #   Subtag: ajp  Description: South Levantine Arabic  Deprecated: 2023-03-17
 #   Preferred-Value: apc  (apc: "Levantine Arabic", Macrolanguage: ar)
@@ -532,7 +532,7 @@ def test_arabizi_is_not_pulled_to_msa(monkeypatch):
 # --- Which tags name Arabic ---------------------------------------------------
 
 # The IANA language subtags with `Macrolanguage: ar` (registry File-Date
-# 2026-09-17), and the macrolanguage itself under its ISO 639-1 and 639-2 codes.
+# 2026-11-18), and the macrolanguage itself under its ISO 639-1 and 639-2 codes.
 ARABIC_MACROLANGUAGE = ["ar", "ara"] + """aao abh abv acm acq acw acx acy adf aeb aec
     afb ajp apc apd arb arq ars ary arz auz avl ayh ayl ayn ayp bbz pga shu ssh""".split()
 
