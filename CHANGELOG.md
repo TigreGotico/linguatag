@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.4.2a1](https://github.com/TigreGotico/linguatag/tree/0.4.2a1) (2026-11-23)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.1a2...0.4.2a1)
+
+**Merged pull requests:**
+
+- fix: default\_region and likely\_script give None for a string that is not a language tag [\#52](https://github.com/TigreGotico/linguatag/pull/52) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.4.1a2](https://github.com/TigreGotico/linguatag/tree/0.4.1a2) (2026-11-21)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.1a1...0.4.1a2)
+
+**Merged pull requests:**
+
+- docs: README, docs index, navigation and agent hints [\#50](https://github.com/TigreGotico/linguatag/pull/50) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.1a1](https://github.com/TigreGotico/linguatag/tree/0.4.1a1) (2026-11-21)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.0a1...0.4.1a1)
