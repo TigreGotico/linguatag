@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional, Tuple
 
-from linguatag.bcp47 import is_region, is_script, load_data, maximize
+from linguatag.bcp47 import LanguageTagError, is_region, is_script, load_data, maximize, parse
 from linguatag.standardize import standardize_lang
 
 __all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
@@ -79,6 +79,10 @@ def default_region(tag: str) -> Optional[str]:
     `CN` and `arb`, Modern Standard Arabic, is `001`. `None` means no region applies: the
     language is unknown or `und`, or the tag is not a language tag.
     """
+    try:
+        parse(tag)
+    except LanguageTagError:
+        return None
     tag = standardize_lang(tag)
     language, script, region, extended = _split(tag)
     if region:
@@ -130,6 +134,10 @@ def likely_script(tag: str) -> Optional[str]:
     tag that is not a language tag, for a language that CLDR does not know
     (`zzz`) or `und`, or when no script is known.
     """
+    try:
+        parse(tag)
+    except LanguageTagError:
+        return None
     tag = with_default_region(tag)
     _, script, _, extended = _split(tag)
     if script or extended:

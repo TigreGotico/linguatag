@@ -29,7 +29,7 @@ print(with_default_region("gl-x-central"))  # gl-ES-x-central
 print(with_default_region("und"))           # und
 ```
 
-`default_region` returns the region that a tag names, or else its default region. It returns `None` for `und` and for a language that CLDR does not know. `with_default_region` returns the standardized tag with that region in place. A variant or a private-use subtag stays after the region. A tag with no default region comes back standardized and with no other change.
+`default_region` returns the region that a tag names, or else its default region. It returns `None` for `und`, for a language that CLDR does not know, and for a string that is not a language tag, such as `en--US` or the voice id `zh-HK-HiuMaanNeural`. `with_default_region` returns the standardized tag with that region in place. A variant or a private-use subtag stays after the region. A tag with no default region comes back standardized and with no other change.
 
 The tag is standardized first, so `iw` gives `IL`. An encompassed language that CLDR replaces with its macrolanguage takes the region of the macrolanguage, so `cmn` gives `CN`.
 
@@ -71,7 +71,7 @@ print(likely_script("mey-SN"))  # Latn
 print(likely_script("zzz"))     # None
 ```
 
-`likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und` and for a language that CLDR does not know.
+`likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und`, for a language that CLDR does not know, and for a string that is not a language tag, such as `en-Latn-`.
 
 <!-- agent-hint: maximize gives en-Latn-US, while default_region gives GB for en. Do not use one in place of the other. -->
 ## maximize: the CLDR algorithm
