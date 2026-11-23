@@ -47,7 +47,7 @@ def test_parse_keeps_the_subtags_in_their_bcp47_case(tag, expected):
     assert str(parse(tag)) == expected
 
 
-# RFC 5646 section 3.1: the registry "contains a comprehensive list of all of
+# RFC 5646 section 3: the registry "contains a comprehensive list of all of
 # the subtags valid in language tags". IANA, File-Date 2026-11-18:
 # "Subtag: 1995 ... Description: Uzbek Latin orthography of 1995 ... Prefix: uz
 # ... Prefix: uz-Latn", and the same for "Subtag: 2026".
