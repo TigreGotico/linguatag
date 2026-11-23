@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2a2](https://github.com/TigreGotico/linguatag/tree/0.4.2a2) (2026-11-23)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a1...0.4.2a2)
+
+**Merged pull requests:**
+
+- chore: refresh the IANA Language Subtag Registry to File-Date 2026-11-18 [\#56](https://github.com/TigreGotico/linguatag/pull/56) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.2a1](https://github.com/TigreGotico/linguatag/tree/0.4.2a1) (2026-11-23)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.1a2...0.4.2a1)
