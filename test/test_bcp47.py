@@ -3,7 +3,7 @@ IANA data this package carries.
 
 Each expected value quotes its source: RFC 5646, UTS #35 (revision 79, CLDR
 49), the CLDR 49 cldr-json supplemental files, or the IANA Language Subtag
-Registry (File-Date 2026-09-17).
+Registry (File-Date 2026-11-18).
 """
 import json
 import subprocess
@@ -14,7 +14,7 @@ import pytest
 
 import linguatag
 from linguatag import default_region, is_arabic_variety, likely_script, standardize_lang, with_default_region
-from linguatag.bcp47 import LanguageTagError, maximize, parse, standardize
+from linguatag.bcp47 import LanguageTagError, maximize, parse, registry, standardize
 
 DATA = Path(linguatag.__file__).parent / "data"
 
@@ -22,7 +22,7 @@ DATA = Path(linguatag.__file__).parent / "data"
 @pytest.mark.parametrize("name, source", [
     ("likely_subtags.json", "CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json"),
     ("aliases.json", "CLDR 49, cldr-json cldr-core/supplemental/aliases.json"),
-    ("subtags.json", "IANA Language Subtag Registry, File-Date: 2026-09-17"),
+    ("subtags.json", "IANA Language Subtag Registry, File-Date: 2026-11-18"),
 ])
 def test_each_data_file_names_its_source(name, source):
     assert json.loads((DATA / name).read_text(encoding="utf-8"))["source"] == source
@@ -45,6 +45,18 @@ def test_a_tag_that_is_not_well_formed_raises(tag):
 ])
 def test_parse_keeps_the_subtags_in_their_bcp47_case(tag, expected):
     assert str(parse(tag)) == expected
+
+
+# RFC 5646 section 3: the registry "contains a comprehensive list of all of
+# the subtags valid in language tags". IANA, File-Date 2026-11-18:
+# "Subtag: 1995 ... Description: Uzbek Latin orthography of 1995 ... Prefix: uz
+# ... Prefix: uz-Latn", and the same for "Subtag: 2026".
+@pytest.mark.parametrize("variant", ["1995", "2026"])
+def test_the_uzbek_latin_orthography_variants_are_registered(variant):
+    assert registry("variant")[variant] == {"prefix": ["uz", "uz-Latn"]}
+    for tag in (f"uz-{variant}", f"uz-Latn-{variant}", f"uz-Latn-UZ-{variant}"):
+        assert str(parse(tag)) == tag
+        assert standardize_lang(tag) == tag
 
 
 # RFC 5646 section 4.5, step 1: "Extension sequences are ordered into
