@@ -4,7 +4,7 @@
 covers: how lang_distance measures two tags and how closest_lang picks a tag from a list.
 source: linguatag/matching.py:lang_distance, linguatag/matching.py:closest_lang, linguatag/distance.py:tag_distance, linguatag/data/language_matching.json
 generated: no
-verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else sys.exit('MISMATCH '+repr([p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g))))" docs/matching.md`
+verify: python scripts/check_doc_page.py docs/matching.md
 see: dialects.md
 -->
 
@@ -24,7 +24,7 @@ print(lang_distance("en-AU", "en-GB"))            # 3
 print(closest_lang("en-AU", ["en-US", "en-GB"]))  # en-GB
 ```
 
-CLDR puts Australia in the same English cluster as Britain, so `en-GB` is nearer. With only `en-US` on hand, the answer is still `en-US`, because 5 is a usable match:
+CLDR puts Australia in the same English cluster as Britain, so `en-GB` is nearer. With only `en-US` on hand, the answer is `en-US`, because 5 is a usable match:
 
 ```python
 from linguatag import closest_lang

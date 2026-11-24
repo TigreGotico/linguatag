@@ -4,7 +4,7 @@
 covers: how the lects argument orders tags that name a dialect with a private-use subtag.
 source: linguatag/lects.py:lect_score, linguatag/lects.py:lect_steps, linguatag/data/lineage.json
 generated: no
-verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else sys.exit('MISMATCH '+repr([p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g))))" docs/dialects.md`
+verify: python scripts/check_doc_page.py docs/dialects.md
 see: matching.md, data-and-licence.md
 -->
 
