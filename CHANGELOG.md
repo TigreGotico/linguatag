@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2a3](https://github.com/TigreGotico/linguatag/tree/0.4.2a3) (2026-11-24)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a2...0.4.2a3)
+
+**Merged pull requests:**
+
+- refactor: simplify lects, regions and standardize; cache the measured form in lang\_distance [\#58](https://github.com/TigreGotico/linguatag/pull/58) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.2a2](https://github.com/TigreGotico/linguatag/tree/0.4.2a2) (2026-11-23)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a1...0.4.2a2)
