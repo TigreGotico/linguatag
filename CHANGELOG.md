@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.2a4](https://github.com/TigreGotico/linguatag/tree/0.4.2a4) (2026-11-24)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a3...0.4.2a4)
+
+**Merged pull requests:**
+
+- docs: README, docs index, navigation and agent hints [\#60](https://github.com/TigreGotico/linguatag/pull/60) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.2a3](https://github.com/TigreGotico/linguatag/tree/0.4.2a3) (2026-11-24)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a2...0.4.2a3)
