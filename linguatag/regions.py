@@ -65,23 +65,13 @@ def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     return language, script, region, extended
 
 
-def default_region(tag: str) -> Optional[str]:
-    """The region `tag` names, or the one it defaults to.
-
-    A tag with a region returns it: `default_region("pt-BR")` is `BR`. A tag
-    with none returns its default: `en` is `GB`, `zh-Hant` is `TW`, `ar` is
-    `001`. A script with no entry of its own takes its language's region,
-    unless an override writes the language in another script. The tag is
-    standardized first, so `en_GB` and deprecated and three-letter codes
-    (`iw`, `eng`) all work, and an encompassed language that CLDR replaces
-    with its macrolanguage takes the region of the macrolanguage: `cmn` is
-    `CN` and `arb`, Modern Standard Arabic, is `001`. `None` means no region applies: the
-    language is unknown or `und`, or the tag is not a language tag.
-    """
-    try:
-        parse(tag)
-    except LanguageTagError:
-        return None
+def _default_region(tag: str, *, parsed: bool) -> Optional[str]:
+    """The region helper; `parsed` says the caller already validated *tag*."""
+    if not parsed:
+        try:
+            parse(tag)
+        except LanguageTagError:
+            return None
     tag = standardize_lang(tag)
     language, script, region, extended = _split(tag)
     if region:
@@ -101,6 +91,36 @@ def default_region(tag: str) -> Optional[str]:
     return maximized.region if maximized else None
 
 
+def default_region(tag: str) -> Optional[str]:
+    """The region `tag` names, or the one it defaults to.
+
+    A tag with a region returns it: `default_region("pt-BR")` is `BR`. A tag
+    with none returns its default: `en` is `GB`, `zh-Hant` is `TW`, `ar` is
+    `001`. A script with no entry of its own takes its language's region,
+    unless an override writes the language in another script. The tag is
+    standardized first, so `en_GB` and deprecated and three-letter codes
+    (`iw`, `eng`) all work, and an encompassed language that CLDR replaces
+    with its macrolanguage takes the region of the macrolanguage: `cmn` is
+    `CN` and `arb`, Modern Standard Arabic, is `001`. `None` means no region applies: the
+    language is unknown or `und`, or the tag is not a language tag.
+    """
+    return _default_region(tag, parsed=False)
+
+
+def _with_default_region(tag: str, *, parsed: bool) -> str:
+    """The region-inserting helper; `parsed` says the caller validated *tag*."""
+    tag = standardize_lang(tag)
+    _, script, region, _ = _split(tag)
+    if region:
+        return tag
+    region = _default_region(tag, parsed=parsed)
+    if region is None:
+        return tag
+    parts = tag.split("-")
+    at = 2 if script else 1
+    return "-".join(parts[:at] + [region] + parts[at:])
+
+
 def with_default_region(tag: str) -> str:
     """`tag`, standardized, with its default region inserted.
 
@@ -109,16 +129,7 @@ def with_default_region(tag: str) -> str:
     `gl-x-central` becomes `gl-ES-x-central`. A tag with no default region is
     returned standardized and otherwise unchanged.
     """
-    tag = standardize_lang(tag)
-    _, script, region, _ = _split(tag)
-    if region:
-        return tag
-    region = default_region(tag)
-    if region is None:
-        return tag
-    parts = tag.split("-")
-    at = 2 if script else 1
-    return "-".join(parts[:at] + [region] + parts[at:])
+    return _with_default_region(tag, parsed=False)
 
 
 def likely_script(tag: str) -> Optional[str]:
@@ -137,7 +148,7 @@ def likely_script(tag: str) -> Optional[str]:
         parse(tag)
     except LanguageTagError:
         return None
-    tag = with_default_region(tag)
+    tag = _with_default_region(tag, parsed=True)
     _, script, _, extended = _split(tag)
     if script or extended:
         return script
