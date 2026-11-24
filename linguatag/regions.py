@@ -55,14 +55,13 @@ def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     grandfathered tag (`zh-min-nan`): such a tag has no language subtag of
     its own to give a region to.
     """
-    parts = tag.split("-")
-    language, index = parts[0], 1
+    language, *rest = tag.split("-")
     script = region = None
-    extended = index < len(parts) and len(parts[index]) == 3 and parts[index].isalpha()
-    if index < len(parts) and is_script(parts[index]):
-        script, index = parts[index], index + 1
-    if index < len(parts) and is_region(parts[index]):
-        region = parts[index]
+    extended = bool(rest) and len(rest[0]) == 3 and rest[0].isalpha()
+    if rest and is_script(rest[0]):
+        script = rest.pop(0)
+    if rest and is_region(rest[0]):
+        region = rest[0]
     return language, script, region, extended
 
 
@@ -155,7 +154,7 @@ def _with_likely_script(tag: str) -> str:
     `lzh-Hant-TW`, as CLDR 49 gives `hyw_Armn_AM` and `lzh_Hant_CN`. A tag
     that names a script, or one with no likely script, is returned unchanged.
     """
-    language, script, region, extended = _split(tag)
+    _, script, _, extended = _split(tag)
     if script or extended:
         return tag
     likely = likely_script(tag)

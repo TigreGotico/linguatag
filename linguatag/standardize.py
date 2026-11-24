@@ -41,16 +41,6 @@ def _without_deprecated_language(tag: str) -> str:
     return tag if preferred is None else preferred + sep + rest
 
 
-def _case(index: int, subtag: str, after_singleton: bool) -> str:
-    if index == 0 or after_singleton:
-        return subtag.lower()
-    if len(subtag) == 4 and subtag.isalpha():
-        return subtag.title()
-    if len(subtag) == 2 and subtag.isalpha():
-        return subtag.upper()
-    return subtag.lower()
-
-
 def _fold(tag: str) -> str:
     """BCP-47 case conventions for a string that is not a well-formed tag:
     language and variants lowercase, script titlecase, region uppercase, and
@@ -58,7 +48,14 @@ def _fold(tag: str) -> str:
     out, after_singleton = [], False
     for index, subtag in enumerate(tag.replace("_", "-").split("-")):
         after_singleton = after_singleton or (index > 0 and len(subtag) == 1)
-        out.append(_case(index, subtag, after_singleton))
+        if index == 0 or after_singleton or not subtag.isalpha():
+            out.append(subtag.lower())
+        elif len(subtag) == 4:
+            out.append(subtag.title())
+        elif len(subtag) == 2:
+            out.append(subtag.upper())
+        else:
+            out.append(subtag.lower())
     return "-".join(out)
 
 

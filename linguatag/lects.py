@@ -23,23 +23,19 @@ A request for the standard language scores a dialect of it by its steps plus 1.
 """
 from __future__ import annotations
 
-import json
-from functools import lru_cache
-from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
+from linguatag.bcp47 import load_data
 from linguatag.standardize import standardize_lang
 
 LECT_MODES = ("dialect", "standard")
 
-_LINEAGE = Path(__file__).resolve().parent / "data" / "lineage.json"
 _FAR = 3
 _STANDARD_LAST = _FAR + 1
 
 
-@lru_cache(maxsize=1)
 def _parents() -> Dict[str, str]:
-    return json.loads(_LINEAGE.read_text(encoding="utf-8"))["parents"]
+    return load_data("lineage.json")["parents"]
 
 
 def private_use(tag: str) -> Tuple[str, ...]:
@@ -63,11 +59,12 @@ def _ancestors(tag: str) -> List[str]:
     while len(chain) <= len(parents):
         node = chain[-1]
         if node in parents:
-            chain.append(parents[node])
-        elif without_private_use(node) != node:
-            chain.append(without_private_use(node))
+            parent = parents[node]
         else:
-            break
+            parent = without_private_use(node)
+            if parent == node:
+                break
+        chain.append(parent)
     return [node.lower() for node in chain]
 
 
@@ -88,10 +85,10 @@ def lect_score(desired: str, supported: str, mode: str) -> int:
     wanted, offered = private_use(desired), private_use(supported)
     if wanted == offered:
         return 0
-    steps = lect_steps(desired, supported)
-    near = _FAR if steps is None else min(steps, _FAR)
     if wanted and not offered:
         return _STANDARD_LAST if mode == "dialect" else 1
+    steps = lect_steps(desired, supported)
+    near = _FAR if steps is None else min(steps, _FAR)
     if offered and not wanted:
         return 1 + near
     return near if mode == "dialect" else 1 + near
