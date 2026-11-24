@@ -74,20 +74,20 @@ extlangs, the original primary language subtag is also replaced if there is
 a primary language subtag in the 'Preferred-Value'." So ``ar-apc`` and
 ``apc`` are one tag, and so are ``my-BU`` and ``my-MM``.
 
-A bare ``und`` and a tag of private-use subtags only match the same tag.
-RFC 5646 section 4.1: "The 'und' (Undetermined) primary language subtag
-identifies linguistic content whose language is not determined." UTS #35
-section 4.4 says why ``und`` is not measured as English, which CLDR likely
-subtags make of it: "Part of this is because 'und' has a special function in
-BCP 47; it stands in for 'no supplied base language'." RFC 5646 section
-2.2.1: "The single-character subtag 'x' as the primary subtag indicates that
-the language tag consists solely of subtags whose meaning is defined by
-private agreement", and section 4.6: "Private use subtags have no meaning
-outside the private agreement between the parties that intend to use or
-exchange language tags that employ them." So ``x-clade-abkh1242`` is not
-``und`` and not ``x-foo``, and ``und-x-foo`` is not ``und``. ``und`` with a
-script or a region (``und-Latn``, ``und-US``) keeps the CLDR distance, which
-is 80 or more from every tag of another language.
+A tag whose language is undetermined and that adds only a script or a region
+matches a bare ``und``. RFC 5646 section 4.1: "The 'und' (Undetermined)
+primary language subtag identifies linguistic content whose language is not
+determined." An unknown script or region names no language either, so
+``und-Zzzz`` and ``und-ZZ`` are ``und`` as well. UTS #35 section 4.4 says why
+``und`` is not measured as English, which CLDR likely subtags make of it:
+"Part of this is because 'und' has a special function in BCP 47; it stands in
+for 'no supplied base language'." RFC 5646 section 2.2.1: "The
+single-character subtag 'x' as the primary subtag indicates that the language
+tag consists solely of subtags whose meaning is defined by private agreement",
+and section 4.6: "Private use subtags have no meaning outside the private
+agreement between the parties that intend to use or exchange language tags
+that employ them." So ``x-clade-abkh1242`` is not ``und`` and not ``x-foo``,
+and ``und-x-foo`` is not ``und``. Surrounding whitespace is ignored.
 
 Standardization, default regions and likely scripts come from
 :mod:`linguatag.bcp47`, and the distance from :mod:`linguatag.distance`.
@@ -99,7 +99,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Optional, Sequence
 
-from linguatag.bcp47 import LanguageTagError, is_region, maximize, parse
+from linguatag.bcp47 import LanguageTagError, is_region, is_script, maximize, parse
 from linguatag.distance import is_paradigm, tag_distance
 from linguatag.lects import lect_score, without_private_use
 from linguatag.regions import _with_likely_script, with_default_region
@@ -214,8 +214,9 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     measured as its longest well-formed prefix: ``zh-HK-HiuMaanNeural`` as
     ``zh-HK``. A tag with an empty subtag (``ar-``, ``ar_``, ``-ar``,
     ``en--US``) is not a language tag, and it is no usable match for any tag.
-    A bare ``und`` (``und-x-foo`` included) and a private-use-only tag
-    (``x-foo``) are no usable match for any tag but themselves.
+    A tag that adds only a script or region to ``und`` matches a bare ``und``.
+    ``und-x-foo`` and a private-use-only tag (``x-foo``) are no usable match
+    for any tag but themselves. Surrounding whitespace is ignored.
 
     The distance is the CLDR 49 matching distance of UTS #35 section 4.4
     (:func:`linguatag.distance.tag_distance`).
@@ -247,6 +248,21 @@ def _has_empty_subtag(tag: str) -> bool:
     return "" in tag.split("-")
 
 
+def _und_without_location(tag: str) -> str:
+    """Bare ``und`` when *tag* adds only a script or region to an undetermined language.
+
+    A private-use subtag still carries meaning agreed between the parties, so
+    ``und-x-foo`` keeps its own identity. Extensions, variants and other
+    subtags also change the identity of a tag, so they are kept.
+    """
+    parts = tag.split("-")
+    if parts[0].lower() != "und":
+        return tag
+    if not all(is_script(part) or is_region(part) for part in parts[1:]):
+        return tag
+    return "und"
+
+
 @lru_cache(maxsize=8192)
 def _with_region_and_script(tag: str) -> str:
     """``tag`` with its default region and its likely script: the form that is measured."""
@@ -254,13 +270,16 @@ def _with_region_and_script(tag: str) -> str:
 
 
 def _language_distance(desired: str, supported: str) -> int:
-    a, b = standardize_lang(desired), standardize_lang(supported)
+    a, b = standardize_lang(desired.strip()), standardize_lang(supported.strip())
     # BCP 47 subtags are 1 to 8 characters long: a leading, trailing or
     # doubled separator makes a tag that names no language.
     if _has_empty_subtag(a) or _has_empty_subtag(b):
         return _DIFFERENT_LANGUAGE_DISTANCE
     a = _as_world_arabic(_parseable_prefix(a))
     b = _as_world_arabic(_parseable_prefix(b))
+    if a.lower() == b.lower():
+        return 0
+    a, b = _und_without_location(a), _und_without_location(b)
     if a.lower() == b.lower():
         return 0
     # A bare und and a private-use-only tag name no language (module docstring).

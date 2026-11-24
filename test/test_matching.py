@@ -301,34 +301,57 @@ def test_lang_distance_is_symmetric_enough_for_identity():
 # "Private use subtags have no meaning outside the private agreement between the
 # parties that intend to use or exchange language tags that employ them."
 _NO_LANGUAGE = ["und", "und-x-foo", "x-foo", "x-clade-abkh1242"]
+_UND_WITH_LOCATION = ["und-US", "und-Latn", "und-Latn-US", "und-ZZ", "und-Zzzz", "und-PT"]
+# The exact set of tags that become a bare ``und``. Stated here, not derived
+# from the code under test, so the test pins the rule independently.
+_COLLAPSES_TO_UND = {
+    "und", "und-us", "und-latn", "und-latn-us", "und-zz", "und-zzzz", "und-pt"}
 
 
-@pytest.mark.parametrize("tag", _NO_LANGUAGE)
-@pytest.mark.parametrize("other", _NO_LANGUAGE + [
-    "und-x-bar", "und-US", "und-Latn", "und-Latn-US", "x-bar", "x-clade", "en", "en-US",
+@pytest.mark.parametrize("tag", _NO_LANGUAGE + _UND_WITH_LOCATION)
+@pytest.mark.parametrize("other", _NO_LANGUAGE + _UND_WITH_LOCATION + [
+    "und-x-bar", "x-bar", "x-clade", "en", "en-US",
     "pt", "ab", "zxx", "mul", "qaa", "i-enochian"])
-def test_a_tag_that_names_no_language_matches_only_itself(tag, other):
-    expected = 0 if tag == other else 100
+def test_a_tag_that_names_no_language_matches_only_another_no_language_tag(tag, other):
+    same = tag.lower() == other.lower() or (
+        tag.lower() in _COLLAPSES_TO_UND and other.lower() in _COLLAPSES_TO_UND)
+    expected = 0 if same else 100
     assert lang_distance(tag, other) == expected
     assert lang_distance(other, tag) == expected
     assert lang_distance(tag, other, lects="dialect") == expected
 
 
-def test_closest_lang_finds_nothing_for_und_or_a_private_use_tag():
+def test_closest_lang_finds_nothing_for_a_private_use_tag():
     available = ["pt", "en", "x-clade-abkh1242", "ab", "und-US", "und-x-foo"]
-    assert closest_lang("und", available) is None
-    assert closest_lang("und-US", ["x-clade-abkh1242", "x-foo", "und", "en-US"]) is None
+    assert closest_lang("und", available) == "und-US"
     assert closest_lang("x-foo", available) is None
     assert closest_lang("x-CLADE-abkh1242", ["und", "x-foo", "x-clade-abkh1242"]) \
         == "x-clade-abkh1242"
-    assert closest_lang("und", ["en", "und"]) == "und"
 
 
-def test_und_with_a_script_or_a_region_keeps_its_cldr_distance():
-    # Values of linguatag 0.4.0a1, before the bare-und rule.
-    assert lang_distance("und-Latn", "en") == 84
-    assert lang_distance("und-Latn-US", "en") == 84
-    assert lang_distance("und-US", "und-Latn") == 54
+@pytest.mark.parametrize("tag", ["und-US", "und-ZZ", "und-Zzzz", " und ", "UND"])
+def test_every_spelling_of_und_finds_a_bare_und(tag):
+    assert closest_lang(tag, ["en-US", "pt-PT", "x-clade-abkh1242", "und"]) == "und"
+
+
+def test_und_with_a_script_or_a_region_keeps_its_distance_from_languages():
+    assert lang_distance("und-Latn", "en") == 100
+    assert lang_distance("und-Latn-US", "en") == 100
+    assert lang_distance("und-US", "und-Latn") == 0
+
+
+# RFC 5646 section 2.1: an extension (singleton ``u``, ``t`` or ``a``), a
+# variant or a private-use subtag is not a script or a region. Each keeps the
+# distance that the base gives it.
+@pytest.mark.parametrize("tag", [
+    "und-u-co-phonebk", "und-t-en", "und-1995", "und-a-foo",
+    "und-lvx-foo", "und-abcde"])
+def test_an_extension_or_variant_stays_distinct_from_a_bare_und(tag):
+    assert lang_distance(tag, "und") == 100
+    assert lang_distance("und", tag) == 100
+    assert lang_distance(tag, "en") == 134
+    assert lang_distance("en", tag) == 134
+    assert closest_lang(tag, ["und", "en"]) is None
 
 
 def test_lang_distance_regional_versus_different_language():
