@@ -4,7 +4,7 @@
 covers: the default region and the likely script of a bare tag, and the CLDR maximize call.
 source: linguatag/regions.py:default_region, linguatag/regions.py:OVERRIDES, linguatag/regions.py:likely_script, linguatag/bcp47.py:maximize, linguatag/data/likely_subtags.json
 generated: no
-verify: `.venv/bin/python -c "import re,sys,subprocess as s;t=open(sys.argv[1]).read();b=re.findall(r'\x60{3}python\n(.*?)\x60{3}',t,re.S);w=[l.split('# ',1)[1].strip() for c in b for l in c.splitlines() if l.strip().startswith('print(') and '# ' in l];g=[x.strip() for c in b for x in s.run([sys.executable,'-I','-c',c],capture_output=True,text=True).stdout.splitlines()];print('OK',len(w)) if g==w else sys.exit('MISMATCH '+repr([p for p in zip(w,g) if p[0]!=p[1]] or (len(w),len(g))))" docs/likely-subtags.md`
+verify: python scripts/check_doc_page.py docs/likely-subtags.md
 see: matching.md, data-and-licence.md
 -->
 
@@ -22,6 +22,8 @@ print(default_region("pt-BR"))     # BR
 print(default_region("zh-Hant"))   # TW
 print(default_region("ar"))        # 001
 print(default_region("und"))       # None
+print(default_region("en--US"))    # None
+print(default_region("zh-HK-HiuMaanNeural"))  # None
 
 print(with_default_region("en"))            # en-GB
 print(with_default_region("en_us"))         # en-US
@@ -69,6 +71,7 @@ print(likely_script("yue"))     # Hans
 print(likely_script("hyw"))     # Armn
 print(likely_script("mey-SN"))  # Latn
 print(likely_script("zzz"))     # None
+print(likely_script("en-Latn-"))  # None
 ```
 
 `likely_script` returns the script subtag of a tag when it has one. Otherwise it returns the script that CLDR 49 likely subtags give for the language in its region. A bare tag takes its default region first, so `yue` becomes `yue-CN`, and that gives `Hans`. The result is `None` for `und`, for a language that CLDR does not know, and for a string that is not a language tag, such as `en-Latn-`.
