@@ -158,8 +158,6 @@ _ARABIC_FALLBACK_DISTANCE = 5
 # Literary Chinese (`lzh`) has no speakers and is not in the set.
 _NOT_MANDARIN = frozenset(
     "cdo cjy cnp cpx csp czh czo gan hak hnm hsn luh mnp nan sjc wuu yue".split())
-_MANDARIN = "cmn"
-_CHINESE = "zh"
 _DIFFERENT_LANGUAGE_DISTANCE = 100
 
 
@@ -191,8 +189,7 @@ def _sinitic_against_mandarin(a: str, b: str) -> bool:
     languages = {a.split("-")[0].lower(): a, b.split("-")[0].lower(): b}
     if _NOT_MANDARIN.isdisjoint(languages):
         return False
-    return _MANDARIN in languages or (_CHINESE in languages
-                                      and _is_simplified(languages[_CHINESE]))
+    return "cmn" in languages or ("zh" in languages and _is_simplified(languages["zh"]))
 
 
 def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int:
@@ -250,6 +247,12 @@ def _has_empty_subtag(tag: str) -> bool:
     return "" in tag.split("-")
 
 
+@lru_cache(maxsize=8192)
+def _with_region_and_script(tag: str) -> str:
+    """``tag`` with its default region and its likely script: the form that is measured."""
+    return _with_likely_script(with_default_region(tag))
+
+
 def _language_distance(desired: str, supported: str) -> int:
     a, b = standardize_lang(desired), standardize_lang(supported)
     # BCP 47 subtags are 1 to 8 characters long: a leading, trailing or
@@ -265,20 +268,20 @@ def _language_distance(desired: str, supported: str) -> int:
            for tag in (a, b)):
         return _DIFFERENT_LANGUAGE_DISTANCE
     to_msa = without_private_use(b).lower() in _MSA
-    a = _with_likely_script(with_default_region(a))
-    b = _with_likely_script(with_default_region(b))
+    a, b = _with_region_and_script(a), _with_region_and_script(b)
     if a.lower() == b.lower():
         return 0
     distance = tag_distance(a, b)
     if _sinitic_against_mandarin(a, b):
         distance = max(distance, _DIFFERENT_LANGUAGE_DISTANCE)
     language = a.split("-")[0].lower()
-    scripts = [t.lower() for t in without_private_use(a).split("-")[1:]
-               if len(t) == 4 and t.isalpha()]
-    if not scripts:
-        scripts = ["latn"] if language in _LATIN_SCRIPT_ARABIC else ["arab"]
-    if to_msa and language in _ARABIC_VARIETIES and scripts == ["arab"]:
-        distance = min(distance, _ARABIC_FALLBACK_DISTANCE)
+    if to_msa and language in _ARABIC_VARIETIES:
+        scripts = [t.lower() for t in without_private_use(a).split("-")[1:]
+                   if len(t) == 4 and t.isalpha()]
+        if not scripts:
+            scripts = ["latn"] if language in _LATIN_SCRIPT_ARABIC else ["arab"]
+        if scripts == ["arab"]:
+            distance = min(distance, _ARABIC_FALLBACK_DISTANCE)
     return distance
 
 
@@ -408,11 +411,12 @@ def closest_lang(target: str, available: Sequence[str],
         distance = lang_distance(target, candidate)
         if distance > max_distance:
             continue
+        standard = standardize_lang(candidate)
         rank = (distance if lects is None else lang_distance(target, candidate, lects),
-                standardize_lang(candidate).casefold() != wanted,
+                standard.casefold() != wanted,
                 _is_other_code_of_language(target, candidate),
                 _has_noncanonical_subtag(candidate),
-                not is_paradigm(_parseable_prefix(standardize_lang(candidate))))
+                not is_paradigm(_parseable_prefix(standard)))
         if best_rank is None or rank < best_rank:
             best, best_rank = candidate, rank
     return best
