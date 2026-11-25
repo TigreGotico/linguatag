@@ -1,8 +1,8 @@
 # Changelog
 
-## [0.4.5a1](https://github.com/TigreGotico/linguatag/tree/0.4.5a1) (2026-11-25)
+## [0.5.0a1](https://github.com/TigreGotico/linguatag/tree/0.5.0a1) (2026-11-25)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a4...0.4.5a1)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a4...0.5.0a1)
 
 **Merged pull requests:**
 
