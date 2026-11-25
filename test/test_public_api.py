@@ -20,4 +20,9 @@ def test_parse_tag_refuses_a_malformed_tag():
 
 
 def test_the_parser_names_are_exported():
-    assert {"parse_tag", "LanguageTag", "LanguageTagError"} <= set(linguatag.__all__)
+    assert {"parse_tag", "LanguageTag", "LanguageTagError", "maximize"} <= set(linguatag.__all__)
+
+
+def test_maximize_adds_the_cldr_likely_subtags():
+    assert str(linguatag.maximize("zh-TW")) == "zh-Hant-TW"
+    assert linguatag.maximize("und") is None

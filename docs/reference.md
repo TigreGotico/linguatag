@@ -8,7 +8,7 @@ verify: python scripts/check_doc_page.py docs/reference.md
 see: getting-started.md, matching.md
 -->
 
-This page gives the signature and one example for each of the 25 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
+This page gives the signature and one example for each of the 26 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
 
 ## Normalise a tag
 
@@ -64,6 +64,16 @@ from linguatag import OVERRIDES
 
 print(sorted(OVERRIDES))           # ['ar', 'en', 'pt', 'ur', 'yue']
 print(OVERRIDES["pt"])             # ('Latn', 'PT')
+```
+
+`maximize(tag: str) -> Optional[LanguageTag]` adds the likely subtags of CLDR 49 (UTS #35 section 4.3) with no overrides, so `en` gives `US`, not the default region `GB`. It returns `None` for `und` and for a language with no CLDR entry.
+
+```python
+from linguatag import maximize
+
+print(maximize("zh-TW"))   # zh-Hant-TW
+print(maximize("en"))      # en-Latn-US
+print(maximize("und"))     # None
 ```
 
 ## Measure and pick
@@ -128,7 +138,7 @@ print(is_arabic_variety("ur"))       # False
 | Names | Page |
 | --- | --- |
 | `standardize_lang`, `parse_tag`, `LanguageTag`, `LanguageTagError` | [Parsing and normalising tags](parsing.md) |
-| `default_region`, `with_default_region`, `likely_script`, `OVERRIDES` | [Likely subtags and default regions](likely-subtags.md) |
+| `default_region`, `with_default_region`, `likely_script`, `maximize`, `OVERRIDES` | [Likely subtags and default regions](likely-subtags.md) |
 | `lang_distance`, `lang_matches`, `closest_lang`, `DEFAULT_MAX_LANGUAGE_DISTANCE` | [Matching](matching.md) |
 | `is_arabic_variety` | [Getting started](getting-started.md#tell-whether-a-tag-names-arabic) |
 | `LECT_MODES`, `lect_steps` | [Dialects](dialects.md) |
