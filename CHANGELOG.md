@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.4.4a1](https://github.com/TigreGotico/linguatag/tree/0.4.4a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a4...0.4.4a1)
+
+**Merged pull requests:**
+
+- fix: return a read-only view of package data [\#65](https://github.com/TigreGotico/linguatag/pull/65) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: match every spelling of und as a bare und [\#64](https://github.com/TigreGotico/linguatag/pull/64) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- perf: parse the tag once in likely\_script [\#62](https://github.com/TigreGotico/linguatag/pull/62) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.2a4](https://github.com/TigreGotico/linguatag/tree/0.4.2a4) (2026-11-24)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a3...0.4.2a4)
