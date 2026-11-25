@@ -112,7 +112,8 @@ def genealogy_families() -> str:
     rows = [(name, count, COLOURS[0]) for name, count in shown]
     rows.append((f"{len(rest)} other families", sum(count for _, count in rest), COLOURS[1]))
     rows.append(("no family", unclassified, COLOURS[2]))
-    left, unit, top, row_height = 230, 0.25, 20, 30
+    left, top, row_height = 230, 20, 30
+    unit = (720 - left - 70) / max(count for _, count, _ in rows)
     height = top + row_height * len(rows) + 12
     body = []
     for index, (name, count, colour) in enumerate(rows):
