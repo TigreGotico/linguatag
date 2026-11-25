@@ -1,8 +1,20 @@
 # Changelog
 
+## [0.5.1a1](https://github.com/TigreGotico/linguatag/tree/0.5.1a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.5.0a1...0.5.1a1)
+
+**Merged pull requests:**
+
+- fix\(lineage\): read a bare tag's default-region node [\#89](https://github.com/TigreGotico/linguatag/pull/89) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.5.0a1](https://github.com/TigreGotico/linguatag/tree/0.5.0a1) (2026-11-25)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a4...0.5.0a1)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.5a1...0.5.0a1)
+
+## [0.4.5a1](https://github.com/TigreGotico/linguatag/tree/0.4.5a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a4...0.4.5a1)
 
 **Merged pull requests:**
 
