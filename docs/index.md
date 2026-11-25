@@ -17,6 +17,7 @@ This index lists the linguatag docs pages in reading order. linguatag reads BCP 
 | [Likely subtags and default regions](likely-subtags.md) | `likely_script`, `default_region`, `with_default_region`, `OVERRIDES` and `maximize` |
 | [Matching](matching.md) | `lang_distance`, `closest_lang` and `lang_matches`, the steps of a match, the distance ladder, the `max_distance` argument, ties, `und` and private-use tags, Arabic and Chinese rules |
 | [Dialects](dialects.md) | The `lects` argument, `lect_steps` and the lect tree in `lineage.json` |
+| [Genealogy, place and time](genealogy.md) | `parent`, `ancestors`, `family`, `ancestry_similarity`, `geographic_distance`, `temporal_distance` and `script_distance_by_name`, with the data files that they read |
 | [Data and licence](data-and-licence.md) | The CLDR 49 and IANA data files with their sizes, the scripts that write them, and their licences |
 | [Performance](performance.md) | What the import and the first call cost, what a warm call costs, and how to measure both |
 | [Reference](reference.md) | The signature and one example of each name in `__all__` |

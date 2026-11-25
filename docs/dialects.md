@@ -60,4 +60,4 @@ The lect score never raises a distance that is 10 or less to a value above 10. S
 `linguatag/data/lineage.json` holds the tree. It is the part of the orthography2ipa spec tree that the lects need: each spec code with a private-use subtag, and its ancestors up to 4 levels above it. Its `source` field names the orthography2ipa commit that it comes from. [Data and licence](data-and-licence.md) shows how to rebuild it.
 
 ---
-[Index](index.md) · [← Matching](matching.md) · [Data and licence →](data-and-licence.md)
+[Index](index.md) · [← Matching](matching.md) · [Genealogy, place and time →](genealogy.md)
