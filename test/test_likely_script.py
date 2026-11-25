@@ -38,6 +38,21 @@ def test_a_bare_tag_takes_its_default_region_first():
     assert likely_script("yue") == likely_script("yue-CN") == "Hans"
 
 
+def test_likely_script_parses_its_tag_once(monkeypatch):
+    from linguatag import regions
+
+    calls = []
+    parse = regions.parse
+
+    def counting_parse(tag):
+        calls.append(tag)
+        return parse(tag)
+
+    monkeypatch.setattr(regions, "parse", counting_parse)
+    assert regions.likely_script("pt") == "Latn"
+    assert calls == ["pt"]
+
+
 def test_western_armenian_is_in_armenian_script():
     # CLDR 49: <likelySubtag from="hyw" to="hyw_Armn_AM" origin="sil1"/>; langcodes 3.5.1 gives Latn.
     assert likely_script("hyw") == "Armn"
