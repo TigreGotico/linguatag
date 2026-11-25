@@ -47,6 +47,7 @@ linguatag needs Python 3.11 or later and has no dependencies. The `langcodes` ex
 | [Likely subtags and default regions](docs/likely-subtags.md) | `likely_script`, `default_region`, `with_default_region` and `maximize` |
 | [Matching](docs/matching.md) | `lang_distance`, `closest_lang`, `lang_matches`, `max_distance`, `und` and private-use tags |
 | [Dialects](docs/dialects.md) | The `lects` argument for tags with a private-use dialect subtag |
+| [Genealogy, place and time](docs/genealogy.md) | `parent`, `ancestors`, `family` and the distance of two languages or two scripts |
 | [Data and licence](docs/data-and-licence.md) | The CLDR 49 and IANA data files, and how to regenerate them |
 | [Performance](docs/performance.md) | The cost of the first call and of a warm call |
 | [Reference](docs/reference.md) | The signature and one example of each public name |

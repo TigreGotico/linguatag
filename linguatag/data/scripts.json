@@ -1,0 +1,27 @@
+{
+"source": "TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5",
+"scripts": {
+"Latin": {"type": "alphabet", "directionality": "LTR", "has_case": true, "vowel_marking": "full", "unicode_block": "Basic Latin", "ancestor_scripts": ["Etruscan", "Greek", "Phoenician"]},
+"Cyrillic": {"type": "alphabet", "directionality": "LTR", "has_case": true, "vowel_marking": "full", "unicode_block": "Cyrillic", "ancestor_scripts": ["Greek", "Phoenician"]},
+"Greek": {"type": "alphabet", "directionality": "LTR", "has_case": true, "vowel_marking": "full", "unicode_block": "Greek", "ancestor_scripts": ["Phoenician"]},
+"Armenian": {"type": "alphabet", "directionality": "LTR", "has_case": true, "vowel_marking": "full", "unicode_block": "Armenian", "ancestor_scripts": ["Greek", "Phoenician"]},
+"Georgian": {"type": "alphabet", "directionality": "LTR", "has_case": false, "vowel_marking": "full", "unicode_block": "Georgian", "ancestor_scripts": ["Greek", "Phoenician"]},
+"Arabic": {"type": "abjad", "directionality": "RTL", "has_case": false, "vowel_marking": "partial", "unicode_block": "Arabic", "ancestor_scripts": ["Nabataean", "Aramaic", "Phoenician"]},
+"Hebrew": {"type": "abjad", "directionality": "RTL", "has_case": false, "vowel_marking": "partial", "unicode_block": "Hebrew", "ancestor_scripts": ["Aramaic", "Phoenician"]},
+"Devanagari": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Devanagari", "ancestor_scripts": ["Brahmi"]},
+"Bengali": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Bengali", "ancestor_scripts": ["Brahmi"]},
+"Tamil": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Tamil", "ancestor_scripts": ["Brahmi"]},
+"Telugu": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Telugu", "ancestor_scripts": ["Brahmi"]},
+"Kannada": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Kannada", "ancestor_scripts": ["Brahmi"]},
+"Gurmukhi": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Gurmukhi", "ancestor_scripts": ["Brahmi"]},
+"Thai": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Thai", "ancestor_scripts": ["Brahmi"]},
+"Tibetan": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Tibetan", "ancestor_scripts": ["Brahmi"]},
+"Ethiopic": {"type": "abugida", "directionality": "LTR", "has_case": false, "vowel_marking": "inherent", "unicode_block": "Ethiopic", "ancestor_scripts": ["South Arabian"]},
+"Hangul": {"type": "featural", "directionality": "LTR", "has_case": false, "vowel_marking": "full", "unicode_block": "Hangul", "ancestor_scripts": []},
+"Hanzi": {"type": "logographic", "directionality": "LTR", "has_case": false, "vowel_marking": "none", "unicode_block": "CJK Unified", "ancestor_scripts": []},
+"Kana": {"type": "syllabary", "directionality": "LTR", "has_case": false, "vowel_marking": "full", "unicode_block": "Hiragana", "ancestor_scripts": []},
+"Cherokee": {"type": "syllabary", "directionality": "LTR", "has_case": false, "vowel_marking": "full", "unicode_block": "Cherokee", "ancestor_scripts": []},
+"IPA-reconstruction": {"type": "reconstruction", "directionality": "LTR", "has_case": false, "vowel_marking": "full", "unicode_block": "IPA Extensions", "ancestor_scripts": []}
+},
+"type_distances": [["alphabet", "abjad", 0.3], ["alphabet", "abugida", 0.4], ["alphabet", "syllabary", 0.5], ["alphabet", "featural", 0.3], ["alphabet", "logographic", 0.9], ["alphabet", "mixed", 0.7], ["abjad", "abugida", 0.4], ["abjad", "syllabary", 0.6], ["abjad", "featural", 0.5], ["abjad", "logographic", 0.9], ["abjad", "mixed", 0.7], ["abugida", "syllabary", 0.4], ["abugida", "featural", 0.5], ["abugida", "logographic", 0.8], ["abugida", "mixed", 0.6], ["syllabary", "featural", 0.5], ["syllabary", "logographic", 0.7], ["syllabary", "mixed", 0.4], ["featural", "logographic", 0.8], ["featural", "mixed", 0.6], ["logographic", "mixed", 0.3], ["reconstruction", "alphabet", 0.1], ["reconstruction", "abjad", 0.3], ["reconstruction", "abugida", 0.3], ["reconstruction", "syllabary", 0.5], ["reconstruction", "featural", 0.3], ["reconstruction", "logographic", 0.8], ["reconstruction", "mixed", 0.6]]
+}

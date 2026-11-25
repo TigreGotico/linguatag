@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: the signature, the return value and one example of each name in linguatag.__all__
-source: linguatag/__init__.py:__all__, linguatag/standardize.py, linguatag/regions.py, linguatag/matching.py, linguatag/lects.py
+source: linguatag/__init__.py:__all__, linguatag/standardize.py, linguatag/regions.py, linguatag/matching.py, linguatag/lects.py, linguatag/lineage.py, linguatag/writing_systems.py
 generated: no
 verify: python scripts/check_doc_page.py docs/reference.md
 see: getting-started.md, matching.md
@@ -82,6 +82,20 @@ print(lect_steps("pt-x-central", "pt-x-minhoto"))  # 2
 print(lect_steps("pt", "en"))                      # None
 ```
 
+## Genealogy, place and time
+
+`parent(tag: str) -> Optional[str]` gives the genealogical parent. `ancestors(tag: str) -> List[str]` gives the chain of parents, nearest first. `family(tag: str) -> str` and `family_path(tag: str) -> Tuple[str, ...]` give the family as text and as clade names.
+
+`ancestry_similarity(a, b, max_depth=10, temporal_decay=False, decay_halflife=1000.0) -> float`, `geographic_distance(a, b, normalize=True) -> Optional[float]` and `temporal_distance(a, b, reference_year=2025) -> Optional[float]` measure two tags. `script_features(name) -> dict`, `script_distance(a: dict, b: dict) -> float` and `script_distance_by_name(a: str, b: str) -> float` compare writing systems.
+
+```python
+from linguatag import ancestors, script_distance_by_name, temporal_distance
+
+print(ancestors("pt-PT-x-porto")[0])                    # pt-PT
+print(round(script_distance_by_name("Latin", "Greek"), 4))  # 0.1667
+print(temporal_distance("la", "qqq"))                   # None
+```
+
 ## Ask about Arabic
 
 `is_arabic_variety(tag: str) -> bool` tells whether the language subtag of the tag is Arabic or a variety of it. Script and region do not count.
@@ -102,6 +116,7 @@ print(is_arabic_variety("ur"))       # False
 | `lang_distance`, `lang_matches`, `closest_lang`, `DEFAULT_MAX_LANGUAGE_DISTANCE` | [Matching](matching.md) |
 | `is_arabic_variety` | [Getting started](getting-started.md#tell-whether-a-tag-names-arabic) |
 | `LECT_MODES`, `lect_steps` | [Dialects](dialects.md) |
+| `parent`, `ancestors`, `family`, `family_path`, `ancestry_similarity`, `geographic_distance`, `temporal_distance`, `script_features`, `script_distance`, `script_distance_by_name` | [Genealogy, place and time](genealogy.md) |
 
 ---
 [Index](index.md) · [← Performance](performance.md)
