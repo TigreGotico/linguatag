@@ -15,7 +15,9 @@ field:
   that canonicalization reads: `Deprecated`, `Preferred-Value`, `Prefix`,
   `Suppress-Script` and `Macrolanguage`. A subtag that is in the file is
   valid; a subtag with `deprecated` is deprecated; `preferred` is the value
-  that replaces it (RFC 5646 section 4.5).
+  that replaces it (RFC 5646 section 4.5). The language records are in
+  `language_subtags.json`, apart from the rest, as most callers read none of
+  them.
 - `language_matching.json`: the `written-new` language matching data of the
   CLDR `supplemental/languageMatching.json`: the paradigm locales, the match
   variables and the `languageMatch` rules, in their order. UTS #35 section
@@ -123,9 +125,11 @@ def subtags(text: str) -> None:
         payload.setdefault(kind, {})[key] = fields
     for kind in list(payload)[1:]:
         payload[kind] = dict(sorted(payload[kind].items()))
+    languages = {"source": payload["source"], "language": payload.pop("language")}
     write("subtags.json", payload)
-    print(f"registry: {len(entries)} records in, "
-          f"{sum(len(v) for k, v in payload.items() if k != 'source')} out", file=sys.stderr)
+    write("language_subtags.json", languages)
+    written = sum(len(v) for k, v in {**payload, **languages}.items() if k != "source")
+    print(f"registry: {len(entries)} records in, {written} out", file=sys.stderr)
 
 
 def language_matching(text: str) -> None:

@@ -111,6 +111,20 @@ def _freeze(value: object) -> object:
 
 
 @lru_cache(maxsize=None)
+def _raw_data(name: str) -> dict:
+    """The parsed JSON file ``name``, shared and not frozen. Code of this
+    package reads it and never changes it; freezing costs more than the
+    read."""
+    return json.loads((_DATA / name).read_text(encoding="utf-8"))
+
+
+def _raw_registry(kind: str) -> Dict[str, dict]:
+    """The records of ``kind``. The language records are a file of their own,
+    as most callers read no language record."""
+    return _raw_data("language_subtags.json" if kind == "language" else "subtags.json").get(kind, {})
+
+
+@lru_cache(maxsize=None)
 def load_data(name: str) -> dict:
     """A read-only view of the JSON file ``name`` of ``linguatag/data``.
 
@@ -118,20 +132,22 @@ def load_data(name: str) -> dict:
     changing a returned mapping or sequence. It stays a dict, so JSON, copy
     and pickle work; JSON arrays are tuples.
     """
-    return _freeze(json.loads((_DATA / name).read_text(encoding="utf-8")))
+    return _freeze(_raw_data(name))
 
 
+@lru_cache(maxsize=None)
 def registry(kind: str) -> Dict[str, dict]:
     """The IANA registry records of ``kind`` (``language``, ``extlang``,
-    ``script``, ``region``, ``variant``, ``grandfathered``, ``redundant``)."""
-    return load_data("subtags.json").get(kind, {})
+    ``script``, ``region``, ``variant``, ``grandfathered``, ``redundant``),
+    as a read-only view like :func:`load_data`."""
+    return _freeze(_raw_registry(kind))
 
 
 @lru_cache(maxsize=1)
 def _whole_tags() -> Dict[str, Optional[str]]:
     """Grandfathered and redundant tags, lowercase, to their IANA
     Preferred-Value or ``None``."""
-    tags = {**registry("grandfathered"), **registry("redundant")}
+    tags = {**_raw_registry("grandfathered"), **_raw_registry("redundant")}
     return {tag.lower(): record.get("preferred") for tag, record in tags.items()}
 
 
@@ -140,7 +156,7 @@ def _irregular() -> FrozenSet[str]:
     """The grandfathered tags, which are read whole (RFC 5646 section 2.1:
     "The only exceptions to this ability to infer meaning from subtag
     structure are the grandfathered tags")."""
-    return frozenset(tag.lower() for tag in registry("grandfathered"))
+    return frozenset(tag.lower() for tag in _raw_registry("grandfathered"))
 
 
 def _alphanum(subtag: str, low: int, high: int) -> bool:
@@ -298,7 +314,7 @@ def _alias_table(macrolanguage: bool) -> Tuple[Dict[str, str], Dict[str, str]]:
     The CLDR rules come first and the IANA Preferred-Values over them, so a
     deprecated subtag takes the value RFC 5646 section 4.5 names: `drh` is
     `khk`, where CLDR goes on to the macrolanguage, `mn`."""
-    aliases = load_data("aliases.json")
+    aliases = _raw_data("aliases.json")
     rules: Dict[str, str] = {}
     legacy: Dict[str, str] = {}
     for kind, prefix in _ALIAS_KINDS:
@@ -317,7 +333,7 @@ def _alias_table(macrolanguage: bool) -> Tuple[Dict[str, str], Dict[str, str]]:
             elif kind == "language":
                 legacy[type_] = replacement
     for kind, prefix in _ALIAS_KINDS:
-        for subtag, record in registry(kind).items():
+        for subtag, record in _raw_registry(kind).items():
             if "preferred" in record and ".." not in subtag:
                 rules[(prefix + subtag).lower()] = prefix + record["preferred"]
     for tag, preferred in _whole_tags().items():
@@ -351,7 +367,52 @@ def _rules(macrolanguage: bool) -> Tuple[List[_Rule], Dict[str, List[int]]]:
     return rules, index
 
 
+def _fields(tag: LanguageTag) -> List[Tuple[str, str]]:
+    """The ``(field, lowercase subtag)`` pairs of ``tag`` in rule order: a
+    rule is indexed under the first of them."""
+    pairs = [("language", tag.language), ("script", tag.script), ("region", tag.region)]
+    pairs += [("variant", variant) for variant in sorted(tag.variants)]
+    return [(field, subtag.lower()) for field, subtag in pairs if subtag]
+
+
+@lru_cache(maxsize=1)
+def _alias_keys() -> Tuple[FrozenSet[Tuple[str, str]], FrozenSet[str]]:
+    """``(keys, wholes)``: every field and subtag that a rule of either
+    :func:`_rules` table is indexed under, and every lowercase tag that a
+    legacy replacement of either :func:`_alias_table` can match whole. Both
+    are read from the data without building the tables, and may hold more
+    than the tables do, never less. The IANA Preferred-Values add no key: each
+    subtag that has one is a CLDR alias type too."""
+    aliases = _raw_data("aliases.json")
+    replaced = [tag for tag, preferred in _whole_tags().items() if preferred]
+    keys = set()
+    wholes = set(replaced)
+    for kind, prefix in _ALIAS_KINDS:
+        for type_ in aliases[kind]:
+            if "-" not in type_:
+                keys.add((kind, type_.lower()))
+                continue
+            wholes.add((prefix + type_).lower())
+            tag = _language_id((prefix + type_).lower())
+            if tag is not None:
+                keys.add(_fields(tag)[0])
+    keys.update(_fields(tag)[0] for tag in map(_language_id, replaced) if tag is not None)
+    return frozenset(keys), frozenset(wholes)
+
+
+def _has_no_alias(tag: LanguageTag) -> bool:
+    """Whether no alias rule can replace any subtag of ``tag``, so that
+    canonicalizing it only orders its variants and extensions."""
+    if tag.whole or tag.extlangs or tag.language is None:
+        return False
+    keys, wholes = _alias_keys()
+    return str(tag).lower() not in wholes and keys.isdisjoint(_fields(tag))
+
+
 def _canonical(tag: LanguageTag, macrolanguage: bool) -> LanguageTag:
+    if _has_no_alias(tag):
+        return replace(tag, variants=tuple(sorted(set(tag.variants))),
+                       extensions=tuple(sorted(tag.extensions)))
     _, legacy = _alias_table(macrolanguage)
     whole = str(tag).lower()
     if whole in legacy and (not tag.extlangs or whole in _whole_tags()):
@@ -359,7 +420,7 @@ def _canonical(tag: LanguageTag, macrolanguage: bool) -> LanguageTag:
     if tag.whole:
         return tag
     if tag.extlangs:
-        record = registry("extlang").get(tag.extlangs[0], {})
+        record = _raw_registry("extlang").get(tag.extlangs[0], {})
         if tag.language in record.get("prefix", ()) and "preferred" in record:
             tag = replace(tag, language=record["preferred"], extlangs=tag.extlangs[1:])
     rules, index = _rules(macrolanguage)
@@ -409,7 +470,7 @@ def standardize(tag: str) -> str:
     """
     canonical = _canonical(parse(tag), macrolanguage=False)
     if canonical.language and canonical.script:
-        record = registry("language").get(canonical.language, {})
+        record = _raw_registry("language").get(canonical.language, {})
         if record.get("suppress_script") == canonical.script:
             canonical = replace(canonical, script=None)
     return str(canonical)
@@ -419,7 +480,7 @@ def _lookup(tag: LanguageTag) -> Optional[LanguageTag]:
     """The CLDR likely-subtags entry of the first of ``language_script_region``,
     ``language_script``, ``language_region`` and ``language`` that has one
     (UTS #35 section 4.3, "Lookup")."""
-    likely = load_data("likely_subtags.json")["likely"]
+    likely = _raw_data("likely_subtags.json")["likely"]
     language = tag.language or "und"
     for parts in ((language, tag.script, tag.region), (language, tag.script),
                   (language, tag.region), (language,)):

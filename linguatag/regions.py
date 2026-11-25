@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional, Tuple
 
-from linguatag.bcp47 import LanguageTagError, is_region, is_script, load_data, maximize, parse
+from linguatag.bcp47 import LanguageTagError, _raw_data, is_region, is_script, maximize, parse
 from linguatag.standardize import standardize_lang
 
 __all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
@@ -79,7 +79,7 @@ def _default_region(tag: str, *, parsed: bool) -> Optional[str]:
     if extended or language == "und":
         return None
     if script:
-        likely = load_data("likely_subtags.json")["likely"].get(f"{language}-{script}")
+        likely = _raw_data("likely_subtags.json")["likely"].get(f"{language}-{script}")
         if likely is not None:
             return likely.split("-")[-1]
     maximized = maximize(f"{language}-{script}" if script else language)
