@@ -270,7 +270,7 @@ def _with_region_and_script(tag: str) -> str:
 
 
 def _language_distance(desired: str, supported: str) -> int:
-    a, b = standardize_lang(desired.strip()), standardize_lang(supported.strip())
+    a, b = standardize_lang(desired), standardize_lang(supported)
     # BCP 47 subtags are 1 to 8 characters long: a leading, trailing or
     # doubled separator makes a tag that names no language.
     if _has_empty_subtag(a) or _has_empty_subtag(b):
@@ -423,18 +423,20 @@ def closest_lang(target: str, available: Sequence[str],
         The original string from ``available`` that best matches ``target``,
         verbatim, or ``None`` when nothing qualifies.
     """
+    target = target.strip()
     wanted = standardize_lang(target).casefold()
     best: Optional[str] = None
     best_rank: Optional[tuple] = None
     for candidate in available:
-        distance = lang_distance(target, candidate)
+        tag = candidate.strip()
+        distance = lang_distance(target, tag)
         if distance > max_distance:
             continue
-        standard = standardize_lang(candidate)
-        rank = (distance if lects is None else lang_distance(target, candidate, lects),
+        standard = standardize_lang(tag)
+        rank = (distance if lects is None else lang_distance(target, tag, lects),
                 standard.casefold() != wanted,
-                _is_other_code_of_language(target, candidate),
-                _has_noncanonical_subtag(candidate),
+                _is_other_code_of_language(target, tag),
+                _has_noncanonical_subtag(tag),
                 not is_paradigm(_parseable_prefix(standard)))
         if best_rank is None or rank < best_rank:
             best, best_rank = candidate, rank

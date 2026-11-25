@@ -5,8 +5,9 @@ from importlib.resources import files
 import pytest
 
 import linguatag.matching as language
-from linguatag import (closest_lang, is_arabic_variety, lang_distance, lang_matches,
-                       standardize_lang)
+from linguatag import (closest_lang, default_region, is_arabic_variety, lang_distance,
+                       lang_matches, lect_steps, likely_script, standardize_lang,
+                       with_default_region)
 
 
 # --- standardize_lang --------------------------------------------------------
@@ -762,3 +763,48 @@ def test_a_tag_with_an_empty_subtag_matches_nothing(malformed):
         assert lang_distance(malformed, tag, lects="standard") > 10
     assert closest_lang(malformed, ["ar", "ar-EG", "arz"]) is None
     assert closest_lang("ar", [malformed]) is None
+
+
+PADDED = [" pt-BR ", "\tpt-BR\n", "pt-BR "]
+
+
+@pytest.mark.parametrize("padded", PADDED)
+@pytest.mark.parametrize("function", [
+    standardize_lang, default_region, with_default_region, likely_script,
+    is_arabic_variety, lambda tag: lang_distance(tag, "pt-BR"),
+    lambda tag: lang_distance("pt-BR", tag), lambda tag: lang_matches(tag, "pt-BR"),
+    lambda tag: lang_distance(tag, "pt-BR", "dialect"),
+    lambda tag: closest_lang(tag, ["pt-PT", "pt-BR"]),
+    lambda tag: lect_steps(tag, "pt-BR")])
+def test_white_space_around_a_tag_is_no_part_of_it(function, padded):
+    assert function(padded) == function("pt-BR")
+
+
+@pytest.mark.parametrize("padded", PADDED)
+def test_closest_lang_returns_the_available_entry_as_given(padded):
+    assert closest_lang("pt-BR", ["pt-PT", padded]) == padded
+
+
+@pytest.mark.parametrize("target,available,expected", [
+    ("apc", [" ajp ", " apc "], " apc "),
+    ("my-MM", ["my-BU\t", "\tmy-MM"], "\tmy-MM"),
+    (" apc ", ["ajp", "apc"], "apc"),
+    ("\tajp\n", ["apc", "ajp"], "ajp"),
+    ("\tmy-BU\n", ["my-MM", "my-BU"], "my-MM")])
+def test_closest_lang_ranks_padded_tags_as_bare_ones(target, available, expected):
+    bare = closest_lang(target.strip(), [tag.strip() for tag in available])
+    assert closest_lang(target, available).strip() == bare == expected.strip()
+
+
+def test_a_bare_tag_gives_the_values_it_gave_before():
+    assert standardize_lang("pt-BR") == "pt-BR"
+    assert default_region("pt-BR") == "BR"
+    assert with_default_region("pt") == "pt-PT"
+    assert likely_script("pt-BR") == "Latn"
+    assert is_arabic_variety("arz-EG")
+    assert lang_distance("pt-BR", "pt-BR") == 0
+    assert closest_lang("pt-BR", ["pt-PT", "pt-BR"]) == "pt-BR"
+
+
+def test_white_space_inside_a_tag_stays_malformed():
+    assert default_region("pt- BR") is None

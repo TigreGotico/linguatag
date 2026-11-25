@@ -110,9 +110,9 @@ def test_an_unknown_language_has_no_region():
 
 
 # RFC 5646 section 2.1: a subtag is 1 to 8 letters and digits, so a leading,
-# trailing or doubled separator, a space or a non-ASCII letter makes no tag.
+# trailing or doubled separator, a space inside a tag or a non-ASCII letter makes no tag.
 @pytest.mark.parametrize("tag", ["", "-en", "_en", "en-", "en_", "en--US", "en__US", "-US", "en-US-",
-                                 "en-a", "en-é", "en ", "zh-HK-HiuMaanNeural"])
+                                 "en-a", "en-é", "e n", "zh-HK-HiuMaanNeural"])
 def test_a_string_that_is_not_a_language_tag_has_no_region(tag):
     assert default_region(tag) is None
 
