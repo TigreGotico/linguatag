@@ -101,22 +101,23 @@ print(closest_lang("fr", ["fr", "fra"]))  # fr
 
 ## und and private-use tags
 
-A bare `und` names no language (RFC 5646 section 4.1). A tag of private-use subtags only, such as `x-foo`, names only what its users agree on (section 4.6). Each of them matches only the same tag. Its distance to every other tag is 100:
+A bare `und` names no language (RFC 5646 section 4.1). A script or region added to it says no more, so `und-Zzzz`, `und-ZZ` and `und-PT` all match `und`. Extensions and variants, such as `und-u-co-phonebk` and `und-1995`, are not locations and keep their own distance. A tag of private-use subtags only, such as `x-foo`, names only what its users agree on (section 4.6), and `und-x-foo` keeps its own identity. Surrounding whitespace is ignored. A collapsed tag or a private-use tag is 100 from a language tag:
 
 ```python
 from linguatag import closest_lang, lang_distance
 
 print(lang_distance("und", "en"))                    # 100
 print(lang_distance("x-foo", "x-bar"))               # 100
+print(lang_distance("und-ZZ", "und"))                # 0
+print(lang_distance("und-Zzzz", "und"))              # 0
+print(lang_distance("und-PT", "und"))                # 0
 print(lang_distance("und-x-foo", "en"))              # 100
+print(lang_distance("und-u-co-phonebk", "und"))      # 100
+print(lang_distance("und-1995", "und"))              # 100
 print(lang_distance("x-foo", "x-foo"))               # 0
-print(closest_lang("und", ["en", "x-foo"]))          # None
-print(closest_lang("x-foo", ["und", "x-bar"]))       # None
-print(lang_distance("und-Latn", "en"))               # 84
-print(lang_distance("und-US", "en"))                 # 134
+print(closest_lang("und-US", ["und", "en-US"]))      # und
+print(closest_lang(" und ", ["en-US", "und"]))       # und
 ```
-
-`und` with a script or a region keeps the CLDR distance, which is 80 or more from every language.
 
 ## Arabic
 
