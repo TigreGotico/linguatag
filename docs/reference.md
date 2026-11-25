@@ -1,0 +1,107 @@
+# Reference
+
+<!-- agent-hint
+covers: the signature, the return value and one example of each name in linguatag.__all__
+source: linguatag/__init__.py:__all__, linguatag/standardize.py, linguatag/regions.py, linguatag/matching.py, linguatag/lects.py
+generated: no
+verify: python scripts/check_doc_page.py docs/reference.md
+see: getting-started.md, matching.md
+-->
+
+This page gives the signature and one example for each of the 12 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
+
+## Normalise a tag
+
+`standardize_lang(tag: str) -> str` puts a tag in one canonical form. It never raises. For a string that is not a well-formed tag, it replaces the language and the extlang and gives each subtag its BCP 47 case.
+
+```python
+from linguatag import standardize_lang
+
+print(standardize_lang("EN_us"))              # en-US
+print(standardize_lang("iw"))                 # he
+print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
+```
+
+## Region and script of a bare tag
+
+`default_region(tag: str) -> Optional[str]` gives the region where the language started and is still spoken. It returns `None` for a language that has none.
+
+`with_default_region(tag: str) -> str` gives the standardized tag with that region inserted. A variant or a private-use subtag stays after the region. A tag with no default region comes back standardized and otherwise unchanged.
+
+`likely_script(tag: str) -> Optional[str]` gives the ISO 15924 script of the tag, or the script that CLDR 49 expects for it. It returns `None` for a string that is not a language tag, for `und` and for an unknown language.
+
+```python
+from linguatag import default_region, likely_script, with_default_region
+
+print(default_region("en"))                # GB
+print(with_default_region("zh-Hant"))      # zh-Hant-TW
+print(with_default_region("gl-x-central")) # gl-ES-x-central
+print(with_default_region("xx"))           # xx
+print(likely_script("ar"))                 # Arab
+print(likely_script("und"))                # None
+```
+
+`OVERRIDES` maps a language to the `(script, region)` that linguatag uses in place of the CLDR value. Each entry cites its source in `linguatag/regions.py`.
+
+```python
+from linguatag import OVERRIDES
+
+print(sorted(OVERRIDES))           # ['ar', 'en', 'pt', 'ur', 'yue']
+print(OVERRIDES["pt"])             # ('Latn', 'PT')
+```
+
+## Measure and pick
+
+`lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int` gives the CLDR 49 matching distance. `0` is identical, and a value above `DEFAULT_MAX_LANGUAGE_DISTANCE` is no usable match. The first argument is the request, because the distance is one-way.
+
+`lang_matches(a: str, b: str, max_distance: int = 10) -> bool` is `lang_distance(a, b) <= max_distance`.
+
+`closest_lang(target: str, available: Sequence[str], max_distance: int = 10, lects: Optional[str] = None) -> Optional[str]` returns the entry of `available` with the smallest distance, as written in the list. It returns `None` when no entry is within `max_distance`. `available` is read once, so an iterator works.
+
+```python
+from linguatag import DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang, lang_distance, lang_matches
+
+print(DEFAULT_MAX_LANGUAGE_DISTANCE)                    # 10
+print(lang_distance("en-AU", "en-US"))                  # 5
+print(lang_matches("arz", "ar"))                        # True
+print(closest_lang("en-AU", iter(["fr", "en-GB"])))     # en-GB
+print(closest_lang("en", []))                           # None
+```
+
+The page [Matching](matching.md) gives the steps and the tie rules.
+
+## Dialects
+
+`LECT_MODES` is the tuple of values that the `lects` argument takes besides `None`. `lect_steps(a: str, b: str) -> Optional[int]` counts the steps between two private-use dialect tags in the dialect tree, and returns `None` when they do not meet.
+
+```python
+from linguatag import LECT_MODES, lect_steps
+
+print(LECT_MODES)                                  # ('dialect', 'standard')
+print(lect_steps("pt-x-central", "pt-x-minhoto"))  # 2
+print(lect_steps("pt", "en"))                      # None
+```
+
+## Ask about Arabic
+
+`is_arabic_variety(tag: str) -> bool` tells whether the language subtag of the tag is Arabic or a variety of it. Script and region do not count.
+
+```python
+from linguatag import is_arabic_variety
+
+print(is_arabic_variety("arz-EG"))   # True
+print(is_arabic_variety("ur"))       # False
+```
+
+## Where each name is explained
+
+| Names | Page |
+| --- | --- |
+| `standardize_lang` | [Parsing and normalising tags](parsing.md) |
+| `default_region`, `with_default_region`, `likely_script`, `OVERRIDES` | [Likely subtags and default regions](likely-subtags.md) |
+| `lang_distance`, `lang_matches`, `closest_lang`, `DEFAULT_MAX_LANGUAGE_DISTANCE` | [Matching](matching.md) |
+| `is_arabic_variety` | [Getting started](getting-started.md#tell-whether-a-tag-names-arabic) |
+| `LECT_MODES`, `lect_steps` | [Dialects](dialects.md) |
+
+---
+[Index](index.md) · [← Performance](performance.md)

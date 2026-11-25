@@ -3,8 +3,8 @@
 <!-- agent-hint
 covers: how lang_distance measures two tags and how closest_lang picks a tag from a list.
 source: linguatag/matching.py:lang_distance, linguatag/matching.py:closest_lang, linguatag/distance.py:tag_distance, linguatag/data/language_matching.json
-generated: no
-verify: python scripts/check_doc_page.py docs/matching.md
+generated: no, but docs/figures/distance-ladder.svg comes from scripts/docs_figures.py. Edit the script, not the SVG
+verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/matching.md
 see: dialects.md
 -->
 
@@ -33,6 +33,35 @@ print(closest_lang("en-AU", ["fr-FR", "en-US"]))  # en-US
 ```
 
 <!-- agent-hint: lang_distance and lang_matches are one-way. Pass the requested tag first. -->
+## The steps of a match
+
+`closest_lang` calls `lang_distance` once for each candidate. `lang_distance` runs the steps in the diagram, and the first step that ends the walk gives the number.
+
+```mermaid
+flowchart TD
+    start["desired and supported tag"] --> std["standardize_lang<br/>both tags"]
+    std --> empty{"empty subtag?"}
+    empty -- yes --> far["distance 100"]
+    empty -- no --> prefix["keep the longest<br/>well-formed prefix"]
+    prefix --> msa["write each spelling of<br/>Modern Standard Arabic as ar-001"]
+    msa --> same{"same tag?"}
+    same -- yes --> zero["distance 0"]
+    same -- no --> und{"bare und or<br/>private use only?"}
+    und -- yes --> far
+    und -- no --> likely["add default region<br/>and likely script"]
+    likely --> same2{"same tag?"}
+    same2 -- yes --> zero
+    same2 -- no --> cldr["CLDR 49 rules of UTS 35<br/>tag_distance"]
+    cldr --> zh["Sinitic language against<br/>Mandarin: at least 100"]
+    zh --> ar["Arabic variety in Arabic script<br/>against Modern Standard Arabic:<br/>at most 5"]
+    ar --> number["distance"]
+    number --> pick["closest_lang: keep the<br/>distances up to max_distance"]
+    pick --> tie["smallest distance wins,<br/>then the tie rules"]
+    tie --> result["the candidate as written,<br/>or None"]
+```
+
+*Figure: the path of one pair of tags, top to bottom. The steps before the CLDR rules end the walk early for empty, identical and undetermined tags, and the two steps after them are the rules that linguatag adds to CLDR.*
+
 ## How the distance works
 
 `lang_distance(desired, supported)` standardizes both tags and gives a tag with no region its default region. Then it adds the likely script, and measures the CLDR 49 matching distance of UTS #35 section 4.4. Each subtag that differs adds the distance of the first CLDR rule that matches it.
@@ -61,6 +90,14 @@ from linguatag import lang_distance
 print(lang_distance("gsw", "de"))   # 8
 print(lang_distance("de", "gsw"))   # 84
 ```
+
+## The distance ladder
+
+The figure puts 13 pairs on one scale. The dashed line is `DEFAULT_MAX_LANGUAGE_DISTANCE`, 10.
+
+![Horizontal bars of lang_distance for 13 tag pairs, from pt to pt-PT at 0 up to und to en and yue to cmn at 100. The default limit is 10. Pairs at 10 or less: pt to pt-PT 0, nb to no 1, en-AU to en-GB 3, en-CA to en-US 4, arz to ar 5, pt to pt-BR 5, gsw to de 8, yue-HK to zh-HK 10. Pairs above the limit: zh-Hans to zh-Hant 54, de to gsw 84, en to fr 84, und to en 100, yue to cmn 100.](figures/distance-ladder.svg)
+
+*Figure: `lang_distance` of 13 pairs. Read the gap: none of these pairs falls between 10 and 54, which fits the rule that a different script is 50 apart and a different language is 80 apart.*
 
 ## The max_distance argument
 

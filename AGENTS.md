@@ -14,7 +14,7 @@ linguatag reads BCP 47 language tags: it normalises them, gives a bare tag its d
 | `linguatag/matching.py` | `lang_distance`, `closest_lang`, `lang_matches` and `is_arabic_variety` |
 | `linguatag/lects.py` | The dialect score for the `lects` argument |
 | `linguatag/data/` | The CLDR 49, IANA and dialect-tree JSON files |
-| `scripts/` | `extract_cldr.py` and `build_lineage.py`, which write `linguatag/data/`, and `check_doc_page.py`, which checks a README or docs page against the code |
+| `scripts/` | `extract_cldr.py` and `build_lineage.py`, which write `linguatag/data/`, and `check_doc_page.py`, which checks a README or docs page against the code, and `docs_figures.py`, which writes the SVG files of `docs/figures/` |
 | `test/` | The pytest suite |
 | `docs/` | The user docs, listed in `docs/index.md` |
 
@@ -44,4 +44,5 @@ The release workflow writes `linguatag/version.py` and `CHANGELOG.md`. Nobody ed
 
 1. Run `.venv/bin/python -m pytest -q test`.
 2. After a data change, run `python3 scripts/extract_cldr.py` and make sure each "in" count agrees with its "out" count.
-3. After a docs change, run `.venv/bin/python scripts/check_doc_page.py <page>` for each page that you changed. `test/test_doc_pages.py` runs it for every page with an agent hint.
+3. After a data change or a docs change, run `.venv/bin/python scripts/docs_figures.py --check`. It fails when a committed figure differs from the data. Run `python scripts/docs_figures.py --measure` only to record the timings again.
+4. After a docs change, run `.venv/bin/python scripts/check_doc_page.py <page>` for each page that you changed. `test/test_doc_pages.py` runs it for every page with an agent hint.

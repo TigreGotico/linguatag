@@ -1,0 +1,8 @@
+call	median ms of 7 fresh processes
+import	29.8988
+first standardize_lang	2.8770
+first with_default_region	5.9975
+first lang_distance	6.8446
+first closest_lang	12.2977
+warm, tag not seen before	0.5308
+warm, tag seen before	0.0066

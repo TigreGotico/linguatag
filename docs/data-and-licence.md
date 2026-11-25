@@ -3,8 +3,8 @@
 <!-- agent-hint
 covers: the data files that linguatag reads, how to regenerate them, and their licences.
 source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/build_lineage.py, NOTICE, LICENSE-CLDR
-generated: no. scripts/extract_cldr.py writes the five CLDR and IANA files and scripts/build_lineage.py writes lineage.json, so edit the scripts, never the JSON.
-verify: python scripts/check_doc_page.py docs/data-and-licence.md
+generated: no for the page. scripts/extract_cldr.py writes the five CLDR and IANA files and scripts/build_lineage.py writes lineage.json, so edit the scripts, never the JSON. scripts/docs_figures.py writes docs/figures/data-files.svg.
+verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/data-and-licence.md
 see: ../NOTICE, ../LICENSE-CLDR
 -->
 
@@ -21,6 +21,12 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 | `language_matching.json` | CLDR 49 `supplemental/languageMatching.json`, `written-new`: paradigm locales, match variables and `languageMatch` rules | `lang_distance` (UTS #35 section 4.4) |
 | `territory_containment.json` | CLDR 49 `supplemental/territoryContainment.json`: the regions in each macroregion | the region clusters of `lang_distance` |
 | `lineage.json` | the orthography2ipa spec files at one commit | the `lects` argument |
+
+The figure shows the size of each file and how many records it holds.
+
+![Horizontal bars of the size of each data file: likely_subtags.json 191 kB with 7,868 records, language_subtags.json 135 kB with 8,276 records, aliases.json 47 kB with 1,145 records, subtags.json 40 kB with 1,022 records, language_matching.json 17 kB with 391 records, lineage.json 7 kB with 265 records, territory_containment.json 5 kB with 35 records.](figures/data-files.svg)
+
+*Figure: the 7 data files by size. Read the bars: `likely_subtags.json` and `language_subtags.json` hold about 74 percent of the 442 kB.*
 
 To see the source of each file:
 
@@ -111,4 +117,4 @@ The four CLDR files hold Unicode CLDR release 49 data (cldr-json 49.0.0) under t
 [NOTICE](../NOTICE) gives the full text of each attribution.
 
 ---
-[Index](index.md) · [← Dialects](dialects.md)
+[Index](index.md) · [← Dialects](dialects.md) · [Performance →](performance.md)
