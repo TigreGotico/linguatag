@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0a1](https://github.com/TigreGotico/linguatag/tree/0.7.0a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.6.0a1...0.7.0a1)
+
+**Merged pull requests:**
+
+- feat: export maximize; docs use only the public API [\#95](https://github.com/TigreGotico/linguatag/pull/95) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.6.0a1](https://github.com/TigreGotico/linguatag/tree/0.6.0a1) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.5.1a1...0.6.0a1)
