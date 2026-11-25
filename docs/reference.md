@@ -8,7 +8,7 @@ verify: python scripts/check_doc_page.py docs/reference.md
 see: getting-started.md, matching.md
 -->
 
-This page gives the signature and one example for each of the 12 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
+This page gives the signature and one example for each of the 25 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
 
 ## Normalise a tag
 
@@ -20,6 +20,22 @@ from linguatag import standardize_lang
 print(standardize_lang("EN_us"))              # en-US
 print(standardize_lang("iw"))                 # he
 print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
+```
+
+## Read the subtags of a tag
+
+`parse_tag(tag: str) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`.
+
+```python
+from linguatag import LanguageTagError, parse_tag
+
+tag = parse_tag("pt_latn_pt")
+print(tag.language, tag.script, tag.region)   # pt Latn PT
+print(parse_tag("x-foo").whole)               # x-foo
+try:
+    parse_tag("pt--PT")
+except LanguageTagError:
+    print("not a tag")                        # not a tag
 ```
 
 ## Region and script of a bare tag
@@ -111,7 +127,7 @@ print(is_arabic_variety("ur"))       # False
 
 | Names | Page |
 | --- | --- |
-| `standardize_lang` | [Parsing and normalising tags](parsing.md) |
+| `standardize_lang`, `parse_tag`, `LanguageTag`, `LanguageTagError` | [Parsing and normalising tags](parsing.md) |
 | `default_region`, `with_default_region`, `likely_script`, `OVERRIDES` | [Likely subtags and default regions](likely-subtags.md) |
 | `lang_distance`, `lang_matches`, `closest_lang`, `DEFAULT_MAX_LANGUAGE_DISTANCE` | [Matching](matching.md) |
 | `is_arabic_variety` | [Getting started](getting-started.md#tell-whether-a-tag-names-arabic) |
