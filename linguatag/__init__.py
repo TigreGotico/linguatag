@@ -1,7 +1,7 @@
 """BCP-47 language tags: standardization, distance, closest match, the default
 region of a tag that names none, the nearness of dialects named with a
 private-use subtag, and the genealogy, place and period of a language."""
-from linguatag.bcp47 import LanguageTag, LanguageTagError
+from linguatag.bcp47 import LanguageTag, LanguageTagError, maximize
 from linguatag.bcp47 import parse as parse_tag
 from linguatag.lects import LECT_MODES, lect_steps
 from linguatag.lineage import (ancestors, ancestry_similarity, family, family_path,
@@ -30,6 +30,7 @@ __all__ = [
     "lang_matches",
     "lect_steps",
     "likely_script",
+    "maximize",
     "parent",
     "parse_tag",
     "script_distance",

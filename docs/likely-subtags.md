@@ -79,10 +79,10 @@ print(likely_script("en-Latn-"))  # None
 <!-- agent-hint: maximize gives en-Latn-US, while default_region gives GB for en. Do not use one in place of the other. -->
 ## maximize: the CLDR algorithm
 
-`linguatag.bcp47.maximize` is UTS #35 section 4.3, "Add Likely Subtags", with no overrides:
+`maximize` is UTS #35 section 4.3, "Add Likely Subtags", with no overrides:
 
 ```python
-from linguatag.bcp47 import maximize
+from linguatag import maximize
 
 print(maximize("zh-TW"))  # zh-Hant-TW
 print(maximize("sr-ME"))  # sr-Latn-ME
