@@ -43,7 +43,7 @@ def read_parents(repo: str, ref: str) -> dict:
         spec = json.loads(blobs[end + 1:end + 1 + size])
         pos = end + 1 + size + 1
         if isinstance(spec, dict) and spec.get("code"):
-            parents[spec["code"]] = spec.get("parent")
+            parents[spec["code"]] = spec.get("inherits", spec.get("parent"))
     print(f"{len(names)} spec files in, {len(parents)} codes read", file=sys.stderr)
     return parents
 
