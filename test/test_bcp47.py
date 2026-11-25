@@ -5,7 +5,9 @@ Each expected value quotes its source: RFC 5646, UTS #35 (revision 79, CLDR
 49), the CLDR 49 cldr-json supplemental files, or the IANA Language Subtag
 Registry (File-Date 2026-11-18).
 """
+import copy
 import json
+import pickle
 import subprocess
 import sys
 from pathlib import Path
@@ -14,7 +16,8 @@ import pytest
 
 import linguatag
 from linguatag import default_region, is_arabic_variety, likely_script, standardize_lang, with_default_region
-from linguatag.bcp47 import LanguageTagError, maximize, parse, registry, standardize
+from linguatag.bcp47 import LanguageTagError, load_data, maximize, parse, registry, standardize
+from linguatag.lects import lect_steps
 
 DATA = Path(linguatag.__file__).parent / "data"
 
@@ -26,6 +29,40 @@ DATA = Path(linguatag.__file__).parent / "data"
 ])
 def test_each_data_file_names_its_source(name, source):
     assert json.loads((DATA / name).read_text(encoding="utf-8"))["source"] == source
+
+
+def test_a_caller_cannot_change_package_data():
+    """The loader shares one read-only view, not a dict a caller can edit."""
+    data = load_data("lineage.json")
+    assert data is load_data("lineage.json")
+    with pytest.raises(TypeError):
+        data["parents"]["pt-x-central"] = "pt-x-minhoto"
+    assert "pt-x-central" not in load_data("lineage.json")["parents"]
+    assert lect_steps("pt-x-central", "pt-x-minhoto") == 2
+
+
+def test_a_caller_cannot_change_a_list_in_package_data():
+    data = load_data("language_matching.json")
+    with pytest.raises(AttributeError):
+        data["paradigm_locales"].append("zz")
+    assert "zz" not in load_data("language_matching.json")["paradigm_locales"]
+
+
+def test_a_caller_cannot_change_a_registry_record():
+    with pytest.raises(TypeError):
+        registry("extlang")["aao"]["preferred"] = "zz"
+    assert registry("extlang")["aao"]["preferred"] == "aao"
+
+
+def test_a_caller_can_still_copy_and_serialize_package_data():
+    data = load_data("lineage.json")
+    assert isinstance(data, dict) and isinstance(data["parents"], dict)
+    assert json.loads(json.dumps(data)) == json.loads((DATA / "lineage.json").read_text())
+    assert pickle.loads(pickle.dumps(data)) == data
+    copied = copy.deepcopy(data)
+    assert type(copied) is dict
+    copied["parents"]["pt-x-central"] = "pt-x-minhoto"
+    assert "pt-x-central" not in data["parents"]
 
 
 # RFC 5646 section 2.1: `language = 2*3ALPHA ["-" extlang] / 4ALPHA / 5*8ALPHA`,
@@ -53,7 +90,7 @@ def test_parse_keeps_the_subtags_in_their_bcp47_case(tag, expected):
 # ... Prefix: uz-Latn", and the same for "Subtag: 2026".
 @pytest.mark.parametrize("variant", ["1995", "2026"])
 def test_the_uzbek_latin_orthography_variants_are_registered(variant):
-    assert registry("variant")[variant] == {"prefix": ["uz", "uz-Latn"]}
+    assert registry("variant")[variant] == {"prefix": ("uz", "uz-Latn")}
     for tag in (f"uz-{variant}", f"uz-Latn-{variant}", f"uz-Latn-UZ-{variant}"):
         assert str(parse(tag)) == tag
         assert standardize_lang(tag) == tag

@@ -82,10 +82,43 @@ class LanguageTag:
         return "-".join(parts)
 
 
+class _FrozenDict(dict):
+    """A dict that refuses changes after it is built.
+
+    It stays a dict, so JSON, copy and pickle still work. ``__reduce__``
+    returns a plain dict, so a copy or an unpickled value is mutable.
+    """
+
+    def _immutable(self, *args, **kwargs):
+        raise TypeError("linguatag package data is read-only")
+
+    __setitem__ = __delitem__ = clear = pop = popitem = setdefault = update = _immutable
+
+    def __ior__(self, other):
+        raise TypeError("linguatag package data is read-only")
+
+    def __reduce__(self):
+        return (dict, (dict(self),))
+
+
+def _freeze(value: object) -> object:
+    """A read-only view of parsed JSON: frozen dicts and tuples throughout."""
+    if isinstance(value, dict):
+        return _FrozenDict({key: _freeze(item) for key, item in value.items()})
+    if isinstance(value, list):
+        return tuple(_freeze(item) for item in value)
+    return value
+
+
 @lru_cache(maxsize=None)
 def load_data(name: str) -> dict:
-    """The JSON file ``name`` of ``linguatag/data``."""
-    return json.loads((_DATA / name).read_text(encoding="utf-8"))
+    """A read-only view of the JSON file ``name`` of ``linguatag/data``.
+
+    The view is made once and shared. A caller cannot change package data by
+    changing a returned mapping or sequence. It stays a dict, so JSON, copy
+    and pickle work; JSON arrays are tuples.
+    """
+    return _freeze(json.loads((_DATA / name).read_text(encoding="utf-8")))
 
 
 def registry(kind: str) -> Dict[str, dict]:
