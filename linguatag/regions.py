@@ -15,7 +15,7 @@ from __future__ import annotations
 
 from typing import Dict, Optional, Tuple
 
-from linguatag.bcp47 import LanguageTagError, is_region, is_script, _raw_data, maximize, parse
+from linguatag.bcp47 import LanguageTagError, _raw_data, is_region, is_script, maximize, parse
 from linguatag.standardize import standardize_lang
 
 __all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]

@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 
 import linguatag
+from linguatag import bcp47
 
 DATA = Path(linguatag.__file__).parent / "data"
 
@@ -16,8 +17,10 @@ DATA = Path(linguatag.__file__).parent / "data"
 def _after(call: str) -> dict:
     """What a fresh interpreter has done after ``call``: the files it read
     and the alias tables it built."""
+    tree = str(DATA.parent.parent)
     code = (
         "import json, pathlib, linguatag, linguatag.bcp47 as b\n"
+        f"assert linguatag.__file__.startswith({tree!r}), linguatag.__file__\n"
         "read = []\n"
         "read_text = pathlib.Path.read_text\n"
         "pathlib.Path.read_text = lambda self, *a, **k: read.append(self.name) or read_text(self, *a, **k)\n"
@@ -25,8 +28,8 @@ def _after(call: str) -> dict:
         "print(json.dumps({'read': read, 'tables': b._alias_table.cache_info().currsize"
         " + b._rules.cache_info().currsize}))"
     )
-    out = subprocess.run([sys.executable, "-I", "-c", code], capture_output=True, text=True,
-                         check=True, cwd="/", env={"PYTHONPATH": str(DATA.parent.parent)})
+    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True,
+                         check=True, cwd="/", env={"PYTHONPATH": tree})
     return json.loads(out.stdout)
 
 
@@ -51,6 +54,16 @@ def test_a_bare_or_regional_tag_builds_no_table(call):
 def test_a_tag_with_an_alias_builds_the_table(tag, expected):
     state = _after(f"assert linguatag.standardize_lang({tag!r}) == {expected!r}")
     assert state["tables"] > 0
+
+
+def test_a_legacy_whole_tag_is_not_canonical_without_rules(monkeypatch):
+    """A tag that a legacy replacement matches whole takes the table path,
+    though no rule key names any of its subtags."""
+    tag = bcp47.parse("xx-YY")
+    monkeypatch.setattr(bcp47, "_alias_keys", lambda: (frozenset(), frozenset({"xx-yy"})))
+    assert not bcp47._has_no_alias(tag)
+    monkeypatch.setattr(bcp47, "_alias_keys", lambda: (frozenset(), frozenset()))
+    assert bcp47._has_no_alias(tag)
 
 
 def test_every_deprecated_subtag_is_a_cldr_alias_type():

@@ -382,7 +382,7 @@ def _alias_keys() -> Tuple[FrozenSet[Tuple[str, str]], FrozenSet[str]]:
     legacy replacement of either :func:`_alias_table` can match whole. Both
     are read from the data without building the tables, and may hold more
     than the tables do, never less. The IANA Preferred-Values add no key: each
-    deprecated subtag is a CLDR alias type too."""
+    subtag that has one is a CLDR alias type too."""
     aliases = _raw_data("aliases.json")
     replaced = [tag for tag, preferred in _whole_tags().items() if preferred]
     keys = set()

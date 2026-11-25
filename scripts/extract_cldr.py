@@ -128,8 +128,8 @@ def subtags(text: str) -> None:
     languages = {"source": payload["source"], "language": payload.pop("language")}
     write("subtags.json", payload)
     write("language_subtags.json", languages)
-    print(f"registry: {len(entries)} records in, "
-          f"{sum(len(v) for k, v in payload.items() if k != 'source')} out", file=sys.stderr)
+    written = sum(len(v) for k, v in {**payload, **languages}.items() if k != "source")
+    print(f"registry: {len(entries)} records in, {written} out", file=sys.stderr)
 
 
 def language_matching(text: str) -> None:
