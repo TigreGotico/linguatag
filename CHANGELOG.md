@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.5a1](https://github.com/TigreGotico/linguatag/tree/0.4.5a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a4...0.4.5a1)
+
+**Merged pull requests:**
+
+- feat: genealogy, places, coverage and language metrics as data [\#87](https://github.com/TigreGotico/linguatag/pull/87) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix\(lineage\): read the inherits key of orthography2ipa specs [\#86](https://github.com/TigreGotico/linguatag/pull/86) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.4a4](https://github.com/TigreGotico/linguatag/tree/0.4.4a4) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a3...0.4.4a4)
