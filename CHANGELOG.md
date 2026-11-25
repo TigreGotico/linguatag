@@ -1,8 +1,20 @@
 # Changelog
 
+## [0.4.4a3](https://github.com/TigreGotico/linguatag/tree/0.4.4a3) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a2...0.4.4a3)
+
+**Merged pull requests:**
+
+- perf: skip the alias table for a tag with no alias, and split out the language records [\#80](https://github.com/TigreGotico/linguatag/pull/80) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.4a2](https://github.com/TigreGotico/linguatag/tree/0.4.4a2) (2026-11-25)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.3a1...0.4.4a2)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a1...0.4.4a2)
+
+## [0.4.4a1](https://github.com/TigreGotico/linguatag/tree/0.4.4a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.3a1...0.4.4a1)
 
 **Merged pull requests:**
 
