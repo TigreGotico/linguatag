@@ -18,6 +18,7 @@ from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
 from linguatag.bcp47 import _raw_data
+from linguatag.regions import with_default_region
 from linguatag.standardize import standardize_lang
 
 _EARTH_RADIUS_KM = 6371.0088
@@ -27,9 +28,20 @@ def _nodes() -> Dict[str, dict]:
     return _raw_data("genealogy.json")["nodes"]
 
 
+@lru_cache(maxsize=4096)
+def _key(tag: str) -> str:
+    """The data key of ``tag``. The data keys a language by its default-region
+    tag when its spec carries a region, so ``gl`` reads ``gl-ES``."""
+    tag = standardize_lang(tag)
+    if tag in _nodes():
+        return tag
+    regional = with_default_region(tag)
+    return regional if regional in _nodes() else tag
+
+
 def parent(tag: str) -> Optional[str]:
     """The genealogical parent of ``tag``, or ``None`` at the top of a tree."""
-    return _nodes().get(standardize_lang(tag), {}).get("parent")
+    return _nodes().get(_key(tag), {}).get("parent")
 
 
 def ancestors(tag: str) -> List[str]:
@@ -45,12 +57,12 @@ def ancestors(tag: str) -> List[str]:
 def family(tag: str) -> str:
     """The family of ``tag`` as a path, such as ``"Indo-European > Italic >
     Romance"``, or ``""`` when it has none."""
-    return _nodes().get(standardize_lang(tag), {}).get("family", "")
+    return _nodes().get(_key(tag), {}).get("family", "")
 
 
 def family_path(tag: str) -> Tuple[str, ...]:
     """The clade names above ``tag``, broadest first."""
-    return tuple(_nodes().get(standardize_lang(tag), {}).get("family_path", ()))
+    return tuple(_nodes().get(_key(tag), {}).get("family_path", ()))
 
 
 def _data_ancestors(tag: str) -> List[Tuple[str, float]]:
@@ -120,7 +132,7 @@ def ancestry_similarity(a: str, b: str, max_depth: int = 10,
     With ``temporal_decay``, a path loses weight with the years between an
     ancestor and its descendant.
     """
-    a, b = standardize_lang(a), standardize_lang(b)
+    a, b = _key(a), _key(b)
     if a == b:
         return 1.0
     paths_a = _weights(a, max_depth, temporal_decay, decay_halflife)
@@ -144,7 +156,7 @@ def geographic_distance(a: str, b: str, normalize: bool = True) -> Optional[floa
     several continents.
     """
     places = _raw_data("places.json")["places"]
-    here, there = places.get(standardize_lang(a)), places.get(standardize_lang(b))
+    here, there = places.get(_key(a)), places.get(_key(b))
     if here is None or there is None:
         return None
     lat1, lon1, lat2, lon2 = map(math.radians, (*here, *there))
@@ -160,7 +172,7 @@ def temporal_distance(a: str, b: str, reference_year: int = 2025) -> Optional[fl
     A tag with no end year is spoken until ``reference_year``. The result is
     ``None`` when either tag has no period.
     """
-    first, second = _period(standardize_lang(a)), _period(standardize_lang(b))
+    first, second = _period(_key(a)), _period(_key(b))
     if first is None or second is None:
         return None
     start_a, end_a = first[0], reference_year if first[1] is None else first[1]
