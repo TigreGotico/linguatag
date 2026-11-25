@@ -25,7 +25,7 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
 
-from linguatag.bcp47 import load_data
+from linguatag.bcp47 import _raw_data
 from linguatag.standardize import standardize_lang
 
 LECT_MODES = ("dialect", "standard")
@@ -35,7 +35,7 @@ _STANDARD_LAST = _FAR + 1
 
 
 def _parents() -> Dict[str, str]:
-    return load_data("lineage.json")["parents"]
+    return _raw_data("lineage.json")["parents"]
 
 
 def private_use(tag: str) -> Tuple[str, ...]:

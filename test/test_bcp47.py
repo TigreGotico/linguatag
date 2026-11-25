@@ -26,6 +26,7 @@ DATA = Path(linguatag.__file__).parent / "data"
     ("likely_subtags.json", "CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json"),
     ("aliases.json", "CLDR 49, cldr-json cldr-core/supplemental/aliases.json"),
     ("subtags.json", "IANA Language Subtag Registry, File-Date: 2026-11-18"),
+    ("language_subtags.json", "IANA Language Subtag Registry, File-Date: 2026-11-18"),
 ])
 def test_each_data_file_names_its_source(name, source):
     assert json.loads((DATA / name).read_text(encoding="utf-8"))["source"] == source

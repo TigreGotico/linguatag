@@ -23,8 +23,10 @@ def test_standardize_keeps_tagalog_as_tl():
 
 def _registry(kind):
     """The IANA Language Subtag Registry records of one type, File-Date
-    2026-11-18, as ``linguatag/data/subtags.json`` holds them."""
-    return json.loads((files("linguatag") / "data" / "subtags.json").read_text("utf-8"))[kind]
+    2026-11-18, as ``linguatag/data/subtags.json`` and
+    ``language_subtags.json`` hold them."""
+    name = "language_subtags.json" if kind == "language" else "subtags.json"
+    return json.loads((files("linguatag") / "data" / name).read_text("utf-8"))[kind]
 
 
 def _registry_extlangs():

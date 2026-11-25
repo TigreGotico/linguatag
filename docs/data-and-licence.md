@@ -17,6 +17,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 | `likely_subtags.json` | CLDR 49 `supplemental/likelySubtags.json` | `maximize`, `default_region` and `likely_script` (UTS #35 section 4.3) |
 | `aliases.json` | CLDR 49 `supplemental/aliases.json`: language, script, territory and variant aliases | canonical form (UTS #35 Annex C) |
 | `subtags.json` | the IANA Language Subtag Registry: each subtag with its Deprecated, Preferred-Value, Prefix, Suppress-Script and Macrolanguage fields | parsing and canonical form (RFC 5646) |
+| `language_subtags.json` | the language records of the same registry, a file of their own so that a caller who reads no language record does not parse them | `standardize` (Suppress-Script), `closest_lang` and `standardize_lang` (Preferred-Value) |
 | `language_matching.json` | CLDR 49 `supplemental/languageMatching.json`, `written-new`: paradigm locales, match variables and `languageMatch` rules | `lang_distance` (UTS #35 section 4.4) |
 | `territory_containment.json` | CLDR 49 `supplemental/territoryContainment.json`: the regions in each macroregion | the region clusters of `lang_distance` |
 | `lineage.json` | the orthography2ipa spec files at one commit | the `lects` argument |
@@ -27,6 +28,7 @@ To see the source of each file:
 $ python3 -c "import json, pathlib; [print(p.name, '|', json.loads(p.read_text())['source']) for p in sorted(pathlib.Path('linguatag/data').glob('*.json'))]"
 aliases.json | CLDR 49, cldr-json cldr-core/supplemental/aliases.json
 language_matching.json | CLDR 49, cldr-json cldr-core/supplemental/languageMatching.json, written-new
+language_subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
 likely_subtags.json | CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json
 lineage.json | TigreGotico/orthography2ipa@1e6e911705761de8d5724276187c4903ae92eaf4
 subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
@@ -104,7 +106,7 @@ linguatag is under the Apache License 2.0 ([LICENSE](../LICENSE)).
 
 The four CLDR files hold Unicode CLDR release 49 data (cldr-json 49.0.0) under the Unicode License v3. The copyright is (C) 2015-2024 Unicode, Inc. [LICENSE-CLDR](../LICENSE-CLDR) holds the full notice.
 
-`subtags.json` holds data from the IANA Language Subtag Registry. IANA and the IETF Trust dedicate their rights in the protocol registries to the public domain under CC0 1.0.
+`subtags.json` and `language_subtags.json` hold data from the IANA Language Subtag Registry. IANA and the IETF Trust dedicate their rights in the protocol registries to the public domain under CC0 1.0.
 
 [NOTICE](../NOTICE) gives the full text of each attribution.
 
