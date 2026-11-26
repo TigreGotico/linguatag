@@ -61,31 +61,13 @@ def _fold(tag: str) -> str:
 
 @lru_cache(maxsize=4096)
 def standardize_lang(tag: str) -> str:
-    """Normalize a BCP-47 language tag for comparison.
+    """The canonical form of ``tag`` (RFC 5646 section 4.5), from the CLDR 49
+    alias rules and the IANA registry.
 
-    The tag is put in canonical form (RFC 5646 section 4.5) from the CLDR 49
-    alias rules and the IANA registry that this package carries (see
-    :mod:`linguatag._bcp47`): underscores become hyphens, each subtag takes
-    its BCP-47 case, a deprecated subtag becomes its Preferred-Value (``iw``
-    is ``he``, ``ajp`` is ``apc``, ``my-BU`` is ``my-MM``), a language and its
-    extlang become the extlang (``zh-hak`` is ``hak``, ``ar-arz-EG`` is
-    ``arz-EG``), an ISO 639-2 code becomes its ISO 639-1 code (``eng`` is
-    ``en``) and a script that IANA suppresses for the language goes
-    (``en-Latn`` is ``en``). An encompassed language keeps its own code
-    (``cmn`` stays ``cmn``). Two spellings of one language (``en_us``,
-    ``en-US``) reduce to one string.
-
-    Args:
-        tag: a BCP-47-like language tag, possibly underscore-separated or
-            mixed-case, as directory names and config values often are.
-            White space around the tag is no part of it (RFC 5646
-            section 2.1) and is removed.
-
-    Returns:
-        The canonical tag, or, for a string that is not a well-formed tag
-        (``zh-HK-HiuMaanNeural``), the string with its language and extlang
-        replaced as above and each subtag in its BCP-47 case.
-    """
+    White space around the tag is removed (RFC 5646 section 2.1). A string
+    that is not a well-formed tag keeps its shape, with its language and
+    extlang replaced and each subtag in its BCP-47 case. The rules and
+    examples are in ``docs/parsing.md``."""
     tag = tag.strip()
     if tag.lower() in ("tl", "tgl"):
         # CLDR replaces Tagalog with Filipino, `fil`; the tag stays `tl` here.
