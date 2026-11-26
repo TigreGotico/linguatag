@@ -27,7 +27,7 @@ containment. Both are read from ``linguatag/data`` (written by
 
 ``und``: "if the desired base language is und, the language matcher should
 not apply likely subtags to it." Section 4.3 lets an implementation exclude
-``und`` from Add Likely Subtags, and :func:`linguatag.bcp47.maximize` does,
+``und`` from Add Likely Subtags, and :func:`linguatag._bcp47.maximize` does,
 so a supported ``und`` is not maximized either. A language with no likely
 subtags (``zzz``) keeps the subtags it has. A missing script is ``Zzzz`` and
 a missing region ``ZZ``, the CLDR codes for an unknown script and region.
@@ -59,7 +59,7 @@ import re
 from functools import lru_cache, reduce
 from typing import Dict, FrozenSet, List, Tuple
 
-from linguatag.bcp47 import LanguageTagError, _canonical, _raw_data, maximize, parse
+from linguatag._bcp47 import LanguageTagError, _canonical, _raw_data, maximize, parse
 
 __all__ = ["is_paradigm", "tag_distance"]
 

@@ -10,7 +10,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict, Tuple
 
-from linguatag.bcp47 import _raw_data
+from linguatag._bcp47 import _raw_data
 
 _VOWEL_ORDER = {"full": 0, "partial": 1, "inherent": 2, "none": 3}
 

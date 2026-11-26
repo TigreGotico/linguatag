@@ -22,7 +22,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from linguatag.standardize import standardize_lang
+from linguatag._standardize import standardize_lang
 
 DATA = Path(__file__).resolve().parent.parent / "linguatag" / "data"
 SPECS = "orthography2ipa/data"

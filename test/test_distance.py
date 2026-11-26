@@ -13,7 +13,7 @@ import pytest
 
 import linguatag
 from linguatag import closest_lang, lang_distance
-from linguatag.distance import is_paradigm, tag_distance
+from linguatag._distance import is_paradigm, tag_distance
 
 DATA = Path(linguatag.__file__).parent / "data"
 

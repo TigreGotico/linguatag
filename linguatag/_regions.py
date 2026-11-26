@@ -4,7 +4,7 @@ A bare tag defaults to its motherland: the region where the language first
 appeared and is still spoken. `en` is `en-GB` and `pt` is `pt-PT`.
 
 CLDR 49 likely-subtags is the base (UTS #35 section 4.3, in
-:mod:`linguatag.bcp47`). It picks the most-populous region, which is the
+:mod:`linguatag._bcp47`). It picks the most-populous region, which is the
 motherland for most languages. `OVERRIDES` replaces it where the two
 differ, and every override cites its source. When several countries share
 the area where a language first appeared, the CLDR pick is one of them and
@@ -15,8 +15,8 @@ from __future__ import annotations
 
 from typing import Dict, Optional, Tuple
 
-from linguatag.bcp47 import LanguageTagError, _raw_data, is_region, is_script, maximize, parse
-from linguatag.standardize import standardize_lang
+from linguatag._bcp47 import LanguageTagError, _raw_data, is_region, is_script, maximize, parse
+from linguatag._standardize import standardize_lang
 
 __all__ = ["OVERRIDES", "default_region", "likely_script", "with_default_region"]
 

@@ -16,8 +16,8 @@ import pytest
 
 import linguatag
 from linguatag import default_region, is_arabic_variety, likely_script, standardize_lang, with_default_region
-from linguatag.bcp47 import LanguageTagError, load_data, maximize, parse, registry, standardize
-from linguatag.lects import lect_steps
+from linguatag._bcp47 import LanguageTagError, load_data, maximize, parse, registry, standardize
+from linguatag._lects import lect_steps
 
 DATA = Path(linguatag.__file__).parent / "data"
 

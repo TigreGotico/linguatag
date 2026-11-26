@@ -1,16 +1,16 @@
 """BCP-47 language tags: standardization, distance, closest match, the default
 region of a tag that names none, the nearness of dialects named with a
 private-use subtag, and the genealogy, place and period of a language."""
-from linguatag.bcp47 import LanguageTag, LanguageTagError, maximize
-from linguatag.bcp47 import parse as parse_tag
-from linguatag.lects import LECT_MODES, lect_steps
-from linguatag.lineage import (ancestors, ancestry_similarity, family, family_path,
+from linguatag._bcp47 import LanguageTag, LanguageTagError, maximize
+from linguatag._bcp47 import parse as parse_tag
+from linguatag._lects import LECT_MODES, lect_steps
+from linguatag._lineage import (ancestors, ancestry_similarity, family, family_path,
                                geographic_distance, parent, temporal_distance)
-from linguatag.matching import (DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang,
+from linguatag._matching import (DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang,
                                 is_arabic_variety, lang_distance, lang_matches)
-from linguatag.regions import OVERRIDES, default_region, likely_script, with_default_region
-from linguatag.standardize import standardize_lang
-from linguatag.writing_systems import script_distance, script_distance_by_name, script_features
+from linguatag._regions import OVERRIDES, default_region, likely_script, with_default_region
+from linguatag._standardize import standardize_lang
+from linguatag._writing_systems import script_distance, script_distance_by_name, script_features
 
 __all__ = [
     "DEFAULT_MAX_LANGUAGE_DISTANCE",

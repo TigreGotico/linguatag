@@ -55,13 +55,13 @@ Nobody edits these files by hand. To change one, change its script or its source
 
 ## The loader is read-only
 
-The package reads its data files with the internal call `linguatag.bcp47.load_data`, which is not part of the public API. It returns a read-only view of the parsed JSON. Dictionaries are frozen dicts and JSON arrays are tuples, so a caller cannot change package data for every other caller. The view is made once when the file is read and shared, so a repeated call costs no copy. `registry` returns a read-only view of the records of one kind, made the same way. The language records are in `language_subtags.json`, so `load_data("subtags.json")` holds no `language` key; read them with `registry("language")` or `load_data("language_subtags.json")`.
+The package reads its data files with the internal call `linguatag._bcp47.load_data`, which is not part of the public API. It returns a read-only view of the parsed JSON. Dictionaries are frozen dicts and JSON arrays are tuples, so a caller cannot change package data for every other caller. The view is made once when the file is read and shared, so a repeated call costs no copy. `registry` returns a read-only view of the records of one kind, made the same way. The language records are in `language_subtags.json`, so `load_data("subtags.json")` holds no `language` key; read them with `registry("language")` or `load_data("language_subtags.json")`.
 
 The view stays a dict, so JSON, copy and pickle work. A deep copy or an unpickled value is a plain, mutable dict. A shallow copy leaves the nested views frozen. To change package data for one call only, make a deep copy first.
 
 ```python
 from linguatag import lect_steps
-from linguatag.bcp47 import load_data  # internal: for contributors only
+from linguatag._bcp47 import load_data  # internal: for contributors only
 
 print(lect_steps("pt-x-central", "pt-x-minhoto"))  # 2
 try:
