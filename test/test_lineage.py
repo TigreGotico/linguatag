@@ -74,8 +74,8 @@ def test_a_cited_period(tag, period):
 
 
 @pytest.mark.parametrize("tag, parent, cited", [
-    ("pt-PT-x-braga", "pt-PT", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
-    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "acm-IQ", "NOT FOUND"),
+    ("pt-PT-x-braga", "pt-PT-x-minho", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
+    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ar-x-mashriqi", "east2729"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
@@ -90,12 +90,12 @@ def test_every_edge_source_belongs_to_a_node():
 
 
 # The chains below are the `inherits` values of the orthography2ipa spec files,
-# read by hand: pt-PT-x-porto to pt-PT to pt-PT-x-medieval, and ars-SA-x-qassim
+# read by hand: pt-PT-x-porto to pt-PT-x-minho to pt-PT to pt-PT-x-medieval, and ars-SA-x-qassim
 # to ars-SA to ar-x-peninsul to arb to xpa. `ar` is a sibling of `arb` under xpa.
 def test_a_portuguese_lect_runs_up_to_portuguese():
-    assert parent("pt-PT-x-porto") == "pt-PT"
+    assert parent("pt-PT-x-porto") == "pt-PT-x-minho"
     assert parent("pt-PT") == "pt-PT-x-medieval"
-    assert ancestors("pt-PT-x-porto")[:2] == ["pt-PT", "pt-PT-x-medieval"]
+    assert ancestors("pt-PT-x-porto")[:3] == ["pt-PT-x-minho", "pt-PT", "pt-PT-x-medieval"]
     assert family("pt-PT-x-porto").startswith("Indo-European > Italic > Romance")
 
 
@@ -108,7 +108,7 @@ def test_an_arabic_lect_runs_up_to_arabic():
 def test_a_chain_ends_at_a_tag_with_no_parent_and_a_tag_is_standardized():
     top = ancestors("pt-PT-x-porto")[-1]
     assert parent(top) is None
-    assert parent("PT-pt-X-PORTO") == "pt-PT"
+    assert parent("PT-pt-X-PORTO") == "pt-PT-x-minho"
 
 
 def test_an_unknown_tag_has_no_genealogy():
@@ -186,3 +186,10 @@ def test_a_deprecated_code_reads_the_ids_of_its_preferred_tag(tag, ids):
 def test_tunisian_arabic_is_not_the_judeo_tunisian_node():
     assert parent("aeb") == "ar-x-maghrebi"
     assert parent("aeb-x-judeo") == "aeb-TN"
+
+
+@pytest.mark.parametrize("tag", ["pt-PT-x-braga", "pt-PT-x-porto"])
+def test_braga_and_porto_are_minhoto_varieties(tag):
+    # Paiva Boléo & Santos Silva 1959, via Cintra 1971: Braga is inside minhoto
+    # central and Porto inside baixo-minhoto, both inside the Minhoto dialect.
+    assert parent(tag) == "pt-PT-x-minho"
