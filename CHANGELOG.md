@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.0a1](https://github.com/TigreGotico/linguatag/tree/0.9.0a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.8.0a1...0.9.0a1)
+
+**Merged pull requests:**
+
+- feat\(scripts\): add\_nodes.py adds languages to the genealogy, place and time data [\#106](https://github.com/TigreGotico/linguatag/pull/106) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.8.0a1](https://github.com/TigreGotico/linguatag/tree/0.8.0a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.2a1...0.8.0a1)
