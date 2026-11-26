@@ -59,7 +59,7 @@ def test_a_metric_equals_the_orthography2ipa_value_on_every_sampled_pair(name):
 
 
 @pytest.mark.parametrize("tag, period", [
-    ("mwl", [1600, None]), ("ca-x-valencia", [1343, None]), ("aat", [1350, None]),
+    ("mwl", [1609, None]), ("ca-x-valencia", [1343, None]), ("aat", [1350, None]),
     ("aae", [1450, None]), ("an-x-cheso", [1200, None]), ("acm-IQ", None), ("pt-BR", None),
 ])
 def test_a_cited_period(tag, period):
