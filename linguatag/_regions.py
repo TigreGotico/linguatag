@@ -104,7 +104,7 @@ def default_region(tag: str) -> Optional[str]:
     `CN` and `arb`, Modern Standard Arabic, is `001`. `None` means no region applies: the
     language is unknown or `und`, or the tag is not a language tag.
     """
-    return _default_region(tag, parsed=False)
+    return _default_region(tag.strip(), parsed=False)
 
 
 def _with_default_region(tag: str, *, parsed: bool) -> str:
@@ -144,6 +144,7 @@ def likely_script(tag: str) -> Optional[str]:
     tag that is not a language tag, for a language that CLDR does not know
     (`zzz`) or `und`, or when no script is known.
     """
+    tag = tag.strip()
     try:
         parse(tag)
     except LanguageTagError:

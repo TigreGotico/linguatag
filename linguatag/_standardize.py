@@ -78,12 +78,15 @@ def standardize_lang(tag: str) -> str:
     Args:
         tag: a BCP-47-like language tag, possibly underscore-separated or
             mixed-case, as directory names and config values often are.
+            White space around the tag is no part of it (RFC 5646
+            section 2.1) and is removed.
 
     Returns:
         The canonical tag, or, for a string that is not a well-formed tag
         (``zh-HK-HiuMaanNeural``), the string with its language and extlang
         replaced as above and each subtag in its BCP-47 case.
     """
+    tag = tag.strip()
     if tag.lower() in ("tl", "tgl"):
         # CLDR replaces Tagalog with Filipino, `fil`; the tag stays `tl` here.
         return "tl"
