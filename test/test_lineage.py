@@ -68,6 +68,22 @@ def test_a_cited_period(tag, period):
     assert years["sources"][tag]
 
 
+@pytest.mark.parametrize("tag, parent, cited", [
+    ("pt-PT-x-braga", "pt-PT", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
+    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "acm-IQ", "NOT FOUND"),
+])
+def test_a_lineage_edge_names_its_source(tag, parent, cited):
+    data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
+    assert data["nodes"][tag]["parent"] == parent
+    assert cited in data["sources"][tag]
+
+
+def test_every_edge_source_belongs_to_a_node():
+    data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
+    assert set(data["sources"]) <= set(data["nodes"])
+    assert all(data["sources"].values())
+
+
 @pytest.mark.parametrize("name", ["ancestry_similarity", "geographic_distance", "temporal_distance"])
 def test_every_moved_metric_is_sampled_on_at_least_500_pairs(name):
     assert len(METRICS[name]["rows"]) >= 500

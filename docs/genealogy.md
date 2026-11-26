@@ -105,7 +105,7 @@ print(script_distance(script_features("Latin"), script_features("Latin")))  # 0.
 
 | File | Holds |
 | --- | --- |
-| `genealogy.json` | For each tag: its `parent`, its weighted `ancestors` when the spec lists them, its `family`, its `family_path` and `clade` when the tag is a clade node |
+| `genealogy.json` | For each tag: its `parent`, its weighted `ancestors` when the spec lists them, its `family`, its `family_path` and `clade` when the tag is a clade node. The `sources` table gives the source of the edge from a tag to its parent; `NOT FOUND` marks an edge that a source check found no source for. A tag that is not in the table has no source check |
 | `places.json` | The latitude and longitude of each tag that has a point |
 | `times.json` | The start year and end year of each tag that has a period. The start year is the year of the earliest attested distinct variety. A living language has `null` as its end year. The `sources` table gives the source of a corrected period; `NOT FOUND` marks a tag whose period was removed because no source supports it, and `WIKIPEDIA-ONLY` marks a year with no primary source |
 | `lects.json` | Each private-use lect with its name and the lists `regions`, `islands` and `cities` that it covers |
