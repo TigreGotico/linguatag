@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.5a1](https://github.com/TigreGotico/linguatag/tree/0.9.5a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.4a1...0.9.5a1)
+
+**Merged pull requests:**
+
+- fix: a script or an explicit default region reads the language node [\#121](https://github.com/TigreGotico/linguatag/pull/121) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.4a1](https://github.com/TigreGotico/linguatag/tree/0.9.4a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.3a1...0.9.4a1)
