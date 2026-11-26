@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.6a2](https://github.com/TigreGotico/linguatag/tree/0.9.6a2) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.6a1...0.9.6a2)
+
+**Merged pull requests:**
+
+- test: cited value tests replace the frozen orthography2ipa fixture [\#126](https://github.com/TigreGotico/linguatag/pull/126) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.6a1](https://github.com/TigreGotico/linguatag/tree/0.9.6a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.5a1...0.9.6a1)
@@ -389,10 +397,6 @@
 ## [0.0.2a2](https://github.com/TigreGotico/linguatag/tree/0.0.2a2) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.0.2a1...0.0.2a2)
-
-**Merged pull requests:**
-
-- perf: cache the parseable prefix of a tag [\#4](https://github.com/TigreGotico/linguatag/pull/4) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.0.2a1](https://github.com/TigreGotico/linguatag/tree/0.0.2a1) (2026-11-03)
 
