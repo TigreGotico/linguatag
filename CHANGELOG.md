@@ -1,12 +1,19 @@
 # Changelog
 
+## [0.9.2a1](https://github.com/TigreGotico/linguatag/tree/0.9.2a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.1a3...0.9.2a1)
+
+**Merged pull requests:**
+
+- fix\(data\): start years from cited sources [\#111](https://github.com/TigreGotico/linguatag/pull/111) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.1a3](https://github.com/TigreGotico/linguatag/tree/0.9.1a3) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.1a2...0.9.1a3)
 
 **Merged pull requests:**
 
-- fix\(data\): start years from cited sources [\#111](https://github.com/TigreGotico/linguatag/pull/111) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 - docs: examples and figures run in CI; figure text from the data [\#110](https://github.com/TigreGotico/linguatag/pull/110) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.9.1a2](https://github.com/TigreGotico/linguatag/tree/0.9.1a2) (2026-11-26)
