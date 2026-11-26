@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.1a1](https://github.com/TigreGotico/linguatag/tree/0.9.1a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.0a1...0.9.1a1)
+
+**Merged pull requests:**
+
+- fix: strip white space around a tag in every tag reader [\#85](https://github.com/TigreGotico/linguatag/pull/85) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.0a1](https://github.com/TigreGotico/linguatag/tree/0.9.0a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.8.0a1...0.9.0a1)
