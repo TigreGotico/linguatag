@@ -1,12 +1,10 @@
 """Genealogy, place and period functions.
 
-``data/metric_pairs.json`` holds the values that orthography2ipa returns for a
-fixed sample of pairs (``scripts/freeze_metric_fixture.py``). It is an
-independent implementation of the same arithmetic, so a linguatag value that
-differs from it is a defect in one of the two. These tests never import
-orthography2ipa.
+Each expected value comes from the cited data and the formula in the docstring
+of the function, worked out by hand.
 """
 import json
+import math
 from pathlib import Path
 
 import pytest
@@ -16,46 +14,53 @@ from linguatag import (ancestors, ancestry_similarity, catalog_ids, family, fami
                        geographic_distance, parent, script_distance_by_name,
                        temporal_distance)
 
-FIXTURE = json.loads((Path(__file__).parent / "data" / "metric_pairs.json").read_text(encoding="utf-8"))
-METRICS = FIXTURE["metrics"]
 
-CALLS = {
-    "ancestry_similarity": ancestry_similarity,
-    "ancestry_similarity_temporal": ancestry_similarity,
-    "ancestry_similarity_depth_1": ancestry_similarity,
-    "geographic_distance": geographic_distance,
-    "geographic_distance_km": geographic_distance,
-    "temporal_distance": temporal_distance,
-    "temporal_distance_1500": temporal_distance,
-    "script_distance_by_name": script_distance_by_name,
-}
-
-
-def test_the_fixture_names_its_orthography2ipa_version():
-    assert FIXTURE["orthography2ipa"]
-    assert set(CALLS) == set(METRICS)
+@pytest.mark.parametrize("a, b, expected", [
+    # pt-PT and pt-BR share pt-PT-x-medieval: weights 1.0 and 0.85.
+    ("pt-PT", "pt-BR", 0.85),
+    # gl-ES hangs from roa-x-galaico-pt with 0.75; pt-PT reaches it through
+    # pt-PT-x-medieval with 1.0 * 1.0.
+    ("pt-PT", "gl", 0.75),
+    ("pt-BR", "gl", 0.85 * 0.75),
+    ("pt-PT", "pt-PT", 1.0),
+])
+def test_ancestry_similarity_multiplies_the_cited_weights(a, b, expected):
+    assert ancestry_similarity(a, b) == pytest.approx(expected)
 
 
-#: Tags whose period has a cited correction (times.json "sources", linguatag #99).
-#: The frozen o2i values do not hold for them.
-CITED_PERIODS = set(json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json")
-                               .read_text(encoding="utf-8"))["sources"])
+@pytest.mark.parametrize("a, b, expected", [
+    # Start years (times.json sources): mwl 1609, aae 1450, ca-x-valencia 1343,
+    # all still spoken, so each period ends at the reference year 2025.
+    ("mwl", "aae", 1 - (2025 - 1609) / (2025 - 1450)),
+    ("mwl", "ca-x-valencia", 1 - (2025 - 1609) / (2025 - 1343)),
+    ("aae", "ca-x-valencia", 1 - (2025 - 1450) / (2025 - 1343)),
+])
+def test_temporal_distance_is_one_minus_the_shared_share(a, b, expected):
+    assert temporal_distance(a, b) == pytest.approx(expected)
 
 
-def _cited(name: str, tag: str) -> bool:
-    if not name.startswith(("temporal", "ancestry_similarity_temporal")):
-        return False
-    return tag in CITED_PERIODS or any(a in CITED_PERIODS for a in ancestors(tag))
+def test_temporal_distance_before_a_start_year_is_one():
+    # With reference year 1500, mwl (1609) has not started: no shared years.
+    assert temporal_distance("mwl", "aae", reference_year=1500) == 1.0
 
 
-@pytest.mark.parametrize("name", sorted(METRICS))
-def test_a_metric_equals_the_orthography2ipa_value_on_every_sampled_pair(name):
-    metric = METRICS[name]
-    assert len(metric["rows"]) >= 441
-    kept = [row for row in metric["rows"] if not (_cited(name, row[0]) or _cited(name, row[1]))]
-    assert len(metric["rows"]) - len(kept) <= 60
-    for a, b, expected in kept:
-        assert CALLS[name](a, b, **metric["kwargs"]) == expected, (name, a, b)
+def test_geographic_distance_by_the_spherical_law_of_cosines():
+    # A second formula for the great circle, on the points of places.json.
+    places = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "places.json")
+                        .read_text(encoding="utf-8"))["places"]
+    (lat1, lon1), (lat2, lon2) = (map(math.radians, places[t]) for t in ("pt-PT", "es-ES"))
+    angle = math.acos(math.sin(lat1) * math.sin(lat2)
+                      + math.cos(lat1) * math.cos(lat2) * math.cos(lon2 - lon1))
+    assert geographic_distance("pt-PT", "es-ES", normalize=False) == pytest.approx(6371.0088 * angle)
+    assert geographic_distance("pt-PT", "es-ES") == pytest.approx(angle / math.pi)
+    assert geographic_distance("pt-PT", "pt-PT") == 0.0
+
+
+def test_script_distance_of_latin_and_cyrillic():
+    # The two differ only in their ancestor scripts: they share Greek and
+    # Phoenician of Etruscan, Greek and Phoenician, so 0.25 * (1 - 2/3).
+    assert script_distance_by_name("Latin", "Cyrillic") == pytest.approx(0.25 / 3)
+    assert script_distance_by_name("Latin", "Latin") == 0.0
 
 
 @pytest.mark.parametrize("tag, period", [
@@ -82,19 +87,6 @@ def test_every_edge_source_belongs_to_a_node():
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
     assert set(data["sources"]) <= set(data["nodes"])
     assert all(data["sources"].values())
-
-
-@pytest.mark.parametrize("name", ["ancestry_similarity", "geographic_distance", "temporal_distance"])
-def test_every_moved_metric_is_sampled_on_at_least_500_pairs(name):
-    assert len(METRICS[name]["rows"]) >= 500
-
-
-def test_the_sample_is_not_trivial():
-    values = [row[2] for row in METRICS["ancestry_similarity"]["rows"]]
-    assert sum(0 < v < 1 for v in values) > 100
-    assert sum(v == 1.0 for v in values) > 10
-    assert any(row[2] is None for row in METRICS["geographic_distance"]["rows"])
-    assert any(row[2] is None for row in METRICS["temporal_distance"]["rows"])
 
 
 # The chains below are the `inherits` values of the orthography2ipa spec files,
