@@ -193,40 +193,14 @@ def _sinitic_against_mandarin(a: str, b: str) -> bool:
 
 
 def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int:
-    """The distance between two BCP-47 language tags.
+    """The CLDR 49 matching distance (UTS #35 section 4.4) between two tags.
 
-    ``0`` is identical; a larger number is further apart; a value above 10 is
-    not a usable match. Both tags are standardized, and a tag with no region
-    is measured from its default region, so ``lang_distance("pt", "pt-PT")``
-    is ``0`` while ``lang_distance("pt", "pt-BR")`` is a regional difference.
-
-    The spellings of Modern Standard Arabic (``ar``, ``arb``, ``ar-001``) are
-    identical. An individual Arabic language (``arz``, ``apc``, ...),
-    Hassaniyya (``mey``) or ``ar`` with any region, in Arabic script, measured
-    against one of them, is at most 5. A spoken member of the ``zh``
-    macrolanguage other than Mandarin (``yue``, ``hak``, ``nan``, ``wuu``,
-    ``cdo`` and the others the module docstring names) measured against
-    ``cmn``, or against ``zh`` in Simplified script, is a different language.
-    Fanti (``fat``) and Mandinka (``mnk``) are 80 or more from any other
-    language, Akan (``ak``) and Mandingo (``man``) included.
-
-    A tag that is not a well-formed BCP 47 tag, such as a voice id, is
-    measured as its longest well-formed prefix: ``zh-HK-HiuMaanNeural`` as
-    ``zh-HK``. A tag with an empty subtag (``ar-``, ``ar_``, ``-ar``,
-    ``en--US``) is not a language tag, and it is no usable match for any tag.
-    A tag that adds only a script or region to ``und`` matches a bare ``und``.
-    ``und-x-foo`` and a private-use-only tag (``x-foo``) are no usable match
-    for any tag but themselves. Surrounding whitespace is ignored.
-
-    The distance is the CLDR 49 matching distance of UTS #35 section 4.4
-    (:func:`linguatag._distance.tag_distance`).
-
-    A private-use subtag counts for nothing unless ``lects`` asks for it:
-    ``"dialect"`` scores the nearest other dialect before the standard
-    language, ``"standard"`` the standard language before the dialects (see
-    :mod:`linguatag._lects`). The lect score reorders candidates; it never
-    raises a distance at or below the default threshold above it.
-    """
+    ``0`` is identical, and a value above 10 is no usable match. Both tags are
+    standardized, and a tag with no region is measured from its default
+    region. White space around a tag is ignored. ``lects`` (``"dialect"`` or
+    ``"standard"``) adds a score for private-use lect subtags that reorders
+    candidates and never raises a distance. The Arabic, Chinese and
+    malformed-tag rules are in ``docs/matching.md``."""
     distance = _language_distance(desired, supported)
     if lects is None:
         return distance
@@ -321,20 +295,11 @@ def lang_matches(a: str, b: str,
 
 
 def is_arabic_variety(tag: str) -> bool:
-    """``True`` when ``tag`` names Arabic or a variety of Arabic.
+    """``True`` when the language subtag of ``tag`` is Arabic: ``ar``, an
+    individual language of the ``ar`` macrolanguage, or Hassaniyya (``mey``).
 
-    The language subtag decides, after :func:`standardize_lang`. Script,
-    region and private-use subtags do not count, so ``ar-Latn-x-buckwalt``,
-    ``arz-EG`` and Juba Arabic, ``pga``, are Arabic varieties. Arabic is
-    ``ar`` (``ara``), its individual languages (the IANA language subtags
-    with ``Macrolanguage: ar``, among them ``arb``, ``arz``, ``acy`` and
-    ``pga``), and Hassaniyya, ``mey``. A different language written in Arabic
-    script is not one: ``fa``, ``ur`` and ``und-Arab`` are ``False``, and so
-    is a tag with an empty subtag.
-
-    This tells what language a tag names. :func:`lang_distance` tells whether
-    a resource for one tag can serve a request for another.
-    """
+    Script, region and private-use subtags do not count, and another language
+    in Arabic script is ``False``. See ``docs/matching.md``."""
     standard = standardize_lang(tag)
     if _has_empty_subtag(standard):
         return False
@@ -388,41 +353,14 @@ def _is_other_code_of_language(target: str, candidate: str) -> bool:
 def closest_lang(target: str, available: Sequence[str],
                  max_distance: int = DEFAULT_MAX_LANGUAGE_DISTANCE,
                  lects: Optional[str] = None) -> Optional[str]:
-    """The entry of ``available`` closest to ``target``.
+    """The entry of ``available`` closest to ``target``, verbatim, or ``None``.
 
-    The candidate with the smallest :func:`lang_distance` wins when its
-    distance is ``max_distance`` or less, so ``max_distance=0`` accepts exact
-    matches only. A tie goes to the candidate that spells ``target`` itself
-    (compared after :func:`standardize_lang`, without regard to case), so
-    ``pt-PT`` picks ``pt-PT`` over ``pt``, which is also at 0. Next, a
-    candidate that writes the target's language with another code of the
-    same language (a deprecated code or an extlang form, and its
-    Preferred-Value) loses the tie, so ``apc`` picks ``apc`` over ``ajp`` and
-    ``hak`` picks ``hak`` over ``zh-hak``. An ISO 639-2 or 639-3 code such as
-    ``fra`` for ``fr`` is not such a code. Next, a candidate with a language,
-    extlang or region subtag that has a Preferred-Value loses the tie, so
-    ``ar-apc`` picks ``apc`` over ``ajp`` and ``my-MM`` picks ``my-MM`` over
-    ``my-BU``. Next, a CLDR 49 paradigm locale (``en-US``, ``en-GB``,
-    ``es-ES``, ``es-419``, ``pt-BR``, ``pt-PT``) wins, as UTS #35 section 4.4
-    says: "These are locales that are preferred within a cluster." So
-    ``closest_lang("es-MX", ["es-CR", "es-419"])`` is ``es-419``. Other ties
-    resolve to the first candidate in iteration order.
-    With ``lects``, the lect score orders the candidates within
-    ``max_distance``; it decides no match.
-
-    Args:
-        target: the requested BCP-47 tag.
-        available: the tags on hand: directory names, voice ids, model
-            languages. Iterated once.
-        max_distance: the inclusive upper bound on an acceptable match.
-        lects: ``None``, ``"dialect"`` or ``"standard"``, as for
-            :func:`lang_distance`. ``closest_lang("an-x-cheso", ["an",
-            "an-x-ansotano"], lects="dialect")`` is ``"an-x-ansotano"``.
-
-    Returns:
-        The original string from ``available`` that best matches ``target``,
-        verbatim, or ``None`` when nothing qualifies.
-    """
+    The smallest :func:`lang_distance` at or below ``max_distance`` wins.
+    A tie goes, in order, to the candidate that spells ``target``, then to one
+    that does not use another code of the same language, then to one with no
+    deprecated subtag, then to a CLDR paradigm locale, then to the first
+    candidate. ``available`` is iterated once. ``lects`` is as for
+    :func:`lang_distance`. Examples are in ``docs/matching.md``."""
     target = target.strip()
     wanted = standardize_lang(target).casefold()
     best: Optional[str] = None

@@ -19,6 +19,7 @@ The SVG files hold no timestamp, so two runs write the same bytes. A run of
 changes ``timings.tsv``.
 """
 import json
+import re
 import math
 import statistics
 import subprocess
@@ -79,13 +80,26 @@ def distance_ladder() -> str:
                body)
 
 
-def data_files() -> str:
+def _file_rows() -> list:
     rows = []
     for path in sorted(DATA.glob("*.json")):
         content = json.loads(path.read_text(encoding="utf-8"))
-        records = sum(len(value) for key, value in content.items() if key != "source")
+        records = sum(len(value) for value in content.values() if not isinstance(value, str))
         rows.append((path.stat().st_size / 1000, path.name, records))
-    rows.sort(reverse=True)
+    return sorted(rows, reverse=True)
+
+
+def data_files_alt() -> str:
+    rows = _file_rows()
+    kilobytes, name, records = rows[0]
+    share = (rows[0][0] + rows[1][0]) / sum(row[0] for row in rows) * 100
+    return (f"Horizontal bars of the size and record count of the {len(rows)} data files. The largest is "
+            f"{name}, {kilobytes:.0f} kB and {records:,} records, and {name} and {rows[1][1]} hold "
+            f"{share:.0f} percent of the bytes.")
+
+
+def data_files() -> str:
+    rows = _file_rows()
     left, unit, top, row_height = 210, 1.8, 20, 30
     height = top + row_height * len(rows) + 12
     body = []
@@ -126,11 +140,24 @@ def genealogy_families() -> str:
                f"Nodes of genealogy.json for each top-level family: {summary}.", body)
 
 
-def call_timings() -> str:
+def _timing_rows() -> list:
     rows = []
     for line in TIMINGS.read_text(encoding="utf-8").splitlines()[1:]:
         label, milliseconds = line.split("\t")
         rows.append((label, float(milliseconds)))
+    return rows
+
+
+def call_timings_alt() -> str:
+    rows = _timing_rows()
+    label, ms = max(rows, key=lambda row: row[1])
+    fastest, fast_ms = min(rows, key=lambda row: row[1])
+    return (f"Horizontal bars on a log scale of the median time of each call in a fresh process. The slowest "
+            f"is {label}, {ms:.1f} ms, and the fastest is {fastest}, {fast_ms * 1000:.0f} microseconds.")
+
+
+def call_timings() -> str:
+    rows = _timing_rows()
     low, high = -3, 2          # log10 of the axis ends in ms: 0.001 to 100
     left, width, top, row_height = 250, 400, 20, 30
     height = top + row_height * len(rows) + 36
@@ -206,6 +233,18 @@ FIGURE_FILES = {"distance-ladder.svg": distance_ladder, "data-files.svg": data_f
                 "call-timings.svg": call_timings, "genealogy-families.svg": genealogy_families}
 
 
+#: The page and the alt-text writer of each figure that a page shows with an alt text from the data.
+ALT_TEXTS = {"data-files.svg": ("data-and-licence.md", data_files_alt),
+             "call-timings.svg": ("performance.md", call_timings_alt)}
+
+
+def _with_alt(page: str, name: str, alt: str) -> str:
+    pattern = re.compile(r"!\[[^\]]*\]\(figures/" + re.escape(name) + r"\)")
+    if len(pattern.findall(page)) != 1:
+        raise ValueError(f"the page must show figures/{name} once")
+    return pattern.sub(lambda _: f"![{alt}](figures/{name})", page)
+
+
 def main(argv) -> int:
     if argv == ["--measure"]:
         measure()
@@ -224,6 +263,16 @@ def main(argv) -> int:
         else:
             FIGURES.mkdir(exist_ok=True)
             path.write_text(fresh, encoding="utf-8")
+    for name, (page_name, alt) in ALT_TEXTS.items():
+        page = ROOT / "docs" / page_name
+        text_now = page.read_text(encoding="utf-8")
+        fresh = _with_alt(text_now, name, alt())
+        if argv:
+            if fresh != text_now:
+                print(f"{page} has an out-of-date alt text for {name}: run python scripts/docs_figures.py")
+                status = 1
+        else:
+            page.write_text(fresh, encoding="utf-8")
     return status
 
 

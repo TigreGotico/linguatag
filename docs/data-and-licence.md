@@ -29,9 +29,9 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 
 The figure shows the size of each file and how many records it holds.
 
-![Horizontal bars of the size of each data file: genealogy.json 820 kB and 7,677 records, places.json 196 kB and 7,256 records, likely_subtags.json 191 kB and 7,868 records, language_subtags.json 135 kB and 8,276 records, aliases.json 47 kB and 1,145 records, subtags.json 40 kB and 1,022 records, lects.json 19 kB and 190 records, language_matching.json 17 kB and 391 records, times.json 15 kB and 605 records, lineage.json 7 kB and 265 records, territory_containment.json 5 kB and 35 records, scripts.json 5 kB and 49 records.](figures/data-files.svg)
+![Horizontal bars of the size and record count of the 12 data files. The largest is genealogy.json, 1063 kB and 7,677 records, and genealogy.json and places.json hold 72 percent of the bytes.](figures/data-files.svg)
 
-*Figure: the 12 data files by size. Read the bars: `genealogy.json` and `places.json` hold about 68 percent of the 1,497 kB.*
+*Figure: the data files by size. `scripts/docs_figures.py` draws it from the files in `linguatag/data`. `genealogy.json` and `places.json` are the two largest.*
 
 To see the source of each file:
 
