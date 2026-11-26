@@ -62,6 +62,14 @@ flowchart TD
 
 *Figure: the path of one pair of tags, top to bottom. The steps before the CLDR rules end the walk early for empty, identical and undetermined tags, and the two steps after them are the rules that linguatag adds to CLDR.*
 
+A voice id or a model name often adds a word to a tag. The longest well-formed prefix is the tag:
+
+```python
+from linguatag import lang_distance
+
+print(lang_distance("zh-HK-HiuMaanNeural", "zh-HK"))  # 0
+```
+
 ## How the distance works
 
 `lang_distance(desired, supported)` standardizes both tags and gives a tag with no region its default region. Then it adds the likely script, and measures the CLDR 49 matching distance of UTS #35 section 4.4. Each subtag that differs adds the distance of the first CLDR rule that matches it.
@@ -169,6 +177,18 @@ print(lang_distance("ar-MA", "ar"))     # 5
 print(lang_distance("mey", "ar"))       # 5
 print(lang_distance("pga", "ar"))       # 64
 print(lang_distance("pga-Arab", "ar"))  # 5
+```
+
+`is_arabic_variety` tells whether a tag names Arabic. Only the language subtag counts, so a script, region or private-use subtag does not change the answer. A different language in Arabic script is not Arabic:
+
+```python
+from linguatag import is_arabic_variety
+
+print(is_arabic_variety("ar-Latn-x-buckwalt"))  # True
+print(is_arabic_variety("arz-EG"))              # True
+print(is_arabic_variety("pga"))                 # True
+print(is_arabic_variety("fa"))                  # False
+print(is_arabic_variety("und-Arab"))            # False
 ```
 
 CLDR alone gives 10 for `arz` against `ar` in one region. CLDR writes Juba Arabic (`pga`), Cypriot Maronite Arabic (`acy`) and Hassaniyya in Senegal (`mey-SN`) in Latin script, so they get the rule only with an explicit `-Arab` subtag. No other macrolanguage gets such a rule.
