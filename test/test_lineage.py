@@ -36,12 +36,36 @@ def test_the_fixture_names_its_orthography2ipa_version():
     assert set(CALLS) == set(METRICS)
 
 
+#: Tags whose period has a cited correction (times.json "sources", linguatag #99).
+#: The frozen o2i values do not hold for them.
+CITED_PERIODS = set(json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json")
+                               .read_text(encoding="utf-8"))["sources"])
+
+
+def _cited(name: str, tag: str) -> bool:
+    if not name.startswith(("temporal", "ancestry_similarity_temporal")):
+        return False
+    return tag in CITED_PERIODS or any(a in CITED_PERIODS for a in ancestors(tag))
+
+
 @pytest.mark.parametrize("name", sorted(METRICS))
 def test_a_metric_equals_the_orthography2ipa_value_on_every_sampled_pair(name):
     metric = METRICS[name]
     assert len(metric["rows"]) >= 441
-    for a, b, expected in metric["rows"]:
+    kept = [row for row in metric["rows"] if not (_cited(name, row[0]) or _cited(name, row[1]))]
+    assert len(metric["rows"]) - len(kept) <= 60
+    for a, b, expected in kept:
         assert CALLS[name](a, b, **metric["kwargs"]) == expected, (name, a, b)
+
+
+@pytest.mark.parametrize("tag, period", [
+    ("mwl", [1600, None]), ("ca-x-valencia", [1343, None]), ("aat", [1350, None]),
+    ("aae", [1450, None]), ("an-x-cheso", [1200, None]), ("acm-IQ", None), ("pt-BR", None),
+])
+def test_a_cited_period(tag, period):
+    years = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json").read_text(encoding="utf-8"))
+    assert years["years"].get(tag) == period
+    assert years["sources"][tag]
 
 
 @pytest.mark.parametrize("name", ["ancestry_similarity", "geographic_distance", "temporal_distance"])

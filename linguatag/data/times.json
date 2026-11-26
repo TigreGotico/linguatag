@@ -2,10 +2,9 @@
 "source": "TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5",
 "years": {
 "aa": [1976, null],
-"aae": [1592, null],
-"aat": [1200, null],
+"aae": [1450, null],
+"aat": [1350, null],
 "ab": [1862, null],
-"acm-IQ": [1400, null],
 "acw-SA": [1400, null],
 "acx-OM": [1700, null],
 "acy": [1200, null],
@@ -31,7 +30,7 @@
 "an-x-ansotano": [1100, null],
 "an-x-belsetan": [1100, null],
 "an-x-benasque": [1100, null],
-"an-x-cheso": [1100, null],
+"an-x-cheso": [1200, null],
 "an-x-chistau": [1100, null],
 "an-x-occident": [1100, null],
 "an-x-oriental": [1100, null],
@@ -102,7 +101,7 @@
 "ca-x-medieval": [1100, 1500],
 "ca-x-nord": [1300, null],
 "ca-x-occident": [1500, null],
-"ca-x-valencia": [1500, null],
+"ca-x-valencia": [1343, null],
 "cbk-PH": [1700, null],
 "cbk-PH-x-cavite": [1700, null],
 "cbk-PH-x-ternate": [1663, null],
@@ -373,7 +372,7 @@
 "ms": [1400, null],
 "mt": [1400, null],
 "mus": [1835, null],
-"mwl": [1400, null],
+"mwl": [1600, null],
 "mwl-x-ifanes": [1600, null],
 "mwl-x-sendim": [1600, null],
 "mxi": [711, 1300],
@@ -431,7 +430,6 @@
 "pre": [1600, null],
 "ps": [1000, null],
 "pt-AO": [1900, null],
-"pt-BR": [1700, null],
 "pt-BR-x-bahia": [1700, null],
 "pt-BR-x-caipira": [1700, null],
 "pt-BR-x-ce": [1700, null],
@@ -606,5 +604,14 @@
 "zgh": [2001, null],
 "zh": [1300, null],
 "zu": [1800, null]
+},
+"sources": {
+"aae": "WIKIPEDIA-ONLY: en 'Arbëresh language' oldid 1385627438 note 2, after Matranga & Milano 2019 p.228: from the middle of the 15th century",
+"aat": "WIKIPEDIA-ONLY: en 'Arbëresh language' oldid 1385627438 note 9, after Liakopoulos 2022 p.307: first mentioned in the Peloponnese in the second half of the 14th century",
+"acm-IQ": "NOT FOUND: no source gives a start year; the gələt/qəltu split follows 1258 and was gradual (Holes 2006 p.1937, via en and ar Wikipedia)",
+"an-x-cheso": "WIKIPEDIA-ONLY: en 'Hecho Aragonese' oldid 1367003846: first reference in a 13th-century inventory of the Siresa church",
+"ca-x-valencia": "WIKIPEDIA-ONLY: en 'Valencian language' oldid 1385983611, first attested use of the name in a Menorca trial of 1343-1346",
+"mwl": "Leite de Vasconcelos, Estudos de Philologia Mirandesa vol. 1 (1900), prologue: a 17th-century manuscript holds the first mention of Mirandese",
+"pt-BR": "NOT FOUND: no source gives a first attestation; pt-BR descends from 16th-century European Portuguese and had its own traits by 1758 (pt Wikipedia 'Português brasileiro' oldid 73217743)"
 }
 }
