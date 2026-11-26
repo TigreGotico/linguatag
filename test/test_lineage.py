@@ -36,29 +36,12 @@ def test_the_fixture_names_its_orthography2ipa_version():
     assert set(CALLS) == set(METRICS)
 
 
-#: Edges that follow Glottolog 5.4 where orthography2ipa's rule-inheritance
-#: parent differs (linguatag #99): braz1246 and port1283, vale1252 and cata1290.
-REPARENTED = {"pt-BR": "roa-x-galaico-pt", "ca-x-valencia": "ca-x-occident"}
-
-
-def _reparented(tag: str) -> bool:
-    return tag in REPARENTED or any(a in REPARENTED for a in ancestors(tag))
-
-
 @pytest.mark.parametrize("name", sorted(METRICS))
 def test_a_metric_equals_the_orthography2ipa_value_on_every_sampled_pair(name):
     metric = METRICS[name]
     assert len(metric["rows"]) >= 441
-    kept = [row for row in metric["rows"] if not (name.startswith("ancestry")
-                                                  and (_reparented(row[0]) or _reparented(row[1])))]
-    assert len(metric["rows"]) - len(kept) <= 40
-    for a, b, expected in kept:
+    for a, b, expected in metric["rows"]:
         assert CALLS[name](a, b, **metric["kwargs"]) == expected, (name, a, b)
-
-
-@pytest.mark.parametrize("tag, glottolog_parent", sorted(REPARENTED.items()))
-def test_a_reparented_lect_has_its_glottolog_parent(tag, glottolog_parent):
-    assert parent(tag) == glottolog_parent
 
 
 @pytest.mark.parametrize("name", ["ancestry_similarity", "geographic_distance", "temporal_distance"])
