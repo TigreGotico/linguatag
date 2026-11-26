@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.0a2](https://github.com/TigreGotico/linguatag/tree/0.7.0a2) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.0a1...0.7.0a2)
+
+**Merged pull requests:**
+
+- refactor: prefix internal modules with \_ [\#97](https://github.com/TigreGotico/linguatag/pull/97) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.0a1](https://github.com/TigreGotico/linguatag/tree/0.7.0a1) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.6.0a1...0.7.0a1)
