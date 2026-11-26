@@ -28,7 +28,7 @@ linguatag.lang_distance("en-AU", "en-US")
 first = time.perf_counter() - start
 ```
 
-![Horizontal bars on a log scale of the median time of each call in a fresh process, from docs/figures/timings.tsv. The figure states each value.](figures/call-timings.svg)
+![Horizontal bars on a log scale of the median time of each call in a fresh process. The slowest is import, 29.9 ms, and the fastest is warm, tag seen before, 7 microseconds.](figures/call-timings.svg)
 
 *Figure: the median of 7 fresh processes for each call, on a log scale. Read the two colours: a first call costs milliseconds, and a warm call on a tag that the process already saw costs microseconds.*
 
