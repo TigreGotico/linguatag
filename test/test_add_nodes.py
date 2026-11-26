@@ -75,3 +75,17 @@ def test_an_update_keeps_the_weighted_ancestors(data, monkeypatch):
     run(data, monkeypatch, {"pt-BR": {"parent": "pt-PT-x-medieval", "wikidata_qid": "Q750553",
                                       "glottolog_code": "braz1246"}}, "--update")
     assert read(data, "genealogy.json")["nodes"]["pt-BR"] == before
+
+
+def test_an_update_changes_only_the_keys_it_gives(data, monkeypatch):
+    before = read(data, "genealogy.json")["nodes"]["chm"]
+    run(data, monkeypatch, {"chm": {"parent": before["parent"], "wikidata_qid": "Q1"}}, "--update")
+    assert read(data, "genealogy.json")["nodes"]["chm"] == {**before, "wikidata_qid": "Q1"}
+
+
+def test_an_update_to_a_new_parent_drops_the_ancestors(data, monkeypatch):
+    before = read(data, "genealogy.json")["nodes"]["pt-BR"]
+    run(data, monkeypatch, {"pt-BR": {"parent": "pt-PT"}}, "--update")
+    after = read(data, "genealogy.json")["nodes"]["pt-BR"]
+    assert "ancestors" not in after and after["parent"] == "pt-PT"
+    assert after["glottolog_code"] == before["glottolog_code"] == "braz1246"

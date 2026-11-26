@@ -147,7 +147,7 @@ $ python scripts/add_nodes.py nodes.json
 4. Give `place` as `[latitude, longitude]` and `years` as `[start, end]`, where `start` is the year of the earliest attested distinct variety and `end` is `null` for a living language.
 5. Write the source of each fact in the pull request.
 
-The script refuses a tag that is not standard, a parent that the data does not hold, a cycle, a malformed glottocode or QID, and an unknown field. It refuses a tag that the data already holds, unless you give `--update`. An update keeps the weighted `ancestors` when the parent stays the same.
+The script refuses a tag that is not standard, a parent that the data does not hold, a cycle, a malformed glottocode or QID, and an unknown field. It refuses a tag that the data already holds, unless you give `--update`. An update changes only the keys that the file gives. When the parent changes, the update drops the weighted `ancestors` and takes the family of the new parent.
 
 The tree models regional descent in more depth than Glottolog. A parent can differ from the Glottolog tree; `glottolog_code` keeps the link.
 

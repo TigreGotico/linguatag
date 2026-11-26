@@ -11,7 +11,8 @@
 ``parent`` is required. Without ``family_path`` a node takes the family of its
 parent. A ``null`` stays in the data: it means that the catalog has no entry.
 A tag that the data already holds is refused unless ``--update`` is given.
-An update keeps the weighted ``ancestors`` when the parent stays the same.
+An update changes only the keys that the file gives. It drops the weighted
+``ancestors`` and takes the family of the new parent when the parent changes.
 """
 import json
 import re
@@ -79,12 +80,14 @@ def main() -> None:
         return 1 + depth(facts[tag]["parent"]) if facts.get(tag, {}).get("parent") in facts else 0
 
     for tag in sorted(facts, key=depth):
-        fact = facts[tag]
-        path = fact.get("family_path", nodes[fact["parent"]].get("family_path", []))
-        node = {"parent": fact["parent"]}
-        if old.get(tag, {}).get("parent") == fact["parent"] and "ancestors" in old[tag]:
-            node["ancestors"] = old[tag]["ancestors"]
-        node.update({"family": " > ".join(path), "family_path": path})
+        fact, node = facts[tag], dict(old.get(tag, {}))
+        moved = node.get("parent") != fact["parent"]
+        node["parent"] = fact["parent"]
+        if moved:
+            node.pop("ancestors", None)
+        if moved or "family_path" in fact:
+            path = fact.get("family_path", nodes[fact["parent"]].get("family_path", []))
+            node.update({"family": " > ".join(path), "family_path": path})
         node.update({k: fact[k] for k in CATALOG if k in fact})
         nodes[tag] = node
         if "place" in fact:
