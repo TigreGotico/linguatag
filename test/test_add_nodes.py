@@ -101,3 +101,37 @@ def test_a_null_parent_makes_a_root(data, monkeypatch):
     assert nodes["x-clade-zzzz0001"] == {"clade": True, "glottolog_code": "zzzz0001"}
     assert nodes["qaa"]["parent"] == "x-clade-zzzz0001" and nodes["qaa"]["glottolog_code"] is None
     assert nodes["qab"] == {"family": "Isolate", "family_path": ["Isolate"], "glottolog_code": "zzzz0002"}
+
+
+def test_a_move_gives_the_new_family_to_the_descendants(data, monkeypatch):
+    germanic = ["Indo-European", "Germanic", "Northwest Germanic", "West Germanic"]
+    run(data, monkeypatch, {"pt-BR": {"parent": "af"},
+                            "pt-BR-x-zown": {"parent": "pt-BR-x-sp", "family_path": ["Isolate"]}}, "--update")
+    nodes = read(data, "genealogy.json")["nodes"]
+    for tag in ("pt-BR", "pt-BR-x-sp", "pt-UY"):
+        assert nodes[tag]["family_path"] == germanic
+        assert nodes[tag]["family"] == "Indo-European > Germanic > Northwest Germanic > West Germanic"
+    assert nodes["pt-BR-x-zown"]["family_path"] == ["Isolate"]
+
+
+def test_a_move_to_the_root_removes_the_family(data, monkeypatch):
+    run(data, monkeypatch, {"pt-BR": {"parent": None}}, "--update")
+    nodes = read(data, "genealogy.json")["nodes"]
+    assert nodes["pt-BR"] == {"glottolog_code": "braz1246", "wikidata_qid": "Q750553"}
+
+
+def test_a_moved_clade_keeps_its_name_in_the_descendants(data, monkeypatch):
+    # x-clade-alba1267 is ["Indo-European"]; its children are ["Indo-European", "Albanian"].
+    run(data, monkeypatch, {"x-clade-alba1267": {"parent": "gem"}}, "--update")
+    nodes = read(data, "genealogy.json")["nodes"]
+    assert nodes["x-clade-alba1267"]["family_path"] == ["Indo-European", "Germanic"]
+    assert nodes["aae"]["family_path"] == ["Indo-European", "Germanic", "Albanian"]
+    assert nodes["aae"]["family"] == "Indo-European > Germanic > Albanian"
+
+
+def test_a_descendant_with_a_catalog_update_still_takes_the_new_family(data, monkeypatch):
+    run(data, monkeypatch, {"x-clade-alba1267": {"parent": "gem"},
+                            "aae": {"parent": "x-clade-alba1267", "wikidata_qid": "Q35852"}}, "--update")
+    nodes = read(data, "genealogy.json")["nodes"]
+    assert nodes["aae"]["family_path"] == ["Indo-European", "Germanic", "Albanian"]
+    assert nodes["aae"]["wikidata_qid"] == "Q35852"
