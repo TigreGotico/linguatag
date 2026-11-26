@@ -118,3 +118,12 @@ def test_a_move_to_the_root_removes_the_family(data, monkeypatch):
     run(data, monkeypatch, {"pt-BR": {"parent": None}}, "--update")
     nodes = read(data, "genealogy.json")["nodes"]
     assert nodes["pt-BR"] == {"glottolog_code": "braz1246", "wikidata_qid": "Q750553"}
+
+
+def test_a_moved_clade_keeps_its_name_in_the_descendants(data, monkeypatch):
+    # x-clade-alba1267 is ["Indo-European"]; its children are ["Indo-European", "Albanian"].
+    run(data, monkeypatch, {"x-clade-alba1267": {"parent": "gem"}}, "--update")
+    nodes = read(data, "genealogy.json")["nodes"]
+    assert nodes["x-clade-alba1267"]["family_path"] == ["Indo-European", "Germanic"]
+    assert nodes["aae"]["family_path"] == ["Indo-European", "Germanic", "Albanian"]
+    assert nodes["aae"]["family"] == "Indo-European > Germanic > Albanian"

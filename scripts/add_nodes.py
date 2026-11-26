@@ -14,7 +14,8 @@ a top-level clade; a tag that starts with ``x-clade-`` is a clade. Without
 A tag that the data already holds is refused unless ``--update`` is given.
 An update changes only the keys that the file gives. It drops the weighted
 ``ancestors`` and takes the family of the new parent when the parent changes. The descendants
-of a moved node take its family too, unless the file gives their family path.
+of a moved node take its new family path in place of its old one and keep the
+levels below it, unless the file gives their family path.
 """
 import json
 import re
@@ -83,6 +84,7 @@ def main() -> None:
     if known and not update:
         raise SystemExit(f"already in the data, pass --update to change them: {known}")
     old = {tag: dict(nodes[tag]) for tag in known}
+    before = {tag: node.get("family_path", []) for tag, node in nodes.items()}
     for tag, fact in facts.items():
         nodes.setdefault(tag, {})["parent"] = fact.get("parent")
     for tag, fact in facts.items():
@@ -118,9 +120,14 @@ def main() -> None:
     while moved:
         tag = moved.pop()
         for child in children.get(tag, []):
-            if "family_path" not in facts.get(child, {}):
-                set_family(nodes[child], nodes[tag].get("family_path"))
-                moved.append(child)
+            if child in facts or child not in before:
+                continue
+            # A descendant keeps its own levels below the moved node, such as
+            # the name of a clade: only the prefix of the moved node changes.
+            prefix, path = before[tag], before[child]
+            if path[:len(prefix)] == prefix:
+                set_family(nodes[child], nodes[tag].get("family_path", []) + path[len(prefix):] or None)
+            moved.append(child)
     for name, data in files.items():
         (DATA / name).write_text(dump(data), encoding="utf-8")
     print(f"{len(facts)} nodes in, {len(facts) - len(known)} added, {len(known)} updated")
