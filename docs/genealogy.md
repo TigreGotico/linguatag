@@ -36,6 +36,20 @@ print(repr(family("qqq-x-nothing")))  # ''
 
 Every function standardizes its tags first, so `PT-pt-X-PORTO` and `pt-PT-x-porto` give the same answer.
 
+## Find a tag in other catalogs
+
+The tree models regional descent in more depth than Glottolog, so its shape can differ from the Glottolog tree. `catalog_ids` links each node to the other catalogs:
+
+```python
+from linguatag import catalog_ids
+
+print(catalog_ids("pt-BR"))          # {'glottolog_code': 'braz1246', 'wikidata_qid': 'Q750553'}
+print(catalog_ids("an-x-cheso"))     # {'glottolog_code': None, 'wikidata_qid': 'Q3573993'}
+print(catalog_ids("qqq-x-nothing"))  # {}
+```
+
+A key with the value `None` means that the catalog has no entry for the variety. A key that is absent means that no one checked.
+
 ## Measure two tags
 
 `ancestry_similarity` is 1.0 for the same tag and 0.0 for two tags with no common ancestor. The ancestors of a tag carry weights, and a weight can be below 1.0 for a substrate or a neighbour that left traces. The similarity of two tags is the product of the weights along their best connecting paths. A clade adds nothing, so the trace skips it.

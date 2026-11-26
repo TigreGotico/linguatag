@@ -12,7 +12,7 @@ from pathlib import Path
 import pytest
 
 import linguatag
-from linguatag import (ancestors, ancestry_similarity, family, family_path,
+from linguatag import (ancestors, ancestry_similarity, catalog_ids, family, family_path,
                        geographic_distance, parent, script_distance_by_name,
                        temporal_distance)
 
@@ -115,3 +115,16 @@ def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
     assert all(tag in nodes and "-x-" in tag for tag in lects)
     assert all(set(entry) == {"name", "regions", "islands", "cities"} for entry in lects.values())
     assert all(not (e["regions"] or e["islands"] or e["cities"]) for e in lects.values())
+
+
+@pytest.mark.parametrize("tag, ids", [
+    # Glottolog 5.4 Indo-European tree: Brazilian Portuguese [braz1246], Valencià [vale1252].
+    ("pt-BR", {"glottolog_code": "braz1246", "wikidata_qid": "Q750553"}),
+    ("ca-x-valencia", {"glottolog_code": "vale1252", "wikidata_qid": "Q32641"}),
+    # Glottolog has no node for Cheso (Aragonese has only four dialect children).
+    ("an-x-cheso", {"glottolog_code": None, "wikidata_qid": "Q3573993"}),
+    ("gl", {"glottolog_code": "gali1258", "wikidata_qid": "Q9307"}),
+    ("qqq-x-nothing", {}),
+])
+def test_catalog_ids(tag, ids):
+    assert catalog_ids(tag) == ids

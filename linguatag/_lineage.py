@@ -65,6 +65,14 @@ def family_path(tag: str) -> Tuple[str, ...]:
     return tuple(_nodes().get(_key(tag), {}).get("family_path", ()))
 
 
+def catalog_ids(tag: str) -> Dict[str, Optional[str]]:
+    """The ids of ``tag`` in other catalogs: ``glottolog_code`` and
+    ``wikidata_qid``. A key with the value ``None`` means that the catalog has
+    no entry for the variety. A key that is absent means that no one checked."""
+    node = _nodes().get(_key(tag), {})
+    return {k: node[k] for k in ("glottolog_code", "wikidata_qid") if k in node}
+
+
 def _data_ancestors(tag: str) -> List[Tuple[str, float]]:
     """The weighted ancestors of ``tag`` with each clade node replaced by the
     nearest ancestor above it that is not a clade. A clade has no phonology and

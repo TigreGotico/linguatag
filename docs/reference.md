@@ -8,7 +8,7 @@ verify: python scripts/check_doc_page.py docs/reference.md
 see: getting-started.md, matching.md
 -->
 
-This page gives the signature and one example for each of the 26 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
+This page gives the signature and one example for each of the 27 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
 
 ## Normalise a tag
 
@@ -110,7 +110,7 @@ print(lect_steps("pt", "en"))                      # None
 
 ## Genealogy, place and time
 
-`parent(tag: str) -> Optional[str]` gives the genealogical parent. `ancestors(tag: str) -> List[str]` gives the chain of parents, nearest first. `family(tag: str) -> str` and `family_path(tag: str) -> Tuple[str, ...]` give the family as text and as clade names.
+`parent(tag: str) -> Optional[str]` gives the genealogical parent. `ancestors(tag: str) -> List[str]` gives the chain of parents, nearest first. `family(tag: str) -> str` and `family_path(tag: str) -> Tuple[str, ...]` give the family as text and as clade names. `catalog_ids(tag: str) -> Dict[str, Optional[str]]` gives the `glottolog_code` and `wikidata_qid` of a tag.
 
 `ancestry_similarity(a, b, max_depth=10, temporal_decay=False, decay_halflife=1000.0) -> float`, `geographic_distance(a, b, normalize=True) -> Optional[float]` and `temporal_distance(a, b, reference_year=2025) -> Optional[float]` measure two tags. `script_features(name) -> dict`, `script_distance(a: dict, b: dict) -> float` and `script_distance_by_name(a: str, b: str) -> float` compare writing systems.
 
@@ -142,7 +142,7 @@ print(is_arabic_variety("ur"))       # False
 | `lang_distance`, `lang_matches`, `closest_lang`, `DEFAULT_MAX_LANGUAGE_DISTANCE` | [Matching](matching.md) |
 | `is_arabic_variety` | [Getting started](getting-started.md#tell-whether-a-tag-names-arabic) |
 | `LECT_MODES`, `lect_steps` | [Dialects](dialects.md) |
-| `parent`, `ancestors`, `family`, `family_path`, `ancestry_similarity`, `geographic_distance`, `temporal_distance`, `script_features`, `script_distance`, `script_distance_by_name` | [Genealogy, place and time](genealogy.md) |
+| `parent`, `ancestors`, `family`, `family_path`, `catalog_ids`, `ancestry_similarity`, `geographic_distance`, `temporal_distance`, `script_features`, `script_distance`, `script_distance_by_name` | [Genealogy, place and time](genealogy.md) |
 
 ---
 [Index](index.md) · [← Performance](performance.md)
