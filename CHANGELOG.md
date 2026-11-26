@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.9a1](https://github.com/TigreGotico/linguatag/tree/0.9.9a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.8a1...0.9.9a1)
+
+**Merged pull requests:**
+
+- fix\(data\): Glottolog code for ett, sux node as an isolate [\#134](https://github.com/TigreGotico/linguatag/pull/134) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.8a1](https://github.com/TigreGotico/linguatag/tree/0.9.8a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.7a1...0.9.8a1)
@@ -389,10 +397,6 @@
 ## [0.1.1a2](https://github.com/TigreGotico/linguatag/tree/0.1.1a2) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.1a1...0.1.1a2)
-
-**Merged pull requests:**
-
-- docs: cite only langcodes for the distance threshold [\#10](https://github.com/TigreGotico/linguatag/pull/10) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.1.1a1](https://github.com/TigreGotico/linguatag/tree/0.1.1a1) (2026-11-03)
 
