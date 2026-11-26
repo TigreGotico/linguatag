@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.1a2](https://github.com/TigreGotico/linguatag/tree/0.9.1a2) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.1a1...0.9.1a2)
+
+**Merged pull requests:**
+
+- docs: examples and figures run in CI; figure text from the data [\#110](https://github.com/TigreGotico/linguatag/pull/110) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- refactor: short docstrings for the matching and standardize calls [\#109](https://github.com/TigreGotico/linguatag/pull/109) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.1a1](https://github.com/TigreGotico/linguatag/tree/0.9.1a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.0a1...0.9.1a1)
