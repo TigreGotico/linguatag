@@ -132,7 +132,9 @@ def main() -> None:
             moved.append(child)
     lineage = json.loads((DATA / "lineage.json").read_text(encoding="utf-8"))
     for tag, fact in facts.items():
-        if fact["parent"] and ("-x-" in tag or tag in lineage["parents"]):
+        if fact["parent"] is None:
+            lineage["parents"].pop(tag, None)
+        elif "-x-" in tag or tag in lineage["parents"]:
             lineage["parents"][tag] = fact["parent"]
     files["lineage.json"] = lineage
     for name, data in files.items():

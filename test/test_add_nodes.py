@@ -143,3 +143,8 @@ def test_a_lect_move_updates_the_lect_tree(data, monkeypatch):
     parents = read(data, "lineage.json")["parents"]
     assert parents["pt-PT-x-znew"] == "pt-PT"
     assert parents["pt-PT-x-braga"] == "pt-PT-x-znew"
+
+
+def test_a_lect_moved_to_the_root_leaves_the_lect_tree(data, monkeypatch):
+    run(data, monkeypatch, {"pt-PT-x-medieval": {"parent": None}}, "--update")
+    assert "pt-PT-x-medieval" not in read(data, "lineage.json")["parents"]
