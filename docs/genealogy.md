@@ -107,7 +107,7 @@ print(script_distance(script_features("Latin"), script_features("Latin")))  # 0.
 | --- | --- |
 | `genealogy.json` | For each tag: its `parent`, its weighted `ancestors` when the spec lists them, its `family`, its `family_path` and `clade` when the tag is a clade node |
 | `places.json` | The latitude and longitude of each tag that has a point |
-| `times.json` | The start year and end year of each tag that has a period. A living language has `null` as its end year |
+| `times.json` | The start year and end year of each tag that has a period. The start year is the year of the earliest attested distinct variety. A living language has `null` as its end year. The `sources` table gives the source of a corrected period; `NOT FOUND` marks a tag whose period was removed because no source supports it, and `WIKIPEDIA-ONLY` marks a year with no primary source |
 | `lects.json` | Each private-use lect with its name and the lists `regions`, `islands` and `cities` that it covers |
 | `scripts.json` | The 21 writing systems and the distance of each pair of script types |
 
