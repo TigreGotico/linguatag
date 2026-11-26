@@ -117,10 +117,11 @@ def main() -> None:
     for tag, node in nodes.items():
         children.setdefault(node.get("parent"), []).append(tag)
     moved = [tag for tag in facts if old.get(tag, {}).get("parent") != facts[tag]["parent"]]
+    own = set(moved) | {tag for tag, fact in facts.items() if "family_path" in fact}
     while moved:
         tag = moved.pop()
         for child in children.get(tag, []):
-            if child in facts or child not in before:
+            if child in own or child not in before:
                 continue
             # A descendant keeps its own levels below the moved node, such as
             # the name of a clade: only the prefix of the moved node changes.

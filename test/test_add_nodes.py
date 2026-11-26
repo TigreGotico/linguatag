@@ -127,3 +127,11 @@ def test_a_moved_clade_keeps_its_name_in_the_descendants(data, monkeypatch):
     assert nodes["x-clade-alba1267"]["family_path"] == ["Indo-European", "Germanic"]
     assert nodes["aae"]["family_path"] == ["Indo-European", "Germanic", "Albanian"]
     assert nodes["aae"]["family"] == "Indo-European > Germanic > Albanian"
+
+
+def test_a_descendant_with_a_catalog_update_still_takes_the_new_family(data, monkeypatch):
+    run(data, monkeypatch, {"x-clade-alba1267": {"parent": "gem"},
+                            "aae": {"parent": "x-clade-alba1267", "wikidata_qid": "Q35852"}}, "--update")
+    nodes = read(data, "genealogy.json")["nodes"]
+    assert nodes["aae"]["family_path"] == ["Indo-European", "Germanic", "Albanian"]
+    assert nodes["aae"]["wikidata_qid"] == "Q35852"
