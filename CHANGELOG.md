@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.8a1](https://github.com/TigreGotico/linguatag/tree/0.9.8a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.7a1...0.9.8a1)
+
+**Merged pull requests:**
+
+- fix: Braga and Porto under Minho, Qeltu under Mashriqi Arabic [\#130](https://github.com/TigreGotico/linguatag/pull/130) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.7a1](https://github.com/TigreGotico/linguatag/tree/0.9.7a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.6a2...0.9.7a1)
@@ -389,10 +397,6 @@
 ## [0.1.1a1](https://github.com/TigreGotico/linguatag/tree/0.1.1a1) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.0a1...0.1.1a1)
-
-**Merged pull requests:**
-
-- fix: never read a private-use subtag as a script [\#8](https://github.com/TigreGotico/linguatag/pull/8) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.1.0a1](https://github.com/TigreGotico/linguatag/tree/0.1.0a1) (2026-11-03)
 
