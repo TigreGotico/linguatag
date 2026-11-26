@@ -1869,7 +1869,6 @@
 "eth": {"parent": "x-clade-sign1238", "family": "Sign Language", "family_path": ["Sign Language"], "glottolog_code": "ethi1238"},
 "etn": {"parent": "x-clade-aust1307", "family": "Austronesian", "family_path": ["Austronesian"], "glottolog_code": "eton1255"},
 "eto": {"parent": "x-clade-atla1278", "family": "Atlantic-Congo", "family_path": ["Atlantic-Congo"], "glottolog_code": "eton1253"},
-"etr": {"parent": "x-clade-tyrsen", "family": "Tyrsenian", "family_path": ["Tyrsenian"], "glottolog_code": "etru1241", "wikidata_qid": "Q35726"},
 "ets": {"parent": "x-clade-atla1278", "family": "Atlantic-Congo", "family_path": ["Atlantic-Congo"], "glottolog_code": "yekh1238"},
 "ett": {"parent": "x-clade-tyrsen", "ancestors": [["x-clade-tyrsen", "parent", 1.0]], "family": "Tyrsenian", "family_path": ["Tyrsenian"], "glottolog_code": "etru1241"},
 "etu": {"parent": "x-clade-atla1278", "family": "Atlantic-Congo", "family_path": ["Atlantic-Congo"], "glottolog_code": "ejag1239"},
