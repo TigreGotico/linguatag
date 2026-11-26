@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.1a1](https://github.com/TigreGotico/linguatag/tree/0.7.1a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.0a2...0.7.1a1)
+
+**Merged pull requests:**
+
+- fix\(data\): pt-BR and ca-x-valencia parents follow Glottolog [\#100](https://github.com/TigreGotico/linguatag/pull/100) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.0a2](https://github.com/TigreGotico/linguatag/tree/0.7.0a2) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.0a1...0.7.0a2)
