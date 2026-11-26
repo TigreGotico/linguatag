@@ -103,14 +103,14 @@ def test_every_data_file_names_its_source_commit():
 
 
 def test_a_chain_terminates_on_a_cycle(monkeypatch):
-    import linguatag.lineage as lineage
+    import linguatag._lineage as lineage
     monkeypatch.setattr(lineage, "_nodes", lambda: {"aa": {"parent": "bb"}, "bb": {"parent": "aa"}})
     assert ancestors("aa") == ["bb", "aa"]
 
 
 def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
-    lects = linguatag.bcp47._raw_data("lects.json")["lects"]
-    nodes = linguatag.bcp47._raw_data("genealogy.json")["nodes"]
+    lects = linguatag._bcp47._raw_data("lects.json")["lects"]
+    nodes = linguatag._bcp47._raw_data("genealogy.json")["nodes"]
     assert len(lects) == 190
     assert all(tag in nodes and "-x-" in tag for tag in lects)
     assert all(set(entry) == {"name", "regions", "islands", "cities"} for entry in lects.values())

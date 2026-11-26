@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how standardize_lang gives a tag one spelling, and how parse_tag reads the subtags of a tag.
-source: linguatag/standardize.py:standardize_lang, linguatag/bcp47.py:parse (exported as parse_tag), linguatag/bcp47.py:standardize
+source: linguatag/_standardize.py:standardize_lang, linguatag/_bcp47.py:parse (exported as parse_tag), linguatag/_bcp47.py:standardize
 generated: no
 verify: python scripts/check_doc_page.py docs/parsing.md
 see: likely-subtags.md
@@ -64,7 +64,7 @@ except LanguageTagError as error:
 
 `parse_tag` returns a `LanguageTag` with the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. It follows the RFC 5646 section 2.1 grammar, and it replaces nothing. It reads `root` as `und`, and it gives `None` as the language of `und`. `LanguageTagError` is a subclass of `ValueError`.
 
-`standardize_lang` replaces deprecated and extlang subtags, so `standardize_lang("sgn-US")` is `ase`. A tag with an extlang whose IANA `Prefix` is a different language stays as written: `standardize_lang("en-hak")` is `en-hak`. Only the names in `linguatag.__all__` are the public API. The modules inside the package, such as `linguatag.bcp47`, are internal.
+`standardize_lang` replaces deprecated and extlang subtags, so `standardize_lang("sgn-US")` is `ase`. A tag with an extlang whose IANA `Prefix` is a different language stays as written: `standardize_lang("en-hak")` is `en-hak`. Only the names in `linguatag.__all__` are the public API. The modules inside the package, such as `linguatag._bcp47`, are internal.
 
 ---
 [Index](index.md) · [← Getting started](getting-started.md) · [Likely subtags and default regions →](likely-subtags.md)

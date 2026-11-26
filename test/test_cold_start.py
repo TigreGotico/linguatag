@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 import linguatag
-from linguatag import bcp47
+from linguatag import _bcp47 as bcp47
 
 DATA = Path(linguatag.__file__).parent / "data"
 
@@ -19,7 +19,7 @@ def _after(call: str) -> dict:
     and the alias tables it built."""
     tree = str(DATA.parent.parent)
     code = (
-        "import json, pathlib, linguatag, linguatag.bcp47 as b\n"
+        "import json, pathlib, linguatag, linguatag._bcp47 as b\n"
         f"assert linguatag.__file__.startswith({tree!r}), linguatag.__file__\n"
         "read = []\n"
         "read_text = pathlib.Path.read_text\n"

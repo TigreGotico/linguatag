@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how lang_distance measures two tags and how closest_lang picks a tag from a list.
-source: linguatag/matching.py:lang_distance, linguatag/matching.py:closest_lang, linguatag/distance.py:tag_distance, linguatag/data/language_matching.json
+source: linguatag/_matching.py:lang_distance, linguatag/_matching.py:closest_lang, linguatag/_distance.py:tag_distance, linguatag/data/language_matching.json
 generated: no, but docs/figures/distance-ladder.svg comes from scripts/docs_figures.py. Edit the script, not the SVG
 verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/matching.md
 see: dialects.md

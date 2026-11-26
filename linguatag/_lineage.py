@@ -17,9 +17,9 @@ from collections import deque
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
-from linguatag.bcp47 import _raw_data
-from linguatag.regions import with_default_region
-from linguatag.standardize import standardize_lang
+from linguatag._bcp47 import _raw_data
+from linguatag._regions import with_default_region
+from linguatag._standardize import standardize_lang
 
 _EARTH_RADIUS_KM = 6371.0088
 

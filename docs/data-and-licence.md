@@ -55,13 +55,13 @@ Nobody edits these files by hand. To change one, change its script or its source
 
 ## The loader is read-only
 
-The package reads its data files with the internal call `linguatag.bcp47.load_data`, which is not part of the public API. It returns a read-only view of the parsed JSON. Dictionaries are frozen dicts and JSON arrays are tuples, so a caller cannot change package data for every other caller. The view is made once when the file is read and shared, so a repeated call costs no copy. `registry` returns a read-only view of the records of one kind, made the same way. The language records are in `language_subtags.json`, so `load_data("subtags.json")` holds no `language` key; read them with `registry("language")` or `load_data("language_subtags.json")`.
+The package reads its data files with the internal call `linguatag._bcp47.load_data`, which is not part of the public API. It returns a read-only view of the parsed JSON. Dictionaries are frozen dicts and JSON arrays are tuples, so a caller cannot change package data for every other caller. The view is made once when the file is read and shared, so a repeated call costs no copy. `registry` returns a read-only view of the records of one kind, made the same way. The language records are in `language_subtags.json`, so `load_data("subtags.json")` holds no `language` key; read them with `registry("language")` or `load_data("language_subtags.json")`.
 
 The view stays a dict, so JSON, copy and pickle work. A deep copy or an unpickled value is a plain, mutable dict. A shallow copy leaves the nested views frozen. To change package data for one call only, make a deep copy first.
 
 ```python
 from linguatag import lect_steps
-from linguatag.bcp47 import load_data  # internal: for contributors only
+from linguatag._bcp47 import load_data  # internal: for contributors only
 
 print(lect_steps("pt-x-central", "pt-x-minhoto"))  # 2
 try:
@@ -132,7 +132,7 @@ Two codes that standardize to one tag give one node, and the code that already i
 
 linguatag is under the Apache License 2.0 ([LICENSE](../LICENSE)).
 
-`linguatag/bcp47.py` and `linguatag/distance.py` port code from langcodes 3.5.1, Copyright (C) 2021 Robyn Speer, under the MIT License. The ported parts are `tag_parser.py`, `language_distance.py`, and the `Language.get`, `Language.maximize`, `Language.distance` and `standardize_tag` functions.
+`linguatag/_bcp47.py` and `linguatag/_distance.py` port code from langcodes 3.5.1, Copyright (C) 2021 Robyn Speer, under the MIT License. The ported parts are `tag_parser.py`, `language_distance.py`, and the `Language.get`, `Language.maximize`, `Language.distance` and `standardize_tag` functions.
 
 The four CLDR files hold Unicode CLDR release 49 data (cldr-json 49.0.0) under the Unicode License v3. The copyright is (C) 2015-2024 Unicode, Inc. [LICENSE-CLDR](../LICENSE-CLDR) holds the full notice.
 

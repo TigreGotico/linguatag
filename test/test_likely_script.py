@@ -39,7 +39,7 @@ def test_a_bare_tag_takes_its_default_region_first():
 
 
 def test_likely_script_parses_its_tag_once(monkeypatch):
-    from linguatag import regions
+    from linguatag import _regions as regions
 
     calls = []
     parse = regions.parse

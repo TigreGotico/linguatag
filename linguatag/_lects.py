@@ -25,8 +25,8 @@ from __future__ import annotations
 
 from typing import Dict, List, Optional, Tuple
 
-from linguatag.bcp47 import _raw_data
-from linguatag.standardize import standardize_lang
+from linguatag._bcp47 import _raw_data
+from linguatag._standardize import standardize_lang
 
 LECT_MODES = ("dialect", "standard")
 

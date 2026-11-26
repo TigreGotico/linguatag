@@ -17,7 +17,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from linguatag.standardize import standardize_lang
+from linguatag._standardize import standardize_lang
 
 OUT = Path(__file__).resolve().parent.parent / "linguatag" / "data" / "lineage.json"
 DATA = "orthography2ipa/data"

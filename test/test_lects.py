@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-import linguatag.lects as lects
+import linguatag._lects as lects
 from linguatag import (DEFAULT_MAX_LANGUAGE_DISTANCE, LECT_MODES, closest_lang,
                        lang_distance, lect_steps)
 
