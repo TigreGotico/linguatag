@@ -34,6 +34,8 @@ def test_ancestry_similarity_multiplies_the_cited_weights(a, b, expected):
     ("mwl", "aae", 1 - (2025 - 1609) / (2025 - 1450)),
     ("mwl", "ca-x-valencia", 1 - (2025 - 1609) / (2025 - 1343)),
     ("aae", "ca-x-valencia", 1 - (2025 - 1450) / (2025 - 1343)),
+    # Etruscan -700 to 100 and Latin -100 to 600 share 200 of 1300 years.
+    ("ett", "la", 1 - 200 / 1300),
 ])
 def test_temporal_distance_is_one_minus_the_shared_share(a, b, expected):
     assert temporal_distance(a, b) == pytest.approx(expected)
@@ -160,9 +162,11 @@ def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
     # Glottolog has no node for Cheso (Aragonese has only four dialect children).
     ("an-x-cheso", {"glottolog_code": None, "wikidata_qid": "Q3573993"}),
     ("gl", {"glottolog_code": "gali1258", "wikidata_qid": "Q9307"}),
-    # Glottolog 5.4: Etruscan [etru1241], Sumerian [sume1241]; Wikidata Q36790 is Sumerian.
-    ("ett", {"glottolog_code": "etru1241"}),
+    # Glottolog 5.4: Etruscan [etru1241], Sumerian [sume1241]; Wikidata Q35726 is Etruscan, Q36790 Sumerian.
+    ("ett", {"glottolog_code": "etru1241", "wikidata_qid": "Q35726"}),
     ("sux", {"glottolog_code": "sume1241", "wikidata_qid": "Q36790"}),
+    # ISO 639-3 etr is Edolo, a language of Papua New Guinea, so it has no Etruscan node.
+    ("etr", {}),
     ("qqq-x-nothing", {}),
 ])
 def test_catalog_ids(tag, ids):
