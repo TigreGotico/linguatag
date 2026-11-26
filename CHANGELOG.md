@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.3a1](https://github.com/TigreGotico/linguatag/tree/0.9.3a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.2a1...0.9.3a1)
+
+**Merged pull requests:**
+
+- fix\(data\): a source for each checked lineage edge [\#114](https://github.com/TigreGotico/linguatag/pull/114) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.2a1](https://github.com/TigreGotico/linguatag/tree/0.9.2a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.1a3...0.9.2a1)
