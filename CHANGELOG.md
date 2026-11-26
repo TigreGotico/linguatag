@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.6a1](https://github.com/TigreGotico/linguatag/tree/0.9.6a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.5a1...0.9.6a1)
+
+**Merged pull requests:**
+
+- fix: add\_nodes accepts a null parent as a root [\#123](https://github.com/TigreGotico/linguatag/pull/123) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.5a1](https://github.com/TigreGotico/linguatag/tree/0.9.5a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.4a1...0.9.5a1)
@@ -390,17 +398,9 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.0.1a1...0.0.2a1)
 
-**Merged pull requests:**
-
-- fix: measure an unparseable tag as its longest parseable prefix [\#2](https://github.com/TigreGotico/linguatag/pull/2) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.0.1a1](https://github.com/TigreGotico/linguatag/tree/0.0.1a1) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/c5c0502433c84c040f7ac5d6ebb3b5207f463b34...0.0.1a1)
-
-**Merged pull requests:**
-
-- feat: language-tag matching and the default region of a bare tag [\#1](https://github.com/TigreGotico/linguatag/pull/1) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 
 
