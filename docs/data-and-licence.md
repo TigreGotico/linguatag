@@ -126,7 +126,7 @@ alias yol dropped: standardizes to enm
 7679 specs in: 7677 genealogy nodes, 7256 places, 605 timespans, 190 lects out
 ```
 
-Two codes that standardize to one tag give one node, and the code that already is the tag wins. `scripts/freeze_metric_fixture.py` writes `test/data/metric_pairs.json`. Run it with a Python that has orthography2ipa installed and that is not the test environment. The tests compare linguatag with the values in that file.
+Two codes that standardize to one tag give one node, and the code that already is the tag wins.
 
 ## Add a language
 

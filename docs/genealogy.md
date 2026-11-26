@@ -3,7 +3,7 @@
 <!-- agent-hint
 covers: the parent, ancestors, family, place and period of a language tag, the three metrics built on them, and the writing-system distance.
 source: linguatag/_lineage.py, linguatag/_writing_systems.py, linguatag/data/genealogy.json, linguatag/data/places.json, linguatag/data/times.json, linguatag/data/lects.json, linguatag/data/scripts.json, scripts/build_genealogy.py
-generated: no for the page. scripts/build_genealogy.py writes the five data files, and scripts/freeze_metric_fixture.py writes test/data/metric_pairs.json.
+generated: no for the page. scripts/build_genealogy.py writes the five data files.
 verify: python scripts/check_doc_page.py docs/genealogy.md
 see: dialects.md, data-and-licence.md
 -->
@@ -113,7 +113,7 @@ print(script_distance(script_features("Latin"), script_features("Latin")))  # 0.
 
 Each file names the orthography2ipa commit that it comes from in its `source` field. After a first build, people edit these files in linguatag. `lects.json` has empty coverage lists. An orthography2ipa spec states the regions, islands and cities of a lect in prose only, and the build script copies no prose.
 
-[Data and licence](data-and-licence.md) shows how to rebuild the files. The values of the three metrics and of the script distance equal those of orthography2ipa on a fixed sample of pairs, which `test/data/metric_pairs.json` holds.
+[Data and licence](data-and-licence.md) shows how to rebuild the files.
 
 ---
 [Index](index.md) · [← Dialects](dialects.md) · [Data and licence →](data-and-licence.md)

@@ -16,7 +16,7 @@ linguatag reads BCP 47 language tags: it normalises them, gives a bare tag its d
 | `linguatag/_lineage.py` | `parent`, `ancestors`, `family`, `ancestry_similarity`, `geographic_distance` and `temporal_distance` |
 | `linguatag/_writing_systems.py` | `script_features`, `script_distance` and `script_distance_by_name` |
 | `linguatag/data/` | The CLDR 49, IANA and dialect-tree JSON files |
-| `scripts/` | `extract_cldr.py`, `build_lineage.py` and `build_genealogy.py`, which write `linguatag/data/`, `freeze_metric_fixture.py`, which writes `test/data/metric_pairs.json` from orthography2ipa, and `check_doc_page.py`, which checks a README or docs page against the code, and `docs_figures.py`, which writes the SVG files of `docs/figures/` |
+| `scripts/` | `extract_cldr.py`, `build_lineage.py` and `build_genealogy.py`, which write `linguatag/data/`, `check_doc_page.py`, which checks a README or docs page against the code, and `docs_figures.py`, which writes the SVG files of `docs/figures/` |
 | `test/` | The pytest suite |
 | `docs/` | The user docs, listed in `docs/index.md` |
 
