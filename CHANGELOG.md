@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.8.0a1](https://github.com/TigreGotico/linguatag/tree/0.8.0a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.2a1...0.8.0a1)
+
+**Merged pull requests:**
+
+- feat: catalog\_ids gives the Glottolog and Wikidata ids of a tag [\#103](https://github.com/TigreGotico/linguatag/pull/103) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.2a1](https://github.com/TigreGotico/linguatag/tree/0.7.2a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.1a1...0.7.2a1)
