@@ -17,7 +17,7 @@ from collections import deque
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
-from linguatag._bcp47 import _raw_data
+from linguatag._bcp47 import _raw_data, parse as parse_tag
 from linguatag._regions import with_default_region
 from linguatag._standardize import standardize_lang
 
@@ -31,12 +31,22 @@ def _nodes() -> Dict[str, dict]:
 @lru_cache(maxsize=4096)
 def _key(tag: str) -> str:
     """The data key of ``tag``. The data keys a language by its default-region
-    tag when its spec carries a region, so ``gl`` reads ``gl-ES``."""
+    tag when its spec carries a region, so ``gl`` reads ``gl-ES``. A script
+    does not change the language, so ``ks-Arab`` reads ``ks`` when it has no
+    node of its own. An explicit default region reads the bare node, so
+    ``sr-RS`` reads ``sr``."""
     tag = standardize_lang(tag)
     if tag in _nodes():
         return tag
     regional = with_default_region(tag)
-    return regional if regional in _nodes() else tag
+    if regional in _nodes():
+        return regional
+    parsed = parse_tag(tag)
+    if parsed.script:
+        return _key(tag.replace(f"-{parsed.script}", "", 1))
+    if parsed.language in _nodes() and with_default_region(parsed.language) == tag:
+        return parsed.language
+    return tag
 
 
 def parent(tag: str) -> Optional[str]:

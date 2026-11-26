@@ -170,6 +170,14 @@ def test_catalog_ids(tag, ids):
     assert catalog_ids(tag) == ids
 
 
+@pytest.mark.parametrize("tag, base", [
+    ("ks-Arab", "ks"), ("sr-Latn-RS", "sr-RS"), ("sr-Cyrl", "sr"), ("pa-Arab", "pa"),
+])
+def test_a_script_subtag_reads_the_node_of_its_language(tag, base):
+    assert catalog_ids(tag) == catalog_ids(base) != {}
+    assert parent(tag) == parent(base)
+
+
 @pytest.mark.parametrize("tag, ids", [
     ("ajt", {"glottolog_code": "tuni1259", "wikidata_qid": "Q56240"}),
     ("aeb-x-judeo", {"glottolog_code": "jude1263", "wikidata_qid": "Q56597"}),
