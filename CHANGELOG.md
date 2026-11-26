@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.7a1](https://github.com/TigreGotico/linguatag/tree/0.9.7a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.6a2...0.9.7a1)
+
+**Merged pull requests:**
+
+- fix: add\_nodes moves pass the family to descendants and roots drop it [\#128](https://github.com/TigreGotico/linguatag/pull/128) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.6a2](https://github.com/TigreGotico/linguatag/tree/0.9.6a2) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.6a1...0.9.6a2)
@@ -389,10 +397,6 @@
 ## [0.1.0a1](https://github.com/TigreGotico/linguatag/tree/0.1.0a1) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.0.2a2...0.1.0a1)
-
-**Merged pull requests:**
-
-- feat: score the private-use subtag of a dialect on request [\#6](https://github.com/TigreGotico/linguatag/pull/6) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.0.2a2](https://github.com/TigreGotico/linguatag/tree/0.0.2a2) (2026-11-03)
 
