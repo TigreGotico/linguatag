@@ -2,10 +2,9 @@
 
 BCP-47 gives a private-use subtag no meaning, so the UTS #35 matching
 distance ignores it:
-``an-x-cheso``, ``an-x-ansotano`` and ``an`` are all at distance 0. The
-orthography2ipa specs place each lect in a tree, a dialect under its language
-and a sub-dialect under its dialect. ``data/lineage.json`` is that tree, cut to
-what lects need (``scripts/build_lineage.py``), and the number of steps between
+``an-x-cheso``, ``an-x-ansotano`` and ``an`` are all at distance 0. ``data/lineage.json``
+places each lect in a tree, a dialect under its language and a sub-dialect
+under its dialect, cut to what lects need, and the number of steps between
 two tags in it is their nearness.
 
 A lect score is added to the language distance only when a caller asks for one,

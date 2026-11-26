@@ -15,7 +15,8 @@ A tag that the data already holds is refused unless ``--update`` is given.
 An update changes only the keys that the file gives. It drops the weighted
 ``ancestors`` and takes the family of the new parent when the parent changes. The descendants
 of a moved node take its new family path in place of its old one and keep the
-levels below it, unless the file gives their family path.
+levels below it, unless the file gives their family path. A lect (a tag with
+``-x-``) or a tag that ``lineage.json`` already holds gets its parent there too.
 """
 import json
 import re
@@ -129,6 +130,11 @@ def main() -> None:
             if path[:len(prefix)] == prefix:
                 set_family(nodes[child], nodes[tag].get("family_path", []) + path[len(prefix):] or None)
             moved.append(child)
+    lineage = json.loads((DATA / "lineage.json").read_text(encoding="utf-8"))
+    for tag, fact in facts.items():
+        if fact["parent"] and ("-x-" in tag or tag in lineage["parents"]):
+            lineage["parents"][tag] = fact["parent"]
+    files["lineage.json"] = lineage
     for name, data in files.items():
         (DATA / name).write_text(dump(data), encoding="utf-8")
     print(f"{len(facts)} nodes in, {len(facts) - len(known)} added, {len(known)} updated")

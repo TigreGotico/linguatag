@@ -11,7 +11,7 @@ import add_nodes  # noqa: E402
 
 @pytest.fixture
 def data(tmp_path, monkeypatch):
-    for name in add_nodes.TABLES:
+    for name in [*add_nodes.TABLES, "lineage.json"]:
         shutil.copy(add_nodes.DATA / name, tmp_path / name)
     monkeypatch.setattr(add_nodes, "DATA", tmp_path)
     return tmp_path
@@ -135,3 +135,11 @@ def test_a_descendant_with_a_catalog_update_still_takes_the_new_family(data, mon
     nodes = read(data, "genealogy.json")["nodes"]
     assert nodes["aae"]["family_path"] == ["Indo-European", "Germanic", "Albanian"]
     assert nodes["aae"]["wikidata_qid"] == "Q35852"
+
+
+def test_a_lect_move_updates_the_lect_tree(data, monkeypatch):
+    run(data, monkeypatch, {"pt-PT-x-znew": {"parent": "pt-PT"},
+                            "pt-PT-x-braga": {"parent": "pt-PT-x-znew"}}, "--update")
+    parents = read(data, "lineage.json")["parents"]
+    assert parents["pt-PT-x-znew"] == "pt-PT"
+    assert parents["pt-PT-x-braga"] == "pt-PT-x-znew"
