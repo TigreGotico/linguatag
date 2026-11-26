@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+import linguatag._bcp47
 import linguatag._lects as lects
 from linguatag import (DEFAULT_MAX_LANGUAGE_DISTANCE, LECT_MODES, closest_lang,
                        lang_distance, lect_steps)
@@ -105,7 +106,6 @@ def test_an_unknown_mode_is_refused():
 
 def test_the_table_reaches_every_lect_ancestor_it_names():
     parents = LINEAGE["parents"]
-    assert LINEAGE["source"].startswith("TigreGotico/orthography2ipa@")
     assert sum("-x-" in code for code in parents) >= 180
     assert DEFAULT_MAX_LANGUAGE_DISTANCE == 10
 
@@ -154,3 +154,9 @@ def test_default_mode_ties_msa_and_the_clades_on_the_first_candidate(catalogue):
     tied = [tag for tag in catalogue if lang_distance("arb-x-zzz", tag) == 0]
     assert tied == [tag for tag in catalogue if tag != "ar-EG"]
     assert closest_lang("arb-x-zzz", catalogue) == tied[0]
+
+
+def test_the_lect_tree_agrees_with_the_genealogy():
+    nodes = linguatag._bcp47._raw_data("genealogy.json")["nodes"]
+    assert {tag: parent for tag, parent in LINEAGE["parents"].items()
+            if nodes[tag].get("parent") != parent} == {}

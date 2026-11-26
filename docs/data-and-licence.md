@@ -2,8 +2,8 @@
 
 <!-- agent-hint
 covers: the data files that linguatag reads, how to regenerate them, and their licences.
-source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/build_lineage.py, scripts/build_genealogy.py, NOTICE, LICENSE-CLDR
-generated: no for the page. scripts/extract_cldr.py writes the five CLDR and IANA files, scripts/build_lineage.py writes lineage.json and scripts/build_genealogy.py writes the five genealogy files, so edit the scripts, never the JSON. scripts/docs_figures.py writes docs/figures/data-files.svg.
+source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/add_nodes.py, NOTICE, LICENSE-CLDR
+generated: no for the page. scripts/extract_cldr.py writes the five CLDR and IANA files, and scripts/add_nodes.py edits genealogy.json, places.json, times.json and lineage.json, so never edit the JSON by hand. scripts/docs_figures.py writes docs/figures/data-files.svg.
 verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/data-and-licence.md
 see: ../NOTICE, ../LICENSE-CLDR
 -->
@@ -51,7 +51,7 @@ territory_containment.json | CLDR 49, cldr-json cldr-core/supplemental/territory
 times.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 ```
 
-Nobody edits these files by hand. To change one, change its script or its source, run the script, and commit the script and the data together.
+Nobody edits these files by hand. `scripts/extract_cldr.py` regenerates the CLDR and IANA files. The genealogy, place, time and lect files are the source of truth: they were seeded once from the orthography2ipa commit that their `source` field names, and linguatag reads no orthography2ipa file. Change them with `scripts/add_nodes.py`.
 
 ## The loader is read-only
 
@@ -101,32 +101,6 @@ python3 scripts/extract_cldr.py likelySubtags.json aliases.json language-subtag-
 ```
 
 To move to a different CLDR release, change the `CLDR_JSON` constant in the script.
-
-## Regenerate the dialect tree
-
-`scripts/build_lineage.py` writes `lineage.json` from an orthography2ipa clone. It reads the spec files at a git ref, so the clone needs no checkout of that ref. The second argument defaults to `origin/dev`. The script imports linguatag, so run it with a Python that has linguatag installed. This run uses the commit that the `source` field of the committed `lineage.json` names, so it writes the same file:
-
-```
-$ python scripts/build_lineage.py ~/path/to/orthography2ipa 1e6e911705761de8d5724276187c4903ae92eaf4
-7672 spec files in, 7671 codes read
-265 parent links out
-```
-
-Run it again when orthography2ipa adds, renames or moves a lect.
-
-## Regenerate the genealogy files
-
-`scripts/build_genealogy.py` writes `genealogy.json`, `places.json`, `times.json`, `lects.json` and `scripts.json` from an orthography2ipa clone. It reads the spec files and `script_distance.py` at a git ref, so the clone needs no checkout, and it never imports orthography2ipa. Run it with a Python that has linguatag installed. It overwrites `lects.json`, so run it once as the first build. After that, people edit the files in linguatag.
-
-```
-$ python scripts/build_genealogy.py ~/path/to/orthography2ipa 1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
-7680 spec files in, 7679 specs read
-alias yol dropped: standardizes to enm
-21 scripts, 28 type distances read
-7679 specs in: 7678 genealogy nodes, 7256 places, 605 timespans, 190 lects out
-```
-
-Two codes that standardize to one tag give one node, and the code that already is the tag wins.
 
 ## Add a language
 

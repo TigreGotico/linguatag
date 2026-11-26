@@ -1,7 +1,7 @@
 """Where a language comes from, where it is spoken and when.
 
 ``data/genealogy.json`` holds a parent, weighted ancestors, a family and a
-clade flag for every language and lect that orthography2ipa describes.
+clade flag for each language and lect.
 ``data/places.json`` and ``data/times.json`` hold a point and a period for
 most of them. ``parent``, ``ancestors``, ``family`` and ``family_path`` read
 the genealogy. ``ancestry_similarity``, ``geographic_distance`` and
