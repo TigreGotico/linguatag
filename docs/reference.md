@@ -117,7 +117,7 @@ print(lect_steps("pt", "en"))                      # None
 ```python
 from linguatag import ancestors, script_distance_by_name, temporal_distance
 
-print(ancestors("pt-PT-x-porto")[0])                    # pt-PT
+print(ancestors("pt-PT-x-porto")[0])                    # pt-PT-x-minho
 print(round(script_distance_by_name("Latin", "Greek"), 4))  # 0.1667
 print(temporal_distance("la", "qqq"))                   # None
 ```

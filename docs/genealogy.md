@@ -17,8 +17,8 @@ Each language and lect has one genealogical parent. `parent` gives it, and `ance
 ```python
 from linguatag import ancestors, family, family_path, parent
 
-print(parent("pt-PT-x-porto"))            # pt-PT
-print(ancestors("pt-PT-x-porto")[:3])     # ['pt-PT', 'pt-PT-x-medieval', 'roa-x-galaico-pt']
+print(parent("pt-PT-x-porto"))            # pt-PT-x-minho
+print(ancestors("pt-PT-x-porto")[:3])     # ['pt-PT-x-minho', 'pt-PT', 'pt-PT-x-medieval']
 print(ancestors("ars-SA-x-qassim")[:4])   # ['ars-SA', 'ar-x-peninsul', 'arb', 'xpa']
 print(family("pt-PT-x-porto"))            # Indo-European > Italic > Romance > Ibero-Romance
 print(family_path("pt-PT-x-porto"))       # ('Indo-European', 'Italic', 'Romance', 'Ibero-Romance')
@@ -57,7 +57,7 @@ A key with the value `None` means that the catalog has no entry for the variety.
 ```python
 from linguatag import ancestry_similarity
 
-print(ancestry_similarity("pt-PT", "pt-PT-x-porto"))           # 0.9
+print(ancestry_similarity("pt-PT", "pt-PT-x-porto"))           # 0.81
 print(round(ancestry_similarity("pt-PT", "es-ES"), 4))         # 0.5304
 print(round(ancestry_similarity("pt-PT", "de-DE"), 4))         # 0.0552
 print(ancestry_similarity("pt-PT", "pt-PT"))                   # 1.0
