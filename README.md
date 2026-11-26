@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: what linguatag does, a quickstart, its place in the stack, and how to install it.
-source: linguatag/__init__.py:__all__, linguatag/matching.py, linguatag/regions.py, linguatag/standardize.py, pyproject.toml
+source: linguatag/__init__.py:__all__, linguatag/_matching.py, linguatag/_regions.py, linguatag/_standardize.py, pyproject.toml
 generated: no
 verify: python scripts/check_doc_page.py README.md
 see: docs/index.md, docs/getting-started.md, docs/reference.md, AGENTS.md

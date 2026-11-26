@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how standardize_lang gives a tag one spelling, and how parse_tag reads the subtags of a tag.
-source: linguatag/standardize.py:standardize_lang, linguatag/bcp47.py:parse (exported as parse_tag), linguatag/bcp47.py:standardize
+source: linguatag/_standardize.py:standardize_lang, linguatag/_bcp47.py:parse (exported as parse_tag), linguatag/_bcp47.py:standardize
 generated: no
 verify: python scripts/check_doc_page.py docs/parsing.md
 see: likely-subtags.md

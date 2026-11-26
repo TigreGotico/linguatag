@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: the parent, ancestors, family, place and period of a language tag, the three metrics built on them, and the writing-system distance.
-source: linguatag/lineage.py, linguatag/writing_systems.py, linguatag/data/genealogy.json, linguatag/data/places.json, linguatag/data/times.json, linguatag/data/lects.json, linguatag/data/scripts.json, scripts/build_genealogy.py
+source: linguatag/_lineage.py, linguatag/_writing_systems.py, linguatag/data/genealogy.json, linguatag/data/places.json, linguatag/data/times.json, linguatag/data/lects.json, linguatag/data/scripts.json, scripts/build_genealogy.py
 generated: no for the page. scripts/build_genealogy.py writes the five data files, and scripts/freeze_metric_fixture.py writes test/data/metric_pairs.json.
 verify: python scripts/check_doc_page.py docs/genealogy.md
 see: dialects.md, data-and-licence.md

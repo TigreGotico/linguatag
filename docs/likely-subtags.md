@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: the default region and the likely script of a bare tag, and the CLDR maximize call.
-source: linguatag/regions.py:default_region, linguatag/regions.py:OVERRIDES, linguatag/regions.py:likely_script, linguatag/bcp47.py:maximize, linguatag/data/likely_subtags.json
+source: linguatag/_regions.py:default_region, linguatag/_regions.py:OVERRIDES, linguatag/_regions.py:likely_script, linguatag/_bcp47.py:maximize, linguatag/data/likely_subtags.json
 generated: no
 verify: python scripts/check_doc_page.py docs/likely-subtags.md
 see: matching.md, data-and-licence.md
@@ -52,7 +52,7 @@ print(OVERRIDES["yue"])    # ('Hans', 'CN')
 
 Each entry gives the script and the region of the default. An override holds only for its own script, so `yue-Hant` keeps the CLDR region `HK` and `en-Dsrt` keeps `US`. When several countries share the area where a language first appeared, the CLDR pick is one of them and stays.
 
-Each entry in `OVERRIDES` cites its source in a comment beside it in `linguatag/regions.py`. An entry added to the map cites its source in the same way.
+Each entry in `OVERRIDES` cites its source in a comment beside it in `linguatag/_regions.py`. An entry added to the map cites its source in the same way.
 
 A bare `ar` is Modern Standard Arabic. It is the standard of no single country.
 

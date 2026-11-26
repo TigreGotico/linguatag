@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: the signature, the return value and one example of each name in linguatag.__all__
-source: linguatag/__init__.py:__all__, linguatag/standardize.py, linguatag/regions.py, linguatag/matching.py, linguatag/lects.py, linguatag/lineage.py, linguatag/writing_systems.py
+source: linguatag/__init__.py:__all__, linguatag/_standardize.py, linguatag/_regions.py, linguatag/_matching.py, linguatag/_lects.py, linguatag/_lineage.py, linguatag/_writing_systems.py
 generated: no
 verify: python scripts/check_doc_page.py docs/reference.md
 see: getting-started.md, matching.md
@@ -57,7 +57,7 @@ print(likely_script("ar"))                 # Arab
 print(likely_script("und"))                # None
 ```
 
-`OVERRIDES` maps a language to the `(script, region)` that linguatag uses in place of the CLDR value. Each entry cites its source in `linguatag/regions.py`.
+`OVERRIDES` maps a language to the `(script, region)` that linguatag uses in place of the CLDR value. Each entry cites its source in `linguatag/_regions.py`.
 
 ```python
 from linguatag import OVERRIDES

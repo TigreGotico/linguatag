@@ -132,7 +132,7 @@ Two codes that standardize to one tag give one node, and the code that already i
 
 linguatag is under the Apache License 2.0 ([LICENSE](../LICENSE)).
 
-`linguatag/bcp47.py` and `linguatag/distance.py` port code from langcodes 3.5.1, Copyright (C) 2021 Robyn Speer, under the MIT License. The ported parts are `tag_parser.py`, `language_distance.py`, and the `Language.get`, `Language.maximize`, `Language.distance` and `standardize_tag` functions.
+`linguatag/_bcp47.py` and `linguatag/_distance.py` port code from langcodes 3.5.1, Copyright (C) 2021 Robyn Speer, under the MIT License. The ported parts are `tag_parser.py`, `language_distance.py`, and the `Language.get`, `Language.maximize`, `Language.distance` and `standardize_tag` functions.
 
 The four CLDR files hold Unicode CLDR release 49 data (cldr-json 49.0.0) under the Unicode License v3. The copyright is (C) 2015-2024 Unicode, Inc. [LICENSE-CLDR](../LICENSE-CLDR) holds the full notice.
 

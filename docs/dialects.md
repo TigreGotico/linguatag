@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how the lects argument orders tags that name a dialect with a private-use subtag.
-source: linguatag/lects.py:lect_score, linguatag/lects.py:lect_steps, linguatag/data/lineage.json
+source: linguatag/_lects.py:lect_score, linguatag/_lects.py:lect_steps, linguatag/data/lineage.json
 generated: no
 verify: python scripts/check_doc_page.py docs/dialects.md
 see: matching.md, data-and-licence.md
