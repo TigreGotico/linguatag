@@ -168,3 +168,21 @@ def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
 ])
 def test_catalog_ids(tag, ids):
     assert catalog_ids(tag) == ids
+
+
+@pytest.mark.parametrize("tag, ids", [
+    ("ajt", {"glottolog_code": "tuni1259", "wikidata_qid": "Q56240"}),
+    ("aeb-x-judeo", {"glottolog_code": "jude1263", "wikidata_qid": "Q56597"}),
+    ("cnr", {"glottolog_code": "mont1282", "wikidata_qid": "Q8821"}),
+    ("oji", {"glottolog_code": "ojib1241", "wikidata_qid": "Q33875"}),
+    ("swc", {"glottolog_code": "cong1236"}),
+    ("yol", {"glottolog_code": "midd1317", "wikidata_qid": "Q36395"}),
+    ("enm-x-yola", {"glottolog_code": "yola1237", "wikidata_qid": "Q56395"}),
+])
+def test_a_deprecated_code_reads_the_ids_of_its_preferred_tag(tag, ids):
+    assert catalog_ids(tag) == ids
+
+
+def test_tunisian_arabic_is_not_the_judeo_tunisian_node():
+    assert parent("aeb") == "ar-x-maghrebi"
+    assert parent("aeb-x-judeo") == "aeb-TN"
