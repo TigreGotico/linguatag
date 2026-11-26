@@ -128,6 +128,29 @@ alias yol dropped: standardizes to enm
 
 Two codes that standardize to one tag give one node, and the code that already is the tag wins. `scripts/freeze_metric_fixture.py` writes `test/data/metric_pairs.json`. Run it with a Python that has orthography2ipa installed and that is not the test environment. The tests compare linguatag with the values in that file.
 
+## Add a language
+
+Add a language or a lect as a pull request that changes `genealogy.json`, `places.json` and `times.json`. Do not edit the lines by hand. Write the facts to a JSON file and run `scripts/add_nodes.py`:
+
+```json
+{"pt-PT-x-ribatejo": {"parent": "pt-PT", "glottolog_code": null, "place": [39.24, -8.69]}}
+```
+
+```console
+$ python scripts/add_nodes.py nodes.json
+1 nodes in, 1 added, 0 updated
+```
+
+1. Give `parent` for each tag. The parent must be in the genealogy or in the same file.
+2. Give `family_path` only when it is different from the family of the parent.
+3. Give `glottolog_code` and `wikidata_qid` when you know them. Write `null` when the catalog has no entry for the variety. Leave the key out when no one checked.
+4. Give `place` as `[latitude, longitude]` and `years` as `[start, end]`, where `start` is the year of the earliest attested distinct variety and `end` is `null` for a living language.
+5. Write the source of each fact in the pull request.
+
+The script refuses a tag that is not standard, a parent that the data does not hold, a cycle, a malformed glottocode or QID, and an unknown field. It refuses a tag that the data already holds, unless you give `--update`. An update keeps the weighted `ancestors` when the parent stays the same.
+
+The tree models regional descent in more depth than Glottolog. A parent can differ from the Glottolog tree; `glottolog_code` keeps the link.
+
 ## Licences
 
 linguatag is under the Apache License 2.0 ([LICENSE](../LICENSE)).
