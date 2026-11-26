@@ -121,6 +121,10 @@ def test_an_unknown_tag_has_no_genealogy():
     assert temporal_distance("qqq-x-nothing", "pt-PT") is None
 
 
+def test_an_isolate_has_the_isolate_category():
+    assert family("sux") == "Isolate" and family_path("sux") == ()
+
+
 def test_the_family_path_joins_to_the_family():
     path = family_path("pt-PT-x-porto")
     assert path[:3] == ("Indo-European", "Italic", "Romance")
@@ -156,6 +160,9 @@ def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
     # Glottolog has no node for Cheso (Aragonese has only four dialect children).
     ("an-x-cheso", {"glottolog_code": None, "wikidata_qid": "Q3573993"}),
     ("gl", {"glottolog_code": "gali1258", "wikidata_qid": "Q9307"}),
+    # Glottolog 5.4: Etruscan [etru1241], Sumerian [sume1241]; Wikidata Q36790 is Sumerian.
+    ("ett", {"glottolog_code": "etru1241"}),
+    ("sux", {"glottolog_code": "sume1241", "wikidata_qid": "Q36790"}),
     ("qqq-x-nothing", {}),
 ])
 def test_catalog_ids(tag, ids):

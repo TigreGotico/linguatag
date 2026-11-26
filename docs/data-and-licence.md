@@ -29,7 +29,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 
 The figure shows the size of each file and how many records it holds.
 
-![Horizontal bars of the size and record count of the 12 data files. The largest is genealogy.json, 1071 kB and 7,721 records, and genealogy.json and places.json hold 72 percent of the bytes.](figures/data-files.svg)
+![Horizontal bars of the size and record count of the 12 data files. The largest is genealogy.json, 1071 kB and 7,722 records, and genealogy.json and places.json hold 72 percent of the bytes.](figures/data-files.svg)
 
 *Figure: the data files by size. `scripts/docs_figures.py` draws it from the files in `linguatag/data`. `genealogy.json` and `places.json` are the two largest.*
 
@@ -123,7 +123,7 @@ $ python scripts/build_genealogy.py ~/path/to/orthography2ipa 1c30a9d4af3f335653
 7680 spec files in, 7679 specs read
 alias yol dropped: standardizes to enm
 21 scripts, 28 type distances read
-7679 specs in: 7677 genealogy nodes, 7256 places, 605 timespans, 190 lects out
+7679 specs in: 7679 genealogy nodes, 7256 places, 605 timespans, 190 lects out
 ```
 
 Two codes that standardize to one tag give one node, and the code that already is the tag wins.
