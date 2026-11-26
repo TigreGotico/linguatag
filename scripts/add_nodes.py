@@ -8,8 +8,9 @@
                   "glottolog_code": null, "wikidata_qid": "Q1",
                   "place": [41.5, -6.4], "years": [1300, null]}}
 
-``parent`` is required. Without ``family_path`` a node takes the family of its
-parent. A ``null`` stays in the data: it means that the catalog has no entry.
+``parent`` is required. A ``null`` parent makes a root, such as an isolate or
+a top-level clade; a tag that starts with ``x-clade-`` is a clade. Without
+``family_path`` a node takes the family of its parent, and a root has none. A ``null`` stays in the data: it means that the catalog has no entry.
 A tag that the data already holds is refused unless ``--update`` is given.
 An update changes only the keys that the file gives. It drops the weighted
 ``ancestors`` and takes the family of the new parent when the parent changes.
@@ -45,7 +46,7 @@ def check(tag: str, fact: dict, nodes: dict) -> None:
     if standardize_lang(tag) != tag:
         raise ValueError(f"{tag!r} is not a standard tag; use {standardize_lang(tag)!r}")
     parent = fact.get("parent")
-    if parent not in nodes:
+    if parent is not None and parent not in nodes:
         raise ValueError(f"{tag!r}: parent {parent!r} is not in the genealogy")
     node, seen = parent, {tag}
     while node:
@@ -81,12 +82,17 @@ def main() -> None:
 
     for tag in sorted(facts, key=depth):
         fact, node = facts[tag], dict(old.get(tag, {}))
-        moved = node.get("parent") != fact["parent"]
-        node["parent"] = fact["parent"]
+        parent = fact["parent"]
+        moved = node.get("parent") != parent
+        node["parent"] = parent
+        if parent is None:
+            del node["parent"]
+        if tag.startswith("x-clade-"):
+            node["clade"] = True
         if moved:
             node.pop("ancestors", None)
-        if moved or "family_path" in fact:
-            path = fact.get("family_path", nodes[fact["parent"]].get("family_path", []))
+        if "family_path" in fact or (moved and parent is not None):
+            path = fact.get("family_path", nodes[parent].get("family_path", []) if parent else [])
             node.update({"family": " > ".join(path), "family_path": path})
         node.update({k: fact[k] for k in CATALOG if k in fact})
         nodes[tag] = node

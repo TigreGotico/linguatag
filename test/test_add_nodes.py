@@ -89,3 +89,15 @@ def test_an_update_to_a_new_parent_drops_the_ancestors(data, monkeypatch):
     after = read(data, "genealogy.json")["nodes"]["pt-BR"]
     assert "ancestors" not in after and after["parent"] == "pt-PT"
     assert after["glottolog_code"] == before["glottolog_code"] == "braz1246"
+
+
+def test_a_null_parent_makes_a_root(data, monkeypatch):
+    run(data, monkeypatch, {
+        "x-clade-zzzz0001": {"parent": None, "glottolog_code": "zzzz0001"},
+        "qaa": {"parent": "x-clade-zzzz0001", "glottolog_code": None},
+        "qab": {"parent": None, "family_path": ["Isolate"], "glottolog_code": "zzzz0002"},
+    })
+    nodes = json.loads((data / "genealogy.json").read_text())["nodes"]
+    assert nodes["x-clade-zzzz0001"] == {"clade": True, "glottolog_code": "zzzz0001"}
+    assert nodes["qaa"]["parent"] == "x-clade-zzzz0001" and nodes["qaa"]["glottolog_code"] is None
+    assert nodes["qab"] == {"family": "Isolate", "family_path": ["Isolate"], "glottolog_code": "zzzz0002"}
