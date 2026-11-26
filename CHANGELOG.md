@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.7.2a1](https://github.com/TigreGotico/linguatag/tree/0.7.2a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.1a1...0.7.2a1)
+
+**Merged pull requests:**
+
+- fix\(data\): restore the regional pt-BR and ca-x-valencia parents [\#102](https://github.com/TigreGotico/linguatag/pull/102) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.7.1a1](https://github.com/TigreGotico/linguatag/tree/0.7.1a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.0a2...0.7.1a1)
