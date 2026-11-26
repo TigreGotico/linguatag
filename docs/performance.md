@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: what the import and the first call of each main function cost, and what a warm call costs
-source: scripts/docs_figures.py, docs/figures/timings.tsv, test/test_cold_start.py, functools.lru_cache in linguatag/standardize.py and linguatag/bcp47.py
+source: scripts/docs_figures.py, docs/figures/timings.tsv, test/test_cold_start.py, functools.lru_cache in linguatag/_standardize.py and linguatag/_bcp47.py
 generated: no, but docs/figures/call-timings.svg comes from scripts/docs_figures.py and docs/figures/timings.tsv from its --measure run. Edit the script, not the output
 verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/performance.md
 see: matching.md, data-and-licence.md

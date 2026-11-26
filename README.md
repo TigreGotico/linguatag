@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: what linguatag does, a quickstart, its place in the stack, and how to install it.
-source: linguatag/__init__.py:__all__, linguatag/matching.py, linguatag/regions.py, linguatag/standardize.py, pyproject.toml
+source: linguatag/__init__.py:__all__, linguatag/_matching.py, linguatag/_regions.py, linguatag/_standardize.py, pyproject.toml
 generated: no
 verify: python scripts/check_doc_page.py README.md
 see: docs/index.md, docs/getting-started.md, docs/reference.md, AGENTS.md
@@ -43,10 +43,11 @@ linguatag needs Python 3.11 or later and has no dependencies. The `langcodes` ex
 | Page | What it covers |
 | --- | --- |
 | [Getting started](docs/getting-started.md) | A walk-through of the main calls, with real output |
-| [Parsing and normalising tags](docs/parsing.md) | `standardize_lang`, and the parser in `linguatag.bcp47` |
+| [Parsing and normalising tags](docs/parsing.md) | `standardize_lang` and `parse_tag` |
 | [Likely subtags and default regions](docs/likely-subtags.md) | `likely_script`, `default_region`, `with_default_region` and `maximize` |
 | [Matching](docs/matching.md) | `lang_distance`, `closest_lang`, `lang_matches`, `max_distance`, `und` and private-use tags |
 | [Dialects](docs/dialects.md) | The `lects` argument for tags with a private-use dialect subtag |
+| [Genealogy, place and time](docs/genealogy.md) | `parent`, `ancestors`, `family` and the distance of two languages or two scripts |
 | [Data and licence](docs/data-and-licence.md) | The CLDR 49 and IANA data files, and how to regenerate them |
 | [Performance](docs/performance.md) | The cost of the first call and of a warm call |
 | [Reference](docs/reference.md) | The signature and one example of each public name |

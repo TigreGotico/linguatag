@@ -4,7 +4,7 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Dict
 
-from linguatag.bcp47 import LanguageTagError, _raw_registry, standardize
+from linguatag._bcp47 import LanguageTagError, _raw_registry, standardize
 
 __all__ = ["standardize_lang"]
 
@@ -65,7 +65,7 @@ def standardize_lang(tag: str) -> str:
 
     The tag is put in canonical form (RFC 5646 section 4.5) from the CLDR 49
     alias rules and the IANA registry that this package carries (see
-    :mod:`linguatag.bcp47`): underscores become hyphens, each subtag takes
+    :mod:`linguatag._bcp47`): underscores become hyphens, each subtag takes
     its BCP-47 case, a deprecated subtag becomes its Preferred-Value (``iw``
     is ``he``, ``ajp`` is ``apc``, ``my-BU`` is ``my-MM``), a language and its
     extlang become the extlang (``zh-hak`` is ``hak``, ``ar-arz-EG`` is

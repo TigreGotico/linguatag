@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how the lects argument orders tags that name a dialect with a private-use subtag.
-source: linguatag/lects.py:lect_score, linguatag/lects.py:lect_steps, linguatag/data/lineage.json
+source: linguatag/_lects.py:lect_score, linguatag/_lects.py:lect_steps, linguatag/data/lineage.json
 generated: no
 verify: python scripts/check_doc_page.py docs/dialects.md
 see: matching.md, data-and-licence.md
@@ -60,4 +60,4 @@ The lect score never raises a distance that is 10 or less to a value above 10. S
 `linguatag/data/lineage.json` holds the tree. It is the part of the orthography2ipa spec tree that the lects need: each spec code with a private-use subtag, and its ancestors up to 4 levels above it. Its `source` field names the orthography2ipa commit that it comes from. [Data and licence](data-and-licence.md) shows how to rebuild it.
 
 ---
-[Index](index.md) · [← Matching](matching.md) · [Data and licence →](data-and-licence.md)
+[Index](index.md) · [← Matching](matching.md) · [Genealogy, place and time →](genealogy.md)

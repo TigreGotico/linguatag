@@ -4,7 +4,7 @@ from importlib.resources import files
 
 import pytest
 
-import linguatag.matching as language
+import linguatag._matching as language
 from linguatag import (closest_lang, default_region, is_arabic_variety, lang_distance,
                        lang_matches, lect_steps, likely_script, standardize_lang,
                        with_default_region)

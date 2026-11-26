@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 
-import linguatag.matching as matching
+import linguatag._matching as matching
 from linguatag import (OVERRIDES, closest_lang, default_region, lang_distance,
                        standardize_lang, with_default_region)
 

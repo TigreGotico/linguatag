@@ -2,8 +2,8 @@
 
 <!-- agent-hint
 covers: the data files that linguatag reads, how to regenerate them, and their licences.
-source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/build_lineage.py, NOTICE, LICENSE-CLDR
-generated: no for the page. scripts/extract_cldr.py writes the five CLDR and IANA files and scripts/build_lineage.py writes lineage.json, so edit the scripts, never the JSON. scripts/docs_figures.py writes docs/figures/data-files.svg.
+source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/build_lineage.py, scripts/build_genealogy.py, NOTICE, LICENSE-CLDR
+generated: no for the page. scripts/extract_cldr.py writes the five CLDR and IANA files, scripts/build_lineage.py writes lineage.json and scripts/build_genealogy.py writes the five genealogy files, so edit the scripts, never the JSON. scripts/docs_figures.py writes docs/figures/data-files.svg.
 verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/data-and-licence.md
 see: ../NOTICE, ../LICENSE-CLDR
 -->
@@ -21,12 +21,17 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 | `language_matching.json` | CLDR 49 `supplemental/languageMatching.json`, `written-new`: paradigm locales, match variables and `languageMatch` rules | `lang_distance` (UTS #35 section 4.4) |
 | `territory_containment.json` | CLDR 49 `supplemental/territoryContainment.json`: the regions in each macroregion | the region clusters of `lang_distance` |
 | `lineage.json` | the orthography2ipa spec files at one commit | the `lects` argument |
+| `genealogy.json` | the same spec files at one commit: the parent, weighted ancestors, family and clade flag of each tag | `parent`, `ancestors`, `family` and `ancestry_similarity` |
+| `places.json` | the same spec files: the latitude and longitude of each tag | `geographic_distance` |
+| `times.json` | the same spec files: the start and end year of each tag | `temporal_distance` and the temporal decay of `ancestry_similarity` |
+| `lects.json` | the same spec files: the name of each private-use lect, with coverage lists that people fill | nothing yet; it holds the regions, islands and cities of each lect |
+| `scripts.json` | the orthography2ipa script typology at the same commit | `script_distance` and `script_distance_by_name` |
 
 The figure shows the size of each file and how many records it holds.
 
-![Horizontal bars of the size of each data file: likely_subtags.json 191 kB with 7,868 records, language_subtags.json 135 kB with 8,276 records, aliases.json 47 kB with 1,145 records, subtags.json 40 kB with 1,022 records, language_matching.json 17 kB with 391 records, lineage.json 7 kB with 265 records, territory_containment.json 5 kB with 35 records.](figures/data-files.svg)
+![Horizontal bars of the size of each data file: genealogy.json 820 kB and 7,677 records, places.json 196 kB and 7,256 records, likely_subtags.json 191 kB and 7,868 records, language_subtags.json 135 kB and 8,276 records, aliases.json 47 kB and 1,145 records, subtags.json 40 kB and 1,022 records, lects.json 19 kB and 190 records, language_matching.json 17 kB and 391 records, times.json 15 kB and 605 records, lineage.json 7 kB and 265 records, territory_containment.json 5 kB and 35 records, scripts.json 5 kB and 49 records.](figures/data-files.svg)
 
-*Figure: the 7 data files by size. Read the bars: `likely_subtags.json` and `language_subtags.json` hold about 74 percent of the 442 kB.*
+*Figure: the 12 data files by size. Read the bars: `genealogy.json` and `places.json` hold about 68 percent of the 1,497 kB.*
 
 To see the source of each file:
 
@@ -35,23 +40,28 @@ $ python3 -c "import json, pathlib; [print(p.name, '|', json.loads(p.read_text()
 aliases.json | CLDR 49, cldr-json cldr-core/supplemental/aliases.json
 language_matching.json | CLDR 49, cldr-json cldr-core/supplemental/languageMatching.json, written-new
 language_subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
+lects.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 likely_subtags.json | CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json
+genealogy.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 lineage.json | TigreGotico/orthography2ipa@1e6e911705761de8d5724276187c4903ae92eaf4
+places.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
+scripts.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
 territory_containment.json | CLDR 49, cldr-json cldr-core/supplemental/territoryContainment.json
+times.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 ```
 
 Nobody edits these files by hand. To change one, change its script or its source, run the script, and commit the script and the data together.
 
 ## The loader is read-only
 
-`bcp47.load_data` returns a read-only view of the parsed JSON. Dictionaries are frozen dicts and JSON arrays are tuples, so a caller cannot change package data for every other caller. The view is made once when the file is read and shared, so a repeated call costs no copy. `registry` returns a read-only view of the records of one kind, made the same way. The language records are in `language_subtags.json`, so `load_data("subtags.json")` holds no `language` key; read them with `registry("language")` or `load_data("language_subtags.json")`.
+The package reads its data files with the internal call `linguatag._bcp47.load_data`, which is not part of the public API. It returns a read-only view of the parsed JSON. Dictionaries are frozen dicts and JSON arrays are tuples, so a caller cannot change package data for every other caller. The view is made once when the file is read and shared, so a repeated call costs no copy. `registry` returns a read-only view of the records of one kind, made the same way. The language records are in `language_subtags.json`, so `load_data("subtags.json")` holds no `language` key; read them with `registry("language")` or `load_data("language_subtags.json")`.
 
 The view stays a dict, so JSON, copy and pickle work. A deep copy or an unpickled value is a plain, mutable dict. A shallow copy leaves the nested views frozen. To change package data for one call only, make a deep copy first.
 
 ```python
-from linguatag.bcp47 import load_data
-from linguatag.lects import lect_steps
+from linguatag import lect_steps
+from linguatag._bcp47 import load_data  # internal: for contributors only
 
 print(lect_steps("pt-x-central", "pt-x-minhoto"))  # 2
 try:
@@ -104,11 +114,48 @@ $ python scripts/build_lineage.py ~/path/to/orthography2ipa 1e6e911705761de8d572
 
 Run it again when orthography2ipa adds, renames or moves a lect.
 
+## Regenerate the genealogy files
+
+`scripts/build_genealogy.py` writes `genealogy.json`, `places.json`, `times.json`, `lects.json` and `scripts.json` from an orthography2ipa clone. It reads the spec files and `script_distance.py` at a git ref, so the clone needs no checkout, and it never imports orthography2ipa. Run it with a Python that has linguatag installed. It overwrites `lects.json`, so run it once as the first build. After that, people edit the files in linguatag.
+
+```
+$ python scripts/build_genealogy.py ~/path/to/orthography2ipa 1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
+7680 spec files in, 7679 specs read
+alias yol dropped: standardizes to enm
+21 scripts, 28 type distances read
+7679 specs in: 7677 genealogy nodes, 7256 places, 605 timespans, 190 lects out
+```
+
+Two codes that standardize to one tag give one node, and the code that already is the tag wins. `scripts/freeze_metric_fixture.py` writes `test/data/metric_pairs.json`. Run it with a Python that has orthography2ipa installed and that is not the test environment. The tests compare linguatag with the values in that file.
+
+## Add a language
+
+Add a language or a lect as a pull request that changes `genealogy.json`, `places.json` and `times.json`. Do not edit the lines by hand. Write the facts to a JSON file and run `scripts/add_nodes.py`:
+
+```json
+{"pt-PT-x-ribatejo": {"parent": "pt-PT", "glottolog_code": null, "place": [39.24, -8.69]}}
+```
+
+```console
+$ python scripts/add_nodes.py nodes.json
+1 nodes in, 1 added, 0 updated
+```
+
+1. Give `parent` for each tag. The parent must be in the genealogy or in the same file.
+2. Give `family_path` only when it is different from the family of the parent.
+3. Give `glottolog_code` and `wikidata_qid` when you know them. Write `null` when the catalog has no entry for the variety. Leave the key out when no one checked.
+4. Give `place` as `[latitude, longitude]` and `years` as `[start, end]`, where `start` is the year of the earliest attested distinct variety and `end` is `null` for a living language.
+5. Write the source of each fact in the pull request.
+
+The script refuses a tag that is not standard, a parent that the data does not hold, a cycle, a malformed glottocode or QID, and an unknown field. It refuses a tag that the data already holds, unless you give `--update`. An update changes only the keys that the file gives. When the parent changes, the update drops the weighted `ancestors` and takes the family of the new parent.
+
+The tree models regional descent in more depth than Glottolog. A parent can differ from the Glottolog tree; `glottolog_code` keeps the link.
+
 ## Licences
 
 linguatag is under the Apache License 2.0 ([LICENSE](../LICENSE)).
 
-`linguatag/bcp47.py` and `linguatag/distance.py` port code from langcodes 3.5.1, Copyright (C) 2021 Robyn Speer, under the MIT License. The ported parts are `tag_parser.py`, `language_distance.py`, and the `Language.get`, `Language.maximize`, `Language.distance` and `standardize_tag` functions.
+`linguatag/_bcp47.py` and `linguatag/_distance.py` port code from langcodes 3.5.1, Copyright (C) 2021 Robyn Speer, under the MIT License. The ported parts are `tag_parser.py`, `language_distance.py`, and the `Language.get`, `Language.maximize`, `Language.distance` and `standardize_tag` functions.
 
 The four CLDR files hold Unicode CLDR release 49 data (cldr-json 49.0.0) under the Unicode License v3. The copyright is (C) 2015-2024 Unicode, Inc. [LICENSE-CLDR](../LICENSE-CLDR) holds the full notice.
 
@@ -117,4 +164,4 @@ The four CLDR files hold Unicode CLDR release 49 data (cldr-json 49.0.0) under t
 [NOTICE](../NOTICE) gives the full text of each attribution.
 
 ---
-[Index](index.md) · [← Dialects](dialects.md) · [Performance →](performance.md)
+[Index](index.md) · [← Genealogy, place and time](genealogy.md) · [Performance →](performance.md)

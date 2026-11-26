@@ -2,13 +2,13 @@
 
 <!-- agent-hint
 covers: the signature, the return value and one example of each name in linguatag.__all__
-source: linguatag/__init__.py:__all__, linguatag/standardize.py, linguatag/regions.py, linguatag/matching.py, linguatag/lects.py
+source: linguatag/__init__.py:__all__, linguatag/_standardize.py, linguatag/_regions.py, linguatag/_matching.py, linguatag/_lects.py, linguatag/_lineage.py, linguatag/_writing_systems.py
 generated: no
 verify: python scripts/check_doc_page.py docs/reference.md
 see: getting-started.md, matching.md
 -->
 
-This page gives the signature and one example for each of the 12 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
+This page gives the signature and one example for each of the 27 names that `from linguatag import ...` offers. Each name has a page that explains its rules, and the table at the end links it.
 
 ## Normalise a tag
 
@@ -20,6 +20,22 @@ from linguatag import standardize_lang
 print(standardize_lang("EN_us"))              # en-US
 print(standardize_lang("iw"))                 # he
 print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
+```
+
+## Read the subtags of a tag
+
+`parse_tag(tag: str) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`.
+
+```python
+from linguatag import LanguageTagError, parse_tag
+
+tag = parse_tag("pt_latn_pt")
+print(tag.language, tag.script, tag.region)   # pt Latn PT
+print(parse_tag("x-foo").whole)               # x-foo
+try:
+    parse_tag("pt--PT")
+except LanguageTagError:
+    print("not a tag")                        # not a tag
 ```
 
 ## Region and script of a bare tag
@@ -41,13 +57,23 @@ print(likely_script("ar"))                 # Arab
 print(likely_script("und"))                # None
 ```
 
-`OVERRIDES` maps a language to the `(script, region)` that linguatag uses in place of the CLDR value. Each entry cites its source in `linguatag/regions.py`.
+`OVERRIDES` maps a language to the `(script, region)` that linguatag uses in place of the CLDR value. Each entry cites its source in `linguatag/_regions.py`.
 
 ```python
 from linguatag import OVERRIDES
 
 print(sorted(OVERRIDES))           # ['ar', 'en', 'pt', 'ur', 'yue']
 print(OVERRIDES["pt"])             # ('Latn', 'PT')
+```
+
+`maximize(tag: str) -> Optional[LanguageTag]` adds the likely subtags of CLDR 49 (UTS #35 section 4.3) with no overrides, so `en` gives `US`, not the default region `GB`. It returns `None` for `und` and for a language with no CLDR entry.
+
+```python
+from linguatag import maximize
+
+print(maximize("zh-TW"))   # zh-Hant-TW
+print(maximize("en"))      # en-Latn-US
+print(maximize("und"))     # None
 ```
 
 ## Measure and pick
@@ -82,6 +108,20 @@ print(lect_steps("pt-x-central", "pt-x-minhoto"))  # 2
 print(lect_steps("pt", "en"))                      # None
 ```
 
+## Genealogy, place and time
+
+`parent(tag: str) -> Optional[str]` gives the genealogical parent. `ancestors(tag: str) -> List[str]` gives the chain of parents, nearest first. `family(tag: str) -> str` and `family_path(tag: str) -> Tuple[str, ...]` give the family as text and as clade names. `catalog_ids(tag: str) -> Dict[str, Optional[str]]` gives the `glottolog_code` and `wikidata_qid` of a tag.
+
+`ancestry_similarity(a, b, max_depth=10, temporal_decay=False, decay_halflife=1000.0) -> float`, `geographic_distance(a, b, normalize=True) -> Optional[float]` and `temporal_distance(a, b, reference_year=2025) -> Optional[float]` measure two tags. `script_features(name) -> dict`, `script_distance(a: dict, b: dict) -> float` and `script_distance_by_name(a: str, b: str) -> float` compare writing systems.
+
+```python
+from linguatag import ancestors, script_distance_by_name, temporal_distance
+
+print(ancestors("pt-PT-x-porto")[0])                    # pt-PT
+print(round(script_distance_by_name("Latin", "Greek"), 4))  # 0.1667
+print(temporal_distance("la", "qqq"))                   # None
+```
+
 ## Ask about Arabic
 
 `is_arabic_variety(tag: str) -> bool` tells whether the language subtag of the tag is Arabic or a variety of it. Script and region do not count.
@@ -97,11 +137,12 @@ print(is_arabic_variety("ur"))       # False
 
 | Names | Page |
 | --- | --- |
-| `standardize_lang` | [Parsing and normalising tags](parsing.md) |
-| `default_region`, `with_default_region`, `likely_script`, `OVERRIDES` | [Likely subtags and default regions](likely-subtags.md) |
+| `standardize_lang`, `parse_tag`, `LanguageTag`, `LanguageTagError` | [Parsing and normalising tags](parsing.md) |
+| `default_region`, `with_default_region`, `likely_script`, `maximize`, `OVERRIDES` | [Likely subtags and default regions](likely-subtags.md) |
 | `lang_distance`, `lang_matches`, `closest_lang`, `DEFAULT_MAX_LANGUAGE_DISTANCE` | [Matching](matching.md) |
 | `is_arabic_variety` | [Getting started](getting-started.md#tell-whether-a-tag-names-arabic) |
 | `LECT_MODES`, `lect_steps` | [Dialects](dialects.md) |
+| `parent`, `ancestors`, `family`, `family_path`, `catalog_ids`, `ancestry_similarity`, `geographic_distance`, `temporal_distance`, `script_features`, `script_distance`, `script_distance_by_name` | [Genealogy, place and time](genealogy.md) |
 
 ---
 [Index](index.md) · [← Performance](performance.md)

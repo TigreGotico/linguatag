@@ -12,7 +12,7 @@ or 5), a member language against its macrolanguage tag (``10``, the threshold
 itself), and a different language (80 or more, never a usable match).
 
 The distance is the CLDR 49 language matching distance of UTS #35 section
-4.4 (:mod:`linguatag.distance`). Add Likely Subtags replaces an encompassed
+4.4 (:mod:`linguatag._distance`). Add Likely Subtags replaces an encompassed
 language with its macrolanguage before it measures, from the CLDR
 ``languageAlias`` entries with ``reason="macrolanguage"``. UTS #35 (revision
 79, CLDR 49), BCP 47 Conformance: "Each macrolanguage has an identified
@@ -64,7 +64,7 @@ member: its record has no ``Macrolanguage`` field, and no CLDR 49
 ``languageMatch`` names it, so ``* ⇒ *`` at 80 already makes it a different
 language from Mandarin.
 
-A bare tag is measured from its default region (see :mod:`linguatag.regions`):
+A bare tag is measured from its default region (see :mod:`linguatag._regions`):
 ``en`` is ``en-GB``, so ``lang_distance("en", "en-GB")`` is ``0`` and
 ``lang_distance("en", "en-US")`` is a regional difference.
 
@@ -90,7 +90,7 @@ that employ them." So ``x-clade-abkh1242`` is not ``und`` and not ``x-foo``,
 and ``und-x-foo`` is not ``und``. Surrounding whitespace is ignored.
 
 Standardization, default regions and likely scripts come from
-:mod:`linguatag.bcp47`, and the distance from :mod:`linguatag.distance`.
+:mod:`linguatag._bcp47`, and the distance from :mod:`linguatag._distance`.
 Both read the CLDR 49 and IANA data of this package, so the output does not
 depend on what else is installed.
 """
@@ -99,11 +99,11 @@ from __future__ import annotations
 from functools import lru_cache
 from typing import Optional, Sequence
 
-from linguatag.bcp47 import LanguageTagError, is_region, is_script, maximize, parse
-from linguatag.distance import is_paradigm, tag_distance
-from linguatag.lects import lect_score, without_private_use
-from linguatag.regions import _with_likely_script, with_default_region
-from linguatag.standardize import (_preferred_values, _without_deprecated_language,
+from linguatag._bcp47 import LanguageTagError, is_region, is_script, maximize, parse
+from linguatag._distance import is_paradigm, tag_distance
+from linguatag._lects import lect_score, without_private_use
+from linguatag._regions import _with_likely_script, with_default_region
+from linguatag._standardize import (_preferred_values, _without_deprecated_language,
                                    _without_extlang, standardize_lang)
 
 __all__ = [
@@ -219,12 +219,12 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     for any tag but themselves. Surrounding whitespace is ignored.
 
     The distance is the CLDR 49 matching distance of UTS #35 section 4.4
-    (:func:`linguatag.distance.tag_distance`).
+    (:func:`linguatag._distance.tag_distance`).
 
     A private-use subtag counts for nothing unless ``lects`` asks for it:
     ``"dialect"`` scores the nearest other dialect before the standard
     language, ``"standard"`` the standard language before the dialects (see
-    :mod:`linguatag.lects`). The lect score reorders candidates; it never
+    :mod:`linguatag._lects`). The lect score reorders candidates; it never
     raises a distance at or below the default threshold above it.
     """
     distance = _language_distance(desired, supported)

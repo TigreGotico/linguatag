@@ -1,5 +1,90 @@
 # Changelog
 
+## [0.9.0a1](https://github.com/TigreGotico/linguatag/tree/0.9.0a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.8.0a1...0.9.0a1)
+
+**Merged pull requests:**
+
+- feat\(scripts\): add\_nodes.py adds languages to the genealogy, place and time data [\#106](https://github.com/TigreGotico/linguatag/pull/106) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.8.0a1](https://github.com/TigreGotico/linguatag/tree/0.8.0a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.2a1...0.8.0a1)
+
+**Merged pull requests:**
+
+- feat: catalog\_ids gives the Glottolog and Wikidata ids of a tag [\#103](https://github.com/TigreGotico/linguatag/pull/103) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.7.2a1](https://github.com/TigreGotico/linguatag/tree/0.7.2a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.1a1...0.7.2a1)
+
+**Merged pull requests:**
+
+- fix\(data\): restore the regional pt-BR and ca-x-valencia parents [\#102](https://github.com/TigreGotico/linguatag/pull/102) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.7.1a1](https://github.com/TigreGotico/linguatag/tree/0.7.1a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.0a2...0.7.1a1)
+
+**Merged pull requests:**
+
+- fix\(data\): pt-BR and ca-x-valencia parents follow Glottolog [\#100](https://github.com/TigreGotico/linguatag/pull/100) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.7.0a2](https://github.com/TigreGotico/linguatag/tree/0.7.0a2) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.7.0a1...0.7.0a2)
+
+**Merged pull requests:**
+
+- refactor: prefix internal modules with \_ [\#97](https://github.com/TigreGotico/linguatag/pull/97) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.7.0a1](https://github.com/TigreGotico/linguatag/tree/0.7.0a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.6.0a1...0.7.0a1)
+
+**Merged pull requests:**
+
+- feat: export maximize; docs use only the public API [\#95](https://github.com/TigreGotico/linguatag/pull/95) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.6.0a1](https://github.com/TigreGotico/linguatag/tree/0.6.0a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.5.1a1...0.6.0a1)
+
+**Merged pull requests:**
+
+- feat: export the tag parser as parse\_tag [\#93](https://github.com/TigreGotico/linguatag/pull/93) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.5.1a1](https://github.com/TigreGotico/linguatag/tree/0.5.1a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.5.0a1...0.5.1a1)
+
+**Merged pull requests:**
+
+- fix\(lineage\): read a bare tag's default-region node [\#89](https://github.com/TigreGotico/linguatag/pull/89) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.5.0a1](https://github.com/TigreGotico/linguatag/tree/0.5.0a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.5a1...0.5.0a1)
+
+## [0.4.5a1](https://github.com/TigreGotico/linguatag/tree/0.4.5a1) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a4...0.4.5a1)
+
+**Merged pull requests:**
+
+- feat: genealogy, places, coverage and language metrics as data [\#87](https://github.com/TigreGotico/linguatag/pull/87) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix\(lineage\): read the inherits key of orthography2ipa specs [\#86](https://github.com/TigreGotico/linguatag/pull/86) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.4.4a4](https://github.com/TigreGotico/linguatag/tree/0.4.4a4) (2026-11-25)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a3...0.4.4a4)
+
+**Merged pull requests:**
+
+- docs: complete pages, figures and navigation [\#84](https://github.com/TigreGotico/linguatag/pull/84) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.4.4a3](https://github.com/TigreGotico/linguatag/tree/0.4.4a3) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a2...0.4.4a3)

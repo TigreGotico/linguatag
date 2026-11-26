@@ -17,7 +17,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from linguatag.standardize import standardize_lang
+from linguatag._standardize import standardize_lang
 
 OUT = Path(__file__).resolve().parent.parent / "linguatag" / "data" / "lineage.json"
 DATA = "orthography2ipa/data"
@@ -43,7 +43,7 @@ def read_parents(repo: str, ref: str) -> dict:
         spec = json.loads(blobs[end + 1:end + 1 + size])
         pos = end + 1 + size + 1
         if isinstance(spec, dict) and spec.get("code"):
-            parents[spec["code"]] = spec.get("parent")
+            parents[spec["code"]] = spec.get("inherits", spec.get("parent"))
     print(f"{len(names)} spec files in, {len(parents)} codes read", file=sys.stderr)
     return parents
 

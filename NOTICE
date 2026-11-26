@@ -1,4 +1,4 @@
-linguatag/bcp47.py and linguatag/distance.py port code from langcodes 3.5.1
+linguatag/_bcp47.py and linguatag/_distance.py port code from langcodes 3.5.1
 (https://github.com/georgkrause/langcodes): its tag_parser.py and
 language_distance.py, and the Language.get, Language.maximize,
 Language.distance and standardize_tag functions:

@@ -7,14 +7,16 @@ linguatag reads BCP 47 language tags: it normalises them, gives a bare tag its d
 | Path | Content |
 | --- | --- |
 | `linguatag/__init__.py` | The public API, in `__all__` |
-| `linguatag/standardize.py` | `standardize_lang` |
-| `linguatag/bcp47.py` | `parse`, `standardize` and `maximize`, ported from langcodes |
-| `linguatag/regions.py` | `default_region`, `with_default_region`, `likely_script` and `OVERRIDES` |
-| `linguatag/distance.py` | The CLDR matching distance of UTS #35 section 4.4 |
-| `linguatag/matching.py` | `lang_distance`, `closest_lang`, `lang_matches` and `is_arabic_variety` |
-| `linguatag/lects.py` | The dialect score for the `lects` argument |
+| `linguatag/_standardize.py` | `standardize_lang` |
+| `linguatag/_bcp47.py` | `parse`, `standardize` and `maximize`, ported from langcodes |
+| `linguatag/_regions.py` | `default_region`, `with_default_region`, `likely_script` and `OVERRIDES` |
+| `linguatag/_distance.py` | The CLDR matching distance of UTS #35 section 4.4 |
+| `linguatag/_matching.py` | `lang_distance`, `closest_lang`, `lang_matches` and `is_arabic_variety` |
+| `linguatag/_lects.py` | The dialect score for the `lects` argument |
+| `linguatag/_lineage.py` | `parent`, `ancestors`, `family`, `ancestry_similarity`, `geographic_distance` and `temporal_distance` |
+| `linguatag/_writing_systems.py` | `script_features`, `script_distance` and `script_distance_by_name` |
 | `linguatag/data/` | The CLDR 49, IANA and dialect-tree JSON files |
-| `scripts/` | `extract_cldr.py` and `build_lineage.py`, which write `linguatag/data/`, and `check_doc_page.py`, which checks a README or docs page against the code, and `docs_figures.py`, which writes the SVG files of `docs/figures/` |
+| `scripts/` | `extract_cldr.py`, `build_lineage.py` and `build_genealogy.py`, which write `linguatag/data/`, `freeze_metric_fixture.py`, which writes `test/data/metric_pairs.json` from orthography2ipa, and `check_doc_page.py`, which checks a README or docs page against the code, and `docs_figures.py`, which writes the SVG files of `docs/figures/` |
 | `test/` | The pytest suite |
 | `docs/` | The user docs, listed in `docs/index.md` |
 

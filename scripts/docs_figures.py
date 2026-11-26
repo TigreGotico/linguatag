@@ -11,6 +11,8 @@ Inputs:
   Output: ``docs/figures/data-files.svg``.
 - ``docs/figures/timings.tsv``: the median of 7 fresh processes for each call,
   written by ``--measure``. Output: ``docs/figures/call-timings.svg``.
+- ``linguatag/data/genealogy.json``: the nodes of each top-level family.
+  Output: ``docs/figures/genealogy-families.svg``.
 
 The SVG files hold no timestamp, so two runs write the same bytes. A run of
 ``--measure`` gives different numbers on each machine, so only ``--measure``
@@ -97,6 +99,33 @@ def data_files() -> str:
                f"Size and record count of the {len(rows)} data files: {summary}.", body)
 
 
+def genealogy_families() -> str:
+    nodes = json.loads((DATA / "genealogy.json").read_text(encoding="utf-8"))["nodes"]
+    counts = {}
+    for node in nodes.values():
+        family = (node.get("family_path") or ["no family"])[0]
+        counts[family] = counts.get(family, 0) + 1
+    unclassified = counts.pop("no family", 0)
+    ranked = sorted(counts.items(), key=lambda item: (-item[1], item[0]))
+    shown = ranked[:12]
+    rest = ranked[12:]
+    rows = [(name, count, COLOURS[0]) for name, count in shown]
+    rows.append((f"{len(rest)} other families", sum(count for _, count in rest), COLOURS[1]))
+    rows.append(("no family", unclassified, COLOURS[2]))
+    left, top, row_height = 230, 20, 30
+    unit = (720 - left - 70) / max(count for _, count, _ in rows)
+    height = top + row_height * len(rows) + 12
+    body = []
+    for index, (name, count, colour) in enumerate(rows):
+        y = top + index * row_height
+        body.append(text(left - 10, y + 17, name, "end"))
+        body.append(f'<rect x="{left}" y="{y}" width="{count * unit:.1f}" height="22" fill="{colour}"/>')
+        body.append(text(f"{left + count * unit + 8:.1f}", y + 17, f"{count:,}"))
+    summary = ", ".join(f"{name} {count:,}" for name, count, _ in rows)
+    return svg(720, height, f"{len(nodes):,} genealogy nodes in {len(counts)} families",
+               f"Nodes of genealogy.json for each top-level family: {summary}.", body)
+
+
 def call_timings() -> str:
     rows = []
     for line in TIMINGS.read_text(encoding="utf-8").splitlines()[1:]:
@@ -174,7 +203,7 @@ def measure() -> None:
 
 
 FIGURE_FILES = {"distance-ladder.svg": distance_ladder, "data-files.svg": data_files,
-                "call-timings.svg": call_timings}
+                "call-timings.svg": call_timings, "genealogy-families.svg": genealogy_families}
 
 
 def main(argv) -> int:

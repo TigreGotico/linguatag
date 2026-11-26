@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how to install linguatag and run each main call once.
-source: linguatag/__init__.py:__all__, linguatag/matching.py, linguatag/regions.py, linguatag/standardize.py
+source: linguatag/__init__.py:__all__, linguatag/_matching.py, linguatag/_regions.py, linguatag/_standardize.py
 generated: no
 verify: python scripts/check_doc_page.py docs/getting-started.md
 see: parsing.md, matching.md
