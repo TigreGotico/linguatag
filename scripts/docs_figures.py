@@ -277,7 +277,7 @@ def leader_languages() -> str:
         region = "-" if "-" in normal else default_region(tag)
         language = normal.split("-")[0]
         step = full.language if full.language != language else "-"
-        ids = ", ".join(f"{key} {value}" for key, value in catalog_ids(tag).items()) or "-"
+        ids = ", ".join(f"{key}: {value or 'no entry'}" for key, value in catalog_ids(tag).items()) or "-"
         files = ["aliases.json", "likely_subtags.json"]
         if family(tag) or ids != "-":
             files.append("genealogy.json")
