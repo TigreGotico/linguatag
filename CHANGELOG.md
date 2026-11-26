@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.10a1](https://github.com/TigreGotico/linguatag/tree/0.9.10a1) (2026-11-26)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.9a1...0.9.10a1)
+
+**Merged pull requests:**
+
+- refactor: linguatag data is the source of truth; drop the o2i build scripts [\#136](https://github.com/TigreGotico/linguatag/pull/136) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix\(data\): etr is Edolo; Etruscan time and place move to ett [\#135](https://github.com/TigreGotico/linguatag/pull/135) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.9a1](https://github.com/TigreGotico/linguatag/tree/0.9.9a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.8a1...0.9.9a1)
@@ -389,10 +398,6 @@
 ## [0.1.2a1](https://github.com/TigreGotico/linguatag/tree/0.1.2a1) (2026-11-03)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.1a2...0.1.2a1)
-
-**Merged pull requests:**
-
-- fix: let an exact candidate win a closest\_lang tie [\#12](https://github.com/TigreGotico/linguatag/pull/12) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.1.1a2](https://github.com/TigreGotico/linguatag/tree/0.1.1a2) (2026-11-03)
 
