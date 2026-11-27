@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.19a1](https://github.com/TigreGotico/linguatag/tree/0.9.19a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.18a1...0.9.19a1)
+
+**Merged pull requests:**
+
+- fix: give pmh to Māhārāṣṭrī and add the Marathi and Punjabi stages [\#160](https://github.com/TigreGotico/linguatag/pull/160) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.18a1](https://github.com/TigreGotico/linguatag/tree/0.9.18a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.17a1...0.9.18a1)
@@ -391,10 +399,6 @@
 ## [0.2.3a1](https://github.com/TigreGotico/linguatag/tree/0.2.3a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.2a1...0.2.3a1)
-
-**Merged pull requests:**
-
-- fix: only a deprecated code loses a closest\_lang tie to its Preferred-Value [\#31](https://github.com/TigreGotico/linguatag/pull/31) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.2a1](https://github.com/TigreGotico/linguatag/tree/0.2.2a1) (2026-11-14)
 
