@@ -233,7 +233,51 @@ def _parse_rest(subtags: List[str], language: Optional[str],
                        extensions=tuple(extensions), private=private)
 
 
-def parse(tag: str) -> LanguageTag:
+#: glibc locale modifiers that name a script or a variant (`sr_RS@latin`,
+#: `ca_ES@valencia`). Any other modifier (`@euro`) names no part of a language.
+_POSIX_MODIFIERS = {"latin": "Latn", "cyrillic": "Cyrl", "devanagari": "Deva", "valencia": "valencia"}
+
+
+def _posix_to_tag(text: str) -> str:
+    """The language part of a POSIX locale string, as a tag: the codeset
+    after ``.`` goes, and a modifier after ``@`` that names a script or a
+    variant becomes that subtag. ``C`` and ``POSIX`` are ``und``. A string
+    with no ``.`` or ``@`` comes back unchanged."""
+    if text.upper().partition(".")[0] in ("C", "POSIX"):
+        return "und"
+    if "." not in text and "@" not in text:
+        return text
+    core, _, modifier = text.partition("@")
+    parts = core.partition(".")[0].replace("_", "-").split("-")
+    subtag = _POSIX_MODIFIERS.get(modifier.partition(".")[0].lower())
+    if subtag and len(subtag) == 4:
+        parts.insert(1, subtag)
+    elif subtag:
+        parts.append(subtag)
+    return "-".join(parts)
+
+
+def _tolerant(tag: str) -> LanguageTag:
+    parts = [part for part in _posix_to_tag(tag.strip()).replace("_", "-").split("-") if part]
+    lowered = [part.lower() for part in parts]
+    private = None
+    if "x" in lowered[1:]:
+        at = lowered.index("x", 1)
+        if at + 1 < len(parts):
+            private = "-".join(lowered[at:])
+        parts = parts[:at]
+    for end in range(len(parts), 0, -1):
+        try:
+            prefix = parse("-".join(parts[:end]))
+        except LanguageTagError:
+            continue
+        if prefix.whole:
+            return prefix
+        return replace(prefix, private=private or prefix.private)
+    raise LanguageTagError(f"{tag!r} has no prefix that names a language")
+
+
+def parse(tag: str, strict: bool = True) -> LanguageTag:
     """The subtags of ``tag``, with the BCP 47 case conventions and nothing
     replaced.
 
@@ -242,9 +286,18 @@ def parse(tag: str) -> LanguageTag:
     47": "Replace the special language identifier "root" with the BCP 47
     primary language tag "und"").
 
+    With ``strict=False``, a string that is not well-formed reads as much as
+    it can: a POSIX locale (``ar_SA.UTF-8``) reads as its language, the
+    longest well-formed prefix before ``-x-`` is the tag, and the private-use
+    part stays even with a subtag longer than 8 characters
+    (``an-x-benasques``).
+
     Raises:
-        LanguageTagError: ``tag`` is not well-formed (RFC 5646 section 2.1).
+        LanguageTagError: ``tag`` is not well-formed (RFC 5646 section 2.1),
+            or, with ``strict=False``, no prefix of it names a language.
     """
+    if not strict:
+        return _tolerant(tag)
     if not tag.isascii():
         raise LanguageTagError(f"{tag!r} is not ASCII")
     text = tag.replace("_", "-").lower()
