@@ -1,8 +1,20 @@
 # Changelog
 
+## [0.9.17a1](https://github.com/TigreGotico/linguatag/tree/0.9.17a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.16a1...0.9.17a1)
+
+**Merged pull requests:**
+
+- fix: add the Middle Indo-Aryan stages [\#153](https://github.com/TigreGotico/linguatag/pull/153) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.16a1](https://github.com/TigreGotico/linguatag/tree/0.9.16a1) (2026-11-27)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.14a1...0.9.16a1)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.15a1...0.9.16a1)
+
+## [0.9.15a1](https://github.com/TigreGotico/linguatag/tree/0.9.15a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.14a1...0.9.15a1)
 
 **Merged pull requests:**
 
@@ -387,10 +399,6 @@
 ## [0.2.1a1](https://github.com/TigreGotico/linguatag/tree/0.2.1a1) (2026-11-11)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.0a1...0.2.1a1)
-
-**Merged pull requests:**
-
-- fix: measure Arabic varieties in their CLDR 49 likely script [\#27](https://github.com/TigreGotico/linguatag/pull/27) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.2.0a1](https://github.com/TigreGotico/linguatag/tree/0.2.0a1) (2026-11-10)
 
