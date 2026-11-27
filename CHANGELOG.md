@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1a1](https://github.com/TigreGotico/linguatag/tree/0.13.1a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.0a1...0.13.1a1)
+
+**Merged pull requests:**
+
+- fix: a region before a lect keeps the lect [\#188](https://github.com/TigreGotico/linguatag/pull/188) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.13.0a1](https://github.com/TigreGotico/linguatag/tree/0.13.0a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.12.0a1...0.13.0a1)
@@ -377,10 +385,6 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.3a1...0.4.4a1)
 
-**Merged pull requests:**
-
-- perf: parse the tag once in likely\_script [\#62](https://github.com/TigreGotico/linguatag/pull/62) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.4.3a1](https://github.com/TigreGotico/linguatag/tree/0.4.3a1) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a4...0.4.3a1)
@@ -388,7 +392,6 @@
 **Merged pull requests:**
 
 - fix: return a read-only view of package data [\#65](https://github.com/TigreGotico/linguatag/pull/65) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-- fix: match every spelling of und as a bare und [\#64](https://github.com/TigreGotico/linguatag/pull/64) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.4.2a4](https://github.com/TigreGotico/linguatag/tree/0.4.2a4) (2026-11-24)
 
