@@ -57,7 +57,7 @@ A key with the value `None` means that the catalog has no entry for the variety.
 ```python
 from linguatag import ancestry_similarity
 
-print(round(ancestry_similarity("pt-PT", "pt-PT-x-porto"), 4))  # 0.7705
+print(round(ancestry_similarity("pt-PT", "pt-PT-x-porto"), 4))  # 0.7381
 print(round(ancestry_similarity("pt-PT", "es-ES"), 4))           # 0.4131
 print(round(ancestry_similarity("pt-PT", "de-DE"), 4))           # 0.0605
 print(ancestry_similarity("pt-PT", "pt-PT"))                   # 1.0
@@ -83,7 +83,7 @@ Without `normalize=False`, the distance is a share of half the circumference of 
 from linguatag import temporal_distance
 
 print(temporal_distance("la", "pt-PT"))                    # 1.0
-print(round(temporal_distance("pt-PT", "es-ES"), 4))       # 0.2759
+print(round(temporal_distance("pt-PT", "es-ES"), 4))       # 0.3527
 print(temporal_distance("pt-PT", "qqq-x-nothing"))         # None
 ```
 
