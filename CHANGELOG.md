@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.18a1](https://github.com/TigreGotico/linguatag/tree/0.9.18a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.17a1...0.9.18a1)
+
+**Merged pull requests:**
+
+- fix: put Assamese and Oriya under Māgadhī Apabhraṃśa [\#157](https://github.com/TigreGotico/linguatag/pull/157) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.17a1](https://github.com/TigreGotico/linguatag/tree/0.9.17a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.16a1...0.9.17a1)
@@ -391,10 +399,6 @@
 ## [0.2.2a1](https://github.com/TigreGotico/linguatag/tree/0.2.2a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.1a1...0.2.2a1)
-
-**Merged pull requests:**
-
-- fix: replace deprecated language subtags with their IANA Preferred-Value [\#29](https://github.com/TigreGotico/linguatag/pull/29) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.2.1a1](https://github.com/TigreGotico/linguatag/tree/0.2.1a1) (2026-11-11)
 
