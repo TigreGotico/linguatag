@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.10.5a2](https://github.com/TigreGotico/linguatag/tree/0.10.5a2) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a1...0.10.5a2)
+
+**Merged pull requests:**
+
+- fix: an unknown region or extlang takes the default region [\#177](https://github.com/TigreGotico/linguatag/pull/177) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: Tagalog stays tl with a region or script [\#176](https://github.com/TigreGotico/linguatag/pull/176) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- docs: an empty subtag makes no tag and matches nothing [\#175](https://github.com/TigreGotico/linguatag/pull/175) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- docs: add a generated leader-languages page [\#140](https://github.com/TigreGotico/linguatag/pull/140) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.5a1](https://github.com/TigreGotico/linguatag/tree/0.10.5a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.4a1...0.10.5a1)
@@ -376,17 +387,9 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.1a1...0.4.1a2)
 
-**Merged pull requests:**
-
-- docs: README, docs index, navigation and agent hints [\#50](https://github.com/TigreGotico/linguatag/pull/50) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.4.1a1](https://github.com/TigreGotico/linguatag/tree/0.4.1a1) (2026-11-21)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.0a1...0.4.1a1)
-
-**Merged pull requests:**
-
-- fix: und and a private-use-only tag match no other tag [\#48](https://github.com/TigreGotico/linguatag/pull/48) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.4.0a1](https://github.com/TigreGotico/linguatag/tree/0.4.0a1) (2026-11-19)
 
