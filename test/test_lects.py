@@ -176,6 +176,13 @@ def test_an_unknown_subtag_after_a_lect_reads_the_lect(tag, candidates, expected
     ("pt_br", ["pt-BR", "pt"]),
     ("zh-Hant-TW", ["zh-Hant-TW", "zh-Hant", "zh"]),
     ("eu", ["eu"]),
+    ("en-US-u-ca-gregory", ["en-US-u-ca-gregory", "en-US-u-ca", "en-US", "en"]),
+    ("x-foo", ["x-foo"]),
+    ("pt--BR", ["pt--BR", "pt"]),
 ])
 def test_lookup_tags_drops_one_subtag_at_a_time(tag, expected):
     assert lookup_tags(tag) == expected
+
+
+def test_an_extension_before_the_lect_keeps_the_lect():
+    assert closest_lang("pt-PT-u-ca-gregory-x-porto", ["pt-PT", "pt-PT-x-porto"], lects="dialect") == "pt-PT-x-porto"

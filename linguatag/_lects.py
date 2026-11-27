@@ -82,11 +82,23 @@ def _ancestors(tag: str) -> List[str]:
     return [node.lower() for node in chain]
 
 
+def _without_extensions(tag: str) -> str:
+    """``tag`` without its extensions: ``pt-PT-u-ca-gregory-x-porto`` is
+    ``pt-PT-x-porto``."""
+    kept, in_extension = [], False
+    for index, part in enumerate(tag.split("-")):
+        if index and len(part) == 1:
+            in_extension = part.lower() != "x"
+        if not in_extension:
+            kept.append(part)
+    return "-".join(kept)
+
+
 def _as_known_lect(tag: str) -> str:
     """``tag`` as the nearest lect that the data names: an unknown subtag
     after a lect (``pt-BR-x-sp-foo``) does not change the lect."""
     known = _known()
-    for node in _ancestors(standardize_lang(tag)):
+    for node in _ancestors(_without_extensions(standardize_lang(tag))):
         if node in known or not private_use(node):
             return node
     return tag
@@ -100,10 +112,12 @@ def lookup_tags(tag: str) -> List[str]:
     ``pt-PT-x-lisboa-foo`` gives ``pt-PT-x-lisboa-foo``, ``pt-PT-x-lisboa``,
     ``pt-PT`` and ``pt``. The tag is standardized first."""
     tags = [standardize_lang(tag)]
-    while "-" in tags[-1]:
-        head = tags[-1].rpartition("-")[0]
+    while "-" in tags[-1] and not tags[-1].lower().startswith("x-"):
+        head = tags[-1].rpartition("-")[0].rstrip("-")
         if len(head.rpartition("-")[2]) == 1:
-            head = head.rpartition("-")[0]
+            head = head.rpartition("-")[0].rstrip("-")
+        if not head:
+            break
         tags.append(head)
     return tags
 
