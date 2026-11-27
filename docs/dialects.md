@@ -2,7 +2,7 @@
 
 <!-- agent-hint
 covers: how the lects argument orders tags that name a dialect with a private-use subtag.
-source: linguatag/_lects.py:lect_score, linguatag/_lects.py:lect_steps, linguatag/data/lineage.json
+source: linguatag/_lects.py:lect_score, linguatag/_lects.py:lect_steps, linguatag/_lects.py:lookup_tags, linguatag/data/lineage.json
 generated: no
 verify: python scripts/check_doc_page.py docs/dialects.md
 see: matching.md, data-and-licence.md
@@ -54,6 +54,24 @@ print(closest_lang("en", ["fr"], lects="bogus"))  # None
 ```
 
 The lect score never raises a distance that is 10 or less to a value above 10. So `closest_lang` uses it only to order the candidates that already match.
+
+## An unknown subtag after a lect
+
+A tag can add a private-use subtag that the data does not know, such as a voice name. The tag then reads as the nearest lect that the data knows, as RFC 4647 section 3.4 (Lookup) removes one subtag at a time from the end:
+
+```python
+from linguatag import closest_lang
+
+print(closest_lang("pt-BR-x-sp-foo", ["pt", "pt-BR", "pt-BR-x-sp"], lects="standard"))  # pt-BR-x-sp
+```
+
+`lookup_tags` gives the tags that Lookup tries, most specific first. A program with its own alias table looks each tag up in turn:
+
+```python
+from linguatag import lookup_tags
+
+print(lookup_tags("pt-PT-x-lisboa-foo"))  # ['pt-PT-x-lisboa-foo', 'pt-PT-x-lisboa', 'pt-PT', 'pt']
+```
 
 ## The dialect tree
 
