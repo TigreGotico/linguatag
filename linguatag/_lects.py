@@ -102,7 +102,7 @@ def _as_known_lect(tag: str) -> str:
         if node in known or _without_region(node) in known:
             return node
         if not private_use(node):
-            break
+            return node
     return tag
 
 

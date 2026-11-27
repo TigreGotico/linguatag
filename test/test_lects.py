@@ -196,3 +196,9 @@ def test_an_extension_before_the_lect_keeps_the_lect():
 def test_a_region_before_a_lect_keeps_the_lect(tag, expected, mode):
     supported = ["eu", "eu-x-bizkaiera", "eu-x-zuberera", "pt", "pt-BR", "pt-BR-x-sp"]
     assert closest_lang(tag, supported, lects=mode) == expected
+
+
+@pytest.mark.parametrize("tag, expected", [("en-x-foo", "en-GB"), ("pt-x-foo", "pt-PT"), ("de-x-foo", "de-DE")])
+def test_an_unknown_private_use_subtag_picks_the_standard(tag, expected):
+    supported = ["en-GB", "en-GB-x-scotland", "pt-PT", "pt-PT-x-acores", "de-DE", "de-x-alemanni"]
+    assert closest_lang(tag, supported, lects="dialect") == expected
