@@ -99,10 +99,8 @@ def _as_known_lect(tag: str) -> str:
     after a lect (``pt-BR-x-sp-foo``) does not change the lect."""
     known = _known()
     for node in _ancestors(_without_extensions(standardize_lang(tag))):
-        if node in known:
+        if node in known or _without_region(node) in known:
             return node
-        if _without_region(node) in known:
-            return _without_region(node)
         if not private_use(node):
             return node
     return tag
