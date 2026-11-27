@@ -61,7 +61,7 @@ def _fold(tag: str) -> str:
 
 
 @lru_cache(maxsize=4096)
-def standardize_lang(tag: str) -> str:
+def standardize_lang(tag: str, macro: bool = False) -> str:
     """The canonical form of ``tag`` (RFC 5646 section 4.5), from the CLDR 49
     alias rules and the IANA registry.
 
@@ -69,7 +69,12 @@ def standardize_lang(tag: str) -> str:
     that is not a well-formed tag keeps its shape, with its language and
     extlang replaced and each subtag in its BCP-47 case. An empty subtag
     (``pt-BR-``) makes a string that is no tag, and it matches nothing. The rules and
-    examples are in ``docs/parsing.md``."""
+    examples are in ``docs/parsing.md``.
+
+    With ``macro``, an individual language that CLDR folds into its
+    macrolanguage takes the macrolanguage: ``cmn`` is ``zh`` and ``arb`` is
+    ``ar``. CLDR keeps a member that is not mutually intelligible with the
+    macrolanguage's main language, so ``yue`` stays ``yue``."""
     tag = tag.strip()
     language, sep, rest = tag.replace("_", "-").partition("-")
     try:
@@ -79,6 +84,6 @@ def standardize_lang(tag: str) -> str:
             canonical = parse(standardize("fil" + sep + rest))
             script = None if canonical.script == "Latn" else canonical.script
             return str(replace(canonical, language="tl", script=script))
-        return standardize(tag)
+        return standardize(tag, macrolanguage=macro)
     except LanguageTagError:
         return _fold(_without_deprecated_language(_without_extlang(tag)))

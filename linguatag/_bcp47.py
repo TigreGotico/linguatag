@@ -469,10 +469,10 @@ def _canonical(tag: LanguageTag, macrolanguage: bool) -> LanguageTag:
 
 
 @lru_cache(maxsize=4096)
-def standardize(tag: str) -> str:
+def standardize(tag: str, macrolanguage: bool = False) -> str:
     """``tag`` in canonical form (RFC 5646 section 4.5), with the CLDR alias
-    rules other than the macrolanguage ones, and with no script that IANA
-    suppresses for its language.
+    rules (the macrolanguage ones only with ``macrolanguage``), and with no
+    script that IANA suppresses for its language.
 
     ``en_us`` is ``en-US``, ``iw`` is ``he``, ``eng`` is ``en``, ``zh-yue`` is
     ``yue``, ``sh`` is ``sr-Latn``, ``en-Latn`` is ``en`` and ``cmn`` stays
@@ -481,7 +481,7 @@ def standardize(tag: str) -> str:
     Raises:
         LanguageTagError: ``tag`` is not well-formed.
     """
-    canonical = _canonical(parse(tag), macrolanguage=False)
+    canonical = _canonical(parse(tag), macrolanguage=macrolanguage)
     if canonical.language and canonical.script:
         record = _raw_registry("language").get(canonical.language, {})
         if record.get("suppress_script") == canonical.script:
