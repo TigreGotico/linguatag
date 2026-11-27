@@ -5,7 +5,7 @@ from linguatag import LanguageTagError, parse_tag, standardize_lang
 
 @pytest.mark.parametrize("locale, expected", [
     ("ar_SA.UTF-8", "ar-SA"), ("pt_BR.utf8", "pt-BR"), ("en_US@euro", "en-US"), ("en_US.UTF-8@euro", "en-US"),
-    ("sr_RS@latin", "sr-Latn-RS"), ("ca_ES@valencia", "ca-ES-valencia"), ("C.UTF-8", "und"), ("POSIX", "und"), ("C", "und"),
+    ("sr_RS@latin", "sr-Latn-RS"), ("sr-Cyrl_RS@latin", "sr-Cyrl-RS"), ("ca_ES@valencia", "ca-ES-valencia"), ("C.UTF-8", "und"), ("POSIX", "und"), ("C", "und"),
 ])
 def test_a_posix_locale_reads_as_its_language(locale, expected):
     assert standardize_lang(locale) == expected

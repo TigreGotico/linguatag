@@ -251,7 +251,9 @@ def _posix_to_tag(text: str) -> str:
     parts = core.partition(".")[0].replace("_", "-").split("-")
     subtag = _POSIX_MODIFIERS.get(modifier.partition(".")[0].lower())
     if subtag and len(subtag) == 4:
-        parts.insert(1, subtag)
+        # A script in the tag itself wins over the modifier.
+        if not (len(parts) > 1 and len(parts[1]) == 4 and parts[1].isalpha()):
+            parts.insert(1, subtag)
     elif subtag:
         parts.append(subtag)
     return "-".join(parts)
