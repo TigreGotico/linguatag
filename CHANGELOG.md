@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.9.15a1](https://github.com/TigreGotico/linguatag/tree/0.9.15a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.14a1...0.9.15a1)
+
+**Merged pull requests:**
+
+- fix\(data\): sources for the Catalan, Kinderib and pt-BR lineage edges [\#148](https://github.com/TigreGotico/linguatag/pull/148) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: ancestry\_similarity ranks a shared branch above a shared family [\#146](https://github.com/TigreGotico/linguatag/pull/146) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.14a1](https://github.com/TigreGotico/linguatag/tree/0.9.14a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.13a1...0.9.14a1)
@@ -387,17 +396,9 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.7a1...0.2.0a1)
 
-**Merged pull requests:**
-
-- feat: add is\_arabic\_variety and match Hassaniyya to Modern Standard Arabic [\#24](https://github.com/TigreGotico/linguatag/pull/24) ([JarbasAl](https://github.com/JarbasAl))
-
 ## [0.1.7a1](https://github.com/TigreGotico/linguatag/tree/0.1.7a1) (2026-11-10)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.6a1...0.1.7a1)
-
-**Merged pull requests:**
-
-- fix: read an extlang tag as its IANA Preferred-Value [\#23](https://github.com/TigreGotico/linguatag/pull/23) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.1.6a1](https://github.com/TigreGotico/linguatag/tree/0.1.6a1) (2026-11-10)
 
