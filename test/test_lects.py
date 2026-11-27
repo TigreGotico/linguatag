@@ -186,3 +186,13 @@ def test_lookup_tags_drops_one_subtag_at_a_time(tag, expected):
 
 def test_an_extension_before_the_lect_keeps_the_lect():
     assert closest_lang("pt-PT-u-ca-gregory-x-porto", ["pt-PT", "pt-PT-x-porto"], lects="dialect") == "pt-PT-x-porto"
+
+
+@pytest.mark.parametrize("mode", ["standard", "dialect"])
+@pytest.mark.parametrize("tag, expected", [
+    ("eu-FR-x-zuberera", "eu-x-zuberera"), ("eu-FR-x-zuberera-foo", "eu-x-zuberera"),
+    ("pt-BR-x-sp-foo", "pt-BR-x-sp"),
+])
+def test_a_region_before_a_lect_keeps_the_lect(tag, expected, mode):
+    supported = ["eu", "eu-x-bizkaiera", "eu-x-zuberera", "pt", "pt-BR", "pt-BR-x-sp"]
+    assert closest_lang(tag, supported, lects=mode) == expected
