@@ -229,6 +229,7 @@ def test_braga_and_porto_are_minhoto_varieties(tag):
 
 @pytest.mark.parametrize("tag, stage", [
     ("hi", "psu-x-apabhram"), ("bn", "pmh-x-apabhram"), ("mwr", "inc-x-owr"), ("gu", "inc-x-owr"),
+    ("as", "pmh-x-apabhram"), ("or", "pmh-x-apabhram"),
 ])
 def test_an_indo_aryan_language_descends_through_a_middle_stage(tag, stage):
     assert parent(tag) == stage
@@ -243,3 +244,8 @@ def test_two_indo_aryan_languages_are_nearer_than_two_branches():
 def test_a_marwari_member_is_indo_aryan(tag):
     assert parent(tag) == "mwr"
     assert family_path(tag) == ("Indo-European", "Indo-Iranian", "Indo-Aryan")
+
+
+@pytest.mark.parametrize("other", ["as", "or"])
+def test_a_magadhi_language_is_nearer_to_bengali_than_hindi_is(other):
+    assert ancestry_similarity("bn", other) > ancestry_similarity("bn", "hi")
