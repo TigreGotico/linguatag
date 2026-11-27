@@ -28,6 +28,16 @@ def test_ancestry_similarity_multiplies_the_cited_weights(a, b, expected):
     assert ancestry_similarity(a, b) == pytest.approx(expected)
 
 
+@pytest.mark.parametrize("near, far", [
+    # Catalan and Spanish share Latin; Catalan and English share only Proto-Indo-European.
+    (("ca", "es"), ("ca", "en")),
+    (("pt", "es"), ("pt", "de")),
+    (("en", "de"), ("en", "hi")),
+])
+def test_a_shared_branch_is_nearer_than_a_shared_family(near, far):
+    assert ancestry_similarity(*near) > ancestry_similarity(*far)
+
+
 @pytest.mark.parametrize("a, b, expected", [
     # Start years (times.json sources): mwl 1609, aae 1450, ca-x-valencia 1343,
     # all still spoken, so each period ends at the reference year 2025.
@@ -84,6 +94,9 @@ def test_a_cited_period(tag, period):
     ("pt-BR-x-mg", "pt-BR", "sub-falar mineiro"), ("pt-BR-x-ce", "pt-BR", "Ceará (Fortaleza)"),
     ("pt-BR-x-paraiba", "pt-BR", "Paraíba (João Pessoa)"), ("pt-BR-x-recife", "pt-BR", "dialeto recifense"),
     ("mwr", "inc-x-owr", "Çaurasena Apabhraṃça"), ("rwr", "mwr", "macrolanguages"),
+    ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
+    ("ar-TR-x-kinderib", "ar-IQ-x-qeltu", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
+    ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
@@ -224,3 +237,9 @@ def test_an_indo_aryan_language_descends_through_a_middle_stage(tag, stage):
 
 def test_two_indo_aryan_languages_are_nearer_than_two_branches():
     assert ancestry_similarity("hi", "bn") > 0.1 > ancestry_similarity("hi", "en")
+
+
+@pytest.mark.parametrize("tag", ["dhd", "mtr", "swv", "wry"])
+def test_a_marwari_member_is_indo_aryan(tag):
+    assert parent(tag) == "mwr"
+    assert family_path(tag) == ("Indo-European", "Indo-Iranian", "Indo-Aryan")
