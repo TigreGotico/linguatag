@@ -168,7 +168,7 @@ def test_a_chain_terminates_on_a_cycle(monkeypatch):
 def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
     lects = linguatag._bcp47._raw_data("lects.json")["lects"]
     nodes = linguatag._bcp47._raw_data("genealogy.json")["nodes"]
-    assert len(lects) == 190
+    assert len(lects) == 189
     assert all(tag in nodes and "-x-" in tag for tag in lects)
     assert all(set(entry) == {"name", "regions", "islands", "cities"} for entry in lects.values())
     assert all(not (e["regions"] or e["islands"] or e["cities"]) for e in lects.values())
@@ -261,3 +261,9 @@ def test_pmh_is_maharastri_prakrit():
 @pytest.mark.parametrize("other", ["pa", "mr"])
 def test_an_inner_indo_aryan_language_is_nearer_to_hindi_than_english_is(other):
     assert ancestry_similarity("hi", other) > 2 * ancestry_similarity("hi", "en")
+
+
+def test_a_retired_variety_has_no_node():
+    # ISO 639-3 retired bbz in 2020, and Glottolog retired baba1273 as non-existent.
+    assert parent("ar-TD-x-babalia") is None
+    assert family("ar-TD-x-babalia") == ""
