@@ -93,7 +93,7 @@ def test_a_cited_period(tag, period):
     ("pt-PT-x-coimbra", "pt-PT", "a montante de Coimbra"), ("pt-PT-x-terceira", "pt-PT", "Terceira Island"),
     ("pt-BR-x-mg", "pt-BR", "sub-falar mineiro"), ("pt-BR-x-ce", "pt-BR", "Ceará (Fortaleza)"),
     ("pt-BR-x-paraiba", "pt-BR", "Paraíba (João Pessoa)"), ("pt-BR-x-recife", "pt-BR", "dialeto recifense"),
-    ("mwr", "raj", "raja1256"), ("rwr", "mwr", "macrolanguages"),
+    ("mwr", "inc-x-owr", "Çaurasena Apabhraṃça"), ("rwr", "mwr", "macrolanguages"),
     ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
     ("ar-TR-x-kinderib", "ar-IQ-x-qeltu", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
     ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
@@ -225,6 +225,18 @@ def test_braga_and_porto_are_minhoto_varieties(tag):
     # Paiva Boléo & Santos Silva 1959, via Cintra 1971: Braga is inside minhoto
     # central and Porto inside baixo-minhoto, both inside the Minhoto dialect.
     assert parent(tag) == "pt-PT-x-minho"
+
+
+@pytest.mark.parametrize("tag, stage", [
+    ("hi", "psu-x-apabhram"), ("bn", "pmh-x-apabhram"), ("mwr", "inc-x-owr"), ("gu", "inc-x-owr"),
+])
+def test_an_indo_aryan_language_descends_through_a_middle_stage(tag, stage):
+    assert parent(tag) == stage
+    assert "sa" in ancestors(tag)
+
+
+def test_two_indo_aryan_languages_are_nearer_than_two_branches():
+    assert ancestry_similarity("hi", "bn") > 2 * ancestry_similarity("hi", "en")
 
 
 @pytest.mark.parametrize("tag", ["dhd", "mtr", "swv", "wry"])
