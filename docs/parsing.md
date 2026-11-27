@@ -40,6 +40,7 @@ Each line applies one rule:
 | `en-Latn` | `en` | A script that the IANA registry suppresses for the language goes (RFC 5646 section 3.1.9). |
 | `cmn` | `cmn` | An encompassed language keeps its own code. It does not become its macrolanguage `zh`. |
 | `tgl` | `tl` | Tagalog stays `tl`. CLDR replaces it with Filipino, `fil`, and linguatag does not. |
+| `tl-Latn-PH` | `tl-PH` | Tagalog stays `tl` with other subtags too, and `Latn`, its IANA Suppress-Script, goes. |
 
 `standardize_lang` never raises. A string that is not a well-formed tag gets the extlang and deprecated-language rules and the BCP 47 case of each subtag, and nothing more:
 
