@@ -66,7 +66,8 @@ def standardize_lang(tag: str) -> str:
 
     White space around the tag is removed (RFC 5646 section 2.1). A string
     that is not a well-formed tag keeps its shape, with its language and
-    extlang replaced and each subtag in its BCP-47 case. The rules and
+    extlang replaced and each subtag in its BCP-47 case. An empty subtag
+    (``pt-BR-``) makes a string that is no tag, and it matches nothing. The rules and
     examples are in ``docs/parsing.md``."""
     tag = tag.strip()
     if tag.lower() in ("tl", "tgl"):
