@@ -142,15 +142,16 @@ def _weights(tag: str, max_depth: int, temporal: bool, halflife: float) -> Dict[
 
 
 def ancestry_similarity(a: str, b: str, max_depth: int = 10,
-                        temporal_decay: bool = False, decay_halflife: float = 1000.0) -> float:
+                        temporal_decay: bool = True, decay_halflife: float = 2000.0) -> float:
     """How strongly two tags are linked by descent, from 0.0 to 1.0.
 
-    1.0 is the same tag, about 0.7 to 0.9 a dialect of the same language, 0.4
-    to 0.7 the same branch, 0.2 to 0.4 the same family and 0.0 no traceable
-    link. The weights are those of the ancestors in ``genealogy.json``.
-    ``max_depth`` counts the levels above each tag that the trace follows.
-    With ``temporal_decay``, a path loses weight with the years between an
-    ancestor and its descendant.
+    1.0 is the same tag, about 0.7 to 0.9 two dialects of one language, 0.2 to
+    0.5 two languages of one branch, and below 0.1 two branches of one family
+    or no traceable link. The weights are those of the ancestors in
+    ``genealogy.json``. ``max_depth`` counts the levels above each tag that the
+    trace follows. With ``temporal_decay``, a path loses weight with the years
+    between an ancestor and its descendant, so an old shared ancestor counts
+    for less than a recent one.
     """
     a, b = _key(a), _key(b)
     if a == b:
