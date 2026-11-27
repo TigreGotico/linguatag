@@ -22,7 +22,8 @@ A request for the standard language scores a dialect of it by its steps plus 1.
 """
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Tuple
+from functools import lru_cache
+from typing import Dict, FrozenSet, List, Optional, Tuple
 
 from linguatag._bcp47 import _raw_data
 from linguatag._standardize import standardize_lang
@@ -50,21 +51,61 @@ def without_private_use(tag: str) -> str:
     return base if separator else tag
 
 
+@lru_cache(maxsize=1)
+def _known() -> FrozenSet[str]:
+    """Every lect that the data names, lowercase."""
+    parents = _parents()
+    return frozenset(tag.lower() for tag in [*parents, *parents.values(), *_raw_data("lects.json")])
+
+
+def _drop_last_private_use(tag: str) -> str:
+    """``tag`` without its last private-use subtag: ``an-x-cheso-foo`` is
+    ``an-x-cheso``, and ``an-x-cheso`` is ``an``."""
+    head, _, _ = tag.rpartition("-")
+    return head[:-2] if head.endswith("-x") else head
+
+
 def _ancestors(tag: str) -> List[str]:
-    """``tag`` and its ancestors. A lect the tree does not hold is placed
-    under its own language."""
+    """``tag`` and its ancestors. A lect the tree does not hold loses one
+    private-use subtag at a time (RFC 4647 section 3.4) until it reaches a
+    lect the tree holds, or its language."""
     parents = _parents()
     chain = [tag]
-    while len(chain) <= len(parents):
+    while len(chain) <= len(parents) + len(tag):
         node = chain[-1]
         if node in parents:
-            parent = parents[node]
+            chain.append(parents[node])
+        elif private_use(node) and not node.lower().startswith("x-"):
+            chain.append(_drop_last_private_use(node))
         else:
-            parent = without_private_use(node)
-            if parent == node:
-                break
-        chain.append(parent)
+            break
     return [node.lower() for node in chain]
+
+
+def _as_known_lect(tag: str) -> str:
+    """``tag`` as the nearest lect that the data names: an unknown subtag
+    after a lect (``pt-BR-x-sp-foo``) does not change the lect."""
+    known = _known()
+    for node in _ancestors(standardize_lang(tag)):
+        if node in known or not private_use(node):
+            return node
+    return tag
+
+
+def lookup_tags(tag: str) -> List[str]:
+    """The tags that RFC 4647 section 3.4 (Lookup) tries for ``tag``, most
+    specific first: one subtag goes at a time from the end, and a singleton
+    goes with the subtag after it.
+
+    ``pt-PT-x-lisboa-foo`` gives ``pt-PT-x-lisboa-foo``, ``pt-PT-x-lisboa``,
+    ``pt-PT`` and ``pt``. The tag is standardized first."""
+    tags = [standardize_lang(tag)]
+    while "-" in tags[-1]:
+        head = tags[-1].rpartition("-")[0]
+        if len(head.rpartition("-")[2]) == 1:
+            head = head.rpartition("-")[0]
+        tags.append(head)
+    return tags
 
 
 def lect_steps(a: str, b: str) -> Optional[int]:
@@ -81,7 +122,11 @@ def lect_score(desired: str, supported: str, mode: str) -> int:
     """The score :func:`~linguatag.lang_distance` adds for ``mode``, 0 to 4."""
     if mode not in LECT_MODES:
         raise ValueError(f"lects must be one of {LECT_MODES} or None, not {mode!r}")
-    wanted, offered = private_use(desired), private_use(supported)
+    offered = private_use(supported)
+    if private_use(desired) == offered:
+        return 0
+    desired = _as_known_lect(desired)
+    wanted = private_use(desired)
     if wanted == offered:
         return 0
     if wanted and not offered:

@@ -93,6 +93,8 @@ print(maximize("und"))     # None
 
 `lang_matches(a: str, b: str, max_distance: int = 10) -> bool` is `lang_distance(a, b) <= max_distance`.
 
+`lookup_tags(tag: str) -> List[str]` gives the tags that RFC 4647 section 3.4 (Lookup) tries for `tag`, most specific first: one subtag goes at a time from the end, and a singleton goes with the subtag after it. See [Dialects](dialects.md).
+
 `closest_lang(target: str, available: Sequence[str], max_distance: int = 10, lects: Optional[str] = None) -> Optional[str]` returns the entry of `available` with the smallest distance, as written in the list. It returns `None` when no entry is within `max_distance`. `available` is read once, so an iterator works.
 
 ```python

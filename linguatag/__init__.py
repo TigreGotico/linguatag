@@ -3,7 +3,7 @@ region of a tag that names none, the nearness of dialects named with a
 private-use subtag, and the genealogy, place and period of a language."""
 from linguatag._bcp47 import LanguageTag, LanguageTagError, language_scope, maximize
 from linguatag._bcp47 import parse as parse_tag
-from linguatag._lects import LECT_MODES, lect_steps
+from linguatag._lects import LECT_MODES, lect_steps, lookup_tags
 from linguatag._lineage import (ancestors, ancestry_similarity, catalog_ids, family, family_path,
                                geographic_distance, parent, temporal_distance)
 from linguatag._matching import (DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang,
@@ -31,6 +31,7 @@ __all__ = [
     "lang_matches",
     "language_scope",
     "lect_steps",
+    "lookup_tags",
     "likely_script",
     "maximize",
     "parent",
