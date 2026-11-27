@@ -228,8 +228,9 @@ def test_braga_and_porto_are_minhoto_varieties(tag):
 
 
 @pytest.mark.parametrize("tag, stage", [
-    ("hi", "psu-x-apabhram"), ("bn", "pmh-x-apabhram"), ("mwr", "inc-x-owr"), ("gu", "inc-x-owr"),
-    ("as", "pmh-x-apabhram"), ("or", "pmh-x-apabhram"),
+    ("hi", "psu-x-apabhram"), ("bn", "inc-x-magadhi-apabhram"), ("mwr", "inc-x-owr"), ("gu", "inc-x-owr"),
+    ("as", "inc-x-magadhi-apabhram"), ("or", "inc-x-magadhi-apabhram"),
+    ("mr", "pmh"), ("pa", "inc-x-takka"),
 ])
 def test_an_indo_aryan_language_descends_through_a_middle_stage(tag, stage):
     assert parent(tag) == stage
@@ -249,3 +250,14 @@ def test_a_marwari_member_is_indo_aryan(tag):
 @pytest.mark.parametrize("other", ["as", "or"])
 def test_a_magadhi_language_is_nearer_to_bengali_than_hindi_is(other):
     assert ancestry_similarity("bn", other) > ancestry_similarity("bn", "hi")
+
+
+def test_pmh_is_maharastri_prakrit():
+    data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
+    assert "Māhārāṣṭri Prākrit" in data["sources"]["pmh"]
+    assert parent("bn") == "inc-x-magadhi-apabhram"
+
+
+@pytest.mark.parametrize("other", ["pa", "mr"])
+def test_an_inner_indo_aryan_language_is_nearer_to_hindi_than_english_is(other):
+    assert ancestry_similarity("hi", other) > 2 * ancestry_similarity("hi", "en")
