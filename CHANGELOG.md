@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.1a1](https://github.com/TigreGotico/linguatag/tree/0.10.1a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.0a1...0.10.1a1)
+
+**Merged pull requests:**
+
+- fix: drop the retired Babalia Creole Arabic node [\#165](https://github.com/TigreGotico/linguatag/pull/165) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.0a1](https://github.com/TigreGotico/linguatag/tree/0.10.0a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.19a1...0.10.0a1)
@@ -391,10 +399,6 @@
 ## [0.2.5a1](https://github.com/TigreGotico/linguatag/tree/0.2.5a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.4a1...0.2.5a1)
-
-**Merged pull requests:**
-
-- fix: break a closest\_lang tie against a deprecated region or extlang subtag [\#35](https://github.com/TigreGotico/linguatag/pull/35) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.4a1](https://github.com/TigreGotico/linguatag/tree/0.2.4a1) (2026-11-14)
 
