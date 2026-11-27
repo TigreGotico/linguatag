@@ -79,7 +79,7 @@ def test_script_distance_of_latin_and_cyrillic():
     ("mwl", [1609, None]), ("ca-x-valencia", [1343, None]), ("aat", [1350, None]),
     ("aae", [1450, None]), ("an-x-cheso", [1200, None]), ("acm-IQ", None), ("pt-BR", None),
     ("pt-PT", [1214, None]), ("es", [900, None]), ("fr", [842, None]), ("it", [960, None]), ("de", [790, None]),
-    ("nl", [510, None]), ("da", [1241, None]), ("bn", [950, None]), ("hi", [1803, None]), ("mwr", [1400, None]),
+    ("nl", [510, None]), ("da", [1241, None]), ("bn", [950, None]), ("hi", [1191, None]), ("mwr", [1400, None]),
     ("kab", [1857, None]), ("es-CO", [1867, None]),
 ])
 def test_a_cited_period(tag, period):
