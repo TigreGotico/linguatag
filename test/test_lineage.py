@@ -96,6 +96,8 @@ def test_a_cited_period(tag, period):
     ("mwr", "inc-x-owr", "Çaurasena Apabhraṃça"), ("rwr", "mwr", "macrolanguages"),
     ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
     ("ar-TR-x-kinderib", "ar-IQ-x-qeltu", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
+    ("pt-PT-x-medieval", "roa-x-galaico-pt", "virada do século 14 para o século 15"),
+    ("pt-PT", "pt-PT-x-medieval", "Teyssier inova ao considerar"),
     ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
@@ -267,3 +269,8 @@ def test_a_retired_variety_has_no_node():
     # ISO 639-3 retired bbz in 2020, and Glottolog retired baba1273 as non-existent.
     assert parent("ar-TD-x-babalia") is None
     assert family("ar-TD-x-babalia") == ""
+
+
+def test_every_lineage_edge_has_a_source():
+    data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
+    assert not [tag for tag, source in data["sources"].items() if source.startswith("NOT FOUND")]
