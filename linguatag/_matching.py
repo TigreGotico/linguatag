@@ -178,10 +178,14 @@ def _parseable_prefix(tag: str) -> str:
     for end in range(len(parts), 0, -1):
         candidate = "-".join(parts[:end])
         try:
-            parse(candidate)
+            parsed = parse(candidate)
         except LanguageTagError:
             continue
-        return candidate
+        # standardize_lang replaces each registered extlang, so one that is
+        # left is not registered: `pt-foo` is measured as `pt`. A cut that
+        # leaves only `und` names no language, so the tag stays whole.
+        if not parsed.extlangs:
+            return candidate if parsed.language or end == len(parts) else tag
     return tag
 
 

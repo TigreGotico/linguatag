@@ -209,3 +209,15 @@ def test_an_exact_candidate_wins_a_tie_at_zero(target, available, exact):
 def test_a_regional_request_is_not_pulled_to_the_default():
     assert closest_lang("en-US", ["en-GB", "en-US"]) == "en-US"
     assert closest_lang("en-US", ["en", "en-US"]) == "en-US"
+
+
+@pytest.mark.parametrize("tag", ["pt-ZZ", "pt-foo"])
+def test_a_tag_with_no_known_region_reads_the_default_region(tag):
+    assert closest_lang(tag, ["pt-BR", "pt-PT"]) == "pt-PT"
+
+
+@pytest.mark.parametrize("tag, expected", [
+    ("pt-ZZ", "pt-PT"), ("sr-Latn-ZZ", "sr-Latn-RS"), ("zh-Hant", "zh-Hant-TW"), ("sr-Latn", "sr-Latn-RS"),
+])
+def test_an_unknown_region_takes_the_default_region(tag, expected):
+    assert with_default_region(tag) == expected

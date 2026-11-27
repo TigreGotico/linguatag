@@ -60,7 +60,8 @@ def _split(tag: str) -> Tuple[str, Optional[str], Optional[str], bool]:
     extended = bool(rest) and len(rest[0]) == 3 and rest[0].isalpha()
     if rest and is_script(rest[0]):
         script = rest.pop(0)
-    if rest and is_region(rest[0]):
+    # ZZ is the BCP 47 code for an unknown region, so it names no region.
+    if rest and is_region(rest[0]) and rest[0] != "ZZ":
         region = rest[0]
     return language, script, region, extended
 
@@ -116,7 +117,7 @@ def _with_default_region(tag: str, *, parsed: bool) -> str:
     region = _default_region(tag, parsed=parsed)
     if region is None:
         return tag
-    parts = tag.split("-")
+    parts = [part for part in tag.split("-") if part != "ZZ"]
     at = 2 if script else 1
     return "-".join(parts[:at] + [region] + parts[at:])
 
