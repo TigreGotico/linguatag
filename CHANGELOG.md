@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.0a1](https://github.com/TigreGotico/linguatag/tree/0.10.0a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.19a1...0.10.0a1)
+
+**Merged pull requests:**
+
+- feat: language\_scope reads the IANA scope of a language subtag [\#163](https://github.com/TigreGotico/linguatag/pull/163) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.19a1](https://github.com/TigreGotico/linguatag/tree/0.9.19a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.18a1...0.9.19a1)
@@ -391,10 +399,6 @@
 ## [0.2.4a1](https://github.com/TigreGotico/linguatag/tree/0.2.4a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.3a1...0.2.4a1)
-
-**Merged pull requests:**
-
-- fix: measure Fanti and Mandinka as languages apart from Akan and Mandingo [\#33](https://github.com/TigreGotico/linguatag/pull/33) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.3a1](https://github.com/TigreGotico/linguatag/tree/0.2.3a1) (2026-11-14)
 
