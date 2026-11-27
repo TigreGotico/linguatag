@@ -90,7 +90,7 @@ def test_a_cited_period(tag, period):
 
 @pytest.mark.parametrize("tag, parent, cited", [
     ("pt-PT-x-braga", "pt-PT-x-minho", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
-    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ar-x-mashriqi", "east2729"),
+    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ayp", "tigr1278"), ("ayp", "ar-x-mashriqi", "east2729"),
     ("pt-AO", "pt-PT", "norma padrão europeia"), ("pt-MZ", "pt-PT", "a norma de referência em Moçambique"),
     ("pt-PT-x-alfena", "pt-PT", "Douro Litoral"), ("pt-PT-x-viana", "pt-PT", "Baixo-Minho"),
     ("pt-PT-x-coimbra", "pt-PT", "a montante de Coimbra"), ("pt-PT-x-terceira", "pt-PT", "Terceira Island"),
@@ -98,7 +98,7 @@ def test_a_cited_period(tag, period):
     ("pt-BR-x-paraiba", "pt-BR", "Paraíba (João Pessoa)"), ("pt-BR-x-recife", "pt-BR", "dialeto recifense"),
     ("mwr", "inc-x-owr", "Çaurasena Apabhraṃça"), ("rwr", "mwr", "macrolanguages"),
     ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
-    ("ar-TR-x-kinderib", "ar-IQ-x-qeltu", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
+    ("ar-TR-x-kinderib", "ayp", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
     ("pt-PT-x-medieval", "roa-x-galaico-pt", "virada do século 14 para o século 15"),
     ("pt-PT", "pt-PT-x-medieval", "Teyssier inova ao considerar"),
     ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
@@ -277,3 +277,8 @@ def test_a_retired_variety_has_no_node():
 def test_every_lineage_edge_has_a_source():
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
     assert not [tag for tag, source in data["sources"].items() if source.startswith("NOT FOUND")]
+
+
+def test_one_node_holds_north_mesopotamian_arabic():
+    nodes = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))["nodes"]
+    assert [tag for tag, node in nodes.items() if node.get("glottolog_code") == "nort3142"] == ["ayp"]
