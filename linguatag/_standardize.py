@@ -5,7 +5,7 @@ from dataclasses import replace
 from functools import lru_cache
 from typing import Dict
 
-from linguatag._bcp47 import LanguageTagError, _raw_registry, parse, standardize
+from linguatag._bcp47 import LanguageTagError, _raw_registry, parse, _posix_to_tag, standardize
 
 __all__ = ["standardize_lang"]
 
@@ -75,7 +75,7 @@ def standardize_lang(tag: str, macro: bool = False) -> str:
     macrolanguage takes the macrolanguage: ``cmn`` is ``zh`` and ``arb`` is
     ``ar``. CLDR folds only the main member of a macrolanguage, so ``yue``
     stays ``yue``."""
-    tag = tag.strip()
+    tag = _posix_to_tag(tag.strip())
     language, sep, rest = tag.replace("_", "-").partition("-")
     try:
         if language.lower() in ("tl", "tgl"):

@@ -24,7 +24,7 @@ print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
 
 ## Read the subtags of a tag
 
-`parse_tag(tag: str) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`.
+`parse_tag(tag: str, strict: bool = True) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`. With `strict=False`, it keeps the longest well-formed prefix and an over-long private-use part, and reads a POSIX locale.
 
 ```python
 from linguatag import LanguageTagError, parse_tag
@@ -92,6 +92,8 @@ print(maximize("und"))     # None
 `lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> int` gives the CLDR 49 matching distance. `0` is identical, and a value above `DEFAULT_MAX_LANGUAGE_DISTANCE` is no usable match. The first argument is the request, because the distance is one-way.
 
 `lang_matches(a: str, b: str, max_distance: int = 10) -> bool` is `lang_distance(a, b) <= max_distance`.
+
+`lookup_tags(tag: str) -> List[str]` gives the tags that RFC 4647 section 3.4 (Lookup) tries for `tag`, most specific first: one subtag goes at a time from the end, and a singleton goes with the subtag after it. See [Dialects](dialects.md).
 
 `closest_lang(target: str, available: Sequence[str], max_distance: int = 10, lects: Optional[str] = None) -> Optional[str]` returns the entry of `available` with the smallest distance, as written in the list. It returns `None` when no entry is within `max_distance`. `available` is read once, so an iterator works.
 

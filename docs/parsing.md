@@ -71,6 +71,16 @@ parts = "pt--BR".replace("_", "-").split("-")
 print(closest_lang("-".join(p for p in parts if p), ["pt-PT", "pt-BR"]))  # pt-BR
 ```
 
+A POSIX locale string from `LANG` or `locale.getlocale()` reads as its language. The codeset after `.` goes. A modifier after `@` that names a script or a variant becomes that subtag, and any other modifier goes. `C` and `POSIX` name no language:
+
+```python
+from linguatag import standardize_lang
+
+print(standardize_lang("ar_SA.UTF-8"))  # ar-SA
+print(standardize_lang("sr_RS@latin"))  # sr-Latn-RS
+print(standardize_lang("C.UTF-8"))      # und
+```
+
 ## Read the subtags with parse_tag
 
 ```python
@@ -90,3 +100,13 @@ except LanguageTagError as error:
 
 ---
 [Index](index.md) · [← Getting started](getting-started.md) · [Likely subtags and default regions →](likely-subtags.md)
+
+
+`parse_tag(tag, strict=False)` reads a string that is not well-formed as far as it can. The longest well-formed prefix before `-x-` is the tag, and the private-use part stays, also with a subtag longer than 8 characters. It raises `LanguageTagError` only when no prefix names a language:
+
+```python
+from linguatag import parse_tag
+
+print(parse_tag("bs-Cyrl-BA-Latn", strict=False))        # bs-Cyrl-BA
+print(parse_tag("an-x-benasques", strict=False).private)  # x-benasques
+```

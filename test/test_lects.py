@@ -7,7 +7,7 @@ import pytest
 import linguatag._bcp47
 import linguatag._lects as lects
 from linguatag import (DEFAULT_MAX_LANGUAGE_DISTANCE, LECT_MODES, closest_lang,
-                       lang_distance, lect_steps)
+                       lang_distance, lect_steps, lookup_tags)
 
 LINEAGE = json.loads((Path(lects.__file__).parent / "data" / "lineage.json")
                      .read_text(encoding="utf-8"))
@@ -160,3 +160,29 @@ def test_the_lect_tree_agrees_with_the_genealogy():
     nodes = linguatag._bcp47._raw_data("genealogy.json")["nodes"]
     assert {tag: parent for tag, parent in LINEAGE["parents"].items()
             if nodes[tag].get("parent") != parent} == {}
+
+
+@pytest.mark.parametrize("tag, candidates, expected", [
+    ("pt-BR-x-sp-foo", ["pt", "pt-BR", "pt-BR-x-sp", "pt-PT"], "pt-BR-x-sp"),
+    ("eu-x-zuberera-foo", ["eu", "eu-x-zuberera"], "eu-x-zuberera"),
+])
+def test_an_unknown_subtag_after_a_lect_reads_the_lect(tag, candidates, expected):
+    assert closest_lang(tag, candidates, lects="standard") == expected
+    assert closest_lang(tag, candidates, lects="dialect") == expected
+
+
+@pytest.mark.parametrize("tag, expected", [
+    ("pt-PT-x-lisboa-foo", ["pt-PT-x-lisboa-foo", "pt-PT-x-lisboa", "pt-PT", "pt"]),
+    ("pt_br", ["pt-BR", "pt"]),
+    ("zh-Hant-TW", ["zh-Hant-TW", "zh-Hant", "zh"]),
+    ("eu", ["eu"]),
+    ("en-US-u-ca-gregory", ["en-US-u-ca-gregory", "en-US-u-ca", "en-US", "en"]),
+    ("x-foo", ["x-foo"]),
+    ("pt--BR", ["pt--BR", "pt"]),
+])
+def test_lookup_tags_drops_one_subtag_at_a_time(tag, expected):
+    assert lookup_tags(tag) == expected
+
+
+def test_an_extension_before_the_lect_keeps_the_lect():
+    assert closest_lang("pt-PT-u-ca-gregory-x-porto", ["pt-PT", "pt-PT-x-porto"], lects="dialect") == "pt-PT-x-porto"
