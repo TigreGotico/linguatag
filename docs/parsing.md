@@ -49,6 +49,17 @@ from linguatag import standardize_lang
 print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
 ```
 
+A leading, trailing or doubled separator makes an empty subtag, and BCP 47 section 2.1 gives a subtag 1 to 8 characters. So `pt-BR-` is not a tag. `standardize_lang` keeps the separator, and the matching functions put the string at distance 100 from every tag, so it matches nothing. When the input can contain extra separators, remove the empty subtags before the call. `str.strip` removes only the leading and trailing separators, so split the string and join the parts that are not empty:
+
+```python
+from linguatag import closest_lang, standardize_lang
+
+print(standardize_lang("pt_BR_"))                     # pt-BR-
+print(closest_lang("pt--BR", ["pt-PT", "pt-BR"]))     # None
+parts = "pt--BR".replace("_", "-").split("-")
+print(closest_lang("-".join(p for p in parts if p), ["pt-PT", "pt-BR"]))  # pt-BR
+```
+
 ## Read the subtags with parse_tag
 
 ```python
