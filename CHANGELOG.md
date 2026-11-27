@@ -1,14 +1,25 @@
 # Changelog
 
+## [0.9.13a1](https://github.com/TigreGotico/linguatag/tree/0.9.13a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.12a1...0.9.13a1)
+
+**Merged pull requests:**
+
+- fix\(data\): sources for 10 Portuguese lineage edges [\#139](https://github.com/TigreGotico/linguatag/pull/139) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.12a1](https://github.com/TigreGotico/linguatag/tree/0.9.12a1) (2026-11-27)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.10a2...0.9.12a1)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.11a1...0.9.12a1)
+
+## [0.9.11a1](https://github.com/TigreGotico/linguatag/tree/0.9.11a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.10a2...0.9.11a1)
 
 **Merged pull requests:**
 
 - fix\(data\): Marwari \(mwr\) node, with rwr and mve under it [\#143](https://github.com/TigreGotico/linguatag/pull/143) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 - fix: a region with no node reads the language's lineage [\#141](https://github.com/TigreGotico/linguatag/pull/141) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-- fix\(data\): sources for 10 Portuguese lineage edges [\#139](https://github.com/TigreGotico/linguatag/pull/139) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.9.10a2](https://github.com/TigreGotico/linguatag/tree/0.9.10a2) (2026-11-26)
 
