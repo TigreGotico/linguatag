@@ -73,8 +73,8 @@ def standardize_lang(tag: str, macro: bool = False) -> str:
 
     With ``macro``, an individual language that CLDR folds into its
     macrolanguage takes the macrolanguage: ``cmn`` is ``zh`` and ``arb`` is
-    ``ar``. CLDR keeps a member that is not mutually intelligible with the
-    macrolanguage's main language, so ``yue`` stays ``yue``."""
+    ``ar``. CLDR folds only the main member of a macrolanguage, so ``yue``
+    stays ``yue``."""
     tag = tag.strip()
     language, sep, rest = tag.replace("_", "-").partition("-")
     try:
