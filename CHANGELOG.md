@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.3a1](https://github.com/TigreGotico/linguatag/tree/0.10.3a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.2a1...0.10.3a1)
+
+**Merged pull requests:**
+
+- fix\(data\): ayp is the North Mesopotamian Arabic node [\#168](https://github.com/TigreGotico/linguatag/pull/168) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.2a1](https://github.com/TigreGotico/linguatag/tree/0.10.2a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.1a1...0.10.2a1)
@@ -391,10 +399,6 @@
 ## [0.2.7a1](https://github.com/TigreGotico/linguatag/tree/0.2.7a1) (2026-11-15)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.6a1...0.2.7a1)
-
-**Merged pull requests:**
-
-- fix: take hyw and lzh likely subtags from CLDR 49 [\#39](https://github.com/TigreGotico/linguatag/pull/39) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.6a1](https://github.com/TigreGotico/linguatag/tree/0.2.6a1) (2026-11-15)
 
