@@ -236,7 +236,7 @@ def test_an_indo_aryan_language_descends_through_a_middle_stage(tag, stage):
 
 
 def test_two_indo_aryan_languages_are_nearer_than_two_branches():
-    assert ancestry_similarity("hi", "bn") > 0.1 > ancestry_similarity("hi", "en")
+    assert ancestry_similarity("hi", "bn") > 2 * ancestry_similarity("hi", "en")
 
 
 @pytest.mark.parametrize("tag", ["dhd", "mtr", "swv", "wry"])
