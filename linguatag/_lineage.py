@@ -145,9 +145,9 @@ def ancestry_similarity(a: str, b: str, max_depth: int = 10,
                         temporal_decay: bool = True, decay_halflife: float = 2000.0) -> float:
     """How strongly two tags are linked by descent, from 0.0 to 1.0.
 
-    1.0 is the same tag, about 0.7 to 0.9 two dialects of one language, 0.2 to
-    0.5 two languages of one branch, and below 0.1 two branches of one family
-    or no traceable link. The weights are those of the ancestors in
+    1.0 is the same tag and 0.0 no traceable link. Typical values: 0.7 to 0.95
+    for two dialects of one language, 0.2 to 0.75 for two languages of one
+    branch, and below 0.1 for two branches of one family. The weights are those of the ancestors in
     ``genealogy.json``. ``max_depth`` counts the levels above each tag that the
     trace follows. With ``temporal_decay``, a path loses weight with the years
     between an ancestor and its descendant, so an old shared ancestor counts
