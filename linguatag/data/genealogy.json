@@ -4248,7 +4248,7 @@
 "muz": {"parent": "x-clade-surm1244", "family": "Surmic", "family_path": ["Surmic"], "glottolog_code": "murs1242"},
 "mva": {"parent": "x-clade-aust1307", "family": "Austronesian", "family_path": ["Austronesian"], "glottolog_code": "mana1295"},
 "mvd": {"parent": "x-clade-aust1307", "family": "Austronesian", "family_path": ["Austronesian"], "glottolog_code": "mamb1305"},
-"mve": {"parent": "x-clade-indo1319", "family": "Indo-European", "family_path": ["Indo-European"], "glottolog_code": "marw1256"},
+"mve": {"parent": "mwr", "family": "Indo-European > Indo-Iranian > Indo-Aryan", "family_path": ["Indo-European", "Indo-Iranian", "Indo-Aryan"], "glottolog_code": "marw1256"},
 "mvf": {"parent": "x-clade-mong1349", "family": "Mongolic", "family_path": ["Mongolic"], "glottolog_code": "peri1253"},
 "mvg": {"parent": "x-clade-otom1299", "family": "Otomanguean", "family_path": ["Otomanguean"], "glottolog_code": "yucu1250"},
 "mvh": {"parent": "x-clade-afro1255", "family": "Afro-Asiatic", "family_path": ["Afro-Asiatic"], "glottolog_code": "mire1238"},
@@ -4284,6 +4284,7 @@
 "mwo": {"parent": "x-clade-aust1307", "family": "Austronesian", "family_path": ["Austronesian"], "glottolog_code": "cent2058"},
 "mwp": {"parent": "x-clade-pama1250", "family": "Pama-Nyungan", "family_path": ["Pama-Nyungan"], "glottolog_code": "kala1377"},
 "mwq": {"parent": "x-clade-sino1245", "family": "Sino-Tibetan", "family_path": ["Sino-Tibetan"], "glottolog_code": "munc1235"},
+"mwr": {"parent": "raj", "family": "Indo-European > Indo-Iranian > Indo-Aryan", "family_path": ["Indo-European", "Indo-Iranian", "Indo-Aryan"], "glottolog_code": null, "wikidata_qid": "Q56312"},
 "mws": {"parent": "x-clade-atla1278", "family": "Atlantic-Congo", "family_path": ["Atlantic-Congo"], "glottolog_code": "mwim1241"},
 "mwt": {"parent": "x-clade-aust1307", "family": "Austronesian", "family_path": ["Austronesian"], "glottolog_code": "moke1242"},
 "mwv": {"parent": "x-clade-aust1307", "family": "Austronesian", "family_path": ["Austronesian"], "glottolog_code": "ment1249"},
@@ -5503,7 +5504,7 @@
 "rwl": {"parent": "x-clade-atla1278", "family": "Atlantic-Congo", "family_path": ["Atlantic-Congo"], "glottolog_code": "ruwi1234"},
 "rwm": {"parent": "x-clade-atla1278", "family": "Atlantic-Congo", "family_path": ["Atlantic-Congo"], "glottolog_code": "amba1263"},
 "rwo": {"parent": "x-clade-nucl1709", "family": "Nuclear Trans New Guinea", "family_path": ["Nuclear Trans New Guinea"], "glottolog_code": "rawa1267"},
-"rwr": {"parent": "x-clade-indo1319", "family": "Indo-European", "family_path": ["Indo-European"], "glottolog_code": "marw1260"},
+"rwr": {"parent": "mwr", "family": "Indo-European > Indo-Iranian > Indo-Aryan", "family_path": ["Indo-European", "Indo-Iranian", "Indo-Aryan"], "glottolog_code": "marw1260", "wikidata_qid": "Q65455884"},
 "rxd": {"parent": "x-clade-pama1250", "family": "Pama-Nyungan", "family_path": ["Pama-Nyungan"], "glottolog_code": "ngar1288"},
 "ryn": {"parent": "x-clade-japo1237", "family": "Japonic", "family_path": ["Japonic"], "glottolog_code": "nort2935"},
 "rys": {"parent": "x-clade-japo1237", "family": "Japonic", "family_path": ["Japonic"], "glottolog_code": "yaey1239"},
@@ -7694,6 +7695,8 @@
 "ca-x-nord": "NOT FOUND: Recasens p. 10 names Roussillonese among the current dialects, but no source gives its medieval parent",
 "ca-x-occident": "NOT FOUND: Recasens p. 10 names North-Western Catalan among the current dialects, but no source gives its medieval parent",
 "ca-x-valencia": "Recasens, Fonètica històrica del català (IEC), p. 11: the conquest of Valencia with settlers mainly from western Catalonia and Aragon (1230-1250)",
+"mve": "ISO 639-3 macrolanguage mappings (SIL, iso-639-3-macrolanguages.tab): mve Marwari (Pakistan) is a member of mwr",
+"mwr": "Glottolog 5.4 puts both members, Marwari (India) [marw1260] and Marwari (Pakistan) [marw1256], under Rajasthani [raja1256]; Glottolog keeps no macrolanguage node. ISO 639-3 (SIL): «Marwari is a macrolanguage», a sibling of raj, not a member of it",
 "pt-AO": "Undolo 2014, O português de Angola, p. 57: «para o caso de Angola, o normal corresponderá ao que designamos por PA; e normativo, ao que designamos por PE»; p. 117: schools no longer «observa como tal a norma padrão europeia». The edge records the reference norm, not descent",
 "pt-BR": "NOT FOUND: the medieval chain needs Castro or Teyssier, which the papers library does not hold",
 "pt-BR-x-bahia": "Nascentes 1953, quoted in Aragão, As vogais pretônicas no falar nordestino: os dados do ALiB: sub-falar baiano",
@@ -7724,6 +7727,7 @@
 "pt-PT-x-terceira": "Mikołajczak 2014, Studia Iberystyczne 13, p. 418, as the author's hypothesis: «it is anticipated that the features of the northern dialects of Portugal had more influence on the Portuguese of Terceira Island»",
 "pt-PT-x-tras-os-montes": "Cintra 1971, Nova proposta de classificação dos dialectos galego-portugueses, Boletim de Filologia, summarising Leite de Vasconcelos, Mapa Dialectológico (1897), p. 16 and the map (Cintra's note 17): dialecto trasmontano",
 "pt-PT-x-viana": "Cintra 1971, Nova proposta de classificação dos dialectos galego-portugueses, p. 13: «grupo de dialectos do Alto-Minho e de Trás-os-Montes e um grupo de dialectos do Baixo-Minho»; the boundary «a oeste Caminha, desce de aí em direcção ao Lima que atravessa próximo de Arcos de Valdevez» puts Viana in the Baixo-Minho group. Cintra does not name Viana",
-"pt-UY": "Mazzaferro, Simioni & Ulrich 2024, Working Papers em Linguística 25(2), doi:10.5007/1984-8420.2024.e100456, p. 99, summarising Rona: the consonant and vowel systems of sul-rio-grandense Portuguese"
+"pt-UY": "Mazzaferro, Simioni & Ulrich 2024, Working Papers em Linguística 25(2), doi:10.5007/1984-8420.2024.e100456, p. 99, summarising Rona: the consonant and vowel systems of sul-rio-grandense Portuguese",
+"rwr": "ISO 639-3 macrolanguage mappings (SIL, iso-639-3-macrolanguages.tab): rwr Marwari (India) is a member of mwr"
 }
 }
