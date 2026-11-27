@@ -29,7 +29,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 
 The figure shows the size of each file and how many records it holds.
 
-![Horizontal bars of the size and record count of the 12 data files. The largest is genealogy.json, 1081 kB and 7,748 records, and genealogy.json and places.json hold 72 percent of the bytes.](figures/data-files.svg)
+![Horizontal bars of the size and record count of the 12 data files. The largest is genealogy.json, 1082 kB and 7,749 records, and genealogy.json and places.json hold 72 percent of the bytes.](figures/data-files.svg)
 
 *Figure: the data files by size. `scripts/docs_figures.py` draws it from the files in `linguatag/data`. `genealogy.json` and `places.json` are the two largest.*
 
