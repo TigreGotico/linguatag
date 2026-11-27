@@ -79,7 +79,7 @@ def test_script_distance_of_latin_and_cyrillic():
     ("mwl", [1609, None]), ("ca-x-valencia", [1343, None]), ("aat", [1350, None]),
     ("aae", [1450, None]), ("an-x-cheso", [1200, None]), ("acm-IQ", None), ("pt-BR", None),
     ("pt-PT", [1214, None]), ("es", [900, None]), ("fr", [842, None]), ("it", [960, None]), ("de", [790, None]),
-    ("nl", [510, None]), ("da", [1241, None]), ("bn", [950, None]), ("hi", [1803, None]), ("mwr", [1400, None]),
+    ("nl", [510, None]), ("da", [1241, None]), ("bn", [950, None]), ("hi", [1191, None]), ("mwr", [1400, None]),
     ("kab", [1857, None]), ("es-CO", [1867, None]),
 ])
 def test_a_cited_period(tag, period):
@@ -90,7 +90,7 @@ def test_a_cited_period(tag, period):
 
 @pytest.mark.parametrize("tag, parent, cited", [
     ("pt-PT-x-braga", "pt-PT-x-minho", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
-    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ayp", "tigr1278"), ("ayp", "ar-x-mashriqi", "east2729"),
+    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ayp", "Euphrat Qeltu [euph1239]"), ("ayp", "ar-x-mashriqi", "east2729"),
     ("pt-AO", "pt-PT", "norma padrão europeia"), ("pt-MZ", "pt-PT", "a norma de referência em Moçambique"),
     ("pt-PT-x-alfena", "pt-PT", "Douro Litoral"), ("pt-PT-x-viana", "pt-PT", "Baixo-Minho"),
     ("pt-PT-x-coimbra", "pt-PT", "a montante de Coimbra"), ("pt-PT-x-terceira", "pt-PT", "Terceira Island"),
@@ -282,3 +282,9 @@ def test_every_lineage_edge_has_a_source():
 def test_one_node_holds_north_mesopotamian_arabic():
     nodes = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))["nodes"]
     assert [tag for tag, node in nodes.items() if node.get("glottolog_code") == "nort3142"] == ["ayp"]
+
+
+@pytest.mark.parametrize("tag", ["kab", "es-CO", "da"])
+def test_a_first_description_is_marked_as_a_latest_bound(tag):
+    sources = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json").read_text(encoding="utf-8"))["sources"]
+    assert "latest bound" in sources[tag]
