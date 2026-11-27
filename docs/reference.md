@@ -24,7 +24,7 @@ print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
 
 ## Read the subtags of a tag
 
-`parse_tag(tag: str) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`.
+`parse_tag(tag: str, strict: bool = True) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`. With `strict=False`, it keeps the longest well-formed prefix and an over-long private-use part, and reads a POSIX locale.
 
 ```python
 from linguatag import LanguageTagError, parse_tag
