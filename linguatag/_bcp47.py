@@ -47,7 +47,7 @@ from functools import lru_cache
 from pathlib import Path
 from typing import Dict, FrozenSet, List, Optional, Tuple
 
-__all__ = ["LanguageTag", "LanguageTagError", "is_region", "is_script", "load_data", "maximize",
+__all__ = ["LanguageTag", "LanguageTagError", "is_region", "is_script", "language_scope", "load_data", "maximize",
            "parse", "registry", "standardize"]
 
 _DATA = Path(__file__).resolve().parent / "data"
@@ -141,6 +141,19 @@ def registry(kind: str) -> Dict[str, dict]:
     ``script``, ``region``, ``variant``, ``grandfathered``, ``redundant``),
     as a read-only view like :func:`load_data`."""
     return _freeze(_raw_registry(kind))
+
+
+def language_scope(tag: str) -> Optional[str]:
+    """The IANA scope of the primary language subtag of ``tag``:
+    ``"language"``, ``"macrolanguage"``, ``"collection"`` (a family such as
+    ``itc``), ``"special"`` (``mul``, ``und``, ``zxx``, ``mis``) or
+    ``"private-use"``. ``None`` when the registry has no such subtag, as for
+    the retired ISO 639-3 code ``mol``."""
+    base = tag.strip().replace("_", "-").split("-")[0].lower()
+    record = _raw_registry("language").get(base)
+    if record is None:
+        return "private-use" if len(base) == 3 and "qaa" <= base <= "qtz" else None
+    return record.get("scope", "language")
 
 
 @lru_cache(maxsize=1)

@@ -30,7 +30,9 @@
    "macrolanguage": "sq"
   },
   "aau": {},
-  "aav": {},
+  "aav": {
+   "scope": "collection"
+  },
   "aaw": {},
   "aax": {},
   "aaz": {},
@@ -149,7 +151,9 @@
   "af": {
    "suppress_script": "Latn"
   },
-  "afa": {},
+  "afa": {
+   "scope": "collection"
+  },
   "afb": {
    "macrolanguage": "ar"
   },
@@ -255,7 +259,9 @@
   },
   "ajw": {},
   "ajz": {},
-  "ak": {},
+  "ak": {
+   "scope": "macrolanguage"
+  },
   "akb": {},
   "akc": {},
   "akd": {},
@@ -285,7 +291,9 @@
   "ald": {},
   "ale": {},
   "alf": {},
-  "alg": {},
+  "alg": {
+   "scope": "collection"
+  },
   "alh": {},
   "ali": {},
   "alj": {},
@@ -304,7 +312,9 @@
   },
   "alt": {},
   "alu": {},
-  "alv": {},
+  "alv": {
+   "scope": "collection"
+  },
   "alw": {},
   "alx": {},
   "aly": {},
@@ -385,7 +395,9 @@
   "aou": {},
   "aox": {},
   "aoz": {},
-  "apa": {},
+  "apa": {
+   "scope": "collection"
+  },
   "apb": {},
   "apc": {
    "macrolanguage": "ar"
@@ -415,12 +427,16 @@
   "apx": {},
   "apy": {},
   "apz": {},
-  "aqa": {},
+  "aqa": {
+   "scope": "collection"
+  },
   "aqc": {},
   "aqd": {},
   "aqg": {},
   "aqk": {},
-  "aql": {},
+  "aql": {
+   "scope": "collection"
+  },
   "aqm": {},
   "aqn": {},
   "aqp": {},
@@ -428,7 +444,8 @@
   "aqt": {},
   "aqz": {},
   "ar": {
-   "suppress_script": "Arab"
+   "suppress_script": "Arab",
+   "scope": "macrolanguage"
   },
   "arb": {
    "macrolanguage": "ar"
@@ -451,7 +468,9 @@
   "ars": {
    "macrolanguage": "ar"
   },
-  "art": {},
+  "art": {
+   "scope": "collection"
+  },
   "aru": {},
   "arv": {},
   "arw": {},
@@ -499,7 +518,9 @@
   "atd": {},
   "ate": {},
   "atg": {},
-  "ath": {},
+  "ath": {
+   "scope": "collection"
+  },
   "ati": {},
   "atj": {},
   "atk": {},
@@ -526,7 +547,9 @@
    "deprecated": "2015-02-12",
    "preferred": "ktz"
   },
-  "auf": {},
+  "auf": {
+   "scope": "collection"
+  },
   "aug": {},
   "auh": {},
   "aui": {},
@@ -539,7 +562,9 @@
   "aup": {},
   "auq": {},
   "aur": {},
-  "aus": {},
+  "aus": {
+   "scope": "collection"
+  },
   "aut": {},
   "auu": {},
   "auw": {},
@@ -566,7 +591,9 @@
   "awa": {},
   "awb": {},
   "awc": {},
-  "awd": {},
+  "awd": {
+   "scope": "collection"
+  },
   "awe": {},
   "awg": {},
   "awh": {},
@@ -591,7 +618,8 @@
   "axm": {},
   "axx": {},
   "ay": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "aya": {},
   "ayb": {},
@@ -631,12 +659,16 @@
    "deprecated": "2020-03-28"
   },
   "ayz": {},
-  "az": {},
+  "az": {
+   "scope": "macrolanguage"
+  },
   "aza": {},
   "azb": {
    "macrolanguage": "az"
   },
-  "azc": {},
+  "azc": {
+   "scope": "collection"
+  },
   "azd": {},
   "azg": {},
   "azj": {
@@ -651,20 +683,28 @@
   "baa": {},
   "bab": {},
   "bac": {},
-  "bad": {},
+  "bad": {
+   "scope": "collection"
+  },
   "bae": {},
   "baf": {},
   "bag": {},
   "bah": {},
-  "bai": {},
+  "bai": {
+   "scope": "collection"
+  },
   "baj": {},
-  "bal": {},
+  "bal": {
+   "scope": "macrolanguage"
+  },
   "ban": {},
   "bao": {},
   "bap": {},
   "bar": {},
   "bas": {},
-  "bat": {},
+  "bat": {
+   "scope": "collection"
+  },
   "bau": {},
   "bav": {},
   "baw": {},
@@ -777,7 +817,9 @@
   "beo": {},
   "bep": {},
   "beq": {},
-  "ber": {},
+  "ber": {
+   "scope": "collection"
+  },
   "bes": {},
   "bet": {},
   "beu": {},
@@ -850,7 +892,8 @@
   "bgz": {},
   "bh": {
    "deprecated": "2026-06-14",
-   "preferred": "bih"
+   "preferred": "bih",
+   "scope": "collection"
   },
   "bha": {},
   "bhb": {},
@@ -894,11 +937,15 @@
   "bie": {},
   "bif": {},
   "big": {},
-  "bih": {},
+  "bih": {
+   "scope": "collection"
+  },
   "bij": {
    "deprecated": "2021-02-20"
   },
-  "bik": {},
+  "bik": {
+   "scope": "macrolanguage"
+  },
   "bil": {},
   "bim": {},
   "bin": {},
@@ -1040,7 +1087,9 @@
   },
   "bna": {},
   "bnb": {},
-  "bnc": {},
+  "bnc": {
+   "scope": "macrolanguage"
+  },
   "bnd": {},
   "bne": {},
   "bnf": {},
@@ -1056,7 +1105,9 @@
   "bnq": {},
   "bnr": {},
   "bns": {},
-  "bnt": {},
+  "bnt": {
+   "scope": "collection"
+  },
   "bnu": {},
   "bnv": {},
   "bnw": {},
@@ -1207,7 +1258,9 @@
   "btj": {
    "macrolanguage": "ms"
   },
-  "btk": {},
+  "btk": {
+   "scope": "collection"
+  },
   "btl": {
    "deprecated": "2016-05-30"
   },
@@ -1227,7 +1280,9 @@
   "btx": {},
   "bty": {},
   "btz": {},
-  "bua": {},
+  "bua": {
+   "scope": "macrolanguage"
+  },
   "bub": {},
   "buc": {},
   "bud": {},
@@ -1405,7 +1460,9 @@
   "caf": {},
   "cag": {},
   "cah": {},
-  "cai": {},
+  "cai": {
+   "scope": "collection"
+  },
   "caj": {},
   "cak": {},
   "cal": {},
@@ -1416,13 +1473,17 @@
   "caq": {},
   "car": {},
   "cas": {},
-  "cau": {},
+  "cau": {
+   "scope": "collection"
+  },
   "cav": {},
   "caw": {},
   "cax": {},
   "cay": {},
   "caz": {},
-  "cba": {},
+  "cba": {
+   "scope": "collection"
+  },
   "cbb": {},
   "cbc": {},
   "cbd": {},
@@ -1458,7 +1519,9 @@
   "ccj": {},
   "ccl": {},
   "ccm": {},
-  "ccn": {},
+  "ccn": {
+   "scope": "collection"
+  },
   "cco": {},
   "ccp": {},
   "ccq": {
@@ -1466,10 +1529,16 @@
    "preferred": "rki"
   },
   "ccr": {},
-  "ccs": {},
+  "ccs": {
+   "scope": "collection"
+  },
   "cda": {},
-  "cdc": {},
-  "cdd": {},
+  "cdc": {
+   "scope": "collection"
+  },
+  "cdd": {
+   "scope": "collection"
+  },
   "cde": {},
   "cdf": {},
   "cdg": {
@@ -1492,7 +1561,9 @@
   "ceb": {},
   "ceg": {},
   "cek": {},
-  "cel": {},
+  "cel": {
+   "scope": "collection"
+  },
   "cen": {},
   "cet": {},
   "cey": {},
@@ -1516,7 +1587,9 @@
   "chj": {},
   "chk": {},
   "chl": {},
-  "chm": {},
+  "chm": {
+   "scope": "macrolanguage"
+  },
   "chn": {},
   "cho": {},
   "chp": {},
@@ -1602,7 +1675,9 @@
   "clw": {},
   "cly": {},
   "cma": {},
-  "cmc": {},
+  "cmc": {
+   "scope": "collection"
+  },
   "cme": {},
   "cmg": {},
   "cmi": {},
@@ -1672,13 +1747,19 @@
   "cpa": {},
   "cpb": {},
   "cpc": {},
-  "cpe": {},
-  "cpf": {},
+  "cpe": {
+   "scope": "collection"
+  },
+  "cpf": {
+   "scope": "collection"
+  },
   "cpg": {},
   "cpi": {},
   "cpn": {},
   "cpo": {},
-  "cpp": {},
+  "cpp": {
+   "scope": "collection"
+  },
   "cps": {},
   "cpu": {},
   "cpx": {
@@ -1693,7 +1774,9 @@
    "preferred": "quh",
    "macrolanguage": "qu"
   },
-  "cr": {},
+  "cr": {
+   "scope": "macrolanguage"
+  },
   "cra": {},
   "crb": {},
   "crc": {},
@@ -1716,7 +1799,9 @@
   },
   "crn": {},
   "cro": {},
-  "crp": {},
+  "crp": {
+   "scope": "collection"
+  },
   "crq": {},
   "crr": {},
   "crs": {},
@@ -1751,7 +1836,9 @@
   "csr": {},
   "css": {},
   "cst": {},
-  "csu": {},
+  "csu": {
+   "scope": "collection"
+  },
   "csv": {},
   "csw": {
    "macrolanguage": "cr"
@@ -1796,7 +1883,9 @@
   "cup": {},
   "cuq": {},
   "cur": {},
-  "cus": {},
+  "cus": {
+   "scope": "collection"
+  },
   "cut": {},
   "cuu": {},
   "cuv": {},
@@ -1858,7 +1947,9 @@
   "dav": {},
   "daw": {},
   "dax": {},
-  "day": {},
+  "day": {
+   "scope": "collection"
+  },
   "daz": {},
   "dba": {},
   "dbb": {},
@@ -1907,9 +1998,13 @@
    "deprecated": "2024-12-12",
    "preferred": "sqm"
   },
-  "del": {},
+  "del": {
+   "scope": "macrolanguage"
+  },
   "dem": {},
-  "den": {},
+  "den": {
+   "scope": "macrolanguage"
+  },
   "dep": {},
   "deq": {},
   "der": {},
@@ -1973,7 +2068,9 @@
   },
   "dil": {},
   "dim": {},
-  "din": {},
+  "din": {
+   "scope": "macrolanguage"
+  },
   "dio": {},
   "dip": {
    "macrolanguage": "din"
@@ -2037,7 +2134,9 @@
   "dmk": {},
   "dml": {},
   "dmm": {},
-  "dmn": {},
+  "dmn": {
+   "scope": "collection"
+  },
   "dmo": {},
   "dmr": {},
   "dms": {},
@@ -2067,7 +2166,9 @@
   "doe": {},
   "dof": {},
   "doh": {},
-  "doi": {},
+  "doi": {
+   "scope": "macrolanguage"
+  },
   "dok": {},
   "dol": {},
   "don": {},
@@ -2083,7 +2184,9 @@
   "doy": {},
   "doz": {},
   "dpp": {},
-  "dra": {},
+  "dra": {
+   "scope": "collection"
+  },
   "drb": {},
   "drc": {},
   "drd": {},
@@ -2227,7 +2330,9 @@
   "egl": {},
   "egm": {},
   "ego": {},
-  "egx": {},
+  "egx": {
+   "scope": "collection"
+  },
   "egy": {},
   "ehs": {},
   "ehu": {},
@@ -2343,10 +2448,13 @@
   "esq": {},
   "ess": {},
   "esu": {},
-  "esx": {},
+  "esx": {
+   "scope": "collection"
+  },
   "esy": {},
   "et": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "etb": {},
   "etc": {},
@@ -2363,7 +2471,9 @@
    "suppress_script": "Latn"
   },
   "eud": {},
-  "euq": {},
+  "euq": {
+   "scope": "collection"
+  },
   "eve": {},
   "evh": {},
   "evn": {},
@@ -2376,7 +2486,8 @@
   "eza": {},
   "eze": {},
   "fa": {
-   "suppress_script": "Arab"
+   "suppress_script": "Arab",
+   "scope": "macrolanguage"
   },
   "faa": {},
   "fab": {},
@@ -2404,7 +2515,9 @@
   },
   "fcs": {},
   "fer": {},
-  "ff": {},
+  "ff": {
+   "scope": "macrolanguage"
+  },
   "ffi": {},
   "ffm": {
    "macrolanguage": "ff"
@@ -2420,7 +2533,9 @@
   "fip": {},
   "fir": {},
   "fit": {},
-  "fiu": {},
+  "fiu": {
+   "scope": "collection"
+  },
   "fiw": {},
   "fj": {
    "suppress_script": "Latn"
@@ -2448,7 +2563,9 @@
   "fon": {},
   "for": {},
   "fos": {},
-  "fox": {},
+  "fox": {
+   "scope": "collection"
+  },
   "fpe": {},
   "fqs": {},
   "fr": {
@@ -2547,7 +2664,9 @@
   "gaz": {
    "macrolanguage": "om"
   },
-  "gba": {},
+  "gba": {
+   "scope": "macrolanguage"
+  },
   "gbb": {},
   "gbc": {
    "deprecated": "2012-08-12"
@@ -2625,7 +2744,9 @@
   "gej": {},
   "gek": {},
   "gel": {},
-  "gem": {},
+  "gem": {
+   "scope": "collection"
+  },
   "geq": {},
   "ges": {},
   "gev": {},
@@ -2735,7 +2856,9 @@
   "gma": {},
   "gmb": {},
   "gmd": {},
-  "gme": {},
+  "gme": {
+   "scope": "collection"
+  },
   "gmg": {},
   "gmh": {},
   "gml": {},
@@ -2743,16 +2866,21 @@
    "macrolanguage": "gba"
   },
   "gmn": {},
-  "gmq": {},
+  "gmq": {
+   "scope": "collection"
+  },
   "gmr": {},
   "gmu": {},
   "gmv": {},
-  "gmw": {},
+  "gmw": {
+   "scope": "collection"
+  },
   "gmx": {},
   "gmy": {},
   "gmz": {},
   "gn": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "gna": {},
   "gnb": {},
@@ -2793,7 +2921,9 @@
   "gom": {
    "macrolanguage": "kok"
   },
-  "gon": {},
+  "gon": {
+   "scope": "macrolanguage"
+  },
   "goo": {},
   "gop": {},
   "goq": {},
@@ -2815,7 +2945,9 @@
   "gqr": {},
   "gqu": {},
   "gra": {},
-  "grb": {},
+  "grb": {
+   "scope": "macrolanguage"
+  },
   "grc": {},
   "grd": {},
   "grg": {},
@@ -2824,7 +2956,9 @@
   "grj": {
    "macrolanguage": "grb"
   },
-  "grk": {},
+  "grk": {
+   "scope": "collection"
+  },
   "grm": {},
   "gro": {},
   "grq": {},
@@ -2959,7 +3093,9 @@
   "haf": {},
   "hag": {},
   "hah": {},
-  "hai": {},
+  "hai": {
+   "scope": "macrolanguage"
+  },
   "haj": {},
   "hak": {
    "macrolanguage": "zh"
@@ -3020,7 +3156,9 @@
   "hij": {},
   "hik": {},
   "hil": {},
-  "him": {},
+  "him": {
+   "scope": "collection"
+  },
   "hio": {},
   "hir": {},
   "hit": {},
@@ -3074,7 +3212,9 @@
   "hmm": {
    "macrolanguage": "hmn"
   },
-  "hmn": {},
+  "hmn": {
+   "scope": "macrolanguage"
+  },
   "hmp": {
    "macrolanguage": "hmn"
   },
@@ -3091,7 +3231,9 @@
   "hmw": {
    "macrolanguage": "hmn"
   },
-  "hmx": {},
+  "hmx": {
+   "scope": "collection"
+  },
   "hmy": {
    "macrolanguage": "hmn"
   },
@@ -3129,7 +3271,9 @@
   "hoj": {
    "macrolanguage": "raj"
   },
-  "hok": {},
+  "hok": {
+   "scope": "collection"
+  },
   "hol": {},
   "hom": {},
   "hoo": {},
@@ -3224,7 +3368,9 @@
   },
   "hya": {},
   "hyw": {},
-  "hyx": {},
+  "hyx": {
+   "scope": "collection"
+  },
   "hz": {},
   "ia": {},
   "iai": {},
@@ -3294,14 +3440,20 @@
   "ihw": {},
   "ii": {},
   "iin": {},
-  "iir": {},
+  "iir": {
+   "scope": "collection"
+  },
   "ijc": {},
   "ije": {},
   "ijj": {},
   "ijn": {},
-  "ijo": {},
+  "ijo": {
+   "scope": "collection"
+  },
   "ijs": {},
-  "ik": {},
+  "ik": {
+   "scope": "macrolanguage"
+  },
   "ike": {
    "macrolanguage": "iu"
   },
@@ -3357,8 +3509,12 @@
    "macrolanguage": "ms"
   },
   "inb": {},
-  "inc": {},
-  "ine": {},
+  "inc": {
+   "scope": "collection"
+  },
+  "ine": {
+   "scope": "collection"
+  },
   "ing": {},
   "inh": {},
   "inj": {},
@@ -3378,13 +3534,17 @@
   "ipo": {},
   "iqu": {},
   "iqw": {},
-  "ira": {},
+  "ira": {
+   "scope": "collection"
+  },
   "ire": {},
   "irh": {},
   "iri": {},
   "irk": {},
   "irn": {},
-  "iro": {},
+  "iro": {
+   "scope": "collection"
+  },
   "irr": {},
   "iru": {},
   "irx": {},
@@ -3411,7 +3571,9 @@
    "suppress_script": "Latn"
   },
   "itb": {},
-  "itc": {},
+  "itc": {
+   "scope": "collection"
+  },
   "itd": {},
   "ite": {},
   "iti": {},
@@ -3427,7 +3589,9 @@
   "itx": {},
   "ity": {},
   "itz": {},
-  "iu": {},
+  "iu": {
+   "scope": "macrolanguage"
+  },
   "ium": {},
   "ivb": {},
   "ivv": {},
@@ -3577,10 +3741,14 @@
   "jow": {},
   "jpa": {},
   "jpr": {},
-  "jpx": {},
+  "jpx": {
+   "scope": "collection"
+  },
   "jqr": {},
   "jra": {},
-  "jrb": {},
+  "jrb": {
+   "scope": "macrolanguage"
+  },
   "jrr": {},
   "jrt": {},
   "jru": {},
@@ -3634,7 +3802,9 @@
   "kao": {},
   "kap": {},
   "kaq": {},
-  "kar": {},
+  "kar": {
+   "scope": "collection"
+  },
   "kav": {},
   "kaw": {},
   "kax": {},
@@ -3708,7 +3878,9 @@
   "kdl": {},
   "kdm": {},
   "kdn": {},
-  "kdo": {},
+  "kdo": {
+   "scope": "collection"
+  },
   "kdp": {},
   "kdq": {},
   "kdr": {},
@@ -3773,7 +3945,9 @@
   "kfx": {},
   "kfy": {},
   "kfz": {},
-  "kg": {},
+  "kg": {
+   "scope": "macrolanguage"
+  },
   "kga": {},
   "kgb": {},
   "kgc": {
@@ -3818,7 +3992,9 @@
   "khf": {},
   "khg": {},
   "khh": {},
-  "khi": {},
+  "khi": {
+   "scope": "collection"
+  },
   "khj": {},
   "khk": {
    "macrolanguage": "mn"
@@ -3936,7 +4112,9 @@
   "klk": {},
   "kll": {},
   "klm": {},
-  "kln": {},
+  "kln": {
+   "scope": "macrolanguage"
+  },
   "klo": {},
   "klp": {},
   "klq": {},
@@ -4032,7 +4210,8 @@
    "preferred": "kwv"
   },
   "kok": {
-   "suppress_script": "Deva"
+   "suppress_script": "Deva",
+   "scope": "macrolanguage"
   },
   "kol": {},
   "koo": {},
@@ -4052,7 +4231,9 @@
   "kpb": {},
   "kpc": {},
   "kpd": {},
-  "kpe": {},
+  "kpe": {
+   "scope": "macrolanguage"
+  },
   "kpf": {},
   "kpg": {},
   "kph": {},
@@ -4104,7 +4285,9 @@
   "kqx": {},
   "kqy": {},
   "kqz": {},
-  "kr": {},
+  "kr": {
+   "scope": "macrolanguage"
+  },
   "kra": {},
   "krb": {},
   "krc": {},
@@ -4121,7 +4304,9 @@
    "preferred": "bmf"
   },
   "krn": {},
-  "kro": {},
+  "kro": {
+   "scope": "collection"
+  },
   "krp": {},
   "krr": {},
   "krs": {},
@@ -4192,7 +4377,9 @@
   "ktx": {},
   "kty": {},
   "ktz": {},
-  "ku": {},
+  "ku": {
+   "scope": "macrolanguage"
+  },
   "kub": {},
   "kuc": {},
   "kud": {},
@@ -4217,7 +4404,9 @@
   "kux": {},
   "kuy": {},
   "kuz": {},
-  "kv": {},
+  "kv": {
+   "scope": "macrolanguage"
+  },
   "kva": {},
   "kvb": {
    "macrolanguage": "ms"
@@ -4389,7 +4578,9 @@
   "lae": {},
   "laf": {},
   "lag": {},
-  "lah": {},
+  "lah": {
+   "scope": "macrolanguage"
+  },
   "lai": {},
   "laj": {},
   "lak": {
@@ -4775,10 +4966,13 @@
   "luu": {},
   "luv": {},
   "luw": {},
-  "luy": {},
+  "luy": {
+   "scope": "macrolanguage"
+  },
   "luz": {},
   "lv": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "lva": {},
   "lvi": {},
@@ -4823,8 +5017,12 @@
   "maj": {},
   "mak": {},
   "mam": {},
-  "man": {},
-  "map": {},
+  "man": {
+   "scope": "macrolanguage"
+  },
+  "map": {
+   "scope": "collection"
+  },
   "maq": {},
   "mas": {},
   "mat": {},
@@ -4974,7 +5172,8 @@
   "mfy": {},
   "mfz": {},
   "mg": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "mga": {},
   "mgb": {},
@@ -5057,7 +5256,9 @@
   "mip": {},
   "miq": {},
   "mir": {},
-  "mis": {},
+  "mis": {
+   "scope": "special"
+  },
   "mit": {},
   "miu": {},
   "miw": {},
@@ -5100,7 +5301,9 @@
   "mke": {},
   "mkf": {},
   "mkg": {},
-  "mkh": {},
+  "mkh": {
+   "scope": "collection"
+  },
   "mki": {},
   "mkj": {},
   "mkk": {},
@@ -5178,7 +5381,9 @@
   "mmx": {},
   "mmy": {},
   "mmz": {},
-  "mn": {},
+  "mn": {
+   "scope": "macrolanguage"
+  },
   "mna": {},
   "mnb": {},
   "mnc": {},
@@ -5195,7 +5400,9 @@
   "mnl": {},
   "mnm": {},
   "mnn": {},
-  "mno": {},
+  "mno": {
+   "scope": "collection"
+  },
   "mnp": {
    "macrolanguage": "zh"
   },
@@ -5327,7 +5534,8 @@
   "mry": {},
   "mrz": {},
   "ms": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "msb": {},
   "msc": {
@@ -5405,9 +5613,13 @@
   },
   "muj": {},
   "muk": {},
-  "mul": {},
+  "mul": {
+   "scope": "special"
+  },
   "mum": {},
-  "mun": {},
+  "mun": {
+   "scope": "collection"
+  },
   "muo": {},
   "mup": {
    "macrolanguage": "raj"
@@ -5477,7 +5689,9 @@
   "mwo": {},
   "mwp": {},
   "mwq": {},
-  "mwr": {},
+  "mwr": {
+   "scope": "macrolanguage"
+  },
   "mws": {},
   "mwt": {},
   "mwu": {},
@@ -5538,7 +5752,9 @@
   "myk": {},
   "myl": {},
   "mym": {},
-  "myn": {},
+  "myn": {
+   "scope": "collection"
+  },
   "myo": {},
   "myp": {},
   "myq": {
@@ -5595,8 +5811,12 @@
   "nae": {},
   "naf": {},
   "nag": {},
-  "nah": {},
-  "nai": {},
+  "nah": {
+   "scope": "collection"
+  },
+  "nai": {
+   "scope": "collection"
+  },
   "naj": {},
   "nak": {},
   "nal": {},
@@ -5702,7 +5922,8 @@
   "ndy": {},
   "ndz": {},
   "ne": {
-   "suppress_script": "Deva"
+   "suppress_script": "Deva",
+   "scope": "macrolanguage"
   },
   "nea": {},
   "neb": {},
@@ -5739,7 +5960,9 @@
   "ngc": {},
   "ngd": {},
   "nge": {},
-  "ngf": {},
+  "ngf": {
+   "scope": "collection"
+  },
   "ngg": {},
   "ngh": {},
   "ngi": {},
@@ -5789,7 +6012,9 @@
   "nhz": {},
   "nia": {},
   "nib": {},
-  "nic": {},
+  "nic": {
+   "scope": "collection"
+  },
   "nid": {},
   "nie": {},
   "nif": {},
@@ -5947,7 +6172,8 @@
   "nny": {},
   "nnz": {},
   "no": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "noa": {},
   "noc": {},
@@ -6072,7 +6298,9 @@
   "nty": {},
   "ntz": {},
   "nua": {},
-  "nub": {},
+  "nub": {
+   "scope": "collection"
+  },
   "nuc": {},
   "nud": {},
   "nue": {},
@@ -6209,7 +6437,9 @@
   "oia": {},
   "oie": {},
   "oin": {},
-  "oj": {},
+  "oj": {
+   "scope": "macrolanguage"
+  },
   "ojb": {
    "macrolanguage": "oj"
   },
@@ -6260,7 +6490,8 @@
   "olt": {},
   "olu": {},
   "om": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "oma": {},
   "omb": {},
@@ -6275,11 +6506,15 @@
   "omn": {},
   "omo": {},
   "omp": {},
-  "omq": {},
+  "omq": {
+   "scope": "collection"
+  },
   "omr": {},
   "omt": {},
   "omu": {},
-  "omv": {},
+  "omv": {
+   "scope": "collection"
+  },
   "omw": {},
   "omx": {},
   "omy": {},
@@ -6311,7 +6546,8 @@
   "opt": {},
   "opy": {},
   "or": {
-   "suppress_script": "Orya"
+   "suppress_script": "Orya",
+   "scope": "macrolanguage"
   },
   "ora": {},
   "orc": {
@@ -6357,7 +6593,9 @@
   "otl": {},
   "otm": {},
   "otn": {},
-  "oto": {},
+  "oto": {
+   "scope": "collection"
+  },
   "otq": {},
   "otr": {},
   "ots": {},
@@ -6389,7 +6627,9 @@
   "pa": {
    "suppress_script": "Guru"
   },
-  "paa": {},
+  "paa": {
+   "scope": "collection"
+  },
   "pab": {},
   "pac": {},
   "pad": {},
@@ -6514,7 +6754,9 @@
   "phd": {},
   "phg": {},
   "phh": {},
-  "phi": {},
+  "phi": {
+   "scope": "collection"
+  },
   "phj": {},
   "phk": {},
   "phl": {},
@@ -6579,7 +6821,9 @@
   "plc": {},
   "pld": {},
   "ple": {},
-  "plf": {},
+  "plf": {
+   "scope": "collection"
+  },
   "plg": {},
   "plh": {},
   "plj": {
@@ -6684,7 +6928,9 @@
   "pow": {},
   "pox": {},
   "poy": {},
-  "poz": {},
+  "poz": {
+   "scope": "collection"
+  },
   "ppa": {
    "deprecated": "2016-05-30",
    "preferred": "bfy"
@@ -6706,10 +6952,16 @@
   "ppt": {},
   "ppu": {},
   "pqa": {},
-  "pqe": {},
+  "pqe": {
+   "scope": "collection"
+  },
   "pqm": {},
-  "pqw": {},
-  "pra": {},
+  "pqw": {
+   "scope": "collection"
+  },
+  "pra": {
+   "scope": "collection"
+  },
   "prb": {
    "deprecated": "2017-02-23"
   },
@@ -6744,7 +6996,8 @@
   },
   "prz": {},
   "ps": {
-   "suppress_script": "Arab"
+   "suppress_script": "Arab",
+   "scope": "macrolanguage"
   },
   "psa": {},
   "psc": {},
@@ -6831,9 +7084,12 @@
   "pze": {},
   "pzh": {},
   "pzn": {},
-  "qaa..qtz": {},
+  "qaa..qtz": {
+   "scope": "private-use"
+  },
   "qu": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "qua": {},
   "qub": {
@@ -6933,7 +7189,9 @@
   "qwc": {
    "macrolanguage": "qu"
   },
-  "qwe": {},
+  "qwe": {
+   "scope": "collection"
+  },
   "qwh": {
    "macrolanguage": "qu"
   },
@@ -6989,7 +7247,9 @@
   },
   "rah": {},
   "rai": {},
-  "raj": {},
+  "raj": {
+   "scope": "macrolanguage"
+  },
   "rak": {},
   "ral": {},
   "ram": {},
@@ -7121,7 +7381,9 @@
   "ro": {
    "suppress_script": "Latn"
   },
-  "roa": {},
+  "roa": {
+   "scope": "collection"
+  },
   "rob": {},
   "roc": {},
   "rod": {},
@@ -7129,7 +7391,9 @@
   "rof": {},
   "rog": {},
   "rol": {},
-  "rom": {},
+  "rom": {
+   "scope": "macrolanguage"
+  },
   "roo": {},
   "rop": {},
   "ror": {},
@@ -7190,7 +7454,9 @@
   "rys": {},
   "ryu": {},
   "rzh": {},
-  "sa": {},
+  "sa": {
+   "scope": "macrolanguage"
+  },
   "saa": {},
   "sab": {},
   "sac": {},
@@ -7198,10 +7464,14 @@
   "sae": {},
   "saf": {},
   "sah": {},
-  "sai": {},
+  "sai": {
+   "scope": "collection"
+  },
   "saj": {},
   "sak": {},
-  "sal": {},
+  "sal": {
+   "scope": "collection"
+  },
   "sam": {},
   "sao": {},
   "sap": {
@@ -7243,7 +7513,9 @@
   "sbx": {},
   "sby": {},
   "sbz": {},
-  "sc": {},
+  "sc": {
+   "scope": "macrolanguage"
+  },
   "sca": {
    "deprecated": "2012-08-12",
    "preferred": "hle"
@@ -7297,7 +7569,9 @@
   "sds": {},
   "sdt": {},
   "sdu": {},
-  "sdv": {},
+  "sdv": {
+   "scope": "collection"
+  },
   "sdx": {},
   "sdz": {},
   "se": {},
@@ -7313,7 +7587,9 @@
   "sej": {},
   "sek": {},
   "sel": {},
-  "sem": {},
+  "sem": {
+   "scope": "collection"
+  },
   "sen": {},
   "seo": {},
   "sep": {},
@@ -7352,7 +7628,9 @@
    "deprecated": "2010-03-11"
   },
   "sgm": {},
-  "sgn": {},
+  "sgn": {
+   "scope": "collection"
+  },
   "sgo": {
    "deprecated": "2015-02-12"
   },
@@ -7365,7 +7643,9 @@
   "sgx": {},
   "sgy": {},
   "sgz": {},
-  "sh": {},
+  "sh": {
+   "scope": "macrolanguage"
+  },
   "sha": {},
   "shb": {},
   "shc": {},
@@ -7411,12 +7691,16 @@
   "sik": {},
   "sil": {},
   "sim": {},
-  "sio": {},
+  "sio": {
+   "scope": "collection"
+  },
   "sip": {},
   "siq": {},
   "sir": {},
   "sis": {},
-  "sit": {},
+  "sit": {
+   "scope": "collection"
+  },
   "siu": {},
   "siv": {},
   "siw": {},
@@ -7480,7 +7764,9 @@
   "sl": {
    "suppress_script": "Latn"
   },
-  "sla": {},
+  "sla": {
+   "scope": "collection"
+  },
   "slc": {},
   "sld": {},
   "sle": {},
@@ -7517,7 +7803,9 @@
   "smf": {},
   "smg": {},
   "smh": {},
-  "smi": {},
+  "smi": {
+   "scope": "collection"
+  },
   "smj": {},
   "smk": {},
   "sml": {},
@@ -7577,7 +7865,9 @@
   "soj": {},
   "sok": {},
   "sol": {},
-  "son": {},
+  "son": {
+   "scope": "collection"
+  },
   "soo": {},
   "sop": {},
   "soq": {},
@@ -7614,11 +7904,14 @@
    "macrolanguage": "kln"
   },
   "sq": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "sqa": {},
   "sqh": {},
-  "sqj": {},
+  "sqj": {
+   "scope": "collection"
+  },
   "sqk": {},
   "sqm": {},
   "sqn": {},
@@ -7662,7 +7955,9 @@
   "ss": {
    "suppress_script": "Latn"
   },
-  "ssa": {},
+  "ssa": {
+   "scope": "collection"
+  },
   "ssb": {},
   "ssc": {},
   "ssd": {},
@@ -7755,7 +8050,8 @@
   "svs": {},
   "svx": {},
   "sw": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "swb": {},
   "swc": {
@@ -7801,14 +8097,18 @@
   "sya": {},
   "syb": {},
   "syc": {},
-  "syd": {},
+  "syd": {
+   "scope": "collection"
+  },
   "syi": {},
   "syk": {},
   "syl": {},
   "sym": {},
   "syn": {},
   "syo": {},
-  "syr": {},
+  "syr": {
+   "scope": "macrolanguage"
+  },
   "sys": {},
   "syw": {},
   "syx": {},
@@ -7839,7 +8139,9 @@
   "tae": {},
   "taf": {},
   "tag": {},
-  "tai": {},
+  "tai": {
+   "scope": "collection"
+  },
   "taj": {},
   "tak": {},
   "tal": {},
@@ -7875,7 +8177,9 @@
   "tbn": {},
   "tbo": {},
   "tbp": {},
-  "tbq": {},
+  "tbq": {
+   "scope": "collection"
+  },
   "tbr": {},
   "tbs": {},
   "tbt": {},
@@ -8145,7 +8449,8 @@
   "tmf": {},
   "tmg": {},
   "tmh": {
-   "suppress_script": "Latn"
+   "suppress_script": "Latn",
+   "scope": "macrolanguage"
   },
   "tmi": {},
   "tmj": {},
@@ -8285,7 +8590,9 @@
   "trh": {},
   "tri": {},
   "trj": {},
-  "trk": {},
+  "trk": {
+   "scope": "collection"
+  },
   "trl": {},
   "trm": {},
   "trn": {},
@@ -8373,13 +8680,19 @@
   "tum": {},
   "tun": {},
   "tuo": {},
-  "tup": {},
+  "tup": {
+   "scope": "collection"
+  },
   "tuq": {},
   "tus": {},
-  "tut": {},
+  "tut": {
+   "scope": "collection"
+  },
   "tuu": {},
   "tuv": {},
-  "tuw": {},
+  "tuw": {
+   "scope": "collection"
+  },
   "tux": {},
   "tuy": {
    "macrolanguage": "kln"
@@ -8550,7 +8863,9 @@
    "macrolanguage": "del"
   },
   "una": {},
-  "und": {},
+  "und": {
+   "scope": "special"
+  },
   "une": {},
   "ung": {},
   "uni": {},
@@ -8584,7 +8899,9 @@
   "urg": {},
   "urh": {},
   "uri": {},
-  "urj": {},
+  "urj": {
+   "scope": "collection"
+  },
   "urk": {
    "macrolanguage": "ms"
   },
@@ -8625,7 +8942,9 @@
   "uvl": {},
   "uwa": {},
   "uya": {},
-  "uz": {},
+  "uz": {
+   "scope": "macrolanguage"
+  },
   "uzn": {
    "macrolanguage": "uz"
   },
@@ -8755,7 +9074,9 @@
   "wah": {},
   "wai": {},
   "waj": {},
-  "wak": {},
+  "wak": {
+   "scope": "collection"
+  },
   "wal": {},
   "wam": {},
   "wan": {},
@@ -8806,7 +9127,9 @@
   "weh": {},
   "wei": {},
   "wem": {},
-  "wen": {},
+  "wen": {
+   "scope": "collection"
+  },
   "weo": {},
   "wep": {},
   "wer": {},
@@ -9083,7 +9406,9 @@
   "xgi": {},
   "xgl": {},
   "xgm": {},
-  "xgn": {},
+  "xgn": {
+   "scope": "collection"
+  },
   "xgr": {},
   "xgu": {},
   "xgw": {},
@@ -9192,7 +9517,9 @@
   "xmz": {},
   "xna": {},
   "xnb": {},
-  "xnd": {},
+  "xnd": {
+   "scope": "collection"
+  },
   "xng": {},
   "xnh": {},
   "xni": {},
@@ -9450,7 +9777,8 @@
   "yhl": {},
   "yhs": {},
   "yi": {
-   "suppress_script": "Hebr"
+   "suppress_script": "Hebr",
+   "scope": "macrolanguage"
   },
   "yia": {},
   "yif": {},
@@ -9564,7 +9892,9 @@
   "ypb": {},
   "ypg": {},
   "yph": {},
-  "ypk": {},
+  "ypk": {
+   "scope": "collection"
+  },
   "ypm": {},
   "ypn": {},
   "ypo": {},
@@ -9651,7 +9981,9 @@
   "yyz": {},
   "yzg": {},
   "yzk": {},
-  "za": {},
+  "za": {
+   "scope": "macrolanguage"
+  },
   "zaa": {
    "macrolanguage": "zap"
   },
@@ -9684,7 +10016,9 @@
   "zao": {
    "macrolanguage": "zap"
   },
-  "zap": {},
+  "zap": {
+   "scope": "macrolanguage"
+  },
   "zaq": {
    "macrolanguage": "zap"
   },
@@ -9747,7 +10081,9 @@
    "macrolanguage": "za"
   },
   "zgr": {},
-  "zh": {},
+  "zh": {
+   "scope": "macrolanguage"
+  },
   "zhb": {},
   "zhd": {
    "macrolanguage": "za"
@@ -9758,7 +10094,9 @@
    "macrolanguage": "za"
   },
   "zhw": {},
-  "zhx": {},
+  "zhx": {
+   "scope": "collection"
+  },
   "zia": {},
   "zib": {},
   "zik": {},
@@ -9789,7 +10127,9 @@
   "zkv": {},
   "zkz": {},
   "zla": {},
-  "zle": {},
+  "zle": {
+   "scope": "collection"
+  },
   "zlj": {
    "macrolanguage": "za"
   },
@@ -9802,9 +10142,13 @@
   "zlq": {
    "macrolanguage": "za"
   },
-  "zls": {},
+  "zls": {
+   "scope": "collection"
+  },
   "zlu": {},
-  "zlw": {},
+  "zlw": {
+   "scope": "collection"
+  },
   "zma": {},
   "zmb": {},
   "zmc": {},
@@ -9834,7 +10178,9 @@
   "zmy": {},
   "zmz": {},
   "zna": {},
-  "znd": {},
+  "znd": {
+   "scope": "collection"
+  },
   "zne": {},
   "zng": {},
   "znk": {},
@@ -9992,7 +10338,9 @@
   "zun": {},
   "zuy": {},
   "zwa": {},
-  "zxx": {},
+  "zxx": {
+   "scope": "special"
+  },
   "zyb": {
    "macrolanguage": "za"
   },
@@ -10006,7 +10354,9 @@
    "macrolanguage": "za"
   },
   "zyp": {},
-  "zza": {},
+  "zza": {
+   "scope": "macrolanguage"
+  },
   "zzj": {
    "macrolanguage": "za"
   }
