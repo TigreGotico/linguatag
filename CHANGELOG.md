@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.9.11a1](https://github.com/TigreGotico/linguatag/tree/0.9.11a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.10a2...0.9.11a1)
+
+**Merged pull requests:**
+
+- fix\(data\): Marwari \(mwr\) node, with rwr and mve under it [\#143](https://github.com/TigreGotico/linguatag/pull/143) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: a region with no node reads the language's lineage [\#141](https://github.com/TigreGotico/linguatag/pull/141) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix\(data\): sources for 10 Portuguese lineage edges [\#139](https://github.com/TigreGotico/linguatag/pull/139) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.10a2](https://github.com/TigreGotico/linguatag/tree/0.9.10a2) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.10a1...0.9.10a2)
@@ -382,17 +392,9 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.4a1...0.1.5a1)
 
-**Merged pull requests:**
-
-- fix: keep Latin-script Juba and Cypriot Maronite Arabic off the MSA fallback [\#17](https://github.com/TigreGotico/linguatag/pull/17) ([JarbasAl](https://github.com/JarbasAl))
-
 ## [0.1.4a1](https://github.com/TigreGotico/linguatag/tree/0.1.4a1) (2026-11-04)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.3a1...0.1.4a1)
-
-**Merged pull requests:**
-
-- fix: rebuild the lect tree from the BCP-47 orthography2ipa keys [\#16](https://github.com/TigreGotico/linguatag/pull/16) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.1.3a1](https://github.com/TigreGotico/linguatag/tree/0.1.3a1) (2026-11-04)
 
