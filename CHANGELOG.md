@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.9.14a1](https://github.com/TigreGotico/linguatag/tree/0.9.14a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.13a1...0.9.14a1)
+
+**Merged pull requests:**
+
+- fix\(data\): Dhundari, Mewari, Shekhawati and Merwari under Marwari [\#147](https://github.com/TigreGotico/linguatag/pull/147) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.13a1](https://github.com/TigreGotico/linguatag/tree/0.9.13a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.12a1...0.9.13a1)
@@ -394,10 +402,6 @@
 ## [0.1.6a1](https://github.com/TigreGotico/linguatag/tree/0.1.6a1) (2026-11-10)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.5a1...0.1.6a1)
-
-**Merged pull requests:**
-
-- fix: keep Hakka, Min Nan, Wu, Gan and Xiang off Mandarin [\#21](https://github.com/TigreGotico/linguatag/pull/21) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.1.5a1](https://github.com/TigreGotico/linguatag/tree/0.1.5a1) (2026-11-04)
 
