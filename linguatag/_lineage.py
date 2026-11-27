@@ -33,8 +33,8 @@ def _key(tag: str) -> str:
     """The data key of ``tag``. The data keys a language by its default-region
     tag when its spec carries a region, so ``gl`` reads ``gl-ES``. A script
     does not change the language, so ``ks-Arab`` reads ``ks`` when it has no
-    node of its own. An explicit default region reads the bare node, so
-    ``sr-RS`` reads ``sr``."""
+    node of its own. A region with no node of its own reads the language, so ``sr-RS``
+    reads ``sr`` and ``bn-IN`` reads ``bn``."""
     tag = standardize_lang(tag)
     if tag in _nodes():
         return tag
@@ -44,8 +44,10 @@ def _key(tag: str) -> str:
     parsed = parse_tag(tag)
     if parsed.script:
         return _key(tag.replace(f"-{parsed.script}", "", 1))
-    if parsed.language in _nodes() and with_default_region(parsed.language) == tag:
-        return parsed.language
+    if parsed.region and not (parsed.variants or parsed.private or parsed.extensions):
+        language = _key(parsed.language)
+        if language in _nodes():
+            return language
     return tag
 
 
