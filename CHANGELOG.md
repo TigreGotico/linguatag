@@ -1,13 +1,24 @@
 # Changelog
 
-## [0.10.6a1](https://github.com/TigreGotico/linguatag/tree/0.10.6a1) (2026-11-27)
+## [0.10.7a1](https://github.com/TigreGotico/linguatag/tree/0.10.7a1) (2026-11-27)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a1...0.10.6a1)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a3...0.10.7a1)
+
+**Merged pull requests:**
+
+- fix: Tagalog stays tl with a region or script [\#176](https://github.com/TigreGotico/linguatag/pull/176) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.10.5a3](https://github.com/TigreGotico/linguatag/tree/0.10.5a3) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a2...0.10.5a3)
+
+## [0.10.5a2](https://github.com/TigreGotico/linguatag/tree/0.10.5a2) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a1...0.10.5a2)
 
 **Merged pull requests:**
 
 - fix: an unknown region or extlang takes the default region [\#177](https://github.com/TigreGotico/linguatag/pull/177) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-- fix: Tagalog stays tl with a region or script [\#176](https://github.com/TigreGotico/linguatag/pull/176) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 - docs: an empty subtag makes no tag and matches nothing [\#175](https://github.com/TigreGotico/linguatag/pull/175) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 - docs: add a generated leader-languages page [\#140](https://github.com/TigreGotico/linguatag/pull/140) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
@@ -378,10 +389,6 @@
 ## [0.4.2a1](https://github.com/TigreGotico/linguatag/tree/0.4.2a1) (2026-11-23)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.1a2...0.4.2a1)
-
-**Merged pull requests:**
-
-- fix: default\_region and likely\_script give None for a string that is not a language tag [\#52](https://github.com/TigreGotico/linguatag/pull/52) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.4.1a2](https://github.com/TigreGotico/linguatag/tree/0.4.1a2) (2026-11-21)
 
