@@ -251,8 +251,8 @@ Each column comes from one call:
 - **Script** and **region** are the subtags that `maximize` adds from CLDR likely subtags.
 - **Default region** is the result of `default_region`. The table shows it only for a tag that has no region subtag.
 - **Macrolanguage step** is the language that `maximize` returns when it is different from the language of the tag. A dash means that `maximize` keeps the language.
-- **Family** is the result of `family`. A dash means that the genealogy data has no family for the tag.
-- **Catalog ids** is the result of `catalog_ids`. A dash means that the genealogy data has no node for the tag.
+- **Family** is the result of `family`. A dash means that linguatag returns no value.
+- **Catalog ids** is the result of `catalog_ids`. A dash means that linguatag returns no value.
 - **Data source** is the `source` field of each data file that gives a fact in the row.
 
 %s

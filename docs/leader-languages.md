@@ -16,8 +16,8 @@ Each column comes from one call:
 - **Script** and **region** are the subtags that `maximize` adds from CLDR likely subtags.
 - **Default region** is the result of `default_region`. The table shows it only for a tag that has no region subtag.
 - **Macrolanguage step** is the language that `maximize` returns when it is different from the language of the tag. A dash means that `maximize` keeps the language.
-- **Family** is the result of `family`. A dash means that the genealogy data has no family for the tag.
-- **Catalog ids** is the result of `catalog_ids`. A dash means that the genealogy data has no node for the tag.
+- **Family** is the result of `family`. A dash means that linguatag returns no value.
+- **Catalog ids** is the result of `catalog_ids`. A dash means that linguatag returns no value.
 - **Data source** is the `source` field of each data file that gives a fact in the row.
 
 | Tag | Normalised tag | Script | Region | Default region | Macrolanguage step | Family | Catalog ids | Data source |
@@ -32,8 +32,8 @@ Each column comes from one call:
 | `da-DK` | `da-DK` | Latn | DK | - | - | Indo-European > Germanic > Northwest Germanic > North Germanic | glottolog_code: dani1285, wikidata_qid: Q9035 | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json<br>genealogy.json: TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5 |
 | `kab` | `kab` | Latn | DZ | DZ | - | Afro-Asiatic > Berber | glottolog_code: kaby1243, wikidata_qid: Q35853 | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json<br>genealogy.json: TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5 |
 | `hi-IN` | `hi-IN` | Deva | IN | - | - | Indo-European > Indo-Iranian > Indo-Aryan | glottolog_code: hind1269, wikidata_qid: Q1568 | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json<br>genealogy.json: TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5 |
-| `bn-IN` | `bn-IN` | Beng | IN | - | - | - | - | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json |
-| `mwr` | `mwr` | Deva | IN | IN | - | - | - | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json |
+| `bn-IN` | `bn-IN` | Beng | IN | - | - | Indo-European > Indo-Iranian > Indo-Aryan | glottolog_code: beng1280, wikidata_qid: Q9610 | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json<br>genealogy.json: TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5 |
+| `mwr` | `mwr` | Deva | IN | IN | - | Indo-European > Indo-Iranian > Indo-Aryan | glottolog_code: no entry, wikidata_qid: Q56312 | aliases.json: CLDR 49, cldr-json cldr-core/supplemental/aliases.json<br>likely_subtags.json: CLDR 49, cldr-json cldr-core/supplemental/likelySubtags.json<br>genealogy.json: TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5 |
 
 ---
 [Index](index.md) · [← Reference](reference.md)
