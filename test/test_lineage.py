@@ -86,6 +86,7 @@ def test_a_cited_period(tag, period):
     ("mwr", "raj", "raja1256"), ("rwr", "mwr", "macrolanguages"),
     ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
     ("ar-TR-x-kinderib", "ar-IQ-x-qeltu", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
+    ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
@@ -214,3 +215,9 @@ def test_braga_and_porto_are_minhoto_varieties(tag):
     # Paiva Boléo & Santos Silva 1959, via Cintra 1971: Braga is inside minhoto
     # central and Porto inside baixo-minhoto, both inside the Minhoto dialect.
     assert parent(tag) == "pt-PT-x-minho"
+
+
+@pytest.mark.parametrize("tag", ["dhd", "mtr", "swv", "wry"])
+def test_a_marwari_member_is_indo_aryan(tag):
+    assert parent(tag) == "mwr"
+    assert family_path(tag) == ("Indo-European", "Indo-Iranian", "Indo-Aryan")
