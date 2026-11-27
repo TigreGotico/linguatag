@@ -99,8 +99,21 @@ def _as_known_lect(tag: str) -> str:
     after a lect (``pt-BR-x-sp-foo``) does not change the lect."""
     known = _known()
     for node in _ancestors(_without_extensions(standardize_lang(tag))):
-        if node in known or not private_use(node):
+        if node in known or _without_region(node) in known:
             return node
+        if not private_use(node):
+            return node
+    return tag
+
+
+def _without_region(tag: str) -> str:
+    """``tag`` without a region subtag: ``eu-fr-x-zuberera`` is ``eu-x-zuberera``."""
+    parts = tag.split("-")
+    for index, part in enumerate(parts[1:3], start=1):
+        if len(part) == 1:
+            break
+        if (len(part) == 2 and part.isalpha()) or (len(part) == 3 and part.isdigit()):
+            return "-".join(parts[:index] + parts[index + 1:])
     return tag
 
 
