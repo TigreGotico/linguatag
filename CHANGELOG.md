@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.0a1](https://github.com/TigreGotico/linguatag/tree/0.13.0a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.12.0a1...0.13.0a1)
+
+**Merged pull requests:**
+
+- feat: standardize\_lang\(macro=True\) folds into the macrolanguage [\#184](https://github.com/TigreGotico/linguatag/pull/184) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.12.0a1](https://github.com/TigreGotico/linguatag/tree/0.12.0a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.11.0a1...0.12.0a1)
@@ -385,10 +393,6 @@
 ## [0.4.2a4](https://github.com/TigreGotico/linguatag/tree/0.4.2a4) (2026-11-24)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a3...0.4.2a4)
-
-**Merged pull requests:**
-
-- docs: README, docs index, navigation and agent hints [\#60](https://github.com/TigreGotico/linguatag/pull/60) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.4.2a3](https://github.com/TigreGotico/linguatag/tree/0.4.2a3) (2026-11-24)
 
