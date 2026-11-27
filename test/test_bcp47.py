@@ -15,7 +15,7 @@ from pathlib import Path
 import pytest
 
 import linguatag
-from linguatag import default_region, is_arabic_variety, likely_script, standardize_lang, with_default_region
+from linguatag import default_region, is_arabic_variety, language_scope, likely_script, standardize_lang, with_default_region
 from linguatag._bcp47 import LanguageTagError, load_data, maximize, parse, registry, standardize
 from linguatag._lects import lect_steps
 
@@ -216,3 +216,12 @@ def test_the_output_is_the_same_without_langcodes():
     without = subprocess.run([sys.executable, "-c", _WITHOUT_LANGCODES, *TAGS], check=True,
                              capture_output=True, text=True).stdout
     assert json.loads(without) == here
+
+
+@pytest.mark.parametrize("tag, scope", [
+    ("en", "language"), ("EN-us", "language"), ("zh", "macrolanguage"), ("ar", "macrolanguage"),
+    ("itc", "collection"), ("sla-Latn", "collection"), ("mul", "special"), ("und", "special"),
+    ("zxx", "special"), ("qab", "private-use"), ("mol", None), ("xx", None),
+])
+def test_language_scope_reads_the_iana_registry(tag, scope):
+    assert language_scope(tag) == scope

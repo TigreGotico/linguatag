@@ -28,6 +28,16 @@ def test_ancestry_similarity_multiplies_the_cited_weights(a, b, expected):
     assert ancestry_similarity(a, b) == pytest.approx(expected)
 
 
+@pytest.mark.parametrize("near, far", [
+    # Catalan and Spanish share Latin; Catalan and English share only Proto-Indo-European.
+    (("ca", "es"), ("ca", "en")),
+    (("pt", "es"), ("pt", "de")),
+    (("en", "de"), ("en", "hi")),
+])
+def test_a_shared_branch_is_nearer_than_a_shared_family(near, far):
+    assert ancestry_similarity(*near) > ancestry_similarity(*far)
+
+
 @pytest.mark.parametrize("a, b, expected", [
     # Start years (times.json sources): mwl 1609, aae 1450, ca-x-valencia 1343,
     # all still spoken, so each period ends at the reference year 2025.
@@ -68,6 +78,9 @@ def test_script_distance_of_latin_and_cyrillic():
 @pytest.mark.parametrize("tag, period", [
     ("mwl", [1609, None]), ("ca-x-valencia", [1343, None]), ("aat", [1350, None]),
     ("aae", [1450, None]), ("an-x-cheso", [1200, None]), ("acm-IQ", None), ("pt-BR", None),
+    ("pt-PT", [1214, None]), ("es", [900, None]), ("fr", [842, None]), ("it", [960, None]), ("de", [790, None]),
+    ("nl", [510, None]), ("da", [1241, None]), ("bn", [950, None]), ("hi", [1191, None]), ("mwr", [1400, None]),
+    ("kab", [1857, None]), ("es-CO", [1867, None]),
 ])
 def test_a_cited_period(tag, period):
     years = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json").read_text(encoding="utf-8"))
@@ -77,13 +90,18 @@ def test_a_cited_period(tag, period):
 
 @pytest.mark.parametrize("tag, parent, cited", [
     ("pt-PT-x-braga", "pt-PT-x-minho", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
-    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ar-x-mashriqi", "east2729"),
+    ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ayp", "Euphrat Qeltu [euph1239]"), ("ayp", "ar-x-mashriqi", "east2729"),
     ("pt-AO", "pt-PT", "norma padrão europeia"), ("pt-MZ", "pt-PT", "a norma de referência em Moçambique"),
     ("pt-PT-x-alfena", "pt-PT", "Douro Litoral"), ("pt-PT-x-viana", "pt-PT", "Baixo-Minho"),
     ("pt-PT-x-coimbra", "pt-PT", "a montante de Coimbra"), ("pt-PT-x-terceira", "pt-PT", "Terceira Island"),
     ("pt-BR-x-mg", "pt-BR", "sub-falar mineiro"), ("pt-BR-x-ce", "pt-BR", "Ceará (Fortaleza)"),
     ("pt-BR-x-paraiba", "pt-BR", "Paraíba (João Pessoa)"), ("pt-BR-x-recife", "pt-BR", "dialeto recifense"),
-    ("mwr", "raj", "raja1256"), ("rwr", "mwr", "macrolanguages"),
+    ("mwr", "inc-x-owr", "Çaurasena Apabhraṃça"), ("rwr", "mwr", "macrolanguages"),
+    ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
+    ("ar-TR-x-kinderib", "ayp", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
+    ("pt-PT-x-medieval", "roa-x-galaico-pt", "virada do século 14 para o século 15"),
+    ("pt-PT", "pt-PT-x-medieval", "Teyssier inova ao considerar"),
+    ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
@@ -155,7 +173,7 @@ def test_a_chain_terminates_on_a_cycle(monkeypatch):
 def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
     lects = linguatag._bcp47._raw_data("lects.json")["lects"]
     nodes = linguatag._bcp47._raw_data("genealogy.json")["nodes"]
-    assert len(lects) == 190
+    assert len(lects) == 189
     assert all(tag in nodes and "-x-" in tag for tag in lects)
     assert all(set(entry) == {"name", "regions", "islands", "cities"} for entry in lects.values())
     assert all(not (e["regions"] or e["islands"] or e["cities"]) for e in lects.values())
@@ -212,3 +230,61 @@ def test_braga_and_porto_are_minhoto_varieties(tag):
     # Paiva Boléo & Santos Silva 1959, via Cintra 1971: Braga is inside minhoto
     # central and Porto inside baixo-minhoto, both inside the Minhoto dialect.
     assert parent(tag) == "pt-PT-x-minho"
+
+
+@pytest.mark.parametrize("tag, stage", [
+    ("hi", "psu-x-apabhram"), ("bn", "inc-x-magadhi-apabhram"), ("mwr", "inc-x-owr"), ("gu", "inc-x-owr"),
+    ("as", "inc-x-magadhi-apabhram"), ("or", "inc-x-magadhi-apabhram"),
+    ("mr", "pmh"), ("pa", "inc-x-takka"),
+])
+def test_an_indo_aryan_language_descends_through_a_middle_stage(tag, stage):
+    assert parent(tag) == stage
+    assert "sa" in ancestors(tag)
+
+
+def test_two_indo_aryan_languages_are_nearer_than_two_branches():
+    assert ancestry_similarity("hi", "bn") > 2 * ancestry_similarity("hi", "en")
+
+
+@pytest.mark.parametrize("tag", ["dhd", "mtr", "swv", "wry"])
+def test_a_marwari_member_is_indo_aryan(tag):
+    assert parent(tag) == "mwr"
+    assert family_path(tag) == ("Indo-European", "Indo-Iranian", "Indo-Aryan")
+
+
+@pytest.mark.parametrize("other", ["as", "or"])
+def test_a_magadhi_language_is_nearer_to_bengali_than_hindi_is(other):
+    assert ancestry_similarity("bn", other) > ancestry_similarity("bn", "hi")
+
+
+def test_pmh_is_maharastri_prakrit():
+    data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
+    assert "Māhārāṣṭri Prākrit" in data["sources"]["pmh"]
+    assert parent("bn") == "inc-x-magadhi-apabhram"
+
+
+@pytest.mark.parametrize("other", ["pa", "mr"])
+def test_an_inner_indo_aryan_language_is_nearer_to_hindi_than_english_is(other):
+    assert ancestry_similarity("hi", other) > 2 * ancestry_similarity("hi", "en")
+
+
+def test_a_retired_variety_has_no_node():
+    # ISO 639-3 retired bbz in 2020, and Glottolog retired baba1273 as non-existent.
+    assert parent("ar-TD-x-babalia") is None
+    assert family("ar-TD-x-babalia") == ""
+
+
+def test_every_lineage_edge_has_a_source():
+    data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
+    assert not [tag for tag, source in data["sources"].items() if source.startswith("NOT FOUND")]
+
+
+def test_one_node_holds_north_mesopotamian_arabic():
+    nodes = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))["nodes"]
+    assert [tag for tag, node in nodes.items() if node.get("glottolog_code") == "nort3142"] == ["ayp"]
+
+
+@pytest.mark.parametrize("tag", ["kab", "es-CO", "da"])
+def test_a_first_description_is_marked_as_a_latest_bound(tag):
+    sources = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json").read_text(encoding="utf-8"))["sources"]
+    assert "latest bound" in sources[tag]

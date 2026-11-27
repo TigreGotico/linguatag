@@ -1,5 +1,119 @@
 # Changelog
 
+## [0.10.5a1](https://github.com/TigreGotico/linguatag/tree/0.10.5a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.4a1...0.10.5a1)
+
+**Merged pull requests:**
+
+- fix\(data\): latest bounds, the qəltu groups and the Hindi start year [\#172](https://github.com/TigreGotico/linguatag/pull/172) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.10.4a1](https://github.com/TigreGotico/linguatag/tree/0.10.4a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.3a1...0.10.4a1)
+
+**Merged pull requests:**
+
+- fix\(data\): cited start years for 12 leader languages [\#169](https://github.com/TigreGotico/linguatag/pull/169) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.10.3a1](https://github.com/TigreGotico/linguatag/tree/0.10.3a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.2a1...0.10.3a1)
+
+**Merged pull requests:**
+
+- fix\(data\): ayp is the North Mesopotamian Arabic node [\#168](https://github.com/TigreGotico/linguatag/pull/168) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.10.2a1](https://github.com/TigreGotico/linguatag/tree/0.10.2a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.1a1...0.10.2a1)
+
+**Merged pull requests:**
+
+- fix: cite the medieval and modern Portuguese lineage edges [\#166](https://github.com/TigreGotico/linguatag/pull/166) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.10.1a1](https://github.com/TigreGotico/linguatag/tree/0.10.1a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.0a1...0.10.1a1)
+
+**Merged pull requests:**
+
+- fix: drop the retired Babalia Creole Arabic node [\#165](https://github.com/TigreGotico/linguatag/pull/165) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.10.0a1](https://github.com/TigreGotico/linguatag/tree/0.10.0a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.19a1...0.10.0a1)
+
+**Merged pull requests:**
+
+- feat: language\_scope reads the IANA scope of a language subtag [\#163](https://github.com/TigreGotico/linguatag/pull/163) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.19a1](https://github.com/TigreGotico/linguatag/tree/0.9.19a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.18a1...0.9.19a1)
+
+**Merged pull requests:**
+
+- fix: give pmh to Māhārāṣṭrī and add the Marathi and Punjabi stages [\#160](https://github.com/TigreGotico/linguatag/pull/160) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.18a1](https://github.com/TigreGotico/linguatag/tree/0.9.18a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.17a1...0.9.18a1)
+
+**Merged pull requests:**
+
+- fix: put Assamese and Oriya under Māgadhī Apabhraṃśa [\#157](https://github.com/TigreGotico/linguatag/pull/157) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.17a1](https://github.com/TigreGotico/linguatag/tree/0.9.17a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.16a1...0.9.17a1)
+
+**Merged pull requests:**
+
+- fix: add the Middle Indo-Aryan stages [\#153](https://github.com/TigreGotico/linguatag/pull/153) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.16a1](https://github.com/TigreGotico/linguatag/tree/0.9.16a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.15a1...0.9.16a1)
+
+## [0.9.15a1](https://github.com/TigreGotico/linguatag/tree/0.9.15a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.14a1...0.9.15a1)
+
+**Merged pull requests:**
+
+- fix\(data\): sources for the Catalan, Kinderib and pt-BR lineage edges [\#148](https://github.com/TigreGotico/linguatag/pull/148) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: ancestry\_similarity ranks a shared branch above a shared family [\#146](https://github.com/TigreGotico/linguatag/pull/146) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.14a1](https://github.com/TigreGotico/linguatag/tree/0.9.14a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.13a1...0.9.14a1)
+
+**Merged pull requests:**
+
+- fix\(data\): Dhundari, Mewari, Shekhawati and Merwari under Marwari [\#147](https://github.com/TigreGotico/linguatag/pull/147) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.13a1](https://github.com/TigreGotico/linguatag/tree/0.9.13a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.12a1...0.9.13a1)
+
+**Merged pull requests:**
+
+- fix\(data\): sources for 10 Portuguese lineage edges [\#139](https://github.com/TigreGotico/linguatag/pull/139) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
+## [0.9.12a1](https://github.com/TigreGotico/linguatag/tree/0.9.12a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.11a1...0.9.12a1)
+
+## [0.9.11a1](https://github.com/TigreGotico/linguatag/tree/0.9.11a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.10a2...0.9.11a1)
+
+**Merged pull requests:**
+
+- fix\(data\): Marwari \(mwr\) node, with rwr and mve under it [\#143](https://github.com/TigreGotico/linguatag/pull/143) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+- fix: a region with no node reads the language's lineage [\#141](https://github.com/TigreGotico/linguatag/pull/141) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.9.10a2](https://github.com/TigreGotico/linguatag/tree/0.9.10a2) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.10a1...0.9.10a2)
@@ -278,121 +392,61 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.1a1...0.4.0a1)
 
-**Merged pull requests:**
-
-- feat: port CLDR 49 language matching and drop the langcodes dependency [\#45](https://github.com/TigreGotico/linguatag/pull/45) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.3.1a1](https://github.com/TigreGotico/linguatag/tree/0.3.1a1) (2026-11-19)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.0a1...0.3.1a1)
-
-**Merged pull requests:**
-
-- fix: read CLDR 49 and IANA data from the package, not from langcodes [\#44](https://github.com/TigreGotico/linguatag/pull/44) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.3.0a1](https://github.com/TigreGotico/linguatag/tree/0.3.0a1) (2026-11-18)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.7a1...0.3.0a1)
 
-**Merged pull requests:**
-
-- feat: likely\_script gives the script of a tag from CLDR likely-subtags [\#42](https://github.com/TigreGotico/linguatag/pull/42) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.2.7a1](https://github.com/TigreGotico/linguatag/tree/0.2.7a1) (2026-11-15)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.6a1...0.2.7a1)
-
-**Merged pull requests:**
-
-- fix: take hyw and lzh likely subtags from CLDR 49 [\#39](https://github.com/TigreGotico/linguatag/pull/39) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.6a1](https://github.com/TigreGotico/linguatag/tree/0.2.6a1) (2026-11-15)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.5a1...0.2.6a1)
 
-**Merged pull requests:**
-
-- fix: keep every non-Mandarin member of zh from matching Mandarin [\#37](https://github.com/TigreGotico/linguatag/pull/37) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.2.5a1](https://github.com/TigreGotico/linguatag/tree/0.2.5a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.4a1...0.2.5a1)
-
-**Merged pull requests:**
-
-- fix: break a closest\_lang tie against a deprecated region or extlang subtag [\#35](https://github.com/TigreGotico/linguatag/pull/35) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.4a1](https://github.com/TigreGotico/linguatag/tree/0.2.4a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.3a1...0.2.4a1)
 
-**Merged pull requests:**
-
-- fix: measure Fanti and Mandinka as languages apart from Akan and Mandingo [\#33](https://github.com/TigreGotico/linguatag/pull/33) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.2.3a1](https://github.com/TigreGotico/linguatag/tree/0.2.3a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.2a1...0.2.3a1)
-
-**Merged pull requests:**
-
-- fix: only a deprecated code loses a closest\_lang tie to its Preferred-Value [\#31](https://github.com/TigreGotico/linguatag/pull/31) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.2a1](https://github.com/TigreGotico/linguatag/tree/0.2.2a1) (2026-11-14)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.1a1...0.2.2a1)
 
-**Merged pull requests:**
-
-- fix: replace deprecated language subtags with their IANA Preferred-Value [\#29](https://github.com/TigreGotico/linguatag/pull/29) ([JarbasAl](https://github.com/JarbasAl))
-
 ## [0.2.1a1](https://github.com/TigreGotico/linguatag/tree/0.2.1a1) (2026-11-11)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.0a1...0.2.1a1)
-
-**Merged pull requests:**
-
-- fix: measure Arabic varieties in their CLDR 49 likely script [\#27](https://github.com/TigreGotico/linguatag/pull/27) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.2.0a1](https://github.com/TigreGotico/linguatag/tree/0.2.0a1) (2026-11-10)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.7a1...0.2.0a1)
 
-**Merged pull requests:**
-
-- feat: add is\_arabic\_variety and match Hassaniyya to Modern Standard Arabic [\#24](https://github.com/TigreGotico/linguatag/pull/24) ([JarbasAl](https://github.com/JarbasAl))
-
 ## [0.1.7a1](https://github.com/TigreGotico/linguatag/tree/0.1.7a1) (2026-11-10)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.6a1...0.1.7a1)
-
-**Merged pull requests:**
-
-- fix: read an extlang tag as its IANA Preferred-Value [\#23](https://github.com/TigreGotico/linguatag/pull/23) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.1.6a1](https://github.com/TigreGotico/linguatag/tree/0.1.6a1) (2026-11-10)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.5a1...0.1.6a1)
 
-**Merged pull requests:**
-
-- fix: keep Hakka, Min Nan, Wu, Gan and Xiang off Mandarin [\#21](https://github.com/TigreGotico/linguatag/pull/21) ([JarbasAl](https://github.com/JarbasAl))
-
 ## [0.1.5a1](https://github.com/TigreGotico/linguatag/tree/0.1.5a1) (2026-11-04)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.4a1...0.1.5a1)
 
-**Merged pull requests:**
-
-- fix: keep Latin-script Juba and Cypriot Maronite Arabic off the MSA fallback [\#17](https://github.com/TigreGotico/linguatag/pull/17) ([JarbasAl](https://github.com/JarbasAl))
-
 ## [0.1.4a1](https://github.com/TigreGotico/linguatag/tree/0.1.4a1) (2026-11-04)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.1.3a1...0.1.4a1)
-
-**Merged pull requests:**
-
-- fix: rebuild the lect tree from the BCP-47 orthography2ipa keys [\#16](https://github.com/TigreGotico/linguatag/pull/16) ([JarbasAl](https://github.com/JarbasAl))
 
 ## [0.1.3a1](https://github.com/TigreGotico/linguatag/tree/0.1.3a1) (2026-11-04)
 

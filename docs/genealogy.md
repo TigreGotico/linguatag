@@ -57,13 +57,13 @@ A key with the value `None` means that the catalog has no entry for the variety.
 ```python
 from linguatag import ancestry_similarity
 
-print(ancestry_similarity("pt-PT", "pt-PT-x-porto"))           # 0.81
-print(round(ancestry_similarity("pt-PT", "es-ES"), 4))         # 0.5304
-print(round(ancestry_similarity("pt-PT", "de-DE"), 4))         # 0.0552
+print(round(ancestry_similarity("pt-PT", "pt-PT-x-porto"), 4))  # 0.7381
+print(round(ancestry_similarity("pt-PT", "es-ES"), 4))           # 0.4131
+print(round(ancestry_similarity("pt-PT", "de-DE"), 4))           # 0.0605
 print(ancestry_similarity("pt-PT", "pt-PT"))                   # 1.0
 ```
 
-The argument `max_depth` limits the levels that the trace follows above each tag, and `temporal_decay=True` lowers a weight with the years between an ancestor and its descendant.
+A path also loses weight with the years between an ancestor and its descendant, with a half-life of 2,000 years (`decay_halflife`). So an old shared ancestor, such as Proto-Indo-European for Portuguese and German, counts for less than a recent one, such as Hispanic Latin for Portuguese and Spanish. `temporal_decay=False` turns this off. The argument `max_depth` limits the levels that the trace follows above each tag.
 
 `geographic_distance` gives the great-circle distance of the points of two tags. A point stands for an area, so trust the number for dialects of one language and not for a language spoken on several continents. It returns `None` when a tag has no point:
 
@@ -83,7 +83,7 @@ Without `normalize=False`, the distance is a share of half the circumference of 
 from linguatag import temporal_distance
 
 print(temporal_distance("la", "pt-PT"))                    # 1.0
-print(round(temporal_distance("pt-PT", "es-ES"), 4))       # 0.2759
+print(round(temporal_distance("pt-PT", "es-ES"), 4))       # 0.3527
 print(temporal_distance("pt-PT", "qqq-x-nothing"))         # None
 ```
 

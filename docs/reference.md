@@ -57,6 +57,17 @@ print(likely_script("ar"))                 # Arab
 print(likely_script("und"))                # None
 ```
 
+`language_scope(tag: str) -> Optional[str]` gives the IANA scope of the primary language subtag: `"language"`, `"macrolanguage"`, `"collection"` (a language family), `"special"` (`mul`, `und`, `zxx`, `mis`) or `"private-use"`. It returns `None` for a subtag that the IANA registry does not hold, such as the retired ISO 639-3 code `mol`. Give the subtag as the registry spells it: `pt`, not `por`.
+
+```python
+from linguatag import language_scope
+
+print(language_scope("itc"))   # collection
+print(language_scope("zh"))    # macrolanguage
+print(language_scope("en-US")) # language
+print(language_scope("mol"))   # None
+```
+
 `OVERRIDES` maps a language to the `(script, region)` that linguatag uses in place of the CLDR value. Each entry cites its source in `linguatag/_regions.py`.
 
 ```python
