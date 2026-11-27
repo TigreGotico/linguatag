@@ -53,7 +53,7 @@ ALIAS_KINDS = {"languageAlias": "language", "scriptAlias": "script",
                "territoryAlias": "region", "variantAlias": "variant"}
 REGISTRY_FIELDS = {"Deprecated": "deprecated", "Preferred-Value": "preferred",
                    "Prefix": "prefix", "Suppress-Script": "suppress_script",
-                   "Macrolanguage": "macrolanguage"}
+                   "Macrolanguage": "macrolanguage", "Scope": "scope"}
 
 
 def read(source: str) -> str:
