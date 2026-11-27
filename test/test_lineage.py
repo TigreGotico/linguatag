@@ -78,6 +78,12 @@ def test_a_cited_period(tag, period):
 @pytest.mark.parametrize("tag, parent, cited", [
     ("pt-PT-x-braga", "pt-PT-x-minho", "minhoto central"), ("ca-x-balear", "ca-x-medieval", "Recasens"),
     ("pt-UY", "pt-BR", "sul-rio-grandense"), ("ar-IQ-x-qeltu", "ar-x-mashriqi", "east2729"),
+    ("pt-AO", "pt-PT", "norma padrão europeia"), ("pt-MZ", "pt-PT", "a norma de referência em Moçambique"),
+    ("pt-PT-x-alfena", "pt-PT", "Douro Litoral"), ("pt-PT-x-viana", "pt-PT", "Baixo-Minho"),
+    ("pt-PT-x-coimbra", "pt-PT", "a montante de Coimbra"), ("pt-PT-x-terceira", "pt-PT", "Terceira Island"),
+    ("pt-BR-x-mg", "pt-BR", "sub-falar mineiro"), ("pt-BR-x-ce", "pt-BR", "Ceará (Fortaleza)"),
+    ("pt-BR-x-paraiba", "pt-BR", "Paraíba (João Pessoa)"), ("pt-BR-x-recife", "pt-BR", "dialeto recifense"),
+    ("mwr", "raj", "raja1256"), ("rwr", "mwr", "macrolanguages"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
     data = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "genealogy.json").read_text(encoding="utf-8"))
@@ -167,6 +173,8 @@ def test_lects_hold_the_private_use_tags_of_the_genealogy_with_empty_coverage():
     ("sux", {"glottolog_code": "sume1241", "wikidata_qid": "Q36790"}),
     # ISO 639-3 etr is Edolo, a language of Papua New Guinea, so it has no Etruscan node.
     ("etr", {}),
+    # Wikidata Q56312 is the Marwari macrolanguage (P220 mwr); Glottolog has no node for it.
+    ("mwr", {"glottolog_code": None, "wikidata_qid": "Q56312"}),
     ("qqq-x-nothing", {}),
 ])
 def test_catalog_ids(tag, ids):
