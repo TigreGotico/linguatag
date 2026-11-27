@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.4a1](https://github.com/TigreGotico/linguatag/tree/0.10.4a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.3a1...0.10.4a1)
+
+**Merged pull requests:**
+
+- fix\(data\): cited start years for 12 leader languages [\#169](https://github.com/TigreGotico/linguatag/pull/169) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.3a1](https://github.com/TigreGotico/linguatag/tree/0.10.3a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.2a1...0.10.3a1)
@@ -391,10 +399,6 @@
 ## [0.3.0a1](https://github.com/TigreGotico/linguatag/tree/0.3.0a1) (2026-11-18)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.7a1...0.3.0a1)
-
-**Merged pull requests:**
-
-- feat: likely\_script gives the script of a tag from CLDR likely-subtags [\#42](https://github.com/TigreGotico/linguatag/pull/42) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.7a1](https://github.com/TigreGotico/linguatag/tree/0.2.7a1) (2026-11-15)
 
