@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.5a1](https://github.com/TigreGotico/linguatag/tree/0.10.5a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.4a1...0.10.5a1)
+
+**Merged pull requests:**
+
+- fix\(data\): latest bounds, the qəltu groups and the Hindi start year [\#172](https://github.com/TigreGotico/linguatag/pull/172) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.4a1](https://github.com/TigreGotico/linguatag/tree/0.10.4a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.3a1...0.10.4a1)
@@ -384,17 +392,9 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.1a1...0.4.0a1)
 
-**Merged pull requests:**
-
-- feat: port CLDR 49 language matching and drop the langcodes dependency [\#45](https://github.com/TigreGotico/linguatag/pull/45) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.3.1a1](https://github.com/TigreGotico/linguatag/tree/0.3.1a1) (2026-11-19)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.3.0a1...0.3.1a1)
-
-**Merged pull requests:**
-
-- fix: read CLDR 49 and IANA data from the package, not from langcodes [\#44](https://github.com/TigreGotico/linguatag/pull/44) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.3.0a1](https://github.com/TigreGotico/linguatag/tree/0.3.0a1) (2026-11-18)
 
