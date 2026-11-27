@@ -84,6 +84,8 @@ def test_a_cited_period(tag, period):
     ("pt-BR-x-mg", "pt-BR", "sub-falar mineiro"), ("pt-BR-x-ce", "pt-BR", "Ceará (Fortaleza)"),
     ("pt-BR-x-paraiba", "pt-BR", "Paraíba (João Pessoa)"), ("pt-BR-x-recife", "pt-BR", "dialeto recifense"),
     ("mwr", "raj", "raja1256"), ("rwr", "mwr", "macrolanguages"),
+    ("ca-x-nord", "ca-x-medieval", "només tenia dos dialectes"), ("ca-x-occident", "ca-x-medieval", "només tenia dos dialectes"),
+    ("ar-TR-x-kinderib", "ar-IQ-x-qeltu", "Untergruppe der Mardin-Dialekte"), ("pt-BR", "pt-PT-x-medieval", "aportou ao Brasil"),
     ("dhd", "mwr", "Dhundari"), ("mtr", "mwr", "Mewari"), ("swv", "mwr", "Shekhawati"), ("wry", "mwr", "Merwari"),
 ])
 def test_a_lineage_edge_names_its_source(tag, parent, cited):
