@@ -12,7 +12,7 @@ This page gives the signature and one example for each of the 27 names that `fro
 
 ## Normalise a tag
 
-`standardize_lang(tag: str) -> str` puts a tag in one canonical form. It never raises. For a string that is not a well-formed tag, it replaces the language and the extlang and gives each subtag its BCP 47 case.
+`standardize_lang(tag: str, macro: bool = False) -> str` puts a tag in one canonical form. It never raises. For a string that is not a well-formed tag, it replaces the language and the extlang and gives each subtag its BCP 47 case.
 
 ```python
 from linguatag import standardize_lang

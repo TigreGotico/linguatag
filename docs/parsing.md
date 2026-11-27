@@ -42,6 +42,16 @@ Each line applies one rule:
 | `tgl` | `tl` | Tagalog stays `tl`. CLDR replaces it with Filipino, `fil`, and linguatag does not. |
 | `tl-Latn-PH` | `tl-PH` | Tagalog stays `tl` with other subtags too, and `Latn`, its IANA Suppress-Script, goes. |
 
+`standardize_lang(tag, macro=True)` folds an individual language into its macrolanguage with the CLDR 49 macrolanguage rules. CLDR folds only the main member of a macrolanguage, so Mandarin becomes `zh` and Cantonese stays `yue`:
+
+```python
+from linguatag import standardize_lang
+
+print(standardize_lang("cmn", macro=True))  # zh
+print(standardize_lang("arb", macro=True))  # ar
+print(standardize_lang("yue", macro=True))  # yue
+```
+
 `standardize_lang` never raises. A string that is not a well-formed tag gets the extlang and deprecated-language rules and the BCP 47 case of each subtag, and nothing more:
 
 ```python

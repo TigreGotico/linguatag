@@ -816,3 +816,16 @@ def test_a_bare_tag_gives_the_values_it_gave_before():
 
 def test_white_space_inside_a_tag_stays_malformed():
     assert default_region("pt- BR") is None
+
+
+@pytest.mark.parametrize("tag, expected", [
+    ("cmn", "zh"), ("zh-cmn", "zh"), ("arb", "ar"), ("swh", "sw"), ("pes", "fa"), ("cmn-Hant-TW", "zh-Hant-TW"),
+    ("yue", "yue"), ("wuu", "wuu"), ("tl", "tl"), ("en-US", "en-US"),
+])
+def test_macro_folds_an_individual_language_into_its_macrolanguage(tag, expected):
+    assert standardize_lang(tag, macro=True) == expected
+
+
+@pytest.mark.parametrize("tag", ["cmn", "arb", "swh"])
+def test_the_default_keeps_the_individual_language(tag):
+    assert standardize_lang(tag) == tag
