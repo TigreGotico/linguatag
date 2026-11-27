@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.10.2a1](https://github.com/TigreGotico/linguatag/tree/0.10.2a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.1a1...0.10.2a1)
+
+**Merged pull requests:**
+
+- fix: cite the medieval and modern Portuguese lineage edges [\#166](https://github.com/TigreGotico/linguatag/pull/166) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.1a1](https://github.com/TigreGotico/linguatag/tree/0.10.1a1) (2026-11-27)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.0a1...0.10.1a1)
@@ -391,10 +399,6 @@
 ## [0.2.6a1](https://github.com/TigreGotico/linguatag/tree/0.2.6a1) (2026-11-15)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.2.5a1...0.2.6a1)
-
-**Merged pull requests:**
-
-- fix: keep every non-Mandarin member of zh from matching Mandarin [\#37](https://github.com/TigreGotico/linguatag/pull/37) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.2.5a1](https://github.com/TigreGotico/linguatag/tree/0.2.5a1) (2026-11-14)
 
