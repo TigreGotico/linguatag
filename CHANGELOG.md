@@ -1,8 +1,20 @@
 # Changelog
 
+## [0.11.0a1](https://github.com/TigreGotico/linguatag/tree/0.11.0a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.7a1...0.11.0a1)
+
+**Merged pull requests:**
+
+- feat: lookup\_tags, and an unknown subtag after a lect reads the lect [\#182](https://github.com/TigreGotico/linguatag/pull/182) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.10.7a1](https://github.com/TigreGotico/linguatag/tree/0.10.7a1) (2026-11-27)
 
-[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a3...0.10.7a1)
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.6a1...0.10.7a1)
+
+## [0.10.6a1](https://github.com/TigreGotico/linguatag/tree/0.10.6a1) (2026-11-27)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.10.5a3...0.10.6a1)
 
 **Merged pull requests:**
 
@@ -381,10 +393,6 @@
 ## [0.4.2a2](https://github.com/TigreGotico/linguatag/tree/0.4.2a2) (2026-11-23)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.2a1...0.4.2a2)
-
-**Merged pull requests:**
-
-- chore: refresh the IANA Language Subtag Registry to File-Date 2026-11-18 [\#56](https://github.com/TigreGotico/linguatag/pull/56) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.4.2a1](https://github.com/TigreGotico/linguatag/tree/0.4.2a1) (2026-11-23)
 
