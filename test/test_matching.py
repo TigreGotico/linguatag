@@ -22,6 +22,14 @@ def test_standardize_keeps_tagalog_as_tl():
     assert standardize_lang("tgl") == "tl"
 
 
+@pytest.mark.parametrize("tag, expected", [
+    ("tl-PH", "tl-PH"), ("tgl-PH", "tl-PH"), ("tl-Latn", "tl"), ("tl-Latn-PH", "tl-PH"), ("TL_ph", "tl-PH"),
+    ("tl-Tglg", "tl-Tglg"), ("fil-PH", "fil-PH"),
+])
+def test_tagalog_stays_tl_with_any_subtag(tag, expected):
+    assert standardize_lang(tag) == expected
+
+
 def _registry(kind):
     """The IANA Language Subtag Registry records of one type, File-Date
     2026-11-18, as ``linguatag/data/subtags.json`` and

@@ -1,10 +1,11 @@
 """One spelling for every way of writing a language tag."""
 from __future__ import annotations
 
+from dataclasses import replace
 from functools import lru_cache
 from typing import Dict
 
-from linguatag._bcp47 import LanguageTagError, _raw_registry, standardize
+from linguatag._bcp47 import LanguageTagError, _raw_registry, parse, standardize
 
 __all__ = ["standardize_lang"]
 
@@ -69,10 +70,14 @@ def standardize_lang(tag: str) -> str:
     extlang replaced and each subtag in its BCP-47 case. The rules and
     examples are in ``docs/parsing.md``."""
     tag = tag.strip()
-    if tag.lower() in ("tl", "tgl"):
-        # CLDR replaces Tagalog with Filipino, `fil`; the tag stays `tl` here.
-        return "tl"
+    language, sep, rest = tag.replace("_", "-").partition("-")
     try:
+        if language.lower() in ("tl", "tgl"):
+            # CLDR replaces Tagalog with Filipino, `fil`; the tag stays `tl` here,
+            # and drops `Latn`, its IANA Suppress-Script.
+            canonical = parse(standardize("fil" + sep + rest))
+            script = None if canonical.script == "Latn" else canonical.script
+            return str(replace(canonical, language="tl", script=script))
         return standardize(tag)
     except LanguageTagError:
         return _fold(_without_deprecated_language(_without_extlang(tag)))
