@@ -13,6 +13,8 @@ Inputs:
   written by ``--measure``. Output: ``docs/figures/call-timings.svg``.
 - ``linguatag/data/genealogy.json``: the nodes of each top-level family.
   Output: ``docs/figures/genealogy-families.svg``.
+- ``standardize_lang``, ``maximize``, ``default_region``, ``family`` and
+  ``catalog_ids`` on the tags of ``LEADERS``. Output: ``docs/leader-languages.md``.
 
 The SVG files hold no timestamp, so two runs write the same bytes. A run of
 ``--measure`` gives different numbers on each machine, so only ``--measure``
@@ -229,6 +231,65 @@ def measure() -> None:
     TIMINGS.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+LEADERS = ["pt-PT", "pt-BR", "es-CO", "fr-FR", "it-IT", "de-DE", "nl-NL", "da-DK", "kab", "hi-IN", "bn-IN", "mwr"]
+
+LEADER_PAGE = """# Leader languages
+
+<!-- agent-hint
+covers: the normalised tag, likely subtags, default region, macrolanguage step, family and data source of each leader tag.
+source: scripts/docs_figures.py:leader_languages, linguatag/_standardize.py:standardize_lang, linguatag/_bcp47.py:maximize, linguatag/_regions.py:default_region, linguatag/_lineage.py:family, linguatag/_lineage.py:catalog_ids
+generated: yes, by scripts/docs_figures.py
+verify: python scripts/docs_figures.py --check
+see: likely-subtags.md, genealogy.md, data-and-licence.md
+-->
+
+This page shows what linguatag returns for each leader tag. The script `scripts/docs_figures.py` writes the table from the public API. Do not edit the table by hand.
+
+Each column comes from one call:
+
+- **Normalised tag** is the result of `standardize_lang`.
+- **Script** and **region** are the subtags that `maximize` adds from CLDR likely subtags.
+- **Default region** is the result of `default_region`. The table shows it only for a tag that has no region subtag.
+- **Macrolanguage step** is the language that `maximize` returns when it is different from the language of the tag. A dash means that `maximize` keeps the language.
+- **Family** is the result of `family`. A dash means that linguatag returns no value.
+- **Catalog ids** is the result of `catalog_ids`. A dash means that linguatag returns no value.
+- **Data source** is the `source` field of each data file that gives a fact in the row.
+
+%s
+
+---
+[Index](index.md) · [← Reference](reference.md)
+"""
+
+
+def _source(name: str) -> str:
+    return f"{name}: {json.loads((DATA / name).read_text(encoding='utf-8'))['source']}"
+
+
+def leader_languages() -> str:
+    from linguatag import catalog_ids, default_region, family, maximize, standardize_lang
+
+    lines = ["| Tag | Normalised tag | Script | Region | Default region | Macrolanguage step | Family | Catalog ids "
+             "| Data source |", "| --- | --- | --- | --- | --- | --- | --- | --- | --- |"]
+    for tag in LEADERS:
+        normal = standardize_lang(tag)
+        full = maximize(tag)
+        region = "-" if "-" in normal else default_region(tag)
+        language = normal.split("-")[0]
+        step = full.language if full.language != language else "-"
+        ids = ", ".join(f"{key}: {value or 'no entry'}" for key, value in catalog_ids(tag).items()) or "-"
+        files = ["aliases.json", "likely_subtags.json"]
+        if family(tag) or ids != "-":
+            files.append("genealogy.json")
+        sources = "<br>".join(_source(name) for name in files)
+        lines.append(f"| `{tag}` | `{normal}` | {full.script} | {full.region} | {region} | {step} | "
+                     f"{family(tag) or '-'} | {ids} | {sources} |")
+    return LEADER_PAGE % "\n".join(lines)
+
+
+GENERATED_PAGES = {"leader-languages.md": leader_languages}
+
+
 FIGURE_FILES = {"distance-ladder.svg": distance_ladder, "data-files.svg": data_files,
                 "call-timings.svg": call_timings, "genealogy-families.svg": genealogy_families}
 
@@ -262,6 +323,15 @@ def main(argv) -> int:
                 status = 1
         else:
             FIGURES.mkdir(exist_ok=True)
+            path.write_text(fresh, encoding="utf-8")
+    for name, make in GENERATED_PAGES.items():
+        path = ROOT / "docs" / name
+        fresh = make()
+        if argv:
+            if not path.exists() or path.read_text(encoding="utf-8") != fresh:
+                print(f"{path} is out of date: run python scripts/docs_figures.py")
+                status = 1
+        else:
             path.write_text(fresh, encoding="utf-8")
     for name, (page_name, alt) in ALT_TEXTS.items():
         page = ROOT / "docs" / page_name

@@ -23,6 +23,7 @@ This index lists the linguatag docs pages in reading order. linguatag reads BCP 
 | [Data and licence](data-and-licence.md) | The CLDR 49 and IANA data files with their sizes, the scripts that write them, and their licences |
 | [Performance](performance.md) | What the import and the first call cost, what a warm call costs, and how to measure both |
 | [Reference](reference.md) | The signature and one example of each name in `__all__` |
+| [Leader languages](leader-languages.md) | What `standardize_lang`, `maximize`, `default_region`, `family` and `catalog_ids` return for each leader tag, with the data source of each fact |
 
 The [README](../README.md) has the quickstart and the place of linguatag in the stack.
 

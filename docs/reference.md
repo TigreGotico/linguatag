@@ -156,4 +156,4 @@ print(is_arabic_variety("ur"))       # False
 | `parent`, `ancestors`, `family`, `family_path`, `catalog_ids`, `ancestry_similarity`, `geographic_distance`, `temporal_distance`, `script_features`, `script_distance`, `script_distance_by_name` | [Genealogy, place and time](genealogy.md) |
 
 ---
-[Index](index.md) · [← Performance](performance.md)
+[Index](index.md) · [← Performance](performance.md) · [Leader languages →](leader-languages.md)
