@@ -28,6 +28,16 @@ def test_ancestry_similarity_multiplies_the_cited_weights(a, b, expected):
     assert ancestry_similarity(a, b) == pytest.approx(expected)
 
 
+@pytest.mark.parametrize("near, far", [
+    # Catalan and Spanish share Latin; Catalan and English share only Proto-Indo-European.
+    (("ca", "es"), ("ca", "en")),
+    (("pt", "es"), ("pt", "de")),
+    (("en", "de"), ("en", "hi")),
+])
+def test_a_shared_branch_is_nearer_than_a_shared_family(near, far):
+    assert ancestry_similarity(*near) > ancestry_similarity(*far)
+
+
 @pytest.mark.parametrize("a, b, expected", [
     # Start years (times.json sources): mwl 1609, aae 1450, ca-x-valencia 1343,
     # all still spoken, so each period ends at the reference year 2025.
