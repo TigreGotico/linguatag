@@ -33,6 +33,16 @@ print(closest_lang("en-AU", ["fr-FR", "en-US"]))  # en-US
 ```
 
 <!-- agent-hint: lang_distance and lang_matches are one-way. Pass the requested tag first. -->
+`ZZ` is the BCP 47 code for an unknown region, so a tag with `ZZ` takes the default region of its language:
+
+```python
+from linguatag import closest_lang
+
+print(closest_lang("pt-ZZ", ["pt-BR", "pt-PT"]))  # pt-PT
+```
+
+A script that CLDR gives no region of its own takes the CLDR region of the language, not the override region, because each override names one script: `pt-Cyrl` is measured as `pt-Cyrl-BR`. A macro-region such as `001` or `419` is a region, so `pt-001` takes no default region.
+
 ## The steps of a match
 
 `closest_lang` calls `lang_distance` once for each candidate. `lang_distance` runs the steps in the diagram, and the first step that ends the walk gives the number.
@@ -62,7 +72,7 @@ flowchart TD
 
 *Figure: the path of one pair of tags, top to bottom. The steps before the CLDR rules end the walk early for empty, identical and undetermined tags, and the two steps after them are the rules that linguatag adds to CLDR.*
 
-A voice id or a model name often adds a word to a tag. The longest well-formed prefix is the tag:
+A voice id or a model name often adds a word to a tag. The longest well-formed prefix is the tag. A three-letter subtag after the language that the IANA registry does not list as an extlang counts as such a word, so `pt-foo` is measured as `pt`:
 
 ```python
 from linguatag import lang_distance
