@@ -305,3 +305,9 @@ def test_a_malformed_tag_has_no_lineage(tag):
     assert ancestors(tag) == []
     assert family(tag) == ""
     assert catalog_ids(tag) == {}
+
+
+# Glottolog 5.4: Yue Chinese is in Sino-Tibetan > Sinitic.
+@pytest.mark.parametrize("tag", ["yue", "zh-HK", "yue-Latn-jyutping"])
+def test_cantonese_is_sinitic(tag):
+    assert family(tag) == "Sino-Tibetan > Sinitic"

@@ -7499,8 +7499,8 @@
 "yua": {"parent": "x-clade-maya1287", "family": "Mayan", "family_path": ["Mayan"], "glottolog_code": "yuca1254", "wikidata_qid": "Q13354"},
 "yuc": {"family": "Isolate", "glottolog_code": "yuch1247"},
 "yud": {"parent": "x-clade-afro1255", "family": "Afro-Asiatic", "family_path": ["Afro-Asiatic"], "glottolog_code": "jude1264"},
-"yue": {"parent": "sit", "ancestors": [["sit", "parent", 0.9]], "family": "Sino-Tibetan", "family_path": ["Sino-Tibetan"], "glottolog_code": "cant1236", "wikidata_qid": "Q9186"},
-"yue-Latn-jyutping": {"parent": "yue", "ancestors": [["yue", "parent", 1.0]], "family": "Sino-Tibetan", "family_path": ["Sino-Tibetan"], "glottolog_code": "cant1236", "wikidata_qid": "Q649913"},
+"yue": {"parent": "x-clade-sini1245", "family": "Sino-Tibetan > Sinitic", "family_path": ["Sino-Tibetan", "Sinitic"], "glottolog_code": "cant1236", "wikidata_qid": "Q9186"},
+"yue-Latn-jyutping": {"parent": "yue", "ancestors": [["yue", "parent", 1.0]], "family": "Sino-Tibetan > Sinitic", "family_path": ["Sino-Tibetan", "Sinitic"], "glottolog_code": "cant1236", "wikidata_qid": "Q649913"},
 "yuf": {"parent": "x-clade-coch1271", "family": "Cochimi-Yuman", "family_path": ["Cochimi-Yuman"], "glottolog_code": "hava1248"},
 "yui": {"parent": "x-clade-tuca1253", "family": "Tucanoan", "family_path": ["Tucanoan"], "glottolog_code": "yuru1263"},
 "yuj": {"parent": "x-clade-pauw1244", "family": "Pauwasi", "family_path": ["Pauwasi"], "glottolog_code": "kark1258"},
@@ -7752,6 +7752,7 @@
 "pt-UY": "Mazzaferro, Simioni & Ulrich 2024, Working Papers em Linguística 25(2), doi:10.5007/1984-8420.2024.e100456, p. 99, summarising Rona: the consonant and vowel systems of sul-rio-grandense Portuguese",
 "rwr": "ISO 639-3 macrolanguage mappings (SIL, iso-639-3-macrolanguages.tab): rwr Marwari (India) is a member of mwr",
 "swv": "ISO 639-3 macrolanguage mappings (SIL, iso-639-3-macrolanguages.tab): swv Shekhawati is a member of mwr",
-"wry": "ISO 639-3 macrolanguage mappings (SIL, iso-639-3-macrolanguages.tab): wry Merwari is a member of mwr"
+"wry": "ISO 639-3 macrolanguage mappings (SIL, iso-639-3-macrolanguages.tab): wry Merwari is a member of mwr",
+"yue": "Glottolog 5.4: Yue Chinese [yuec1235][yue] is in Sino-Tibetan > Sinitic > Classical-Middle-Modern Sinitic > Middle-Modern Sinitic > Yue-Pinghua > Southern Yue-Pinghua; Cantonese [cant1236] is a dialect under Yue Chinese > Yuehai"
 }
 }
