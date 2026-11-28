@@ -293,6 +293,7 @@ def test_a_first_description_is_marked_as_a_latest_bound(tag):
 @pytest.mark.parametrize("tag, glottolog", [
     ("ar-EG", "egyp1253"), ("ar-MA", "moro1292"), ("zh-HK", "cant1236"),
     ("ar-SA", "stan1318"), ("zh-TW", "mand1415"), ("ar", "stan1318"),
+    ("ms-ID", "stan1306"), ("no-NO", "norw1258"), ("zh-Hant-HK", "cant1236"),
 ])
 def test_a_region_reads_the_member_lect_that_most_of_it_speaks(tag, glottolog):
     assert catalog_ids(tag)["glottolog_code"] == glottolog

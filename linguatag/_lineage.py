@@ -62,12 +62,16 @@ def _territory_members() -> Dict[str, Dict[str, float]]:
 @lru_cache(maxsize=None)
 def _majority_member(macrolanguage: str, region: str) -> Optional[str]:
     """The individual language of ``macrolanguage`` that most of ``region``
-    speaks, when CLDR gives it 50 percent or more: ``ar`` in ``EG`` is
-    ``arz``, ``zh`` in ``HK`` is ``yue``."""
+    speaks, when CLDR gives it 50 percent or more and it has no ISO 639-1
+    code: ``ar`` in ``EG`` is ``arz``, ``zh`` in ``HK`` is ``yue``, and
+    ``ms`` in ``ID`` stays ``ms``."""
     shares = _territory_members().get(region, {})
     record = _raw_registry("language")
     language, share = max(((code, share) for code, share in shares.items()
-                           if record.get(code, {}).get("macrolanguage") == macrolanguage),
+                           # A member with an ISO 639-1 code (id, nb) is a
+                           # standard language of its own, not a lect.
+                           if len(code) == 3
+                           and record.get(code, {}).get("macrolanguage") == macrolanguage),
                           key=lambda item: item[1], default=(None, 0))
     return language if share >= 50 else None
 

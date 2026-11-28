@@ -36,7 +36,7 @@ print(repr(family("qqq-x-nothing")))  # ''
 
 Every function standardizes its tags first, so `PT-pt-X-PORTO` and `pt-PT-x-porto` give the same answer.
 
-A macrolanguage with a region that has no node of its own reads the individual language that most of that region speaks, when CLDR 49 `territoryInfo` gives it 50 percent or more. Otherwise it reads the macrolanguage:
+A macrolanguage with a region that has no node of its own reads the individual language that most of that region speaks, when CLDR 49 `territoryInfo` gives it 50 percent or more. A member with an ISO 639-1 code, such as Indonesian (`id`) or Norwegian Bokmål (`nb`), is a standard language of its own, so it does not take the tag. Otherwise the tag reads the macrolanguage. The rule applies to every function on this page, the distances included:
 
 ```python
 from linguatag import catalog_ids
@@ -46,7 +46,7 @@ print(catalog_ids("zh-HK")["glottolog_code"])  # cant1236
 print(catalog_ids("ar-SA")["glottolog_code"])  # stan1318
 ```
 
-CLDR gives Egyptian Arabic 64 percent of Egypt and Cantonese 90 percent of Hong Kong. It gives Najdi Arabic 3 percent of Saudi Arabia, so `ar-SA` stays Arabic.
+CLDR gives Egyptian Arabic 64 percent of Egypt and Cantonese 90 percent of Hong Kong. It gives Najdi Arabic 3 percent of Saudi Arabia, so `ar-SA` stays Arabic. `zh-HK` has the start year of `yue`, and the data holds none, so `temporal_distance` gives `None` for it.
 
 ## Find a tag in other catalogs
 
