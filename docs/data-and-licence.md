@@ -3,7 +3,7 @@
 <!-- agent-hint
 covers: the data files that linguatag reads, how to regenerate them, and their licences.
 source: linguatag/data/*.json, scripts/extract_cldr.py, scripts/add_nodes.py, NOTICE, LICENSE-CLDR
-generated: no for the page. scripts/extract_cldr.py writes the five CLDR and IANA files, and scripts/add_nodes.py edits genealogy.json, places.json, times.json and lineage.json, so never edit the JSON by hand. scripts/docs_figures.py writes docs/figures/data-files.svg.
+generated: no for the page. scripts/extract_cldr.py writes the CLDR and IANA files, and scripts/add_nodes.py edits genealogy.json, places.json, times.json and lineage.json, so never edit the JSON by hand. scripts/docs_figures.py writes docs/figures/data-files.svg.
 verify: python scripts/docs_figures.py --check && python scripts/check_doc_page.py docs/data-and-licence.md
 see: ../NOTICE, ../LICENSE-CLDR
 -->
@@ -21,6 +21,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 | `language_subtags.json` | the language records of the same registry, a file of their own so that a caller who reads no language record does not parse them | `standardize` (Suppress-Script), `closest_lang` and `standardize_lang` (Preferred-Value) |
 | `language_matching.json` | CLDR 49 `supplemental/languageMatching.json`, `written-new`: paradigm locales, match variables and `languageMatch` rules | `lang_distance` (UTS #35 section 4.4) |
 | `territory_containment.json` | CLDR 49 `supplemental/territoryContainment.json`: the regions in each macroregion | the region clusters of `lang_distance` |
+| `territory_members.json` | CLDR 49 `supplemental/territoryInfo.json`: the share of each territory that speaks each individual language of a macrolanguage | the member lect that a macrolanguage with a region reads in `parent`, `ancestors` and `catalog_ids` |
 | `lineage.json` | the orthography2ipa spec files at one commit | the `lects` argument |
 | `genealogy.json` | the same spec files at one commit: the parent, weighted ancestors, family and clade flag of each tag | `parent`, `ancestors`, `family` and `ancestry_similarity` |
 | `places.json` | the same spec files: the latitude and longitude of each tag | `geographic_distance` |
@@ -30,7 +31,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 
 The figure shows the size of each file and how many records it holds.
 
-![Horizontal bars of the size and record count of the 13 data files. The largest is genealogy.json, 1082 kB and 7,749 records, and genealogy.json and places.json hold 70 percent of the bytes.](figures/data-files.svg)
+![Horizontal bars of the size and record count of the 14 data files. The largest is genealogy.json, 1082 kB and 7,749 records, and genealogy.json and places.json hold 70 percent of the bytes.](figures/data-files.svg)
 
 *Figure: the data files by size. `scripts/docs_figures.py` draws it from the files in `linguatag/data`. `genealogy.json` and `places.json` are the two largest.*
 
@@ -50,6 +51,7 @@ places.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98
 scripts.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
 territory_containment.json | CLDR 49, cldr-json cldr-core/supplemental/territoryContainment.json
+territory_members.json | CLDR 49, cldr-json cldr-core/supplemental/territoryInfo.json
 times.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 ```
 
