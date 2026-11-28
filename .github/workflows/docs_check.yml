@@ -10,4 +10,5 @@ jobs:
     uses: OpenVoiceOS/gh-automations/.github/workflows/docs-check.yml@dev
     with:
       docs_standard: true
+      hf_space: TigreGotico/linguatag
     secrets: inherit

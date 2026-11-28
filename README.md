@@ -10,6 +10,8 @@ see: docs/index.md, docs/getting-started.md, docs/reference.md, AGENTS.md
 
 linguatag reads BCP 47 language tags. It puts a tag in one canonical form and gives a bare tag its default region and its likely script. It also measures how near two tags are. It picks the best tag from a list of available tags. The package carries all its data: CLDR 49, the IANA Language Subtag Registry, and a dialect tree from orthography2ipa in `lineage.json`.
 
+Try it in the browser: [linguatag on Hugging Face](https://huggingface.co/spaces/TigreGotico/linguatag).
+
 ```python
 from linguatag import closest_lang, lang_distance, likely_script, standardize_lang, with_default_region
 
