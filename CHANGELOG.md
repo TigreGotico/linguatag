@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.1a3](https://github.com/TigreGotico/linguatag/tree/0.13.1a3) (2026-11-28)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.1a2...0.13.1a3)
+
+**Merged pull requests:**
+
+- perf: read the compiled alias rules from a generated file [\#193](https://github.com/TigreGotico/linguatag/pull/193) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.13.1a2](https://github.com/TigreGotico/linguatag/tree/0.13.1a2) (2026-11-28)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.1a1...0.13.1a2)
