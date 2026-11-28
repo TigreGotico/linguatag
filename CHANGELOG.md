@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.4a2](https://github.com/TigreGotico/linguatag/tree/0.13.4a2) (2026-11-28)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.4a1...0.13.4a2)
+
+**Merged pull requests:**
+
+- docs: link the Hugging Face Space [\#203](https://github.com/TigreGotico/linguatag/pull/203) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.13.4a1](https://github.com/TigreGotico/linguatag/tree/0.13.4a1) (2026-11-28)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.3a1...0.13.4a1)
