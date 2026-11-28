@@ -22,6 +22,8 @@ field:
   CLDR `supplemental/languageMatching.json`: the paradigm locales, the match
   variables and the `languageMatch` rules, in their order. UTS #35 section
   4.4, "Language Matching", reads them.
+- `territory_members.json`: the share of each CLDR `supplemental/territoryInfo.json`
+  territory that speaks each individual language of a macrolanguage.
 - `territory_containment.json`: the regions that each CLDR
   `supplemental/territoryContainment.json` region contains, without the
   `-status-` entries: the deprecated codes (`SU`, `YU`) and the grouping
@@ -161,13 +163,32 @@ def territory_containment(text: str) -> None:
           f"({len(table) - len(contains)} status entries left out)", file=sys.stderr)
 
 
+def territory_members(text: str) -> None:
+    """The share of each territory that speaks an individual language of a
+    macrolanguage, from CLDR ``territoryInfo``: ``EG`` holds ``arz`` at 64."""
+    supplemental = json.loads(text)["supplemental"]
+    table = supplemental["territoryInfo"]
+    languages = json.loads((DATA / "language_subtags.json").read_text(encoding="utf-8"))["language"]
+    members = {region: {language: float(entry["_populationPercent"])
+                        for language, entry in sorted(info.get("languagePopulation", {}).items())
+                        if "macrolanguage" in languages.get(language, {})}
+               for region, info in sorted(table.items())}
+    members = {region: shares for region, shares in members.items() if shares}
+    write("territory_members.json", {
+        "source": f"CLDR {cldr_version(supplemental)}, cldr-json "
+                  "cldr-core/supplemental/territoryInfo.json",
+        "members": members})
+    print(f"territoryInfo: {len(table)} in, {len(members)} out", file=sys.stderr)
+
+
 def main() -> None:
-    sources = sys.argv[1:] + [None] * (5 - len(sys.argv[1:]))
+    sources = sys.argv[1:] + [None] * (6 - len(sys.argv[1:]))
     likely_subtags(read(sources[0] or CLDR_URL.format(CLDR_JSON, "likelySubtags")))
     aliases(read(sources[1] or CLDR_URL.format(CLDR_JSON, "aliases")))
     subtags(read(sources[2] or IANA_URL))
     language_matching(read(sources[3] or CLDR_URL.format(CLDR_JSON, "languageMatching")))
     territory_containment(read(sources[4] or CLDR_URL.format(CLDR_JSON, "territoryContainment")))
+    territory_members(read(sources[5] or CLDR_URL.format(CLDR_JSON, "territoryInfo")))
 
 
 if __name__ == "__main__":

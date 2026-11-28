@@ -17,7 +17,7 @@ from collections import deque
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
-from linguatag._bcp47 import _raw_data, parse as parse_tag
+from linguatag._bcp47 import _raw_data, _raw_registry, parse as parse_tag
 from linguatag._regions import with_default_region
 from linguatag._standardize import standardize_lang
 
@@ -45,10 +45,31 @@ def _key(tag: str) -> str:
     if parsed.script:
         return _key(tag.replace(f"-{parsed.script}", "", 1))
     if parsed.region and not (parsed.variants or parsed.private or parsed.extensions):
+        member = _majority_member(parsed.language, parsed.region)
+        if member:
+            return _key(f"{member}-{parsed.region}")
         language = _key(parsed.language)
         if language in _nodes():
             return language
     return tag
+
+
+@lru_cache(maxsize=1)
+def _territory_members() -> Dict[str, Dict[str, float]]:
+    return _raw_data("territory_members.json")["members"]
+
+
+@lru_cache(maxsize=None)
+def _majority_member(macrolanguage: str, region: str) -> Optional[str]:
+    """The individual language of ``macrolanguage`` that most of ``region``
+    speaks, when CLDR gives it 50 percent or more: ``ar`` in ``EG`` is
+    ``arz``, ``zh`` in ``HK`` is ``yue``."""
+    shares = _territory_members().get(region, {})
+    record = _raw_registry("language")
+    language, share = max(((code, share) for code, share in shares.items()
+                           if record.get(code, {}).get("macrolanguage") == macrolanguage),
+                          key=lambda item: item[1], default=(None, 0))
+    return language if share >= 50 else None
 
 
 def parent(tag: str) -> Optional[str]:

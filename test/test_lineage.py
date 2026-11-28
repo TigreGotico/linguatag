@@ -288,3 +288,11 @@ def test_one_node_holds_north_mesopotamian_arabic():
 def test_a_first_description_is_marked_as_a_latest_bound(tag):
     sources = json.loads((Path(__file__).parent.parent / "linguatag" / "data" / "times.json").read_text(encoding="utf-8"))["sources"]
     assert "latest bound" in sources[tag]
+
+
+@pytest.mark.parametrize("tag, glottolog", [
+    ("ar-EG", "egyp1253"), ("ar-MA", "moro1292"), ("zh-HK", "cant1236"),
+    ("ar-SA", "stan1318"), ("zh-TW", "mand1415"), ("ar", "stan1318"),
+])
+def test_a_region_reads_the_member_lect_that_most_of_it_speaks(tag, glottolog):
+    assert catalog_ids(tag)["glottolog_code"] == glottolog
