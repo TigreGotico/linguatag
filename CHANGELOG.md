@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.5a1](https://github.com/TigreGotico/linguatag/tree/0.13.5a1) (2026-11-28)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.4a2...0.13.5a1)
+
+**Merged pull requests:**
+
+- fix: Cantonese descends from the Sinitic clade [\#206](https://github.com/TigreGotico/linguatag/pull/206) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.13.4a2](https://github.com/TigreGotico/linguatag/tree/0.13.4a2) (2026-11-28)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.4a1...0.13.4a2)
@@ -387,10 +395,6 @@
 ## [0.6.0a1](https://github.com/TigreGotico/linguatag/tree/0.6.0a1) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.5.1a1...0.6.0a1)
-
-**Merged pull requests:**
-
-- feat: export the tag parser as parse\_tag [\#93](https://github.com/TigreGotico/linguatag/pull/93) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.5.1a1](https://github.com/TigreGotico/linguatag/tree/0.5.1a1) (2026-11-25)
 
