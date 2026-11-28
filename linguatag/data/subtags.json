@@ -1,0 +1,3194 @@
+{
+ "source": "IANA Language Subtag Registry, File-Date: 2026-11-18",
+ "extlang": {
+  "aao": {
+   "preferred": "aao",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "abh": {
+   "preferred": "abh",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "abv": {
+   "preferred": "abv",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "acm": {
+   "preferred": "acm",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "acq": {
+   "preferred": "acq",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "acw": {
+   "preferred": "acw",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "acx": {
+   "preferred": "acx",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "acy": {
+   "preferred": "acy",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "adf": {
+   "preferred": "adf",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ads": {
+   "preferred": "ads",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "aeb": {
+   "preferred": "aeb",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "aec": {
+   "preferred": "aec",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "aed": {
+   "preferred": "aed",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "aen": {
+   "preferred": "aen",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "afb": {
+   "preferred": "afb",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "afg": {
+   "preferred": "afg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ajp": {
+   "deprecated": "2023-03-17",
+   "preferred": "ajp",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ajs": {
+   "preferred": "ajs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "apc": {
+   "preferred": "apc",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "apd": {
+   "preferred": "apd",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "arb": {
+   "preferred": "arb",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "arq": {
+   "preferred": "arq",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ars": {
+   "preferred": "ars",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ary": {
+   "preferred": "ary",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "arz": {
+   "preferred": "arz",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ase": {
+   "preferred": "ase",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "asf": {
+   "preferred": "asf",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "asp": {
+   "preferred": "asp",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "asq": {
+   "preferred": "asq",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "asw": {
+   "preferred": "asw",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "auz": {
+   "preferred": "auz",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "avl": {
+   "preferred": "avl",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ayh": {
+   "preferred": "ayh",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ayl": {
+   "preferred": "ayl",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ayn": {
+   "preferred": "ayn",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ayp": {
+   "preferred": "ayp",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "bbz": {
+   "deprecated": "2020-03-28",
+   "preferred": "bbz",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "bfi": {
+   "preferred": "bfi",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "bfk": {
+   "preferred": "bfk",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "bjn": {
+   "preferred": "bjn",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "bog": {
+   "preferred": "bog",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "bqn": {
+   "preferred": "bqn",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "bqy": {
+   "preferred": "bqy",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "btj": {
+   "preferred": "btj",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "bve": {
+   "preferred": "bve",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "bvl": {
+   "preferred": "bvl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "bvu": {
+   "preferred": "bvu",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "bzs": {
+   "preferred": "bzs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "cdo": {
+   "preferred": "cdo",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "cds": {
+   "preferred": "cds",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "cjy": {
+   "preferred": "cjy",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "cmn": {
+   "preferred": "cmn",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "cnp": {
+   "preferred": "cnp",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "coa": {
+   "preferred": "coa",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "cpx": {
+   "preferred": "cpx",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "csc": {
+   "preferred": "csc",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csd": {
+   "preferred": "csd",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "cse": {
+   "preferred": "cse",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csf": {
+   "preferred": "csf",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csg": {
+   "preferred": "csg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csl": {
+   "preferred": "csl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csn": {
+   "preferred": "csn",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csp": {
+   "preferred": "csp",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "csq": {
+   "preferred": "csq",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csr": {
+   "preferred": "csr",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "csx": {
+   "preferred": "csx",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "czh": {
+   "preferred": "czh",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "czo": {
+   "preferred": "czo",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "doq": {
+   "preferred": "doq",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "dse": {
+   "preferred": "dse",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "dsl": {
+   "preferred": "dsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "dsz": {
+   "preferred": "dsz",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "dup": {
+   "preferred": "dup",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "dyl": {
+   "preferred": "dyl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ecs": {
+   "preferred": "ecs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ehs": {
+   "preferred": "ehs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "esl": {
+   "preferred": "esl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "esn": {
+   "preferred": "esn",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "eso": {
+   "preferred": "eso",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "eth": {
+   "preferred": "eth",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "fcs": {
+   "preferred": "fcs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "fse": {
+   "preferred": "fse",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "fsl": {
+   "preferred": "fsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "fss": {
+   "preferred": "fss",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "gan": {
+   "preferred": "gan",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "gds": {
+   "preferred": "gds",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "gom": {
+   "preferred": "gom",
+   "prefix": [
+    "kok"
+   ],
+   "macrolanguage": "kok"
+  },
+  "gse": {
+   "preferred": "gse",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "gsg": {
+   "preferred": "gsg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "gsm": {
+   "preferred": "gsm",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "gss": {
+   "preferred": "gss",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "gus": {
+   "preferred": "gus",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hab": {
+   "preferred": "hab",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "haf": {
+   "preferred": "haf",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hak": {
+   "preferred": "hak",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "hds": {
+   "preferred": "hds",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hji": {
+   "preferred": "hji",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "hks": {
+   "preferred": "hks",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hnm": {
+   "preferred": "hnm",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "hos": {
+   "preferred": "hos",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hps": {
+   "preferred": "hps",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hsh": {
+   "preferred": "hsh",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hsl": {
+   "preferred": "hsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "hsn": {
+   "preferred": "hsn",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "icl": {
+   "preferred": "icl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "iks": {
+   "preferred": "iks",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ils": {
+   "preferred": "ils",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "inl": {
+   "preferred": "inl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ins": {
+   "preferred": "ins",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ise": {
+   "preferred": "ise",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "isg": {
+   "preferred": "isg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "isr": {
+   "preferred": "isr",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jak": {
+   "preferred": "jak",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "jax": {
+   "preferred": "jax",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "jcs": {
+   "preferred": "jcs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jhs": {
+   "preferred": "jhs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jks": {
+   "preferred": "jks",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jls": {
+   "preferred": "jls",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jos": {
+   "preferred": "jos",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jsl": {
+   "preferred": "jsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "jus": {
+   "preferred": "jus",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "kgi": {
+   "preferred": "kgi",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "knn": {
+   "preferred": "knn",
+   "prefix": [
+    "kok"
+   ],
+   "macrolanguage": "kok"
+  },
+  "kvb": {
+   "preferred": "kvb",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "kvk": {
+   "preferred": "kvk",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "kvr": {
+   "preferred": "kvr",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "kxd": {
+   "preferred": "kxd",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "lbs": {
+   "preferred": "lbs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lce": {
+   "preferred": "lce",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "lcf": {
+   "preferred": "lcf",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "lgs": {
+   "preferred": "lgs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "liw": {
+   "preferred": "liw",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "lls": {
+   "preferred": "lls",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsb": {
+   "preferred": "lsb",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsc": {
+   "preferred": "lsc",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsg": {
+   "deprecated": "2018-03-08",
+   "preferred": "lsg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsl": {
+   "preferred": "lsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsn": {
+   "preferred": "lsn",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lso": {
+   "preferred": "lso",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsp": {
+   "preferred": "lsp",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lst": {
+   "preferred": "lst",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsv": {
+   "preferred": "lsv",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsw": {
+   "preferred": "lsw",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lsy": {
+   "preferred": "lsy",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ltg": {
+   "preferred": "ltg",
+   "prefix": [
+    "lv"
+   ],
+   "macrolanguage": "lv"
+  },
+  "luh": {
+   "preferred": "luh",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "lvs": {
+   "preferred": "lvs",
+   "prefix": [
+    "lv"
+   ],
+   "macrolanguage": "lv"
+  },
+  "lws": {
+   "preferred": "lws",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "lzh": {
+   "preferred": "lzh",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "max": {
+   "preferred": "max",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mdl": {
+   "preferred": "mdl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "meo": {
+   "preferred": "meo",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mfa": {
+   "preferred": "mfa",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mfb": {
+   "preferred": "mfb",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mfs": {
+   "preferred": "mfs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "min": {
+   "preferred": "min",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mnp": {
+   "preferred": "mnp",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "mqg": {
+   "preferred": "mqg",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mre": {
+   "preferred": "mre",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "msd": {
+   "preferred": "msd",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "msi": {
+   "preferred": "msi",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "msr": {
+   "preferred": "msr",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "mui": {
+   "preferred": "mui",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "mzc": {
+   "preferred": "mzc",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "mzg": {
+   "preferred": "mzg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "mzy": {
+   "preferred": "mzy",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "nan": {
+   "preferred": "nan",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "nbs": {
+   "preferred": "nbs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ncs": {
+   "preferred": "ncs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "nsi": {
+   "preferred": "nsi",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "nsl": {
+   "preferred": "nsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "nsp": {
+   "preferred": "nsp",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "nsr": {
+   "preferred": "nsr",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "nzs": {
+   "preferred": "nzs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "okl": {
+   "preferred": "okl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "orn": {
+   "preferred": "orn",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "ors": {
+   "preferred": "ors",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "pel": {
+   "preferred": "pel",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "pga": {
+   "preferred": "pga",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "pgz": {
+   "preferred": "pgz",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "pks": {
+   "preferred": "pks",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "prl": {
+   "preferred": "prl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "prz": {
+   "preferred": "prz",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "psc": {
+   "preferred": "psc",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "psd": {
+   "preferred": "psd",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "pse": {
+   "preferred": "pse",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "psg": {
+   "preferred": "psg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "psl": {
+   "preferred": "psl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "pso": {
+   "preferred": "pso",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "psp": {
+   "preferred": "psp",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "psr": {
+   "preferred": "psr",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "pys": {
+   "preferred": "pys",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rib": {
+   "preferred": "rib",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rms": {
+   "preferred": "rms",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rnb": {
+   "preferred": "rnb",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rsi": {
+   "deprecated": "2017-02-23",
+   "preferred": "rsi",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rsl": {
+   "preferred": "rsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rsm": {
+   "preferred": "rsm",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "rsn": {
+   "preferred": "rsn",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sdl": {
+   "preferred": "sdl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sfb": {
+   "preferred": "sfb",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sfs": {
+   "preferred": "sfs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sgg": {
+   "preferred": "sgg",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sgx": {
+   "preferred": "sgx",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "shu": {
+   "preferred": "shu",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "sjc": {
+   "preferred": "sjc",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "slf": {
+   "preferred": "slf",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sls": {
+   "preferred": "sls",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sqk": {
+   "preferred": "sqk",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sqs": {
+   "preferred": "sqs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "sqx": {
+   "preferred": "sqx",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ssh": {
+   "preferred": "ssh",
+   "prefix": [
+    "ar"
+   ],
+   "macrolanguage": "ar"
+  },
+  "ssp": {
+   "preferred": "ssp",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ssr": {
+   "preferred": "ssr",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "svk": {
+   "preferred": "svk",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "swc": {
+   "preferred": "swc",
+   "prefix": [
+    "sw"
+   ],
+   "macrolanguage": "sw"
+  },
+  "swh": {
+   "preferred": "swh",
+   "prefix": [
+    "sw"
+   ],
+   "macrolanguage": "sw"
+  },
+  "swl": {
+   "preferred": "swl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "syy": {
+   "preferred": "syy",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "szs": {
+   "preferred": "szs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "tmw": {
+   "preferred": "tmw",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "tse": {
+   "preferred": "tse",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "tsm": {
+   "preferred": "tsm",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "tsq": {
+   "preferred": "tsq",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "tss": {
+   "preferred": "tss",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "tsy": {
+   "preferred": "tsy",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "tza": {
+   "preferred": "tza",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ugn": {
+   "preferred": "ugn",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ugy": {
+   "preferred": "ugy",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ukl": {
+   "preferred": "ukl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "uks": {
+   "preferred": "uks",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "urk": {
+   "preferred": "urk",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "uzn": {
+   "preferred": "uzn",
+   "prefix": [
+    "uz"
+   ],
+   "macrolanguage": "uz"
+  },
+  "uzs": {
+   "preferred": "uzs",
+   "prefix": [
+    "uz"
+   ],
+   "macrolanguage": "uz"
+  },
+  "vgt": {
+   "preferred": "vgt",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "vkk": {
+   "preferred": "vkk",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "vkt": {
+   "preferred": "vkt",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "vsi": {
+   "preferred": "vsi",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "vsl": {
+   "preferred": "vsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "vsv": {
+   "preferred": "vsv",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "wbs": {
+   "preferred": "wbs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "wuu": {
+   "preferred": "wuu",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "xki": {
+   "preferred": "xki",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "xml": {
+   "preferred": "xml",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "xmm": {
+   "preferred": "xmm",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "xms": {
+   "preferred": "xms",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "yds": {
+   "deprecated": "2015-02-12",
+   "preferred": "yds",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ygs": {
+   "preferred": "ygs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "yhs": {
+   "preferred": "yhs",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ysl": {
+   "preferred": "ysl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "ysm": {
+   "preferred": "ysm",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "yue": {
+   "preferred": "yue",
+   "prefix": [
+    "zh"
+   ],
+   "macrolanguage": "zh"
+  },
+  "zhk": {
+   "preferred": "zhk",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "zib": {
+   "preferred": "zib",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "zlm": {
+   "preferred": "zlm",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "zmi": {
+   "preferred": "zmi",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  },
+  "zsl": {
+   "preferred": "zsl",
+   "prefix": [
+    "sgn"
+   ]
+  },
+  "zsm": {
+   "preferred": "zsm",
+   "prefix": [
+    "ms"
+   ],
+   "macrolanguage": "ms"
+  }
+ },
+ "script": {
+  "Adlm": {},
+  "Afak": {},
+  "Aghb": {},
+  "Ahom": {},
+  "Arab": {},
+  "Aran": {},
+  "Armi": {},
+  "Armn": {},
+  "Avst": {},
+  "Bali": {},
+  "Bamu": {},
+  "Bass": {},
+  "Batk": {},
+  "Beng": {},
+  "Berf": {},
+  "Bhks": {},
+  "Blis": {},
+  "Bopo": {},
+  "Brah": {},
+  "Brai": {},
+  "Bugi": {},
+  "Buhd": {},
+  "Cakm": {},
+  "Cans": {},
+  "Cari": {},
+  "Cham": {},
+  "Cher": {},
+  "Chis": {},
+  "Chrs": {},
+  "Cirt": {},
+  "Copt": {},
+  "Cpmn": {},
+  "Cprt": {},
+  "Cyrl": {},
+  "Cyrs": {},
+  "Deva": {},
+  "Diak": {},
+  "Dogr": {},
+  "Dsrt": {},
+  "Dupl": {},
+  "Egyd": {},
+  "Egyh": {},
+  "Egyp": {},
+  "Elba": {},
+  "Elym": {},
+  "Ethi": {},
+  "Gara": {},
+  "Geok": {},
+  "Geor": {},
+  "Glag": {},
+  "Gong": {},
+  "Gonm": {},
+  "Goth": {},
+  "Gran": {},
+  "Grek": {},
+  "Gujr": {},
+  "Gukh": {},
+  "Guru": {},
+  "Hanb": {},
+  "Hang": {},
+  "Hani": {},
+  "Hano": {},
+  "Hans": {},
+  "Hant": {},
+  "Hatr": {},
+  "Hebr": {},
+  "Hira": {},
+  "Hluw": {},
+  "Hmng": {},
+  "Hmnp": {},
+  "Hntl": {},
+  "Hrkt": {},
+  "Hung": {},
+  "Inds": {},
+  "Ital": {},
+  "Jamo": {},
+  "Java": {},
+  "Jpan": {},
+  "Jurc": {},
+  "Kali": {},
+  "Kana": {},
+  "Kawi": {},
+  "Khar": {},
+  "Khmr": {},
+  "Khoj": {},
+  "Kitl": {},
+  "Kits": {},
+  "Knda": {},
+  "Kore": {},
+  "Kpel": {},
+  "Krai": {},
+  "Kthi": {},
+  "Lana": {},
+  "Laoo": {},
+  "Latf": {},
+  "Latg": {},
+  "Latn": {},
+  "Leke": {},
+  "Lepc": {},
+  "Limb": {},
+  "Lina": {},
+  "Linb": {},
+  "Lisu": {},
+  "Loma": {},
+  "Lyci": {},
+  "Lydi": {},
+  "Mahj": {},
+  "Maka": {},
+  "Mand": {},
+  "Mani": {},
+  "Marc": {},
+  "Maya": {},
+  "Medf": {},
+  "Mend": {},
+  "Merc": {},
+  "Mero": {},
+  "Mlym": {},
+  "Modi": {},
+  "Mong": {},
+  "Moon": {},
+  "Mroo": {},
+  "Mtei": {},
+  "Mult": {},
+  "Mymr": {},
+  "Nagm": {},
+  "Nand": {},
+  "Narb": {},
+  "Nbat": {},
+  "Newa": {},
+  "Nkdb": {},
+  "Nkgb": {},
+  "Nkoo": {},
+  "Nshu": {},
+  "Ogam": {},
+  "Olck": {},
+  "Onao": {},
+  "Orkh": {},
+  "Orya": {},
+  "Osge": {},
+  "Osma": {},
+  "Ougr": {},
+  "Palm": {},
+  "Pauc": {},
+  "Pcun": {},
+  "Pelm": {},
+  "Perm": {},
+  "Phag": {},
+  "Phli": {},
+  "Phlp": {},
+  "Phlv": {},
+  "Phnx": {},
+  "Piqd": {},
+  "Plrd": {},
+  "Prti": {},
+  "Psin": {},
+  "Qaaa..Qabx": {},
+  "Ranj": {},
+  "Rjng": {},
+  "Rohg": {},
+  "Roro": {},
+  "Runr": {},
+  "Samr": {},
+  "Sara": {},
+  "Sarb": {},
+  "Saur": {},
+  "Seal": {},
+  "Sgnw": {},
+  "Shaw": {},
+  "Shrd": {},
+  "Shui": {},
+  "Sidd": {},
+  "Sidt": {},
+  "Sind": {},
+  "Sinh": {},
+  "Sogd": {},
+  "Sogo": {},
+  "Sora": {},
+  "Soyo": {},
+  "Sund": {},
+  "Sunu": {},
+  "Sylo": {},
+  "Syrc": {},
+  "Syre": {},
+  "Syrj": {},
+  "Syrn": {},
+  "Tagb": {},
+  "Takr": {},
+  "Tale": {},
+  "Talu": {},
+  "Taml": {},
+  "Tang": {},
+  "Tavt": {},
+  "Tayo": {},
+  "Telu": {},
+  "Teng": {},
+  "Tfng": {},
+  "Tglg": {},
+  "Thaa": {},
+  "Thai": {},
+  "Tibt": {},
+  "Tirh": {},
+  "Tnsa": {},
+  "Todr": {},
+  "Tols": {},
+  "Toto": {},
+  "Tutg": {},
+  "Ugar": {},
+  "Vaii": {},
+  "Visp": {},
+  "Vith": {},
+  "Wara": {},
+  "Wcho": {},
+  "Wole": {},
+  "Xpeo": {},
+  "Xsux": {},
+  "Yezi": {},
+  "Yiii": {},
+  "Zanb": {},
+  "Zinh": {},
+  "Zmth": {},
+  "Zsye": {},
+  "Zsym": {},
+  "Zxxx": {},
+  "Zyyy": {},
+  "Zzzz": {}
+ },
+ "region": {
+  "001": {},
+  "002": {},
+  "003": {},
+  "005": {},
+  "009": {},
+  "011": {},
+  "013": {},
+  "014": {},
+  "015": {},
+  "017": {},
+  "018": {},
+  "019": {},
+  "021": {},
+  "029": {},
+  "030": {},
+  "034": {},
+  "035": {},
+  "039": {},
+  "053": {},
+  "054": {},
+  "057": {},
+  "061": {},
+  "142": {},
+  "143": {},
+  "145": {},
+  "150": {},
+  "151": {},
+  "154": {},
+  "155": {},
+  "202": {},
+  "419": {},
+  "AA": {},
+  "AC": {},
+  "AD": {},
+  "AE": {},
+  "AF": {},
+  "AG": {},
+  "AI": {},
+  "AL": {},
+  "AM": {},
+  "AN": {
+   "deprecated": "2011-01-07"
+  },
+  "AO": {},
+  "AQ": {},
+  "AR": {},
+  "AS": {},
+  "AT": {},
+  "AU": {},
+  "AW": {},
+  "AX": {},
+  "AZ": {},
+  "BA": {},
+  "BB": {},
+  "BD": {},
+  "BE": {},
+  "BF": {},
+  "BG": {},
+  "BH": {},
+  "BI": {},
+  "BJ": {},
+  "BL": {},
+  "BM": {},
+  "BN": {},
+  "BO": {},
+  "BQ": {},
+  "BR": {},
+  "BS": {},
+  "BT": {},
+  "BU": {
+   "deprecated": "1989-12-05",
+   "preferred": "MM"
+  },
+  "BV": {},
+  "BW": {},
+  "BY": {},
+  "BZ": {},
+  "CA": {},
+  "CC": {},
+  "CD": {},
+  "CF": {},
+  "CG": {},
+  "CH": {},
+  "CI": {},
+  "CK": {},
+  "CL": {},
+  "CM": {},
+  "CN": {},
+  "CO": {},
+  "CP": {},
+  "CQ": {},
+  "CR": {},
+  "CS": {
+   "deprecated": "2006-10-05"
+  },
+  "CU": {},
+  "CV": {},
+  "CW": {},
+  "CX": {},
+  "CY": {},
+  "CZ": {},
+  "DD": {
+   "deprecated": "1990-10-30",
+   "preferred": "DE"
+  },
+  "DE": {},
+  "DG": {},
+  "DJ": {},
+  "DK": {},
+  "DM": {},
+  "DO": {},
+  "DZ": {},
+  "EA": {},
+  "EC": {},
+  "EE": {},
+  "EG": {},
+  "EH": {},
+  "ER": {},
+  "ES": {},
+  "ET": {},
+  "EU": {},
+  "EZ": {},
+  "FI": {},
+  "FJ": {},
+  "FK": {},
+  "FM": {},
+  "FO": {},
+  "FR": {},
+  "FX": {
+   "deprecated": "1997-07-14",
+   "preferred": "FR"
+  },
+  "GA": {},
+  "GB": {},
+  "GD": {},
+  "GE": {},
+  "GF": {},
+  "GG": {},
+  "GH": {},
+  "GI": {},
+  "GL": {},
+  "GM": {},
+  "GN": {},
+  "GP": {},
+  "GQ": {},
+  "GR": {},
+  "GS": {},
+  "GT": {},
+  "GU": {},
+  "GW": {},
+  "GY": {},
+  "HK": {},
+  "HM": {},
+  "HN": {},
+  "HR": {},
+  "HT": {},
+  "HU": {},
+  "IC": {},
+  "ID": {},
+  "IE": {},
+  "IL": {},
+  "IM": {},
+  "IN": {},
+  "IO": {},
+  "IQ": {},
+  "IR": {},
+  "IS": {},
+  "IT": {},
+  "JE": {},
+  "JM": {},
+  "JO": {},
+  "JP": {},
+  "KE": {},
+  "KG": {},
+  "KH": {},
+  "KI": {},
+  "KM": {},
+  "KN": {},
+  "KP": {},
+  "KR": {},
+  "KW": {},
+  "KY": {},
+  "KZ": {},
+  "LA": {},
+  "LB": {},
+  "LC": {},
+  "LI": {},
+  "LK": {},
+  "LR": {},
+  "LS": {},
+  "LT": {},
+  "LU": {},
+  "LV": {},
+  "LY": {},
+  "MA": {},
+  "MC": {},
+  "MD": {},
+  "ME": {},
+  "MF": {},
+  "MG": {},
+  "MH": {},
+  "MK": {},
+  "ML": {},
+  "MM": {},
+  "MN": {},
+  "MO": {},
+  "MP": {},
+  "MQ": {},
+  "MR": {},
+  "MS": {},
+  "MT": {},
+  "MU": {},
+  "MV": {},
+  "MW": {},
+  "MX": {},
+  "MY": {},
+  "MZ": {},
+  "NA": {},
+  "NC": {},
+  "NE": {},
+  "NF": {},
+  "NG": {},
+  "NI": {},
+  "NL": {},
+  "NO": {},
+  "NP": {},
+  "NR": {},
+  "NT": {
+   "deprecated": "1993-07-12"
+  },
+  "NU": {},
+  "NZ": {},
+  "OM": {},
+  "PA": {},
+  "PE": {},
+  "PF": {},
+  "PG": {},
+  "PH": {},
+  "PK": {},
+  "PL": {},
+  "PM": {},
+  "PN": {},
+  "PR": {},
+  "PS": {},
+  "PT": {},
+  "PW": {},
+  "PY": {},
+  "QA": {},
+  "QM..QZ": {},
+  "RE": {},
+  "RO": {},
+  "RS": {},
+  "RU": {},
+  "RW": {},
+  "SA": {},
+  "SB": {},
+  "SC": {},
+  "SD": {},
+  "SE": {},
+  "SG": {},
+  "SH": {},
+  "SI": {},
+  "SJ": {},
+  "SK": {},
+  "SL": {},
+  "SM": {},
+  "SN": {},
+  "SO": {},
+  "SR": {},
+  "SS": {},
+  "ST": {},
+  "SU": {
+   "deprecated": "1992-08-30"
+  },
+  "SV": {},
+  "SX": {},
+  "SY": {},
+  "SZ": {},
+  "TA": {},
+  "TC": {},
+  "TD": {},
+  "TF": {},
+  "TG": {},
+  "TH": {},
+  "TJ": {},
+  "TK": {},
+  "TL": {},
+  "TM": {},
+  "TN": {},
+  "TO": {},
+  "TP": {
+   "deprecated": "2002-05-20",
+   "preferred": "TL"
+  },
+  "TR": {},
+  "TT": {},
+  "TV": {},
+  "TW": {},
+  "TZ": {},
+  "UA": {},
+  "UG": {},
+  "UM": {},
+  "UN": {},
+  "US": {},
+  "UY": {},
+  "UZ": {},
+  "VA": {},
+  "VC": {},
+  "VE": {},
+  "VG": {},
+  "VI": {},
+  "VN": {},
+  "VU": {},
+  "WF": {},
+  "WS": {},
+  "XA..XZ": {},
+  "YD": {
+   "deprecated": "1990-08-14",
+   "preferred": "YE"
+  },
+  "YE": {},
+  "YT": {},
+  "YU": {
+   "deprecated": "2003-07-23"
+  },
+  "ZA": {},
+  "ZM": {},
+  "ZR": {
+   "deprecated": "1997-07-14",
+   "preferred": "CD"
+  },
+  "ZW": {},
+  "ZZ": {}
+ },
+ "variant": {
+  "1606nict": {
+   "prefix": [
+    "frm"
+   ]
+  },
+  "1694acad": {
+   "prefix": [
+    "fr"
+   ]
+  },
+  "1901": {
+   "prefix": [
+    "de"
+   ]
+  },
+  "1959acad": {
+   "prefix": [
+    "be"
+   ]
+  },
+  "1994": {
+   "prefix": [
+    "sl-rozaj",
+    "sl-rozaj-biske",
+    "sl-rozaj-njiva",
+    "sl-rozaj-osojs",
+    "sl-rozaj-solba"
+   ]
+  },
+  "1995": {
+   "prefix": [
+    "uz",
+    "uz-Latn"
+   ]
+  },
+  "1996": {
+   "prefix": [
+    "de"
+   ]
+  },
+  "2026": {
+   "prefix": [
+    "uz",
+    "uz-Latn"
+   ]
+  },
+  "abl1943": {
+   "prefix": [
+    "pt-BR"
+   ]
+  },
+  "akhmimic": {
+   "prefix": [
+    "cop"
+   ]
+  },
+  "akuapem": {
+   "prefix": [
+    "tw"
+   ]
+  },
+  "alalc97": {},
+  "aluku": {
+   "prefix": [
+    "djk"
+   ]
+  },
+  "anpezo": {
+   "prefix": [
+    "lld"
+   ]
+  },
+  "ao1990": {
+   "prefix": [
+    "pt",
+    "gl"
+   ]
+  },
+  "aranes": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "arevela": {
+   "deprecated": "2018-03-24",
+   "prefix": [
+    "hy"
+   ]
+  },
+  "arevmda": {
+   "deprecated": "2018-03-24",
+   "prefix": [
+    "hy"
+   ]
+  },
+  "arkaika": {
+   "prefix": [
+    "eo"
+   ]
+  },
+  "asante": {
+   "prefix": [
+    "tw"
+   ]
+  },
+  "auvern": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "baku1926": {
+   "prefix": [
+    "az",
+    "ba",
+    "crh",
+    "kk",
+    "krc",
+    "ky",
+    "sah",
+    "tk",
+    "tt",
+    "uz"
+   ]
+  },
+  "balanka": {
+   "prefix": [
+    "blo"
+   ]
+  },
+  "barla": {
+   "prefix": [
+    "kea"
+   ]
+  },
+  "basiceng": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "bauddha": {
+   "prefix": [
+    "sa"
+   ]
+  },
+  "bciav": {
+   "prefix": [
+    "zbl"
+   ]
+  },
+  "bcizbl": {
+   "prefix": [
+    "zbl"
+   ]
+  },
+  "biscayan": {
+   "prefix": [
+    "eu"
+   ]
+  },
+  "biske": {
+   "prefix": [
+    "sl-rozaj"
+   ]
+  },
+  "blasl": {
+   "prefix": [
+    "ase",
+    "sgn-ase"
+   ]
+  },
+  "bohairic": {
+   "prefix": [
+    "cop"
+   ]
+  },
+  "bohoric": {
+   "prefix": [
+    "sl"
+   ]
+  },
+  "boont": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "bornholm": {
+   "prefix": [
+    "da"
+   ]
+  },
+  "cisaup": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "colb1945": {
+   "prefix": [
+    "pt"
+   ]
+  },
+  "cornu": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "creiss": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "dajnko": {
+   "prefix": [
+    "sl"
+   ]
+  },
+  "ekavsk": {
+   "prefix": [
+    "sr",
+    "sr-Latn",
+    "sr-Cyrl"
+   ]
+  },
+  "emodeng": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "fascia": {
+   "prefix": [
+    "lld"
+   ]
+  },
+  "fayyumic": {
+   "prefix": [
+    "cop"
+   ]
+  },
+  "fodom": {
+   "prefix": [
+    "lld"
+   ]
+  },
+  "fonipa": {},
+  "fonkirsh": {},
+  "fonnapa": {},
+  "fonupa": {},
+  "fonxsamp": {},
+  "gallo": {
+   "prefix": [
+    "fr"
+   ]
+  },
+  "gascon": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "gherd": {
+   "prefix": [
+    "lld"
+   ]
+  },
+  "grclass": {
+   "prefix": [
+    "oc",
+    "oc-aranes",
+    "oc-auvern",
+    "oc-cisaup",
+    "oc-creiss",
+    "oc-gascon",
+    "oc-lemosin",
+    "oc-lengadoc",
+    "oc-nicard",
+    "oc-provenc",
+    "oc-vivaraup"
+   ]
+  },
+  "grital": {
+   "prefix": [
+    "oc",
+    "oc-cisaup",
+    "oc-nicard",
+    "oc-provenc"
+   ]
+  },
+  "grmistr": {
+   "prefix": [
+    "oc",
+    "oc-aranes",
+    "oc-auvern",
+    "oc-cisaup",
+    "oc-creiss",
+    "oc-gascon",
+    "oc-lemosin",
+    "oc-lengadoc",
+    "oc-nicard",
+    "oc-provenc",
+    "oc-vivaraup"
+   ]
+  },
+  "hanoi": {
+   "prefix": [
+    "vi"
+   ]
+  },
+  "hepburn": {
+   "prefix": [
+    "ja-Latn"
+   ]
+  },
+  "heploc": {
+   "deprecated": "2010-02-07",
+   "preferred": "alalc97",
+   "prefix": [
+    "ja-Latn-hepburn"
+   ]
+  },
+  "hognorsk": {
+   "prefix": [
+    "nn"
+   ]
+  },
+  "hsistemo": {
+   "prefix": [
+    "eo"
+   ]
+  },
+  "huett": {
+   "prefix": [
+    "vi"
+   ]
+  },
+  "ijekavsk": {
+   "prefix": [
+    "sr",
+    "sr-Latn",
+    "sr-Cyrl"
+   ]
+  },
+  "itihasa": {
+   "prefix": [
+    "sa"
+   ]
+  },
+  "ivanchov": {
+   "prefix": [
+    "bg"
+   ]
+  },
+  "jauer": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "jyutping": {
+   "prefix": [
+    "yue"
+   ]
+  },
+  "kkcor": {
+   "prefix": [
+    "kw"
+   ]
+  },
+  "kleinsch": {
+   "prefix": [
+    "kl",
+    "kl-tunumiit"
+   ]
+  },
+  "kociewie": {
+   "prefix": [
+    "pl"
+   ]
+  },
+  "kscor": {
+   "prefix": [
+    "kw"
+   ]
+  },
+  "laukika": {
+   "deprecated": "2024-06-08",
+   "prefix": [
+    "sa"
+   ]
+  },
+  "leidentr": {
+   "prefix": [
+    "egy"
+   ]
+  },
+  "lemosin": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "lengadoc": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "lipaw": {
+   "prefix": [
+    "sl-rozaj"
+   ]
+  },
+  "ltg1929": {
+   "prefix": [
+    "ltg"
+   ]
+  },
+  "ltg2007": {
+   "prefix": [
+    "ltg"
+   ]
+  },
+  "luna1918": {
+   "prefix": [
+    "ru"
+   ]
+  },
+  "lycopol": {
+   "prefix": [
+    "cop"
+   ]
+  },
+  "mdcegyp": {
+   "prefix": [
+    "egy"
+   ]
+  },
+  "mdctrans": {
+   "prefix": [
+    "egy"
+   ]
+  },
+  "mesokem": {
+   "prefix": [
+    "cop"
+   ]
+  },
+  "metelko": {
+   "prefix": [
+    "sl"
+   ]
+  },
+  "moderat": {
+   "prefix": [
+    "nb"
+   ]
+  },
+  "monoton": {
+   "prefix": [
+    "el"
+   ]
+  },
+  "ndyuka": {
+   "prefix": [
+    "djk"
+   ]
+  },
+  "nedis": {
+   "prefix": [
+    "sl"
+   ]
+  },
+  "newfound": {
+   "prefix": [
+    "en-CA"
+   ]
+  },
+  "nicard": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "njiva": {
+   "prefix": [
+    "sl-rozaj"
+   ]
+  },
+  "nulik": {
+   "prefix": [
+    "vo"
+   ]
+  },
+  "osojs": {
+   "prefix": [
+    "sl-rozaj"
+   ]
+  },
+  "oxendict": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "pahawh2": {
+   "prefix": [
+    "mww",
+    "hnj"
+   ]
+  },
+  "pahawh3": {
+   "prefix": [
+    "mww",
+    "hnj"
+   ]
+  },
+  "pahawh4": {
+   "prefix": [
+    "mww",
+    "hnj"
+   ]
+  },
+  "pamaka": {
+   "prefix": [
+    "djk"
+   ]
+  },
+  "peano": {
+   "prefix": [
+    "la"
+   ]
+  },
+  "pehoeji": {
+   "prefix": [
+    "nan-Latn"
+   ]
+  },
+  "petr1708": {
+   "prefix": [
+    "ru"
+   ]
+  },
+  "pinyin": {
+   "prefix": [
+    "zh-Latn",
+    "bo-Latn"
+   ]
+  },
+  "polyton": {
+   "prefix": [
+    "el"
+   ]
+  },
+  "provenc": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "puter": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "radikalt": {
+   "prefix": [
+    "nb"
+   ]
+  },
+  "rigik": {
+   "prefix": [
+    "vo"
+   ]
+  },
+  "rozaj": {
+   "prefix": [
+    "sl"
+   ]
+  },
+  "rumgr": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "sahidic": {
+   "prefix": [
+    "cop"
+   ]
+  },
+  "saigon": {
+   "prefix": [
+    "vi"
+   ]
+  },
+  "scotland": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "scouse": {
+   "prefix": [
+    "en"
+   ]
+  },
+  "simple": {},
+  "slepe": {
+   "prefix": [
+    "dsb"
+   ]
+  },
+  "solba": {
+   "prefix": [
+    "sl-rozaj"
+   ]
+  },
+  "sotav": {
+   "prefix": [
+    "kea"
+   ]
+  },
+  "spanglis": {
+   "prefix": [
+    "en",
+    "es"
+   ]
+  },
+  "stadi": {
+   "prefix": [
+    "fi"
+   ]
+  },
+  "surmiran": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "sursilv": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "sutsilv": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "synnejyl": {
+   "prefix": [
+    "da"
+   ]
+  },
+  "taglish": {
+   "prefix": [
+    "en",
+    "tl",
+    "fil"
+   ]
+  },
+  "tailo": {
+   "prefix": [
+    "nan-Latn"
+   ]
+  },
+  "tarask": {
+   "prefix": [
+    "be"
+   ]
+  },
+  "tongyong": {
+   "prefix": [
+    "zh-Latn"
+   ]
+  },
+  "tunumiit": {
+   "prefix": [
+    "kl"
+   ]
+  },
+  "uccor": {
+   "prefix": [
+    "kw"
+   ]
+  },
+  "ucrcor": {
+   "prefix": [
+    "kw"
+   ]
+  },
+  "ulster": {
+   "prefix": [
+    "sco"
+   ]
+  },
+  "unifon": {
+   "prefix": [
+    "en",
+    "hup",
+    "kyh",
+    "tol",
+    "yur"
+   ]
+  },
+  "vaidika": {
+   "deprecated": "2024-06-08",
+   "prefix": [
+    "sa"
+   ]
+  },
+  "valbadia": {
+   "prefix": [
+    "lld"
+   ]
+  },
+  "valencia": {
+   "prefix": [
+    "ca"
+   ]
+  },
+  "vallader": {
+   "prefix": [
+    "rm"
+   ]
+  },
+  "vecdruka": {
+   "prefix": [
+    "lv"
+   ]
+  },
+  "viennese": {
+   "prefix": [
+    "de"
+   ]
+  },
+  "vivaraup": {
+   "prefix": [
+    "oc"
+   ]
+  },
+  "wadegile": {
+   "prefix": [
+    "zh-Latn"
+   ]
+  },
+  "xsistemo": {
+   "prefix": [
+    "eo"
+   ]
+  }
+ },
+ "grandfathered": {
+  "art-lojban": {
+   "deprecated": "2003-09-02",
+   "preferred": "jbo"
+  },
+  "cel-gaulish": {
+   "deprecated": "2015-03-29"
+  },
+  "en-GB-oed": {
+   "deprecated": "2015-04-17",
+   "preferred": "en-GB-oxendict"
+  },
+  "i-ami": {
+   "deprecated": "2009-07-29",
+   "preferred": "ami"
+  },
+  "i-bnn": {
+   "deprecated": "2009-07-29",
+   "preferred": "bnn"
+  },
+  "i-default": {},
+  "i-enochian": {
+   "deprecated": "2015-03-29"
+  },
+  "i-hak": {
+   "deprecated": "2000-01-10",
+   "preferred": "hak"
+  },
+  "i-klingon": {
+   "deprecated": "2004-02-24",
+   "preferred": "tlh"
+  },
+  "i-lux": {
+   "deprecated": "1998-09-09",
+   "preferred": "lb"
+  },
+  "i-mingo": {},
+  "i-navajo": {
+   "deprecated": "2000-02-18",
+   "preferred": "nv"
+  },
+  "i-pwn": {
+   "deprecated": "2009-07-29",
+   "preferred": "pwn"
+  },
+  "i-tao": {
+   "deprecated": "2009-07-29",
+   "preferred": "tao"
+  },
+  "i-tay": {
+   "deprecated": "2009-07-29",
+   "preferred": "tay"
+  },
+  "i-tsu": {
+   "deprecated": "2009-07-29",
+   "preferred": "tsu"
+  },
+  "no-bok": {
+   "deprecated": "2000-02-18",
+   "preferred": "nb"
+  },
+  "no-nyn": {
+   "deprecated": "2000-02-18",
+   "preferred": "nn"
+  },
+  "sgn-BE-FR": {
+   "deprecated": "2009-07-29",
+   "preferred": "sfb"
+  },
+  "sgn-BE-NL": {
+   "deprecated": "2009-07-29",
+   "preferred": "vgt"
+  },
+  "sgn-CH-DE": {
+   "deprecated": "2009-07-29",
+   "preferred": "sgg"
+  },
+  "zh-guoyu": {
+   "deprecated": "2005-07-15",
+   "preferred": "cmn"
+  },
+  "zh-hakka": {
+   "deprecated": "2009-07-29",
+   "preferred": "hak"
+  },
+  "zh-min": {
+   "deprecated": "2009-07-29"
+  },
+  "zh-min-nan": {
+   "deprecated": "2009-07-29",
+   "preferred": "nan"
+  },
+  "zh-xiang": {
+   "deprecated": "2009-07-29",
+   "preferred": "hsn"
+  }
+ },
+ "redundant": {
+  "az-Arab": {},
+  "az-Cyrl": {},
+  "az-Latn": {},
+  "be-Latn": {},
+  "bs-Cyrl": {},
+  "bs-Latn": {},
+  "de-1901": {},
+  "de-1996": {},
+  "de-AT-1901": {},
+  "de-AT-1996": {},
+  "de-CH-1901": {},
+  "de-CH-1996": {},
+  "de-DE-1901": {},
+  "de-DE-1996": {},
+  "en-boont": {},
+  "en-scouse": {},
+  "es-419": {},
+  "iu-Cans": {},
+  "iu-Latn": {},
+  "mn-Cyrl": {},
+  "mn-Mong": {},
+  "sgn-BR": {
+   "deprecated": "2009-07-29",
+   "preferred": "bzs"
+  },
+  "sgn-CO": {
+   "deprecated": "2009-07-29",
+   "preferred": "csn"
+  },
+  "sgn-DE": {
+   "deprecated": "2009-07-29",
+   "preferred": "gsg"
+  },
+  "sgn-DK": {
+   "deprecated": "2009-07-29",
+   "preferred": "dsl"
+  },
+  "sgn-ES": {
+   "deprecated": "2009-07-29",
+   "preferred": "ssp"
+  },
+  "sgn-FR": {
+   "deprecated": "2009-07-29",
+   "preferred": "fsl"
+  },
+  "sgn-GB": {
+   "deprecated": "2009-07-29",
+   "preferred": "bfi"
+  },
+  "sgn-GR": {
+   "deprecated": "2009-07-29",
+   "preferred": "gss"
+  },
+  "sgn-IE": {
+   "deprecated": "2009-07-29",
+   "preferred": "isg"
+  },
+  "sgn-IT": {
+   "deprecated": "2009-07-29",
+   "preferred": "ise"
+  },
+  "sgn-JP": {
+   "deprecated": "2009-07-29",
+   "preferred": "jsl"
+  },
+  "sgn-MX": {
+   "deprecated": "2009-07-29",
+   "preferred": "mfs"
+  },
+  "sgn-NI": {
+   "deprecated": "2009-07-29",
+   "preferred": "ncs"
+  },
+  "sgn-NL": {
+   "deprecated": "2009-07-29",
+   "preferred": "dse"
+  },
+  "sgn-NO": {
+   "deprecated": "2009-07-29",
+   "preferred": "nsl"
+  },
+  "sgn-PT": {
+   "deprecated": "2009-07-29",
+   "preferred": "psr"
+  },
+  "sgn-SE": {
+   "deprecated": "2009-07-29",
+   "preferred": "swl"
+  },
+  "sgn-US": {
+   "deprecated": "2009-07-29",
+   "preferred": "ase"
+  },
+  "sgn-ZA": {
+   "deprecated": "2009-07-29",
+   "preferred": "sfs"
+  },
+  "sl-nedis": {},
+  "sl-rozaj": {},
+  "sr-Cyrl": {},
+  "sr-Latn": {},
+  "tg-Arab": {},
+  "tg-Cyrl": {},
+  "uz-Cyrl": {},
+  "uz-Latn": {},
+  "yi-Latn": {},
+  "zh-Hans": {},
+  "zh-Hans-CN": {},
+  "zh-Hans-HK": {},
+  "zh-Hans-MO": {},
+  "zh-Hans-SG": {},
+  "zh-Hans-TW": {},
+  "zh-Hant": {},
+  "zh-Hant-CN": {},
+  "zh-Hant-HK": {},
+  "zh-Hant-MO": {},
+  "zh-Hant-SG": {},
+  "zh-Hant-TW": {},
+  "zh-cmn": {
+   "deprecated": "2009-07-29",
+   "preferred": "cmn"
+  },
+  "zh-cmn-Hans": {
+   "deprecated": "2009-07-29",
+   "preferred": "cmn-Hans"
+  },
+  "zh-cmn-Hant": {
+   "deprecated": "2009-07-29",
+   "preferred": "cmn-Hant"
+  },
+  "zh-gan": {
+   "deprecated": "2009-07-29",
+   "preferred": "gan"
+  },
+  "zh-wuu": {
+   "deprecated": "2009-07-29",
+   "preferred": "wuu"
+  },
+  "zh-yue": {
+   "deprecated": "2009-07-29",
+   "preferred": "yue"
+  }
+ }
+}

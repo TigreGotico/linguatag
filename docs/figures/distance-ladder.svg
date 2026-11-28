@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" width="720" height="420" role="img" aria-labelledby="t d">
+<title id="t">lang_distance of 13 tag pairs</title>
+<desc id="d">The distance of 13 tag pairs, with the default limit of 10: pt to pt-PT 0, nb to no 1, en-AU to en-GB 3, en-CA to en-US 4, arz to ar 5, pt to pt-BR 5, gsw to de 8, yue-HK to zh-HK 10, zh-Hans to zh-Hant 54, de to gsw 84, en to fr 84, und to en 100, yue to cmn 100.</desc>
+<rect x="16" y="14" width="16" height="16" fill="#4C8DD6"/>
+<text x="40" y="28" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">usable match</text>
+<rect x="170" y="14" width="16" height="16" fill="#E0883A"/>
+<text x="194" y="28" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">not a usable match</text>
+<line x1="200" y1="44" x2="200" y2="394" stroke="#80808055"/>
+<text x="200" y="414" text-anchor="middle" fill="#808080" font-family="sans-serif" font-size="15">0</text>
+<line x1="284" y1="44" x2="284" y2="394" stroke="#80808055"/>
+<text x="284" y="414" text-anchor="middle" fill="#808080" font-family="sans-serif" font-size="15">20</text>
+<line x1="368" y1="44" x2="368" y2="394" stroke="#80808055"/>
+<text x="368" y="414" text-anchor="middle" fill="#808080" font-family="sans-serif" font-size="15">40</text>
+<line x1="452" y1="44" x2="452" y2="394" stroke="#80808055"/>
+<text x="452" y="414" text-anchor="middle" fill="#808080" font-family="sans-serif" font-size="15">60</text>
+<line x1="536" y1="44" x2="536" y2="394" stroke="#80808055"/>
+<text x="536" y="414" text-anchor="middle" fill="#808080" font-family="sans-serif" font-size="15">80</text>
+<line x1="620" y1="44" x2="620" y2="394" stroke="#80808055"/>
+<text x="620" y="414" text-anchor="middle" fill="#808080" font-family="sans-serif" font-size="15">100</text>
+<line x1="242" y1="44" x2="242" y2="394" stroke="#808080" stroke-dasharray="5 4"/>
+<text x="190" y="69" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">pt to pt-PT</text>
+<rect x="200" y="52" width="2.0" height="20" fill="#4C8DD6"/>
+<text x="208.0" y="69" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">0</text>
+<text x="190" y="95" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">nb to no</text>
+<rect x="200" y="78" width="4.2" height="20" fill="#4C8DD6"/>
+<text x="212.2" y="95" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">1</text>
+<text x="190" y="121" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">en-AU to en-GB</text>
+<rect x="200" y="104" width="12.6" height="20" fill="#4C8DD6"/>
+<text x="220.6" y="121" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">3</text>
+<text x="190" y="147" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">en-CA to en-US</text>
+<rect x="200" y="130" width="16.8" height="20" fill="#4C8DD6"/>
+<text x="224.8" y="147" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">4</text>
+<text x="190" y="173" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">arz to ar</text>
+<rect x="200" y="156" width="21.0" height="20" fill="#4C8DD6"/>
+<text x="229.0" y="173" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">5</text>
+<text x="190" y="199" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">pt to pt-BR</text>
+<rect x="200" y="182" width="21.0" height="20" fill="#4C8DD6"/>
+<text x="229.0" y="199" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">5</text>
+<text x="190" y="225" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">gsw to de</text>
+<rect x="200" y="208" width="33.6" height="20" fill="#4C8DD6"/>
+<text x="241.6" y="225" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">8</text>
+<text x="190" y="251" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">yue-HK to zh-HK</text>
+<rect x="200" y="234" width="42.0" height="20" fill="#4C8DD6"/>
+<text x="250.0" y="251" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">10</text>
+<text x="190" y="277" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">zh-Hans to zh-Hant</text>
+<rect x="200" y="260" width="226.8" height="20" fill="#E0883A"/>
+<text x="434.8" y="277" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">54</text>
+<text x="190" y="303" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">de to gsw</text>
+<rect x="200" y="286" width="352.8" height="20" fill="#E0883A"/>
+<text x="560.8" y="303" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">84</text>
+<text x="190" y="329" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">en to fr</text>
+<rect x="200" y="312" width="352.8" height="20" fill="#E0883A"/>
+<text x="560.8" y="329" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">84</text>
+<text x="190" y="355" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">und to en</text>
+<rect x="200" y="338" width="420.0" height="20" fill="#E0883A"/>
+<text x="628.0" y="355" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">100</text>
+<text x="190" y="381" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">yue to cmn</text>
+<rect x="200" y="364" width="420.0" height="20" fill="#E0883A"/>
+<text x="628.0" y="381" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">100</text>
+</svg>

@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 452" width="720" height="452" role="img" aria-labelledby="t d">
+<title id="t">The data files of linguatag</title>
+<desc id="d">Size and record count of the 14 data files: genealogy.json 1082 kB and 7,750 records, places.json 196 kB and 7,256 records, likely_subtags.json 191 kB and 7,868 records, language_subtags.json 140 kB and 8,276 records, alias_rules.json 63 kB and 4 records, aliases.json 47 kB and 1,145 records, subtags.json 40 kB and 1,022 records, times.json 19 kB and 635 records, lects.json 19 kB and 189 records, language_matching.json 17 kB and 391 records, lineage.json 8 kB and 268 records, territory_containment.json 5 kB and 35 records, scripts.json 5 kB and 49 records, territory_members.json 3 kB and 59 records.</desc>
+<text x="200" y="37" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">genealogy.json</text>
+<rect x="210" y="20" width="1947.7" height="22" fill="#4C8DD6"/>
+<text x="2165.7" y="37" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">1082 kB, 7,750 records</text>
+<text x="200" y="67" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">places.json</text>
+<rect x="210" y="50" width="352.7" height="22" fill="#4C8DD6"/>
+<text x="570.7" y="67" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">196 kB, 7,256 records</text>
+<text x="200" y="97" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">likely_subtags.json</text>
+<rect x="210" y="80" width="343.5" height="22" fill="#4C8DD6"/>
+<text x="561.5" y="97" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">191 kB, 7,868 records</text>
+<text x="200" y="127" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">language_subtags.json</text>
+<rect x="210" y="110" width="252.3" height="22" fill="#4C8DD6"/>
+<text x="470.3" y="127" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">140 kB, 8,276 records</text>
+<text x="200" y="157" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">alias_rules.json</text>
+<rect x="210" y="140" width="113.1" height="22" fill="#4C8DD6"/>
+<text x="331.1" y="157" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">63 kB, 4 records</text>
+<text x="200" y="187" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">aliases.json</text>
+<rect x="210" y="170" width="83.9" height="22" fill="#4C8DD6"/>
+<text x="301.9" y="187" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">47 kB, 1,145 records</text>
+<text x="200" y="217" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">subtags.json</text>
+<rect x="210" y="200" width="71.8" height="22" fill="#4C8DD6"/>
+<text x="289.8" y="217" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">40 kB, 1,022 records</text>
+<text x="200" y="247" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">times.json</text>
+<rect x="210" y="230" width="34.2" height="22" fill="#4C8DD6"/>
+<text x="252.2" y="247" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">19 kB, 635 records</text>
+<text x="200" y="277" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">lects.json</text>
+<rect x="210" y="260" width="34.2" height="22" fill="#4C8DD6"/>
+<text x="252.2" y="277" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">19 kB, 189 records</text>
+<text x="200" y="307" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">language_matching.json</text>
+<rect x="210" y="290" width="31.2" height="22" fill="#4C8DD6"/>
+<text x="249.2" y="307" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">17 kB, 391 records</text>
+<text x="200" y="337" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">lineage.json</text>
+<rect x="210" y="320" width="13.6" height="22" fill="#4C8DD6"/>
+<text x="231.6" y="337" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">8 kB, 268 records</text>
+<text x="200" y="367" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">territory_containment.json</text>
+<rect x="210" y="350" width="9.9" height="22" fill="#4C8DD6"/>
+<text x="227.9" y="367" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">5 kB, 35 records</text>
+<text x="200" y="397" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">scripts.json</text>
+<rect x="210" y="380" width="8.2" height="22" fill="#4C8DD6"/>
+<text x="226.2" y="397" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">5 kB, 49 records</text>
+<text x="200" y="427" text-anchor="end" fill="#808080" font-family="sans-serif" font-size="15">territory_members.json</text>
+<rect x="210" y="410" width="4.9" height="22" fill="#4C8DD6"/>
+<text x="222.9" y="427" text-anchor="start" fill="#808080" font-family="sans-serif" font-size="15">3 kB, 59 records</text>
+</svg>
