@@ -9,7 +9,7 @@ from linguatag._lineage import (ancestors, ancestry_similarity, catalog_ids, fam
 from linguatag._matching import (DEFAULT_MAX_LANGUAGE_DISTANCE, closest_lang,
                                 is_arabic_variety, lang_distance, lang_matches)
 from linguatag._regions import OVERRIDES, default_region, likely_script, with_default_region
-from linguatag._standardize import standardize_lang
+from linguatag._standardize import standard_tag, standardize_lang
 from linguatag._writing_systems import script_distance, script_distance_by_name, script_features
 
 __all__ = [
@@ -39,6 +39,7 @@ __all__ = [
     "script_distance",
     "script_distance_by_name",
     "script_features",
+    "standard_tag",
     "standardize_lang",
     "temporal_distance",
     "with_default_region",

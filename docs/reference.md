@@ -22,6 +22,14 @@ print(standardize_lang("iw"))                 # he
 print(standardize_lang("zh-HK-HiuMaanNeural"))  # zh-HK-hiumaanneural
 ```
 
+`standard_tag(tag: str) -> str` gives the plain ISO tag: the canonical language after the macrolanguage fold, with its script and region, and no private-use, variant or extension subtag. `pt-PT-x-porto` gives `pt-PT`. It never raises; a tag with no language gives `und`. The rules are in [Parsing](parsing.md).
+
+```python
+from linguatag import standard_tag
+
+print(standard_tag("pt-PT-x-porto"))  # pt-PT
+```
+
 ## Read the subtags of a tag
 
 `parse_tag(tag: str, strict: bool = True) -> LanguageTag` gives the subtags of a tag and replaces nothing. It reads underscores as hyphens and ignores case. `LanguageTag` has the fields `language`, `extlangs`, `script`, `region`, `variants`, `extensions`, `private` and `whole`. `whole` holds a private-use tag or a grandfathered tag that has no replacement. For a string that is not a well-formed tag, `parse_tag` raises `LanguageTagError`, a `ValueError`. With `strict=False`, it keeps the longest well-formed prefix and an over-long private-use part, and reads a POSIX locale.

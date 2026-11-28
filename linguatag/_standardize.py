@@ -74,7 +74,8 @@ def standardize_lang(tag: str, macro: bool = False) -> str:
     With ``macro``, an individual language that CLDR folds into its
     macrolanguage takes the macrolanguage: ``cmn`` is ``zh`` and ``arb`` is
     ``ar``. CLDR folds only the main member of a macrolanguage, so ``yue``
-    stays ``yue``."""
+    stays ``yue``. A fold drops the private-use subtags of the member:
+    ``cmn-x-beijing`` is ``zh``."""
     tag = _posix_to_tag(tag.strip())
     language, sep, rest = tag.replace("_", "-").partition("-")
     try:
@@ -84,6 +85,30 @@ def standardize_lang(tag: str, macro: bool = False) -> str:
             canonical = parse(standardize("fil" + sep + rest))
             script = None if canonical.script == "Latn" else canonical.script
             return str(replace(canonical, language="tl", script=script))
-        return standardize(tag, macrolanguage=macro)
+        folded = standardize(tag, macrolanguage=macro)
+        if macro and folded.partition("-")[0] != standardize(tag).partition("-")[0]:
+            # A private-use lect of the member names nothing under the
+            # macrolanguage: cmn-x-beijing is zh, not zh-x-beijing.
+            return str(replace(parse(folded), private=None))
+        return folded
     except LanguageTagError:
         return _fold(_without_deprecated_language(_without_extlang(tag)))
+
+
+@lru_cache(maxsize=4096)
+def standard_tag(tag: str) -> str:
+    """The plain ISO tag to choose a resource for ``tag``: the canonical
+    language, with the CLDR macrolanguage fold, plus its script and region.
+
+    Private-use, variant and extension subtags go, so ``pt-PT-x-porto`` is
+    ``pt-PT``, ``en-GB-oed`` is ``en-GB`` and ``cmn-x-beijing`` is ``zh``. A
+    tag that names no language, such as ``x-foo`` or a malformed string, is
+    ``und``. A voice name such as ``zh-HK-HiuMaanNeural`` keeps its
+    well-formed prefix, ``zh-HK``."""
+    try:
+        parsed = parse(standardize_lang(tag, macro=True), strict=False)
+    except LanguageTagError:
+        return "und"
+    if not parsed.language:
+        return "und"
+    return "-".join(part for part in (parsed.language, parsed.script, parsed.region) if part)

@@ -52,6 +52,28 @@ print(standardize_lang("arb", macro=True))  # ar
 print(standardize_lang("yue", macro=True))  # yue
 ```
 
+A private-use subtag names a lect of the member language, and no lect of the macrolanguage. So a fold drops it. A tag that the fold does not change keeps it:
+
+```python
+from linguatag import standardize_lang
+
+print(standardize_lang("cmn-x-beijing", macro=True))  # zh
+print(standardize_lang("pt-PT-x-porto", macro=True))  # pt-PT-x-porto
+```
+
+`standard_tag(tag)` gives the plain ISO tag to choose a resource with, such as a voice or a model. It keeps the canonical language, after the macrolanguage fold, and the script and the region. It drops the private-use, variant and extension subtags. A tag with no language gives `und`:
+
+```python
+from linguatag import standard_tag
+
+print(standard_tag("pt-PT-x-porto"))        # pt-PT
+print(standard_tag("en-GB-oed"))            # en-GB
+print(standard_tag("cmn-x-beijing"))        # zh
+print(standard_tag("sr-Latn-RS"))           # sr-Latn-RS
+print(standard_tag("zh-HK-HiuMaanNeural"))  # zh-HK
+print(standard_tag("x-foo"))                # und
+```
+
 `standardize_lang` never raises. A string that is not a well-formed tag gets the extlang and deprecated-language rules and the BCP 47 case of each subtag, and nothing more:
 
 ```python
