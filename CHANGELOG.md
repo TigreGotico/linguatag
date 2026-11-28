@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.2a1](https://github.com/TigreGotico/linguatag/tree/0.13.2a1) (2026-11-28)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.1a4...0.13.2a1)
+
+**Merged pull requests:**
+
+- fix: a named lect outweighs a region the data does not hold for it [\#197](https://github.com/TigreGotico/linguatag/pull/197) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.13.1a4](https://github.com/TigreGotico/linguatag/tree/0.13.1a4) (2026-11-28)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.1a3...0.13.1a4)
@@ -304,10 +312,6 @@
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.9.0a1...0.9.1a1)
 
-**Merged pull requests:**
-
-- fix: strip white space around a tag in every tag reader [\#85](https://github.com/TigreGotico/linguatag/pull/85) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
-
 ## [0.9.0a1](https://github.com/TigreGotico/linguatag/tree/0.9.0a1) (2026-11-26)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.8.0a1...0.9.0a1)
@@ -388,10 +392,6 @@
 ## [0.4.4a4](https://github.com/TigreGotico/linguatag/tree/0.4.4a4) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.4.4a3...0.4.4a4)
-
-**Merged pull requests:**
-
-- docs: complete pages, figures and navigation [\#84](https://github.com/TigreGotico/linguatag/pull/84) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.4.4a3](https://github.com/TigreGotico/linguatag/tree/0.4.4a3) (2026-11-25)
 
