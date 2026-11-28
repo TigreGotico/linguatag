@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.13.4a1](https://github.com/TigreGotico/linguatag/tree/0.13.4a1) (2026-11-28)
+
+[Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.3a1...0.13.4a1)
+
+**Merged pull requests:**
+
+- fix: a malformed tag has no lineage instead of raising [\#201](https://github.com/TigreGotico/linguatag/pull/201) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
+
 ## [0.13.3a1](https://github.com/TigreGotico/linguatag/tree/0.13.3a1) (2026-11-28)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.13.2a1...0.13.3a1)
@@ -379,10 +387,6 @@
 ## [0.5.1a1](https://github.com/TigreGotico/linguatag/tree/0.5.1a1) (2026-11-25)
 
 [Full Changelog](https://github.com/TigreGotico/linguatag/compare/0.5.0a1...0.5.1a1)
-
-**Merged pull requests:**
-
-- fix\(lineage\): read a bare tag's default-region node [\#89](https://github.com/TigreGotico/linguatag/pull/89) ([openvoiceos-bot](https://github.com/openvoiceos-bot))
 
 ## [0.5.0a1](https://github.com/TigreGotico/linguatag/tree/0.5.0a1) (2026-11-25)
 
