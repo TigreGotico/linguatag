@@ -16,6 +16,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 | --- | --- | --- |
 | `likely_subtags.json` | CLDR 49 `supplemental/likelySubtags.json` | `maximize`, `default_region` and `likely_script` (UTS #35 section 4.3) |
 | `aliases.json` | CLDR 49 `supplemental/aliases.json`: language, script, territory and variant aliases | canonical form (UTS #35 Annex C) |
+| `alias_rules.json` | `scripts/build_alias_rules.py` compiles `aliases.json` and the IANA Preferred-Values into the UTS #35 alias rules, with and without the macrolanguage rules | canonical form, so that a first call reads the rules and does not build them |
 | `subtags.json` | the IANA Language Subtag Registry, without the language records: each extlang, script, region and variant subtag and each grandfathered and redundant tag, with its Deprecated, Preferred-Value, Prefix, Suppress-Script and Macrolanguage fields | parsing and canonical form (RFC 5646) |
 | `language_subtags.json` | the language records of the same registry, a file of their own so that a caller who reads no language record does not parse them | `standardize` (Suppress-Script), `closest_lang` and `standardize_lang` (Preferred-Value) |
 | `language_matching.json` | CLDR 49 `supplemental/languageMatching.json`, `written-new`: paradigm locales, match variables and `languageMatch` rules | `lang_distance` (UTS #35 section 4.4) |
@@ -29,7 +30,7 @@ This page lists the data files that linguatag reads, shows how to regenerate the
 
 The figure shows the size of each file and how many records it holds.
 
-![Horizontal bars of the size and record count of the 12 data files. The largest is genealogy.json, 1082 kB and 7,749 records, and genealogy.json and places.json hold 72 percent of the bytes.](figures/data-files.svg)
+![Horizontal bars of the size and record count of the 13 data files. The largest is genealogy.json, 1082 kB and 7,749 records, and genealogy.json and places.json hold 70 percent of the bytes.](figures/data-files.svg)
 
 *Figure: the data files by size. `scripts/docs_figures.py` draws it from the files in `linguatag/data`. `genealogy.json` and `places.json` are the two largest.*
 
@@ -38,6 +39,7 @@ To see the source of each file:
 ```
 $ python3 -c "import json, pathlib; [print(p.name, '|', json.loads(p.read_text())['source']) for p in sorted(pathlib.Path('linguatag/data').glob('*.json'))]"
 aliases.json | CLDR 49, cldr-json cldr-core/supplemental/aliases.json
+alias_rules.json | scripts/build_alias_rules.py, from aliases.json, subtags.json and language_subtags.json
 language_matching.json | CLDR 49, cldr-json cldr-core/supplemental/languageMatching.json, written-new
 language_subtags.json | IANA Language Subtag Registry, File-Date: 2026-11-18
 lects.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
@@ -51,7 +53,7 @@ territory_containment.json | CLDR 49, cldr-json cldr-core/supplemental/territory
 times.json | TigreGotico/orthography2ipa@1c30a9d4af3f335653f08ffdd836c4fbb4ff98e5
 ```
 
-Nobody edits these files by hand. `scripts/extract_cldr.py` regenerates the CLDR and IANA files. The genealogy, place, time and lect files are the source of truth: they were seeded once from the orthography2ipa commit that their `source` field names, and linguatag reads no orthography2ipa file. Change them with `scripts/add_nodes.py`.
+Nobody edits these files by hand. `scripts/extract_cldr.py` regenerates the CLDR and IANA files, and then `scripts/build_alias_rules.py` regenerates `alias_rules.json`. The genealogy, place, time and lect files are the source of truth: they were seeded once from the orthography2ipa commit that their `source` field names, and linguatag reads no orthography2ipa file. Change them with `scripts/add_nodes.py`.
 
 ## The loader is read-only
 
