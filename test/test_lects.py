@@ -202,3 +202,14 @@ def test_a_region_before_a_lect_keeps_the_lect(tag, expected, mode):
 def test_an_unknown_private_use_subtag_picks_the_standard(tag, expected):
     supported = ["en-GB", "en-GB-x-scotland", "pt-PT", "pt-PT-x-acores", "de-DE", "de-x-alemanni"]
     assert closest_lang(tag, supported, lects="dialect") == expected
+
+
+@pytest.mark.parametrize("mode", ["standard", "dialect"])
+@pytest.mark.parametrize("tag, expected", [
+    ("ast-PT-x-cantabri", "ast-x-cantabri"), ("ast-PT-x-leon-foo", "ast-x-leon"),
+])
+def test_a_named_lect_outweighs_a_region_it_is_not_held_with(tag, expected, mode):
+    from linguatag._lects import _parents
+    supported = sorted({t for t in [*_parents(), *_parents().values()] if t.lower().startswith("ast")})
+    from linguatag._lects import private_use
+    assert private_use(closest_lang(tag, supported, lects=mode)) == private_use(expected)

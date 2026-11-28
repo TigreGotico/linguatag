@@ -101,7 +101,7 @@ from typing import Optional, Sequence
 
 from linguatag._bcp47 import LanguageTagError, is_region, is_script, maximize, parse
 from linguatag._distance import is_paradigm, tag_distance
-from linguatag._lects import lect_score, without_private_use
+from linguatag._lects import lect_score, region_free_lect, without_private_use
 from linguatag._regions import _with_likely_script, with_default_region
 from linguatag._standardize import (_preferred_values, _without_deprecated_language,
                                    _without_extlang, standardize_lang)
@@ -205,6 +205,9 @@ def lang_distance(desired: str, supported: str, lects: Optional[str] = None) -> 
     ``"standard"``) adds a score for private-use lect subtags that reorders
     candidates and never raises a distance. The Arabic, Chinese and
     malformed-tag rules are in ``docs/matching.md``."""
+    if lects is not None:
+        # A named lect outweighs a region that the data does not hold for it.
+        desired = region_free_lect(desired) or desired
     distance = _language_distance(desired, supported)
     if lects is None:
         return distance
