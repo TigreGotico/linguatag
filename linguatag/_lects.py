@@ -117,6 +117,18 @@ def _without_region(tag: str) -> str:
     return tag
 
 
+def region_free_lect(tag: str) -> Optional[str]:
+    """The known lect that ``tag`` names with a region the data does not hold
+    for it: ``ast-PT-x-cantabri`` is ``ast-x-cantabri``. ``None`` when the
+    data holds ``tag`` itself or no such lect."""
+    tag = _as_known_lect(tag).lower()
+    known = _known()
+    if not private_use(tag) or tag in known:
+        return None
+    bare = _without_region(tag)
+    return bare if bare != tag and bare in known else None
+
+
 def lookup_tags(tag: str) -> List[str]:
     """The tags that RFC 4647 section 3.4 (Lookup) tries for ``tag``, most
     specific first: one subtag goes at a time from the end, and a singleton
