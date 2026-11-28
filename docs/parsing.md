@@ -98,8 +98,6 @@ except LanguageTagError as error:
 
 `standardize_lang` replaces deprecated and extlang subtags, so `standardize_lang("sgn-US")` is `ase`. A tag with an extlang whose IANA `Prefix` is a different language stays as written: `standardize_lang("en-hak")` is `en-hak`. White space around a tag is no part of it (RFC 5646 section 2.1), so `standardize_lang(" pt-br ")` is `pt-BR`. A space inside a tag, as in `pt- BR`, leaves the tag malformed. Only the names in `linguatag.__all__` are the public API. The modules inside the package, such as `linguatag._bcp47`, are internal.
 
----
-[Index](index.md) · [← Getting started](getting-started.md) · [Likely subtags and default regions →](likely-subtags.md)
 
 
 `parse_tag(tag, strict=False)` reads a string that is not well-formed as far as it can. The longest well-formed prefix before `-x-` is the tag, and the private-use part stays, also with a subtag longer than 8 characters. It raises `LanguageTagError` only when no prefix names a language:
@@ -110,3 +108,6 @@ from linguatag import parse_tag
 print(parse_tag("bs-Cyrl-BA-Latn", strict=False))        # bs-Cyrl-BA
 print(parse_tag("an-x-benasques", strict=False).private)  # x-benasques
 ```
+
+---
+[Index](index.md) · [← Getting started](getting-started.md) · [Likely subtags and default regions →](likely-subtags.md)
