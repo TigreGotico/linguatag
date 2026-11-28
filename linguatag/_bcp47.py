@@ -279,6 +279,7 @@ def _tolerant(tag: str) -> LanguageTag:
     raise LanguageTagError(f"{tag!r} has no prefix that names a language")
 
 
+@lru_cache(maxsize=4096)
 def parse(tag: str, strict: bool = True) -> LanguageTag:
     """The subtags of ``tag``, with the BCP 47 case conventions and nothing
     replaced.

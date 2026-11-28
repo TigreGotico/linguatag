@@ -119,12 +119,34 @@ def _all_match(fields: Tuple[_Field, ...], subtags: Tuple[str, ...]) -> bool:
     return True
 
 
+def _index(rules: list) -> Tuple[Dict[str, List[int]], List[int]]:
+    """The positions of ``rules`` by the languages that their language fields
+    name, and the positions of the rules that a negated or a large field can
+    match for any language."""
+    by_language: Dict[str, List[int]] = {}
+    generic: List[int] = []
+    for position, (want, have, _, _) in enumerate(rules):
+        heads = (want[0], have[0])
+        if any(negated or len(values) > 8 for negated, values in heads):
+            generic.append(position)
+            continue
+        for language in set().union(*(values for _, values in heads)):
+            by_language.setdefault(language, []).append(position)
+    return by_language, generic
+
+
+_INDEX = {fields: _index(rules) for fields, rules in _RULES.items()}
+
+
 @lru_cache(maxsize=1 << 16)
 def _rules_for(fields: int, language: str) -> tuple:
     """The rules of ``fields`` fields, in data order, with a language field
     that matches ``language``: only these can match a pair that starts with it."""
-    return tuple(rule for rule in _RULES[fields]
-                 if _all_match(rule[0][:1], (language,)) or _all_match(rule[1][:1], (language,)))
+    by_language, generic = _INDEX[fields]
+    rules = _RULES[fields]
+    return tuple(rules[position] for position in sorted({*by_language.get(language, ()), *generic})
+                 if _all_match(rules[position][0][:1], (language,))
+                 or _all_match(rules[position][1][:1], (language,)))
 
 
 @lru_cache(maxsize=_CACHE_SIZE)
