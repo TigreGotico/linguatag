@@ -17,7 +17,7 @@ from collections import deque
 from functools import lru_cache
 from typing import Dict, List, Optional, Tuple
 
-from linguatag._bcp47 import _raw_data, _raw_registry, parse as parse_tag
+from linguatag._bcp47 import LanguageTagError, _raw_data, _raw_registry, parse as parse_tag
 from linguatag._regions import with_default_region
 from linguatag._standardize import standardize_lang
 
@@ -41,7 +41,10 @@ def _key(tag: str) -> str:
     regional = with_default_region(tag)
     if regional in _nodes():
         return regional
-    parsed = parse_tag(tag)
+    try:
+        parsed = parse_tag(tag)
+    except LanguageTagError:
+        return tag
     if parsed.script:
         return _key(tag.replace(f"-{parsed.script}", "", 1))
     if parsed.region and not (parsed.variants or parsed.private or parsed.extensions):
