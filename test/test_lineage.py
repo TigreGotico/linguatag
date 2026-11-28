@@ -297,3 +297,11 @@ def test_a_first_description_is_marked_as_a_latest_bound(tag):
 ])
 def test_a_region_reads_the_member_lect_that_most_of_it_speaks(tag, glottolog):
     assert catalog_ids(tag)["glottolog_code"] == glottolog
+
+
+@pytest.mark.parametrize("tag", ["bs-Cyrl-BA-Latn", "pt-BR-", "en--US"])
+def test_a_malformed_tag_has_no_lineage(tag):
+    assert parent(tag) is None
+    assert ancestors(tag) == []
+    assert family(tag) == ""
+    assert catalog_ids(tag) == {}
