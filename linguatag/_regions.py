@@ -13,6 +13,7 @@ region, `001`, as CLDR spells it.
 """
 from __future__ import annotations
 
+from functools import lru_cache
 from typing import Dict, Optional, Tuple
 
 from linguatag._bcp47 import LanguageTagError, _raw_data, is_region, is_script, maximize, parse
@@ -92,6 +93,7 @@ def _default_region(tag: str, *, parsed: bool) -> Optional[str]:
     return maximized.region if maximized else None
 
 
+@lru_cache(maxsize=4096)
 def default_region(tag: str) -> Optional[str]:
     """The region `tag` names, or the one it defaults to.
 
@@ -122,6 +124,7 @@ def _with_default_region(tag: str, *, parsed: bool) -> str:
     return "-".join(parts[:at] + [region] + parts[at:])
 
 
+@lru_cache(maxsize=4096)
 def with_default_region(tag: str) -> str:
     """`tag`, standardized, with its default region inserted.
 
