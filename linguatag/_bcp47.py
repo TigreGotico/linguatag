@@ -411,11 +411,10 @@ def _alias_table(macrolanguage: bool) -> Tuple[Dict[str, str], Dict[str, str]]:
     return rules, legacy
 
 
-@lru_cache(maxsize=2)
-def _rules(macrolanguage: bool) -> Tuple[List[_Rule], Dict[str, List[int]]]:
-    """The alias rules in UTS #35 Annex C order, and the positions of the
-    rules under the first field their type names, so a tag is tried only
-    against rules that can match."""
+def _build_rules(macrolanguage: bool) -> List[_Rule]:
+    """The alias rules in UTS #35 Annex C order, built from the CLDR and IANA
+    data. ``scripts/build_alias_rules.py`` writes them to
+    ``alias_rules.json``, which :func:`_rules` reads."""
     table, _ = _alias_table(macrolanguage)
     rules: List[_Rule] = []
     for type_, replacement in table.items():
@@ -429,6 +428,32 @@ def _rules(macrolanguage: bool) -> Tuple[List[_Rule], Dict[str, List[int]]]:
                            tuple(t.region for t in targets if t.region),
                            frozenset(first.variants)))
     rules.sort(key=_Rule.order)
+    return rules
+
+
+def _rule_row(rule: _Rule) -> list:
+    return [rule.language, rule.script, rule.region, sorted(rule.variants), rule.to_language,
+            rule.to_script, list(rule.regions), sorted(rule.to_variants)]
+
+
+@lru_cache(maxsize=1)
+def _compiled() -> dict:
+    return _raw_data("alias_rules.json")
+
+
+def _legacy(macrolanguage: bool) -> Dict[str, str]:
+    return _compiled()["macrolanguage" if macrolanguage else "standard"]["legacy"]
+
+
+@lru_cache(maxsize=2)
+def _rules(macrolanguage: bool) -> Tuple[List[_Rule], Dict[str, List[int]]]:
+    """The alias rules in UTS #35 Annex C order, and the positions of the
+    rules under the first field their type names, so a tag is tried only
+    against rules that can match."""
+    rules = [_Rule(language, script, region, frozenset(variants), to_language, to_script,
+                   tuple(regions), frozenset(to_variants))
+             for language, script, region, variants, to_language, to_script, regions, to_variants
+             in _compiled()["macrolanguage" if macrolanguage else "standard"]["rules"]]
     index: Dict[str, List[int]] = {}
     for position, rule in enumerate(rules):
         key = rule.language or rule.script or rule.region or min(rule.variants)
@@ -482,7 +507,7 @@ def _canonical(tag: LanguageTag, macrolanguage: bool) -> LanguageTag:
     if _has_no_alias(tag):
         return replace(tag, variants=tuple(sorted(set(tag.variants))),
                        extensions=tuple(sorted(tag.extensions)))
-    _, legacy = _alias_table(macrolanguage)
+    legacy = _legacy(macrolanguage)
     whole = str(tag).lower()
     if whole in legacy and (not tag.extlangs or whole in _whole_tags()):
         tag = parse(legacy[whole])

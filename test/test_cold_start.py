@@ -75,3 +75,11 @@ def test_every_deprecated_subtag_is_a_cldr_alias_type():
         missing = [subtag for subtag, record in registry[kind].items()
                    if "preferred" in record and ".." not in subtag and subtag not in aliases[kind]]
         assert missing == [], kind
+
+
+def test_the_compiled_alias_rules_are_fresh():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("build", DATA.parent.parent / "scripts" / "build_alias_rules.py")
+    build = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(build)
+    assert json.loads((DATA / "alias_rules.json").read_text()) == build.compiled()
